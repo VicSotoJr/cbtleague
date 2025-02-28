@@ -1451,10 +1451,10 @@
             "stats": [{
                     "game_number": 1,
                     "opponent": "BTA",
-                    "Points": 12,
+                    "Points": 15,
                     "FieldGoalsMade": 0,
                     "FieldGoalAttempts": 0,
-                    "ThreesMade": 4,
+                    "ThreesMade": 5,
                     "ThreesAttempts": 8,
                     "FreeThrowsMade": 0,
                     "FreeThrowsAttempts": 0,
