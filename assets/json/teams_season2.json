@@ -4631,10 +4631,10 @@
         ]
         },
         {
-            "name": "Malik",
+            "name": "Malik Jackson",
             "number": 5,
             "GamesPlayed": 1,
-            "PlayerHead": "malik.jpg",
+            "PlayerHead": "malikjackson.jpg",
             "stats": [{
                 "game_number": 1,
                 "opponent": "",
