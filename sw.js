@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cbt-league-v2';  // Update cache version when changing files
+const CACHE_NAME = 'cbt-league-v4';  // Update cache version when changing files
 const urlsToCache = [
   '/index.html',
   '/manifest.json',

@@ -1,8 +1,8 @@
 [{
     "Team": "Hidden Rain ",
-    "wins": 1,
+    "wins": 2,
     "loss": 0,
-    "gamesPlayed": 1,
+    "gamesPlayed": 2,
     "roster": [{
             "name": "Kevin Rivera",
             "number": 34,
@@ -1441,8 +1441,8 @@
 {
     "Team": "Venom",
     "wins": 0,
-    "loss": 1,
-    "gamesPlayed": 1,
+    "loss": 2,
+    "gamesPlayed": 2,
     "roster": [{
             "name": "Matt Evarts",
             "number": 20,
@@ -3197,8 +3197,8 @@
 {
     "Team": "GetBuck$",
     "wins": 0,
-    "loss": 1,
-    "gamesPlayed": 1,
+    "loss": 2,
+    "gamesPlayed": 2,
     "roster": [{
             "name": "TJ Green",
             "number": 1,
@@ -4634,9 +4634,9 @@
 },
 {
     "Team": "1Fam",
-    "wins": 1,
+    "wins": 2,
     "loss": 0,
-    "gamesPlayed": 1,
+    "gamesPlayed": 2,
     "roster": [{
             "name": "Matt Perez",
             "number": 13,
@@ -6073,8 +6073,8 @@
 {
     "Team": "Free Agents ",
     "wins": 0,
-    "loss": 0,
-    "gamesPlayed": 0,
+    "loss": 1,
+    "gamesPlayed": 1,
     "roster": [{
             "name": "Ali Jefferson",
             "number": 11,
@@ -7510,9 +7510,9 @@
 },
 {
     "Team": "BTA",
-    "wins": 1,
+    "wins": 2,
     "loss": 0,
-    "gamesPlayed": 1,
+    "gamesPlayed": 2,
     "roster": [{
             "name": "Tamaron Hargett",
             "number": 55,
