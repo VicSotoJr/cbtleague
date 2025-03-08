@@ -1,520 +1,575 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Player Stats</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(
+          document.querySelectorAll(".navbar-burger"),
+          0
+        );
 
-            // Get all "navbar-burger" elements
-            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        // Add a click event on each of them
+        $navbarBurgers.forEach((el) => {
+          el.addEventListener("click", () => {
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
 
-            // Add a click event on each of them
-            $navbarBurgers.forEach(el => {
-                el.addEventListener('click', () => {
-
-                    // Get the target from the "data-target" attribute
-                    const target = el.dataset.target;
-                    const $target = document.getElementById(target);
-
-                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-                    el.classList.toggle('is-active');
-                    $target.classList.toggle('is-active');
-
-                });
-            });
-
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle("is-active");
+            $target.classList.toggle("is-active");
+          });
         });
+      });
 
+      //This script gets individual player stats onto a table
+      $.getJSON("assets/json/teams.json", function (data) {
+        $.each(data, function (i, team) {
+          for (let i = 0; i < team.roster.length; i++) {
+            let playerPoints = 0;
+            let playerFGM = 0;
+            let playerFGA = 0;
+            let player3PM = 0;
+            let player3PA = 0;
+            let playerFTM = 0;
+            let playerFTA = 0;
+            let playerRebounds = 0;
+            let playerOREB = 0;
+            let playerDREB = 0;
+            let playerAssists = 0;
+            let playerBlocks = 0;
+            let playerSteals = 0;
+            let playerTOV = 0;
+            let playerPF = 0;
 
+            for (let j = 0; j < team.roster[i].stats.length; j++) {
+              playerPoints += team.roster[i].stats[j].Points;
+              playerFGM += team.roster[i].stats[j].FieldGoalsMade;
+              playerFGA += team.roster[i].stats[j].FieldGoalAttempts;
+              player3PM += team.roster[i].stats[j].ThreesMade;
+              player3PA += team.roster[i].stats[j].ThreesAttempts;
+              playerFTM += team.roster[i].stats[j].FreeThrowsMade;
+              playerFTA += team.roster[i].stats[j].FreeThrowsAttempts;
+              playerRebounds += team.roster[i].stats[j].Rebounds;
+              playerOREB += team.roster[i].stats[j].Offrebounds;
+              playerDREB += team.roster[i].stats[j].Defrebounds;
+              playerAssists += team.roster[i].stats[j].Assists;
+              playerBlocks += team.roster[i].stats[j].Blocks;
+              playerSteals += team.roster[i].stats[j].Steals;
+              playerTOV += team.roster[i].stats[j].Turnovers;
+              playerPF += team.roster[i].stats[j].PersonalFouls;
+            }
 
-        //This script gets individual player stats onto a table
-        $.getJSON("assets/json/teams.json", function (data) {
-
-            $.each(data, function (i, team) {
-
-                for (let i = 0; i < team.roster.length; i++) {
-                    let playerPoints = 0;
-                    let playerFGM = 0;
-                    let playerFGA = 0;
-                    let player3PM = 0;
-                    let player3PA = 0;
-                    let playerFTM = 0;
-                    let playerFTA = 0;
-                    let playerRebounds = 0;
-                    let playerOREB = 0;
-                    let playerDREB = 0;
-                    let playerAssists = 0;
-                    let playerBlocks = 0;
-                    let playerSteals = 0;
-                    let playerTOV = 0;
-                    let playerPF = 0;
-
-
-                    for (let j = 0; j < team.roster[i].stats.length; j++) {
-                        playerPoints += team.roster[i].stats[j].Points;
-                        playerFGM += team.roster[i].stats[j].FieldGoalsMade;
-                        playerFGA += team.roster[i].stats[j].FieldGoalAttempts;
-                        player3PM += team.roster[i].stats[j].ThreesMade;
-                        player3PA += team.roster[i].stats[j].ThreesAttempts;
-                        playerFTM += team.roster[i].stats[j].FreeThrowsMade;
-                        playerFTA += team.roster[i].stats[j].FreeThrowsAttempts;
-                        playerRebounds += team.roster[i].stats[j].Rebounds;
-                        playerOREB += team.roster[i].stats[j].Offrebounds;
-                        playerDREB += team.roster[i].stats[j].Defrebounds;
-                        playerAssists += team.roster[i].stats[j].Assists;
-                        playerBlocks += team.roster[i].stats[j].Blocks;
-                        playerSteals += team.roster[i].stats[j].Steals;
-                        playerTOV += team.roster[i].stats[j].Turnovers;
-                        playerPF += team.roster[i].stats[j].PersonalFouls;
-                    }
-
-                    $("#players-table").append(
-                        "<tr>" +
-                        "<td >" + team.roster[i].number + "</td>" +
-
-                        "<td class='sticky-column' onclick='getPlayerName(event, \"" + team.Team +
-                        "\")' data-player-name='" +
-                        team.roster[i].name + "'><strong>" + team.roster[i].name +
-                        "</strong></td>" +
-
-                        "<td onclick='getTeamName(event)' data-team-name='" +
-                        team.Team + "'>" + team.Team + "</td>" +
-
-                        "<td>" + team.roster[i].GamesPlayed + "</td>" +
-                        "<td>" + playerPoints + "</td>" +
-                        "<td>" + (playerPoints / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
-                        "<td>" + playerFGM + "</td>" +
-                        "<td>" + playerFGA + "</td>" +
-                        "<td>" + ((playerFGM / playerFGA)*100).toFixed(1) + "%</td>" +
-                        "<td>" + player3PM + "</td>" +
-                        "<td>" + player3PA + "</td>" +
-                        "<td>" + ((player3PM / player3PA)*100).toFixed(1) + "%</td>" +
-                        "<td>" + playerFTM + "</td>" +
-                        "<td>" + playerFTA + "</td>" +
-                        "<td>" + ((playerFTM / playerFTA)*100).toFixed(1) + "%</td>" +
-                        "<td>" + playerOREB + "</td>" +
-                        "<td>" + playerDREB + "</td>" +
-                        "<td>" + playerRebounds + "</td>" +
-                        "<td>" + (playerRebounds / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
-                        "<td>" + playerAssists + "</td>" +
-                        "<td>" + (playerAssists / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
-                        "<td>" + playerSteals + "</td>" +
-                        "<td>" + (playerSteals / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
-                        "<td>" + playerBlocks + "</td>" +
-                        "<td>" + (playerBlocks / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
-                        "<td>" + playerTOV + "</td>" +
-                        "<td>" + (playerTOV / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
-                        "<td>" + playerPF + "</td>" +
-                        "<td>" + ((playerPoints + playerRebounds + playerAssists + playerSteals +
-                            playerBlocks - (
-                                playerFGA - playerFGM) - (playerFTA - playerFTM) - playerTOV) / team
-                        .roster[i].GamesPlayed).toFixed(1) + "</td>" +
-                        //(PTS + REB + AST + STL + BLK − Missed FG − Missed FT - TO) / GP.
-                        "</tr>"
-                    );
-                }
-            });
-            //After table is loaded running the sortTable function
-            sortTable();
+            $("#players-table").append(
+              "<tr>" +
+                "<td >" +
+                team.roster[i].number +
+                "</td>" +
+                "<td class='sticky-column' onclick='getPlayerName(event, \"" +
+                team.Team +
+                "\")' data-player-name='" +
+                team.roster[i].name +
+                "'><strong>" +
+                team.roster[i].name +
+                "</strong></td>" +
+                "<td onclick='getTeamName(event)' data-team-name='" +
+                team.Team +
+                "'>" +
+                team.Team +
+                "</td>" +
+                "<td>" +
+                team.roster[i].GamesPlayed +
+                "</td>" +
+                "<td>" +
+                playerPoints +
+                "</td>" +
+                "<td>" +
+                (playerPoints / team.roster[i].GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerFGM +
+                "</td>" +
+                "<td>" +
+                playerFGA +
+                "</td>" +
+                "<td>" +
+                ((playerFGM / playerFGA) * 100).toFixed(1) +
+                "%</td>" +
+                "<td>" +
+                player3PM +
+                "</td>" +
+                "<td>" +
+                player3PA +
+                "</td>" +
+                "<td>" +
+                ((player3PM / player3PA) * 100).toFixed(1) +
+                "%</td>" +
+                "<td>" +
+                playerFTM +
+                "</td>" +
+                "<td>" +
+                playerFTA +
+                "</td>" +
+                "<td>" +
+                ((playerFTM / playerFTA) * 100).toFixed(1) +
+                "%</td>" +
+                "<td>" +
+                playerOREB +
+                "</td>" +
+                "<td>" +
+                playerDREB +
+                "</td>" +
+                "<td>" +
+                playerRebounds +
+                "</td>" +
+                "<td>" +
+                (playerRebounds / team.roster[i].GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerAssists +
+                "</td>" +
+                "<td>" +
+                (playerAssists / team.roster[i].GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerSteals +
+                "</td>" +
+                "<td>" +
+                (playerSteals / team.roster[i].GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerBlocks +
+                "</td>" +
+                "<td>" +
+                (playerBlocks / team.roster[i].GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerTOV +
+                "</td>" +
+                "<td>" +
+                (playerTOV / team.roster[i].GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerPF +
+                "</td>" +
+                "<td>" +
+                (
+                  (playerPoints +
+                    playerRebounds +
+                    playerAssists +
+                    playerSteals +
+                    playerBlocks -
+                    (playerFGA - playerFGM) -
+                    (playerFTA - playerFTM) -
+                    playerTOV) /
+                  team.roster[i].GamesPlayed
+                ).toFixed(1) +
+                "</td>" +
+                //(PTS + REB + AST + STL + BLK − Missed FG − Missed FT - TO) / GP.
+                "</tr>"
+            );
+          }
         });
+        //After table is loaded running the sortTable function
+        sortTable();
+      });
 
-        //Sort table Alphabetically
-        function sortTable() {
-            var table, rows, switching, i, x, y, shouldSwitch;
-            table = document.getElementById("players-table");
-            switching = true;
-            /* Make a loop that will continue until
+      //Sort table Alphabetically
+      function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("players-table");
+        switching = true;
+        /* Make a loop that will continue until
             no switching has been done: */
-            while (switching) {
-                // Start by saying: no switching is done:
-                switching = false;
-                rows = table.rows;
-                /* Loop through all table rows (except the
+        while (switching) {
+          // Start by saying: no switching is done:
+          switching = false;
+          rows = table.rows;
+          /* Loop through all table rows (except the
                 first, which contains table headers): */
-                for (i = 1; i < (rows.length - 1); i++) {
-                    // Start by saying there should be no switching:
-                    shouldSwitch = false;
-                    /* Get the two elements you want to compare,
+          for (i = 1; i < rows.length - 1; i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare,
                     one from current row and one from the next: */
-                    x = rows[i].getElementsByTagName("td")[1];
-                    y = rows[i + 1].getElementsByTagName("td")[1];
-                    // Check if the two rows should switch place:
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        // If so, mark as a switch and break the loop:
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-                if (shouldSwitch) {
-                    /* If a switch has been marked, make the switch
+            x = rows[i].getElementsByTagName("td")[1];
+            y = rows[i + 1].getElementsByTagName("td")[1];
+            // Check if the two rows should switch place:
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              // If so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
+          }
+          if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
                     and mark that a switch has been done: */
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    switching = true;
-                }
-            }
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+          }
         }
+      }
 
+      //filtering table by Name
+      function filterTable() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("team-filter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("players-table");
+        tr = table.getElementsByTagName("tr");
 
-
-        //filtering table by Name
-        function filterTable() {
-            // Declare variables
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("team-filter");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("players-table");
-            tr = table.getElementsByTagName("tr");
-
-
-            // Loop through all table rows, and hide those who don't match the search query
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
             }
+          }
         }
-
+      }
     </script>
-</head>
+  </head>
 
-
-<body>
-
-
-    <nav class="navbar " role="navigation" aria-label="main navigation">
-
-        <div class="navbar-brand">
-            <div class="container ">
-
-                <a href="index.html"><img class="logoContainer" src="assets/img/cbt-logo1.jpg" alt="" width="100px"></a>
-
-            </div>
-
-
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <div class="container">
+          <a href="index.html"
+            ><img
+              class="logoContainer"
+              src="assets/img/cbt-logo1.jpg"
+              alt=""
+              width="100px"
+          /></a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
 
-            <a href="index.html" class="navbar-item">
-                Home
-            </a>
+      <div id="navbarBasicExample" class="navbar-menu">
+        <a href="index.html" class="navbar-item"> Home </a>
 
-            <a href="schedule.html" class="navbar-item">
-                Schedule
-            </a>
-            <a href="standings.html" class="navbar-item">
-                Standings
-            </a>
-            <a href="teams.html" class="navbar-item">
-                Teams
-            </a>
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a href="stats.html" class="navbar-link">
-                    Stats
-                </a>
+        <a href="schedule.html" class="navbar-item"> Schedule </a>
+        <a href="standings.html" class="navbar-item"> Standings </a>
+        <a href="teams.html" class="navbar-item"> Teams </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a href="stats.html" class="navbar-link"> Stats </a>
 
-                <div class="navbar-dropdown">
-                    <a href="stats.html" class="navbar-item">
-                        Team Stats
-                    </a>
-                    <a href="playerstats.html" class="navbar-item">
-                        Player Stats
-                    </a>
-                    <a href="leagueleaders.html" class="navbar-item">
-                        League Leaders
-                    </a>
-                </div>
-            </div>
-           
+          <div class="navbar-dropdown">
+            <a href="stats.html" class="navbar-item"> Team Stats </a>
+            <a href="playerstats.html" class="navbar-item"> Player Stats </a>
+            <a href="leagueleaders.html" class="navbar-item">
+              League Leaders
+            </a>
+          </div>
         </div>
+      </div>
     </nav>
-    <hr>
+    <hr />
 
     <section class="section">
-        <h1 class="title is-3">Player Stats</h1>
+      <h1 class="title is-3">Player Stats</h1>
 
-        <div class="container">
-            <h3 style="color: white;">Season:</h3>
-            <div class="select is-small is-centered">
-                <select id="seasonSelector">
-                    <option value="season2">Season 2 - 2025</option>
-                    <option value="season1" selected>Season 1 - 2023 </option>
-                </select>                
-            </div>
+      <div class="container">
+        <h3 style="color: white">Season:</h3>
+        <div class="select is-small is-centered">
+          <select id="seasonSelector">
+            <option value="season2">Season 2 - 2025</option>
+            <option value="season1" selected>Season 1 - 2023</option>
+          </select>
         </div>
+      </div>
     </section>
 
     <div class="container is-max-fullwidth">
-        <h1>Player Search: <input type="text" id="team-filter" onkeyup="filterTable()"
-                placeholder="Filter by Player name..."></h1>
-        <br>
-        <div class="table-container">
-            <table class="table is-narrow is-hoverable" id="players-table">
-                <tr style="border: 1px solid white;">
-                    <th>#</th>
-                    <th class="sticky-column-head">Name</th>
-                    <th>Team</th>
-                    <th>GP</th>
-                    <th>PTS</th>
-                    <th>PPG</th>
-                    <th>FGM</th>
-                    <th>FGA</th>
-                    <th>FG%</th>
-                    <th>3PM</th>
-                    <th>3PA</th>
-                    <th>3P%</th>
-                    <th>FTM</th>
-                    <th>FTA</th>
-                    <th>FT%</th>
-                    <th>OREB</th>
-                    <th>DREB</th>
-                    <th>REB</th>
-                    <th>RPG</th>
-                    <th>AST</th>
-                    <th>APG</th>
-                    <th>STL</th>
-                    <th>SPG</th>
-                    <th>BLK</th>
-                    <th>BPG</th>
-                    <th>TOV</th>
-                    <th>TOVPG</th>
-                    <th>PF</th>
-                    <th>EFF</th>
-                </tr>
-                <tbody>
-
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>#</th>
-                        <th class="sticky-column-head">Name</th>
-                        <th>Team</th>
-                        <th>GP</th>
-                        <th>PTS</th>
-                        <th>PPG</th>
-                        <th>FGM</th>
-                        <th>FGA</th>
-                        <th>FG%</th>
-                        <th>3PM</th>
-                        <th>3PA</th>
-                        <th>3P%</th>
-                        <th>FTM</th>
-                        <th>FTA</th>
-                        <th>FT%</th>
-                        <th>OREB</th>
-                        <th>DREB</th>
-                        <th>REB</th>
-                        <th>RPG</th>
-                        <th>AST</th>
-                        <th>APG</th>
-                        <th>STL</th>
-                        <th>SPG</th>
-                        <th>BLK</th>
-                        <th>BPG</th>
-                        <th>TOV</th>
-                        <th>TOVPG</th>
-                        <th>PF</th>
-                        <th>EFF</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+      <h1>
+        Player Search:
+        <input
+          type="text"
+          id="team-filter"
+          onkeyup="filterTable()"
+          placeholder="Filter by Player name..."
+        />
+      </h1>
+      <br />
+      <div class="table-container">
+        <table class="table is-narrow is-hoverable" id="players-table">
+          <tr style="border: 1px solid white">
+            <th>#</th>
+            <th class="sticky-column-head">Name</th>
+            <th>Team</th>
+            <th>GP</th>
+            <th>PTS</th>
+            <th>PPG</th>
+            <th>FGM</th>
+            <th>FGA</th>
+            <th>FG%</th>
+            <th>3PM</th>
+            <th>3PA</th>
+            <th>3P%</th>
+            <th>FTM</th>
+            <th>FTA</th>
+            <th>FT%</th>
+            <th>OREB</th>
+            <th>DREB</th>
+            <th>REB</th>
+            <th>RPG</th>
+            <th>AST</th>
+            <th>APG</th>
+            <th>STL</th>
+            <th>SPG</th>
+            <th>BLK</th>
+            <th>BPG</th>
+            <th>TOV</th>
+            <th>TOVPG</th>
+            <th>PF</th>
+            <th>EFF</th>
+          </tr>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <th>#</th>
+              <th class="sticky-column-head">Name</th>
+              <th>Team</th>
+              <th>GP</th>
+              <th>PTS</th>
+              <th>PPG</th>
+              <th>FGM</th>
+              <th>FGA</th>
+              <th>FG%</th>
+              <th>3PM</th>
+              <th>3PA</th>
+              <th>3P%</th>
+              <th>FTM</th>
+              <th>FTA</th>
+              <th>FT%</th>
+              <th>OREB</th>
+              <th>DREB</th>
+              <th>REB</th>
+              <th>RPG</th>
+              <th>AST</th>
+              <th>APG</th>
+              <th>STL</th>
+              <th>SPG</th>
+              <th>BLK</th>
+              <th>BPG</th>
+              <th>TOV</th>
+              <th>TOVPG</th>
+              <th>PF</th>
+              <th>EFF</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
-
-</body>
-<script>
+  </body>
+  <script>
     function getTeamName(event) {
-        let target = event.target;
-        while (!target.hasAttribute('data-team-name')) {
-            target = target.parentNode;
-        }
-        const teamName = target.dataset.teamName;
-        console.log(teamName);
-        let teamColor; // Declare the variable outside of the if statements
+      let target = event.target;
+      while (!target.hasAttribute("data-team-name")) {
+        target = target.parentNode;
+      }
+      const teamName = target.dataset.teamName;
+      console.log(teamName);
+      let teamColor; // Declare the variable outside of the if statements
 
-        if (teamName === "Hidden Rain") {
-            console.log("hidden raine");
-            teamColor = "grey"; // Assign a value inside the if statement
-        }
-        if (teamName === "OTF") {
-            console.log("OTF")
-            teamColor = "midnightblue";
-        }
-        if (teamName === "Hidden Rain ") {
-            console.log("hidden raine");
-            teamColor = "grey"; // Assign a value inside the if statement
-        }
-        if (teamName === "OTF ") {
-            console.log("OTF")
-            teamColor = "midnightblue";
-        }
-        if (teamName === "Tune Squad") {
-            console.log("TUNE")
-            teamColor = "red";
-        }
-        if (teamName === "Free Agents") {
-            console.log("F A")
-            teamColor = "darkorange";
-        }
-        if (teamName === "Free Agents ") {
-            console.log("F A")
-            teamColor = "yellow";
-        }
-        if (teamName === "YAGGA") {
-            console.log("YAGGA")
-            teamColor = "rebeccapurple";
-        }
-        if(teamName === "BTA"){
-        console.log("BTA")
+      if (teamName === "Hidden Rain") {
+        console.log("hidden raine");
+        teamColor = "grey"; // Assign a value inside the if statement
+      }
+      if (teamName === "OTF") {
+        console.log("OTF");
+        teamColor = "midnightblue";
+      }
+      if (teamName === "Hidden Rain ") {
+        console.log("hidden raine");
+        teamColor = "grey"; // Assign a value inside the if statement
+      }
+      if (teamName === "OTF ") {
+        console.log("OTF");
+        teamColor = "midnightblue";
+      }
+      if (teamName === "Tune Squad") {
+        console.log("TUNE");
+        teamColor = "red";
+      }
+      if (teamName === "Free Agents") {
+        console.log("F A");
+        teamColor = "darkorange";
+      }
+      if (teamName === "Free Agents ") {
+        console.log("F A");
+        teamColor = "yellow";
+      }
+      if (teamName === "YAGGA") {
+        console.log("YAGGA");
+        teamColor = "rebeccapurple";
+      }
+      if (teamName === "BTA") {
+        console.log("BTA");
         teamColor = "grey";
-    }
-    if(teamName === "Venom"){
-        console.log("venom")
+      }
+      if (teamName === "Venom") {
+        console.log("venom");
         teamColor = "black";
-    }
-    if(teamName === "1Fam"){
-        console.log("1fam")
+      }
+      if (teamName === "1Fam") {
+        console.log("1fam");
         teamColor = "black";
-    }
-    if(teamName === "GetBuck$"){
-        console.log("getbuck$")
+      }
+      if (teamName === "GetBuck$") {
+        console.log("getbuck$");
         teamColor = "darkblue";
-    }
-        if (teamName === "Integral Construction") {
-            console.log("IC")
-            teamColor = "darkgreen";
-        };
+      }
+      if (teamName === "Integral Construction") {
+        console.log("IC");
+        teamColor = "darkgreen";
+      }
 
-        sessionStorage.setItem("team_name", teamName);
-        sessionStorage.setItem("team_color", teamColor);
+      sessionStorage.setItem("team_name", teamName);
+      sessionStorage.setItem("team_color", teamColor);
 
-        window.location.href = "teamProfile.html";
+      window.location.href = "teamProfile.html";
     }
 
     function getPlayerName(event, teamName) {
-        let target = event.target;
-        while (!target.hasAttribute('data-player-name')) {
-            target = target.parentNode;
-        }
-        const playerName = target.dataset.playerName;
+      let target = event.target;
+      while (!target.hasAttribute("data-player-name")) {
+        target = target.parentNode;
+      }
+      const playerName = target.dataset.playerName;
 
-        console.log(teamName);
-        let teamColor;
+      console.log(teamName);
+      let teamColor;
 
-        if (teamName === "Hidden Rain") {
-            console.log("HR")
-            teamColor = "grey";
-        }
-        if (teamName === "OTF") {
-            console.log("OTF")
-            teamColor = "midnightblue";
-        }
-        if (teamName === "Hidden Rain ") {
-            console.log("HR")
-            teamColor = "grey";
-        }
-        if (teamName === "OTF ") {
-            console.log("OTF")
-            teamColor = "midnightblue";
-        }
-        if (teamName === "Tune Squad") {
-            console.log("TUNE")
-
-            teamColor = "red";
-        }
-        if (teamName === "Free Agents") {
-            console.log("F A")
-
-            teamColor = "darkorange";
-        }
-        if (teamName === "Free Agents") {
-            console.log("F A")
-
-            teamColor = "yellow";
-        }
-        if (teamName === "YAGGA") {
-            console.log("YAGGA")
-
-            teamColor = "rebeccapurple";
-        }
-        if (teamName === "Integral Construction") {
-            console.log("IC")
-
-            teamColor = "darkgreen";
-        }
-        if(teamName === "BTA"){
-        console.log("BTA")
+      if (teamName === "Hidden Rain") {
+        console.log("HR");
         teamColor = "grey";
-    }
-    if(teamName === "Venom"){
-        console.log("venom")
+      }
+      if (teamName === "OTF") {
+        console.log("OTF");
+        teamColor = "midnightblue";
+      }
+      if (teamName === "Hidden Rain ") {
+        console.log("HR");
+        teamColor = "grey";
+      }
+      if (teamName === "OTF ") {
+        console.log("OTF");
+        teamColor = "midnightblue";
+      }
+      if (teamName === "Tune Squad") {
+        console.log("TUNE");
+
+        teamColor = "red";
+      }
+      if (teamName === "Free Agents") {
+        console.log("F A");
+
+        teamColor = "darkorange";
+      }
+      if (teamName === "Free Agents") {
+        console.log("F A");
+
+        teamColor = "yellow";
+      }
+      if (teamName === "YAGGA") {
+        console.log("YAGGA");
+
+        teamColor = "rebeccapurple";
+      }
+      if (teamName === "Integral Construction") {
+        console.log("IC");
+
+        teamColor = "darkgreen";
+      }
+      if (teamName === "BTA") {
+        console.log("BTA");
+        teamColor = "grey";
+      }
+      if (teamName === "Venom") {
+        console.log("venom");
         teamColor = "black";
-    }
-    if(teamName === "1Fam"){
-        console.log("1fam")
+      }
+      if (teamName === "1Fam") {
+        console.log("1fam");
         teamColor = "black";
-    }
-    if(teamName === "GetBuck$"){
-        console.log("getbuck$")
+      }
+      if (teamName === "GetBuck$") {
+        console.log("getbuck$");
         teamColor = "darkblue";
+      }
+
+      console.log("Player name:", playerName);
+      console.log("Team name:", teamName);
+      console.log("Team color:", teamColor);
+
+      sessionStorage.setItem("player_Name", playerName);
+      sessionStorage.setItem("team_color", teamColor);
+
+      console.log("Session storage:", sessionStorage);
+
+      window.location.href = "playerProfile.html";
     }
 
-        console.log("Player name:", playerName);
-        console.log("Team name:", teamName);
-        console.log("Team color:", teamColor);
-
-        sessionStorage.setItem("player_Name", playerName);
-        sessionStorage.setItem("team_color", teamColor);
-
-        console.log("Session storage:", sessionStorage);
-
-        window.location.href = "playerProfile.html";
-    }
-
-    document.getElementById('seasonSelector').addEventListener('change', function() {
-        if (this.value === 'season1') {
-            window.location.href = 'playerstats_1.html'; // Redirects to playerstats_1.html
-        } else if (this.value === 'season2') {
-            window.location.href = 'playerstats.html'; // Redirects to playerstats.html (or wherever you'd want)
+    document
+      .getElementById("seasonSelector")
+      .addEventListener("change", function () {
+        if (this.value === "season1") {
+          window.location.href = "playerstats_1.html"; // Redirects to playerstats_1.html
+        } else if (this.value === "season2") {
+          window.location.href = "playerstats.html"; // Redirects to playerstats.html (or wherever you'd want)
         }
-    });
-</script>
-<style>
+      });
+  </script>
+  <style>
     .table-container {
-        overflow-x: auto;
-        max-width: 100%;
+      overflow-x: auto;
+      max-width: 100%;
     }
 
     .table tfoot tr td {
-        position: sticky;
-        bottom: 0;
-        z-index: 1;
-        background-color: white;
+      position: sticky;
+      bottom: 0;
+      z-index: 1;
+      background-color: white;
     }
-</style>
-
+  </style>
 </html>

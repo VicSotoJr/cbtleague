@@ -1,55 +1,68 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Standings</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      
-    function loadStandings(seasonFile) {
+      function loadStandings(seasonFile) {
         $("#team-table tr:not(:first)").remove(); // Clear previous standings, keeping headers
 
         $.getJSON(`assets/json/${seasonFile}`, function (data) {
-            let rank = 1;
-            data.sort(function (a, b) {
-                return (b.wins / (b.wins + b.loss)) - (a.wins / (a.wins + b.loss));
-            });
+          let rank = 1;
+          data.sort(function (a, b) {
+            return b.wins / (b.wins + b.loss) - a.wins / (a.wins + b.loss);
+          });
 
-            $.each(data, function (i, team) {
-                let winPercent = (team.wins + team.loss) === 0 ? "0.000" : (team.wins / (team.wins + team.loss)).toFixed(3);
+          $.each(data, function (i, team) {
+            let winPercent =
+              team.wins + team.loss === 0
+                ? "0.000"
+                : (team.wins / (team.wins + team.loss)).toFixed(3);
 
-                $("#team-table").append(
-                    `<tr>
+            $("#team-table").append(
+              `<tr>
                         <td>${rank++}</td>
-                        <td onclick='getTeamName(event)' data-team-name='${team.Team}'><strong>${team.Team}</strong></td>
+                        <td onclick='getTeamName(event)' data-team-name='${
+                          team.Team
+                        }'><strong>${team.Team}</strong></td>
                         <td>${team.wins}</td>
                         <td>${team.loss}</td>
                         <td>${winPercent}</td>
                     </tr>`
-                );
-            });
-        }).fail(function() {
-            console.error("Error loading JSON file: " + seasonFile);
+            );
+          });
+        }).fail(function () {
+          console.error("Error loading JSON file: " + seasonFile);
         });
-    }
+      }
 
-    document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("DOMContentLoaded", function () {
         const seasonDropdown = document.getElementById("seasonDropdown");
 
         function updateSeason() {
-            const selectedSeason = seasonDropdown.value;
-            const jsonFile = selectedSeason === "season1" ? "teams.json" : "teams_season2.json";
-            loadStandings(jsonFile);
+          const selectedSeason = seasonDropdown.value;
+          const jsonFile =
+            selectedSeason === "season1" ? "teams.json" : "teams_season2.json";
+          loadStandings(jsonFile);
         }
 
         // Load default standings based on initial dropdown value
@@ -57,223 +70,198 @@
 
         // Change JSON file when season is selected
         seasonDropdown.addEventListener("change", updateSeason);
-    });
+      });
 
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(
+          document.querySelectorAll(".navbar-burger"),
+          0
+        );
 
+        // Add a click event on each of them
+        $navbarBurgers.forEach((el) => {
+          el.addEventListener("click", () => {
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
 
-
-
-
-
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // Get all "navbar-burger" elements
-            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-            // Add a click event on each of them
-            $navbarBurgers.forEach(el => {
-                el.addEventListener('click', () => {
-
-                    // Get the target from the "data-target" attribute
-                    const target = el.dataset.target;
-                    const $target = document.getElementById(target);
-
-                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-                    el.classList.toggle('is-active');
-                    $target.classList.toggle('is-active');
-
-                });
-            });
-
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle("is-active");
+            $target.classList.toggle("is-active");
+          });
         });
+      });
 
-        document.addEventListener("DOMContentLoaded", function () {
-    const seasonDropdown = document.getElementById("seasonDropdown"); // Assign an id to the dropdown
-    const season1Container = document.getElementById("season1");
-    const season2Container = document.getElementById("season2");
+      document.addEventListener("DOMContentLoaded", function () {
+        const seasonDropdown = document.getElementById("seasonDropdown"); // Assign an id to the dropdown
+        const season1Container = document.getElementById("season1");
+        const season2Container = document.getElementById("season2");
 
-    function toggleSeason() {
-        const selectedSeason = seasonDropdown.value;
+        function toggleSeason() {
+          const selectedSeason = seasonDropdown.value;
 
-        if (selectedSeason === "season1") {
+          if (selectedSeason === "season1") {
             season1Container.style.display = "block";
             season2Container.style.display = "none";
-        } else {
+          } else {
             season1Container.style.display = "none";
             season2Container.style.display = "block";
+          }
         }
-    }
 
-    // Initial toggle to show the correct season on page load
-    toggleSeason();
+        // Initial toggle to show the correct season on page load
+        toggleSeason();
 
-    // Add event listener to dropdown
-    seasonDropdown.addEventListener("change", toggleSeason);
-});
-
+        // Add event listener to dropdown
+        seasonDropdown.addEventListener("change", toggleSeason);
+      });
     </script>
-</head>
+  </head>
 
-
-<body>
-
-    <nav class="navbar " role="navigation" aria-label="main navigation">
-
-        <div class="navbar-brand">
-            <div class="container ">
-
-                <a href="index.html"><img class="logoContainer" src="assets/img/cbt-logo1.jpg" alt="" width="100px"></a>
-
-            </div>
-
-
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <div class="container">
+          <a href="index.html"
+            ><img
+              class="logoContainer"
+              src="assets/img/cbt-logo1.jpg"
+              alt=""
+              width="100px"
+          /></a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
 
-            <a href="index.html" class="navbar-item">
-                Home
-            </a>
+      <div id="navbarBasicExample" class="navbar-menu">
+        <a href="index.html" class="navbar-item"> Home </a>
 
-            <a href="schedule.html" class="navbar-item">
-                Schedule
-            </a>
-            <a href="standings.html" class="navbar-item">
-                Standings
-            </a>
-            <a href="teams.html" class="navbar-item">
-                Teams
-            </a>
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a href="stats.html" class="navbar-link">
-                    Stats
-                </a>
+        <a href="schedule.html" class="navbar-item"> Schedule </a>
+        <a href="standings.html" class="navbar-item"> Standings </a>
+        <a href="teams.html" class="navbar-item"> Teams </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a href="stats.html" class="navbar-link"> Stats </a>
 
-                <div class="navbar-dropdown">
-                    <a href="stats.html" class="navbar-item">
-                        Team Stats
-                    </a>
-                    <a href="playerstats.html" class="navbar-item">
-                        Player Stats
-                    </a>
-                    <a href="leagueleaders.html" class="navbar-item">
-                        League Leaders
-                    </a>
-                </div>
-            </div>
-           
+          <div class="navbar-dropdown">
+            <a href="stats.html" class="navbar-item"> Team Stats </a>
+            <a href="playerstats.html" class="navbar-item"> Player Stats </a>
+            <a href="leagueleaders.html" class="navbar-item">
+              League Leaders
+            </a>
+          </div>
         </div>
+      </div>
     </nav>
-    <hr>
+    <hr />
 
     <section class="section">
-        <h1 class="title is-3">Standings</h1>
+      <h1 class="title is-3">Standings</h1>
     </section>
 
-    
-
     <div class="container is-max-fullwidth">
+      <div class="container">
+        <h3 style="color: white">Season:</h3>
+        <div class="select is-small is-centered">
+          <select id="seasonDropdown">
+            <option value="season2">Season 2 - 2025</option>
+            <option value="season1">Season 1 - 2023</option>
+          </select>
+        </div>
+      </div>
 
-        <div class="container">
-            <h3 style="color: white;">Season:</h3>
-            <div class="select is-small is-centered">
-                <select id="seasonDropdown">
-                    <option value="season2">Season 2 - 2025</option>
-                    <option value="season1">Season 1 - 2023</option>
-                </select>                
-            </div>
-            
-        </div>
-        
-        <br>
-        <div class="table-container">
-            <table class="table is-fullwidth is-hoverable" id="team-table">
-                <tr style="border: 1px solid white;">
-                    <th>Rank</th>
-                    <th>Team</th>
-                    <th>W</th>
-                    <th>L</th>
-                    <th>Win %</th>
-                </tr>
-            </table>
-        </div>
+      <br />
+      <div class="table-container">
+        <table class="table is-fullwidth is-hoverable" id="team-table">
+          <tr style="border: 1px solid white">
+            <th>Rank</th>
+            <th>Team</th>
+            <th>W</th>
+            <th>L</th>
+            <th>Win %</th>
+          </tr>
+        </table>
+      </div>
     </div>
-</body>
-<script>
+  </body>
+  <script>
     function getTeamName(event) {
-        let target = event.target;
-        while (!target.hasAttribute('data-team-name')) {
-            target = target.parentNode;
-        }
-        const teamName = target.dataset.teamName;
-        console.log(teamName);
-        let teamColor; // Declare the variable outside of the if statements
+      let target = event.target;
+      while (!target.hasAttribute("data-team-name")) {
+        target = target.parentNode;
+      }
+      const teamName = target.dataset.teamName;
+      console.log(teamName);
+      let teamColor; // Declare the variable outside of the if statements
 
-        if(teamName === "Hidden Rain"){
+      if (teamName === "Hidden Rain") {
         console.log("hidden raine");
         teamColor = "grey"; // Assign a value inside the if statement
-    }
-    if(teamName === "Hidden Rain "){
+      }
+      if (teamName === "Hidden Rain ") {
         console.log("hidden raine");
         teamColor = "grey"; // Assign a value inside the if statement
-    }
-    if(teamName === "OTF"){
-        console.log("OTF")
+      }
+      if (teamName === "OTF") {
+        console.log("OTF");
         teamColor = "midnightblue";
-    }
-    if(teamName === "OTF "){
-        console.log("OTF")
+      }
+      if (teamName === "OTF ") {
+        console.log("OTF");
         teamColor = "midnightblue";
-    }
-    if(teamName === "Tune Squad"){
-        console.log("TUNE")
+      }
+      if (teamName === "Tune Squad") {
+        console.log("TUNE");
         teamColor = "red";
-    }
-    if(teamName === "Free Agents"){
-        console.log("F A")
+      }
+      if (teamName === "Free Agents") {
+        console.log("F A");
         teamColor = "darkorange";
-    }
-    if(teamName === "YAGGA"){
-        console.log("YAGGA")
+      }
+      if (teamName === "YAGGA") {
+        console.log("YAGGA");
         teamColor = "rebeccapurple";
-    }
-    if(teamName === "Integral Construction"){
-        console.log("IC")
+      }
+      if (teamName === "Integral Construction") {
+        console.log("IC");
         teamColor = "darkgreen";
-    }
-    if(teamName === "BTA"){
-        console.log("BTA")
+      }
+      if (teamName === "BTA") {
+        console.log("BTA");
         teamColor = "grey";
-    }
-    if(teamName === "Venom"){
-        console.log("venom")
+      }
+      if (teamName === "Venom") {
+        console.log("venom");
         teamColor = "black";
-    }
-    if(teamName === "1Fam"){
-        console.log("1fam")
+      }
+      if (teamName === "1Fam") {
+        console.log("1fam");
         teamColor = "black";
-    }
-    if(teamName === "GetBuck$"){
-        console.log("getbuck$")
+      }
+      if (teamName === "GetBuck$") {
+        console.log("getbuck$");
         teamColor = "darkblue";
-    }
-    if(teamName === "FreeAgents"){
-        console.log("FA")
+      }
+      if (teamName === "FreeAgents") {
+        console.log("FA");
         teamColor = "yellow";
-    };
+      }
 
+      sessionStorage.setItem("team_name", teamName);
+      sessionStorage.setItem("team_color", teamColor);
 
-        sessionStorage.setItem("team_name", teamName);
-        sessionStorage.setItem("team_color", teamColor);
-
-        window.location.href = "teamProfile.html";
+      window.location.href = "teamProfile.html";
     }
-</script>
-
+  </script>
 </html>

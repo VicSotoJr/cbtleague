@@ -6,7 +6,6 @@
 
 html {
   background-color: black !important;
- 
 }
 
 hr {
@@ -16,10 +15,9 @@ hr {
 h1 {
   text-align: center;
   color: white !important;
-  font-family: 'Kanit', sans-serif;
+  font-family: "Kanit", sans-serif;
   font-weight: 900 !important;
 }
-
 
 .navbar,
 .navbar-item,
@@ -27,9 +25,8 @@ h1 {
 .navbar-link,
 .navbar-dropdown {
   background-color: black !important;
-  font-family: 'Kanit', sans-serif;
+  font-family: "Kanit", sans-serif;
   font-size: 15px !important;
-
 }
 
 .navbar {
@@ -39,7 +36,6 @@ h1 {
 .navbar-menu {
   justify-content: space-evenly !important;
 }
-
 
 caption {
   text-align: center;
@@ -87,17 +83,17 @@ td {
 p {
   font-size: 1.3rem;
   font-weight: 700;
-  font-family: 'Kanit', sans-serif;
+  font-family: "Kanit", sans-serif;
   padding: 0%;
   margin-bottom: 0 !important;
 }
 
 h2 {
-  font-family: 'Kanit', sans-serif;
+  font-family: "Kanit", sans-serif;
 }
 
-img{
-  border-radius: .5rem;
+img {
+  border-radius: 0.5rem;
 }
 .sticky-column-head {
   position: sticky;
@@ -135,9 +131,9 @@ img{
   cursor: pointer;
 }
 @media (max-width: 768px) {
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     font-size: 16px !important;
   }
 }
-
-

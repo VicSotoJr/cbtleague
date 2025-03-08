@@ -1,320 +1,353 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Stats</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<head>
-  <title>Stats</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      //This Script gets all team stats onto one table
+      $.getJSON("assets/json/teams_season2.json", function (data) {
+        $.each(data, function (i, team) {
+          let teamPoints = 0;
+          let teamFGM = 0;
+          let teamFGA = 0;
+          let team3PM = 0;
+          let team3PA = 0;
+          let teamFTM = 0;
+          let teamFTA = 0;
+          let teamRebounds = 0;
+          let teamOREB = 0;
+          let teamDREB = 0;
+          let teamAssists = 0;
+          let teamBlocks = 0;
+          let teamSteals = 0;
+          let teamTOV = 0;
+          let teamPF = 0;
 
-  <script>
-    //This Script gets all team stats onto one table
-    $.getJSON("assets/json/teams_season2.json", function (data) {
-
-      $.each(data, function (i, team) {
-
-        let teamPoints = 0;
-        let teamFGM = 0;
-        let teamFGA = 0;
-        let team3PM = 0;
-        let team3PA = 0;
-        let teamFTM = 0;
-        let teamFTA = 0;
-        let teamRebounds = 0;
-        let teamOREB = 0;
-        let teamDREB = 0;
-        let teamAssists = 0;
-        let teamBlocks = 0;
-        let teamSteals = 0;
-        let teamTOV = 0;
-        let teamPF = 0;
-
-        for (let i = 0; i < team.roster.length; i++) {
-          for (let j = 0; j < team.roster[i].stats.length; j++) {
-            teamPoints += team.roster[i].stats[j].Points;
-            teamFGM += team.roster[i].stats[j].FieldGoalsMade;
-            teamFGA += team.roster[i].stats[j].FieldGoalAttempts;
-            team3PM += team.roster[i].stats[j].ThreesMade;
-            team3PA += team.roster[i].stats[j].ThreesAttempts;
-            teamFTM += team.roster[i].stats[j].FreeThrowsMade;
-            teamFTA += team.roster[i].stats[j].FreeThrowsAttempts;
-            teamRebounds += team.roster[i].stats[j].Rebounds;
-            teamOREB += team.roster[i].stats[j].Offrebounds;
-            teamDREB += team.roster[i].stats[j].Defrebounds;
-            teamAssists += team.roster[i].stats[j].Assists;
-            teamBlocks += team.roster[i].stats[j].Blocks;
-            teamSteals += team.roster[i].stats[j].Steals;
-            teamTOV += team.roster[i].stats[j].Turnovers;
-            teamPF += team.roster[i].stats[j].PersonalFouls;
+          for (let i = 0; i < team.roster.length; i++) {
+            for (let j = 0; j < team.roster[i].stats.length; j++) {
+              teamPoints += team.roster[i].stats[j].Points;
+              teamFGM += team.roster[i].stats[j].FieldGoalsMade;
+              teamFGA += team.roster[i].stats[j].FieldGoalAttempts;
+              team3PM += team.roster[i].stats[j].ThreesMade;
+              team3PA += team.roster[i].stats[j].ThreesAttempts;
+              teamFTM += team.roster[i].stats[j].FreeThrowsMade;
+              teamFTA += team.roster[i].stats[j].FreeThrowsAttempts;
+              teamRebounds += team.roster[i].stats[j].Rebounds;
+              teamOREB += team.roster[i].stats[j].Offrebounds;
+              teamDREB += team.roster[i].stats[j].Defrebounds;
+              teamAssists += team.roster[i].stats[j].Assists;
+              teamBlocks += team.roster[i].stats[j].Blocks;
+              teamSteals += team.roster[i].stats[j].Steals;
+              teamTOV += team.roster[i].stats[j].Turnovers;
+              teamPF += team.roster[i].stats[j].PersonalFouls;
+            }
           }
-        }
-        $("#team-table").append(
-          "<tr>" +
-          "<td class='sticky-column' onclick='getTeamName(event)' data-team-name='" +
-          team.Team + "'><strong>" + team.Team + "</strong></td>" +
-          "<td>" + team.gamesPlayed + "</td>" +
-          "<td>" + team.wins + "</td>" +
-          "<td>" + team.loss + "</td>" +
-          "<td>" + teamPoints + "</td>" +
-          "<td>" + teamFGM + "</td>" +
-          "<td>" + teamFGA + "</td>" +
-          "<td>" + team3PM + "</td>" +
-          "<td>" + team3PA + "</td>" +
-          "<td>" + teamFTM + "</td>" +
-          "<td>" + teamFTA + "</td>" +
-          "<td>" + teamRebounds + "</td>" +
-          "<td>" + teamOREB + "</td>" +
-          "<td>" + teamDREB + "</td>" +
-          "<td>" + teamAssists + "</td>" +
-          "<td>" + teamBlocks + "</td>" +
-          "<td>" + teamSteals + "</td>" +
-          "<td>" + teamTOV + "</td>" +
-          "<td>" + teamPF + "</td>" +
-          "</tr>"
-        );
-      });
-    });
-
-    //filtering table
-    function filterTable() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("team-filter");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("team-table");
-      tr = table.getElementsByTagName("tr");
-
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-
-      // Get all "navbar-burger" elements
-      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-      // Add a click event on each of them
-      $navbarBurgers.forEach(el => {
-        el.addEventListener('click', () => {
-
-          // Get the target from the "data-target" attribute
-          const target = el.dataset.target;
-          const $target = document.getElementById(target);
-
-          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-          el.classList.toggle('is-active');
-          $target.classList.toggle('is-active');
-
+          $("#team-table").append(
+            "<tr>" +
+              "<td class='sticky-column' onclick='getTeamName(event)' data-team-name='" +
+              team.Team +
+              "'><strong>" +
+              team.Team +
+              "</strong></td>" +
+              "<td>" +
+              team.gamesPlayed +
+              "</td>" +
+              "<td>" +
+              team.wins +
+              "</td>" +
+              "<td>" +
+              team.loss +
+              "</td>" +
+              "<td>" +
+              teamPoints +
+              "</td>" +
+              "<td>" +
+              teamFGM +
+              "</td>" +
+              "<td>" +
+              teamFGA +
+              "</td>" +
+              "<td>" +
+              team3PM +
+              "</td>" +
+              "<td>" +
+              team3PA +
+              "</td>" +
+              "<td>" +
+              teamFTM +
+              "</td>" +
+              "<td>" +
+              teamFTA +
+              "</td>" +
+              "<td>" +
+              teamRebounds +
+              "</td>" +
+              "<td>" +
+              teamOREB +
+              "</td>" +
+              "<td>" +
+              teamDREB +
+              "</td>" +
+              "<td>" +
+              teamAssists +
+              "</td>" +
+              "<td>" +
+              teamBlocks +
+              "</td>" +
+              "<td>" +
+              teamSteals +
+              "</td>" +
+              "<td>" +
+              teamTOV +
+              "</td>" +
+              "<td>" +
+              teamPF +
+              "</td>" +
+              "</tr>"
+          );
         });
       });
 
-    });
-  </script>
-</head>
+      //filtering table
+      function filterTable() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("team-filter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("team-table");
+        tr = table.getElementsByTagName("tr");
 
-
-<body>
-
-  <nav class="navbar " role="navigation" aria-label="main navigation">
-
-    <div class="navbar-brand">
-      <div class="container ">
-
-        <a href="index.html"><img class="logoContainer" src="assets/img/cbt-logo1.jpg" alt="" width="100px"></a>
-
-      </div>
-
-
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-
-    <div id="navbarBasicExample" class="navbar-menu">
-
-      <a href="index.html" class="navbar-item">
-        Home
-      </a>
-
-      <a href="schedule.html" class="navbar-item">
-        Schedule
-      </a>
-      <a href="standings.html" class="navbar-item">
-        Standings
-      </a>
-      <a href="teams.html" class="navbar-item">
-        Teams
-      </a>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a href="stats.html" class="navbar-link">
-          Stats
-        </a>
-
-        <div class="navbar-dropdown">
-          <a href="stats.html" class="navbar-item">
-            Team Stats
-          </a>
-          <a href="playerstats.html" class="navbar-item">
-            Player Stats
-          </a>
-          <a href="leagueleaders.html" class="navbar-item">
-            League Leaders
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>
-  <hr>
-
-  <div class="container is-max-fullwidth">
-    <section class="section">
-      <h1 class="title is-3">Team Stats</h1>
-
-      <div class="container">
-        <h3 style="color: white;">Season:</h3>
-        <div class="select is-small is-centered">
-          <select id="seasonSelector">
-            <option value="season2">Season 2 - 2025</option>
-            <option value="season1">Season 1 - 2023</option>
-        </select> 
-        </div>
-    </div>
-
-    </section>
-    <!-- <h1>Spring 2023 Season: <input type="text" id="team-filter" onkeyup="filterTable()"
-        placeholder="Filter by Team name..."></h1> -->
-    <br>
-    <div class="table-container">
-      <table class="table is-fullwidth is-hoverable has-sticky-column" id="team-table">
-        <tr style="border: 1px solid white;">
-          <th class="sticky-column-head">Team</th>
-          <th>GP</th>
-          <th>W</th>
-          <th>L</th>
-          <th>PTS</th>
-          <th>FGM</th>
-          <th>FGA</th>
-          <th>3PM</th>
-          <th>3PA</th>
-          <th>FTM</th>
-          <th>FTA</th>
-          <th>REB</th>
-          <th>OREB</th>
-          <th>DREB</th>
-          <th>AST</th>
-          <th>BLK</th>
-          <th>STL</th>
-          <th>TOV</th>
-          <th>PF</th>
-        </tr>
-      </table>
-    </div>
-  </div>
-</body>
-
-<script>
-  function getTeamName(event) {
-    let target = event.target;
-    while (!target.hasAttribute('data-team-name')) {
-      target = target.parentNode;
-    }
-    const teamName = target.dataset.teamName;
-    console.log(teamName);
-
-    let teamColor; // Declare the variable outside of the if statements
-
-    if(teamName === "Hidden Rain"){
-        console.log("hidden raine");
-        teamColor = "grey"; // Assign a value inside the if statement
-    }
-    if(teamName === "OTF"){
-        console.log("OTF")
-        teamColor = "midnightblue";
-    }
-    if(teamName === "Hidden Rain "){
-        console.log("hidden raine");
-        teamColor = "grey"; // Assign a value inside the if statement
-    }
-    if(teamName === "OTF "){
-        console.log("OTF")
-        teamColor = "midnightblue";
-    }
-    if(teamName === "Tune Squad"){
-        console.log("TUNE")
-        teamColor = "red";
-    }
-    if(teamName === "Free Agents"){
-        console.log("F A")
-        teamColor = "darkorange";
-    }
-    if(teamName === "YAGGA"){
-        console.log("YAGGA")
-        teamColor = "rebeccapurple";
-    }
-    if(teamName === "Integral Construction"){
-        console.log("IC")
-        teamColor = "darkgreen";
-    }
-    if(teamName === "BTA"){
-        console.log("BTA")
-        teamColor = "grey";
-    }
-    if(teamName === "Venom"){
-        console.log("venom")
-        teamColor = "black";
-    }
-    if(teamName === "1Fam"){
-        console.log("1fam")
-        teamColor = "black";
-    }
-    if(teamName === "GetBuck$"){
-        console.log("getbuck$")
-        teamColor = "darkblue";
-    }
-    if(teamName === "Free Agents "){
-        console.log("FA")
-        teamColor = "yellow";
-    };
-
-
-
-    sessionStorage.setItem("team_name", teamName);
-    sessionStorage.setItem("team_color", teamColor);
-
-    window.location.href = "teamProfile.html";
-  }
-
-//this is to change pages with the season selector
-  document.getElementById('seasonSelector').addEventListener('change', function() {
-        if (this.value === 'season1') {
-            window.location.href = 'stats_1.html'; // Redirects to playerstats_1.html
-        } else if (this.value === 'season2') {
-            window.location.href = 'stats.html'; // Redirects to playerstats_2.html (or wherever you'd want)
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
         }
-    });
+      }
 
-</script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(
+          document.querySelectorAll(".navbar-burger"),
+          0
+        );
 
+        // Add a click event on each of them
+        $navbarBurgers.forEach((el) => {
+          el.addEventListener("click", () => {
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle("is-active");
+            $target.classList.toggle("is-active");
+          });
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <div class="container">
+          <a href="index.html"
+            ><img
+              class="logoContainer"
+              src="assets/img/cbt-logo1.jpg"
+              alt=""
+              width="100px"
+          /></a>
+        </div>
+
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <a href="index.html" class="navbar-item"> Home </a>
+
+        <a href="schedule.html" class="navbar-item"> Schedule </a>
+        <a href="standings.html" class="navbar-item"> Standings </a>
+        <a href="teams.html" class="navbar-item"> Teams </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a href="stats.html" class="navbar-link"> Stats </a>
+
+          <div class="navbar-dropdown">
+            <a href="stats.html" class="navbar-item"> Team Stats </a>
+            <a href="playerstats.html" class="navbar-item"> Player Stats </a>
+            <a href="leagueleaders.html" class="navbar-item">
+              League Leaders
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <hr />
+
+    <div class="container is-max-fullwidth">
+      <section class="section">
+        <h1 class="title is-3">Team Stats</h1>
+
+        <div class="container">
+          <h3 style="color: white">Season:</h3>
+          <div class="select is-small is-centered">
+            <select id="seasonSelector">
+              <option value="season2">Season 2 - 2025</option>
+              <option value="season1">Season 1 - 2023</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      <!-- <h1>Spring 2023 Season: <input type="text" id="team-filter" onkeyup="filterTable()"
+        placeholder="Filter by Team name..."></h1> -->
+      <br />
+      <div class="table-container">
+        <table
+          class="table is-fullwidth is-hoverable has-sticky-column"
+          id="team-table"
+        >
+          <tr style="border: 1px solid white">
+            <th class="sticky-column-head">Team</th>
+            <th>GP</th>
+            <th>W</th>
+            <th>L</th>
+            <th>PTS</th>
+            <th>FGM</th>
+            <th>FGA</th>
+            <th>3PM</th>
+            <th>3PA</th>
+            <th>FTM</th>
+            <th>FTA</th>
+            <th>REB</th>
+            <th>OREB</th>
+            <th>DREB</th>
+            <th>AST</th>
+            <th>BLK</th>
+            <th>STL</th>
+            <th>TOV</th>
+            <th>PF</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    function getTeamName(event) {
+      let target = event.target;
+      while (!target.hasAttribute("data-team-name")) {
+        target = target.parentNode;
+      }
+      const teamName = target.dataset.teamName;
+      console.log(teamName);
+
+      let teamColor; // Declare the variable outside of the if statements
+
+      if (teamName === "Hidden Rain") {
+        console.log("hidden raine");
+        teamColor = "grey"; // Assign a value inside the if statement
+      }
+      if (teamName === "OTF") {
+        console.log("OTF");
+        teamColor = "midnightblue";
+      }
+      if (teamName === "Hidden Rain ") {
+        console.log("hidden raine");
+        teamColor = "grey"; // Assign a value inside the if statement
+      }
+      if (teamName === "OTF ") {
+        console.log("OTF");
+        teamColor = "midnightblue";
+      }
+      if (teamName === "Tune Squad") {
+        console.log("TUNE");
+        teamColor = "red";
+      }
+      if (teamName === "Free Agents") {
+        console.log("F A");
+        teamColor = "darkorange";
+      }
+      if (teamName === "YAGGA") {
+        console.log("YAGGA");
+        teamColor = "rebeccapurple";
+      }
+      if (teamName === "Integral Construction") {
+        console.log("IC");
+        teamColor = "darkgreen";
+      }
+      if (teamName === "BTA") {
+        console.log("BTA");
+        teamColor = "grey";
+      }
+      if (teamName === "Venom") {
+        console.log("venom");
+        teamColor = "black";
+      }
+      if (teamName === "1Fam") {
+        console.log("1fam");
+        teamColor = "black";
+      }
+      if (teamName === "GetBuck$") {
+        console.log("getbuck$");
+        teamColor = "darkblue";
+      }
+      if (teamName === "Free Agents ") {
+        console.log("FA");
+        teamColor = "yellow";
+      }
+
+      sessionStorage.setItem("team_name", teamName);
+      sessionStorage.setItem("team_color", teamColor);
+
+      window.location.href = "teamProfile.html";
+    }
+
+    //this is to change pages with the season selector
+    document
+      .getElementById("seasonSelector")
+      .addEventListener("change", function () {
+        if (this.value === "season1") {
+          window.location.href = "stats_1.html"; // Redirects to playerstats_1.html
+        } else if (this.value === "season2") {
+          window.location.href = "stats.html"; // Redirects to playerstats_2.html (or wherever you'd want)
+        }
+      });
+  </script>
 </html>

@@ -1,219 +1,261 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Welcome to CBT League!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/c494ba9a84.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(
+          document.querySelectorAll(".navbar-burger"),
+          0
+        );
 
-<head>
-  <title>Welcome to CBT League!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/c494ba9a84.js" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
+        // Add a click event on each of them
+        $navbarBurgers.forEach((el) => {
+          el.addEventListener("click", () => {
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
 
-      // Get all "navbar-burger" elements
-      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-      // Add a click event on each of them
-      $navbarBurgers.forEach(el => {
-        el.addEventListener('click', () => {
-
-          // Get the target from the "data-target" attribute
-          const target = el.dataset.target;
-          const $target = document.getElementById(target);
-
-          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-          el.classList.toggle('is-active');
-          $target.classList.toggle('is-active');
-
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle("is-active");
+            $target.classList.toggle("is-active");
+          });
         });
       });
+    </script>
+  </head>
 
-    });
-  </script>
-</head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <div class="container">
+          <a href="index.html"
+            ><img
+              class="logoContainer"
+              src="assets/img/cbt-logo1.jpg"
+              alt=""
+              width="100px"
+          /></a>
+        </div>
 
-
-<body>
-
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-
-    <div class="navbar-brand">
-      <div class="container ">
-
-        <a href="index.html"><img class="logoContainer" src="assets/img/cbt-logo1.jpg" alt="" width="100px"></a>
-
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
 
+      <div id="navbarBasicExample" class="navbar-menu">
+        <a href="index.html" class="navbar-item"> Home </a>
 
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
+        <a href="schedule.html" class="navbar-item"> Schedule </a>
+        <a href="standings.html" class="navbar-item"> Standings </a>
+        <a href="teams.html" class="navbar-item"> Teams </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a href="stats.html" class="navbar-link"> Stats </a>
 
-    <div id="navbarBasicExample" class="navbar-menu">
-
-      <a href="index.html" class="navbar-item">
-        Home
-      </a>
-
-      <a href="schedule.html" class="navbar-item">
-        Schedule
-      </a>
-      <a href="standings.html" class="navbar-item">
-        Standings
-      </a>
-      <a href="teams.html" class="navbar-item">
-        Teams
-      </a>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a href="stats.html" class="navbar-link">
-          Stats
-        </a>
-
-        <div class="navbar-dropdown">
-          <a href="stats.html" class="navbar-item">
-            Team Stats
-          </a>
-          <a href="playerstats.html" class="navbar-item">
-            Player Stats
-          </a>
-          <a href="leagueleaders.html" class="navbar-item">
-            League Leaders
-          </a>
+          <div class="navbar-dropdown">
+            <a href="stats.html" class="navbar-item"> Team Stats </a>
+            <a href="playerstats.html" class="navbar-item"> Player Stats </a>
+            <a href="leagueleaders.html" class="navbar-item">
+              League Leaders
+            </a>
+          </div>
         </div>
       </div>
-     
-    </div>
-  </nav>
+    </nav>
 
-
-
-
-  <section class="section">
-
-    <h1 class="title is-3">CBT Rule Book</h1>
-  </section>
-
-  <div class="container is-max-desktop">
-    <div class="content">
-      <p style="color: white;">Hey guys. Welcome to the CBT League. There are a few things I
-        want to go over with each and every team. I will do my best to make
-        sure this league runs smoothly and no issues happen but it’s your
-        responsibility to follow these rules so we can meet each other half
-        way. If you have any questions about anything, please reach out to
-        me.</p>
-      <ul>
-        <p style="color: white;"><u>First rule:</u> Please arrive to games on time. (mandatory). There will
-          be a 15 min grace period but the games will start approximately at
-          6:15, 7:15, and 8:15 if we have enough to start the game. The team
-          present gets an automatic win. The refs will leave if you don’t show
-          up on time.</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Second rule:</u> This is a no NONSENSE league. I am more than fair
-          but if you and your team become disrespectful to the staff or to other
-          opponents, then the police will be called ASAP. The league will not
-          tolerate any bullshit.</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Third rule:</u> You’re only allowed in the gym. If you have to use the
-          bathroom outside the gym you can but don’t wander around the
-          halls. This is a middle school & it was very, very hard to get this
-          gym for this adult men’s league so don’t ruin it for everyone else.
-          Please!</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Fourth rule:</u> Don’t give refs a hard time. I get the games will be
-          intense but don’t be disrespectful and want to fight or threaten the
-          refs. That’s an automatic disqualification from the league (No
-          Exceptions).</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Fifth rule:</u> You must wear your CBT jersey every game. This is
-          mandatory. If you don’t, your team will receive a TECHNICAL
-          FOUL for each player that does not have their jersey. Read this rule
-          again.</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Sixth rule:</u> Individuals must play in a minimum 4 games to qualify
-          for playoffs.</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Seventh rule:</u> Rosters will be locked Week 3. That means you can
-          not add anyone new to the team.</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Eighth rule:</u> Everyone must sign a waiver to play in this league.</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Ninth rule:</u> No weapons!!! I shouldn’t even have to say this but you
-          don’t know anybody more. Keep the peace!!!</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Tenth rule:</u> Another reminder, this a no nonsense league. If you
-          continue to be be a problem, you will be kicked out of the league
-          without getting your money back. I’m very, very serious. Don’t ruin
-          it for everyone else.</p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Eleventh rule:</u> If you text or call me that your team has to forfeit the game, then that’s an automatic Loss. No turning back. </p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Twelfth rule:</u> No hanging on rim at all before and during the game. </p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Thirteenth rule:</u> Nobody is allowed to be near the scores table complaining about stats. </p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Fourteenth rule:</u> Each game has a 10 min running clock even on free throws. Last 2 mins in the 4th the clock will stop.  </p>
-      </ul>
-      <ul>
-        <p style="color: white;"><u>Fifteenth rule:</u> 4th quarter clock will run after made shot under 2 mins. It only stops for dead balls, timeouts and free throws.  </p>
-      </ul>
-      <p style="color: white;">
-        *We’ll be cracking down on Technical fouls moving forward. Any swearing at refs or threatening refs will be an
-        automatic technical foul.</p>
-        <p style="color: white;">
-        *2 techs the same game will result in being removed from the game.
-      </p>
-      <p style="color: white;">
-        *If you don’t leave the court after we tell you multiple times your team will get a team technical foul again &
-        you will be removed from the league immediately for disrupting the league. </p>
-        <br>
-      <p style="color: white;">*A technical foul would count towards the players foul & the teams
-        foul.</p>
-      <p style="color: white;">*Timeouts: Each team will be awarded two timeouts per half. The
-        timeouts do not carry over.</p>
-      <p style="color: white;">*Spectators can come and watch the games but we will not be
-        allowing people to argue with the refs and threatening them or the
-        other team. You will be asked to leave and if you don’t leave we will
-        be calling the police. </p>
-        <p style="color: white;">*If you quit, you quit. There is no coming back and there are no refunds. </p>
-        <p style="color: white;">*NO SMOKING ON SCHOOL PROPERTY! </p>
-        <p style="color: white;">*Refs will not be replaced, It will be the same refs all season long.  </p>
-
-    </div>
     <section class="section">
-      <h1 class="title is-3">No Refunds!</h1>
+      <h1 class="title is-3">CBT Rule Book</h1>
     </section>
-    <div class="container has-text-centered">
-      <img src="/assets/img/cbt-logo1.jpg" width="25%" alt="">
+
+    <div class="container is-max-desktop">
+      <div class="content">
+        <p style="color: white">
+          Hey guys. Welcome to the CBT League. There are a few things I want to
+          go over with each and every team. I will do my best to make sure this
+          league runs smoothly and no issues happen but it’s your responsibility
+          to follow these rules so we can meet each other half way. If you have
+          any questions about anything, please reach out to me.
+        </p>
+        <ul>
+          <p style="color: white">
+            <u>First rule:</u> Please arrive to games on time. (mandatory).
+            There will be a 15 min grace period but the games will start
+            approximately at 6:15, 7:15, and 8:15 if we have enough to start the
+            game. The team present gets an automatic win. The refs will leave if
+            you don’t show up on time.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Second rule:</u> This is a no NONSENSE league. I am more than
+            fair but if you and your team become disrespectful to the staff or
+            to other opponents, then the police will be called ASAP. The league
+            will not tolerate any bullshit.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Third rule:</u> You’re only allowed in the gym. If you have to
+            use the bathroom outside the gym you can but don’t wander around the
+            halls. This is a middle school & it was very, very hard to get this
+            gym for this adult men’s league so don’t ruin it for everyone else.
+            Please!
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Fourth rule:</u> Don’t give refs a hard time. I get the games
+            will be intense but don’t be disrespectful and want to fight or
+            threaten the refs. That’s an automatic disqualification from the
+            league (No Exceptions).
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Fifth rule:</u> You must wear your CBT jersey every game. This is
+            mandatory. If you don’t, your team will receive a TECHNICAL FOUL for
+            each player that does not have their jersey. Read this rule again.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Sixth rule:</u> Individuals must play in a minimum 4 games to
+            qualify for playoffs.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Seventh rule:</u> Rosters will be locked Week 3. That means you
+            can not add anyone new to the team.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Eighth rule:</u> Everyone must sign a waiver to play in this
+            league.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Ninth rule:</u> No weapons!!! I shouldn’t even have to say this
+            but you don’t know anybody more. Keep the peace!!!
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Tenth rule:</u> Another reminder, this a no nonsense league. If
+            you continue to be be a problem, you will be kicked out of the
+            league without getting your money back. I’m very, very serious.
+            Don’t ruin it for everyone else.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Eleventh rule:</u> If you text or call me that your team has to
+            forfeit the game, then that’s an automatic Loss. No turning back.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Twelfth rule:</u> No hanging on rim at all before and during the
+            game.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Thirteenth rule:</u> Nobody is allowed to be near the scores
+            table complaining about stats.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Fourteenth rule:</u> Each game has a 10 min running clock even on
+            free throws. Last 2 mins in the 4th the clock will stop.
+          </p>
+        </ul>
+        <ul>
+          <p style="color: white">
+            <u>Fifteenth rule:</u> 4th quarter clock will run after made shot
+            under 2 mins. It only stops for dead balls, timeouts and free
+            throws.
+          </p>
+        </ul>
+        <p style="color: white">
+          *We’ll be cracking down on Technical fouls moving forward. Any
+          swearing at refs or threatening refs will be an automatic technical
+          foul.
+        </p>
+        <p style="color: white">
+          *2 techs the same game will result in being removed from the game.
+        </p>
+        <p style="color: white">
+          *If you don’t leave the court after we tell you multiple times your
+          team will get a team technical foul again & you will be removed from
+          the league immediately for disrupting the league.
+        </p>
+        <br />
+        <p style="color: white">
+          *A technical foul would count towards the players foul & the teams
+          foul.
+        </p>
+        <p style="color: white">
+          *Timeouts: Each team will be awarded two timeouts per half. The
+          timeouts do not carry over.
+        </p>
+        <p style="color: white">
+          *Spectators can come and watch the games but we will not be allowing
+          people to argue with the refs and threatening them or the other team.
+          You will be asked to leave and if you don’t leave we will be calling
+          the police.
+        </p>
+        <p style="color: white">
+          *If you quit, you quit. There is no coming back and there are no
+          refunds.
+        </p>
+        <p style="color: white">*NO SMOKING ON SCHOOL PROPERTY!</p>
+        <p style="color: white">
+          *Refs will not be replaced, It will be the same refs all season long.
+        </p>
+      </div>
+      <section class="section">
+        <h1 class="title is-3">No Refunds!</h1>
+      </section>
+      <div class="container has-text-centered">
+        <img src="/assets/img/cbt-logo1.jpg" width="25%" alt="" />
+      </div>
     </div>
-  </div>
-
-
-</body>
-
-
-
+  </body>
 </html>
