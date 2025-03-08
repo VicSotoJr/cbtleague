@@ -540,17 +540,27 @@ $.each(data, function (i, team) {
             );
                 $("#team_name").append(team.Team + " | #" + team.roster[i].number);
                 
-                // Select the playerhead element
-                var playerHeadContainer = $("#playerhead");
+// Select the playerhead image element
+var playerHeadContainer = $("#playerhead img");
 
-                // Remove existing img if present
-                playerHeadContainer.find("img").remove();
+// Check if an img tag exists
+if (playerHeadContainer.length) {
+    // Update the src attribute with the new image URL
+    var imageUrl = "assets/img/player-heads/" + team.roster[i].PlayerHead + "?t=" + new Date().getTime();
+    playerHeadContainer.attr("src", imageUrl);
+} else {
+    // If no image exists, create a new one
+    if (team.roster[i].PlayerHead) {
+        var imageUrl = "assets/img/player-heads/" + team.roster[i].PlayerHead + "?t=" + new Date().getTime();
+        playerHeadContainer = $("<img>").attr("src", imageUrl).attr("alt", "Player Image").css("width", "200px");
+        $("#playerhead").append(playerHeadContainer);
+    } else {
+        // Handle missing image case
+        playerHeadContainer = $("<p>").text("No image available");
+        $("#playerhead").append(playerHeadContainer);
+    }
+}
 
-                // Append the new image
-                playerHeadContainer.append(
-                "<img src='assets/img/player-heads/" + team.roster[i].PlayerHead +
-                "' alt='Player Image' style='width:200px !important;'>"
-);
 
 
         }
