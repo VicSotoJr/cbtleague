@@ -1,9 +1,9 @@
 [
   {
     "Team": "Hidden Rain ",
-    "wins": 3,
+    "wins": 4,
     "loss": 0,
-    "gamesPlayed": 3,
+    "gamesPlayed": 4,
     "roster": [
       {
         "name": "Kevin Rivera",
@@ -1450,8 +1450,8 @@
   {
     "Team": "Venom",
     "wins": 0,
-    "loss": 3,
-    "gamesPlayed": 3,
+    "loss": 4,
+    "gamesPlayed": 4,
     "roster": [
       {
         "name": "Matt Evarts",
@@ -2414,6 +2414,166 @@
         ]
       },
       {
+        "name": "Cerrone Bell",
+        "number": 1,
+        "GamesPlayed": 0,
+        "PlayerHead": "cerronebell.jpg",
+        "stats": [
+          {
+            "game_number": 1,
+            "opponent": "",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": 1,
+            "opponent": "",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": 1,
+            "opponent": "",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": 4,
+            "opponent": "",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": 5,
+            "opponent": "",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": 6,
+            "opponent": "",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": 7,
+            "opponent": "",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": 8,
+            "opponent": "",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
+        ]
+      },
+      {
         "name": "Pasquale Villano",
         "number": 74,
         "GamesPlayed": 3,
@@ -3217,9 +3377,9 @@
   },
   {
     "Team": "GetBuck$",
-    "wins": 0,
+    "wins": 1,
     "loss": 3,
-    "gamesPlayed": 3,
+    "gamesPlayed": 4,
     "roster": [
       {
         "name": "TJ Green",
@@ -6274,8 +6434,8 @@
   {
     "Team": "Free Agents ",
     "wins": 1,
-    "loss": 1,
-    "gamesPlayed": 2,
+    "loss": 2,
+    "gamesPlayed": 3,
     "roster": [
       {
         "name": "Ali Jefferson",
@@ -7721,9 +7881,9 @@
   },
   {
     "Team": "BTA",
-    "wins": 2,
+    "wins": 3,
     "loss": 0,
-    "gamesPlayed": 2,
+    "gamesPlayed": 3,
     "roster": [
       {
         "name": "Tamaron Hargett",
@@ -9330,8 +9490,8 @@
   {
     "Team": "OTF ",
     "wins": 1,
-    "loss": 1,
-    "gamesPlayed": 2,
+    "loss": 2,
+    "gamesPlayed": 3,
     "roster": [
       {
         "name": "Bryant Washington",
