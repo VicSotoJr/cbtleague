@@ -108,7 +108,7 @@
                             team
                             .roster[i].GamesPlayed).toFixed(1) + "</td>" +
                         //(PTS + REB + AST + STL + BLK − Missed FG − Missed FT - TO) / GP.
-                        "<td>" + ((playerPoints / (2 * (playerFGA + (0.44 * playerFTA)))) * 100)
+                        "<td>" + ((playerPoints / (2 * (playerFGA + player3PA + (0.44 * playerFTA)))) * 100)
                         .toFixed(2) + "%</td>" +
                         //ts = pts/(3(fga+(0.44xfta))
                         "<td>" + ((playerPoints * (playerPoints / (2 * (playerFGA + (0.44 *
