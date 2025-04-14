@@ -289,7 +289,7 @@
                     playerAssists +
                     playerSteals +
                     playerBlocks -
-                    ((playerFGA+player3PA) - (playerFGM+player3PM) -
+                    ((playerFGA+player3PA) - (playerFGM+player3PM)) -
                     (playerFTA - playerFTM) -
                     playerTOV) /
                   team.roster[i].GamesPlayed
@@ -442,7 +442,7 @@
                     playerAssists +
                     playerSteals +
                     playerBlocks -
-                    ((playerFGA+player3PA) - (playerFGM+player3PM) -
+                    ((playerFGA+player3PA) - (playerFGM+player3PM)) -
                     (playerFTA - playerFTM) -
                     playerTOV) /
                   player.GamesPlayed
@@ -565,7 +565,7 @@
                       playerAssists +
                       playerSteals +
                       playerBlocks -
-                      ((playerFGA-player3PA) - (playerFGM+player3PM) -
+                      ((playerFGA-player3PA) - (playerFGM+player3PM)) -
                       (playerFTA - playerFTM) -
                       playerTOV
                     ).toFixed(1) +
