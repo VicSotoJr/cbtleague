@@ -109,6 +109,15 @@
                 (playerPoints / team.roster[i].GamesPlayed).toFixed(1) +
                 "</td>" +
                 "<td>" +
+                (playerFGM + player3PM) +
+                "</td>" +
+                "<td>" +
+                (playerFGA + player3PA) +
+                "</td>" +
+                "<td>" +
+                (((playerFGM + player3PM) / (playerFGA + player3PA)) * 100).toFixed(1) +
+                "%</td>" +
+                "<td>" +
                 playerFGM +
                 "</td>" +
                 "<td>" +
@@ -181,7 +190,7 @@
                     playerAssists +
                     playerSteals +
                     playerBlocks -
-                    (playerFGA - playerFGM) -
+                    ((playerFGA + player3PA) - (playerFGM + player3PM)) -
                     (playerFTA - playerFTM) -
                     playerTOV) /
                   team.roster[i].GamesPlayed
@@ -341,6 +350,9 @@
             <th>FGM</th>
             <th>FGA</th>
             <th>FG%</th>
+            <th>2PM</th>
+            <th>2PA</th>
+            <th>2P%</th>
             <th>3PM</th>
             <th>3PA</th>
             <th>3P%</th>
@@ -374,6 +386,9 @@
               <th>FGM</th>
               <th>FGA</th>
               <th>FG%</th>
+              <th>2PM</th>
+              <th>2PA</th>
+              <th>2P%</th>
               <th>3PM</th>
               <th>3PA</th>
               <th>3P%</th>

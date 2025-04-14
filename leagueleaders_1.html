@@ -676,6 +676,8 @@
             blocks: 0,
             fga: 0,
             fgm: 0,
+            threesMade: 0,
+            threesAttempted: 0,
             missedFG: 0,
             fta: 0,
             ftm: 0,
@@ -691,6 +693,8 @@
             players[players.length - 1].blocks += team.roster[j].stats[k].Blocks;
             players[players.length - 1].fga += team.roster[j].stats[k].FieldGoalAttempts;
             players[players.length - 1].fgm += team.roster[j].stats[k].FieldGoalsMade;
+            players[players.length - 1].threesMade += team.roster[j].stats[k].threesMade;
+            players[players.length - 1].threesAttempted += team.roster[j].stats[k].threesAttempted;
             players[players.length - 1].fta += team.roster[j].stats[k].FreeThrowsAttempts;
             players[players.length - 1].ftm += team.roster[j].stats[k].FreeThrowsMade;
             players[players.length - 1].tov += team.roster[j].stats[k].Turnovers;
@@ -700,8 +704,9 @@
             players[players.length - 1].eff = ((players[players.length - 1].points + players[players.length - 1]
               .rebounds + players[players.length - 1].assists + players[players.length - 1].steals +
               players[
-                players.length - 1].blocks - (players[players.length - 1].fga - players[players.length - 1]
-                .fgm) - (players[players.length - 1].fta - players[players.length - 1].ftm) - players[
+                players.length - 1].blocks - ((players[players.length - 1].fga + players[players.length - 1].threesAttempted) - (players[players.length - 1]
+                .fgm + players[players.length - 1]
+                .threesMade)) - (players[players.length - 1].fta - players[players.length - 1].ftm) - players[
                 players
                 .length - 1].tov) / gamesPlayed).toFixed(1)
           }
@@ -709,7 +714,7 @@
       });
 
 
-      // Sort the players by points
+      // Sort the players by eff
       players.sort(function (a, b) {
         return b.eff - a.eff;
       });

@@ -109,6 +109,15 @@
                 (playerPoints / team.roster[i].GamesPlayed).toFixed(1) +
                 "</td>" +
                 "<td>" +
+                (playerFGM + player3PM) +
+                "</td>" +
+                "<td>" +
+                (playerFGA + player3PA) +
+                "</td>" +
+                "<td>" +
+                (((playerFGM + player3PM) / (playerFGA + player3PA)) * 100).toFixed(1) +
+                "%</td>" +
+                "<td>" +
                 playerFGM +
                 "</td>" +
                 "<td>" +
@@ -181,7 +190,7 @@
                     playerAssists +
                     playerSteals +
                     playerBlocks -
-                    (playerFGA - playerFGM) -
+                    ((playerFGA + player3PA) - (playerFGM + player3PM)) -
                     (playerFTA - playerFTM) -
                     playerTOV) /
                   team.roster[i].GamesPlayed
@@ -335,32 +344,35 @@
             <th>#</th>
             <th class="sticky-column-head">Name</th>
             <th>Team</th>
-            <th>GP</th>
-            <th>PTS</th>
-            <th>PPG</th>
-            <th>FGM</th>
-            <th>FGA</th>
-            <th>FG%</th>
-            <th>3PM</th>
-            <th>3PA</th>
-            <th>3P%</th>
-            <th>FTM</th>
-            <th>FTA</th>
-            <th>FT%</th>
-            <th>OREB</th>
-            <th>DREB</th>
-            <th>REB</th>
-            <th>RPG</th>
-            <th>AST</th>
-            <th>APG</th>
-            <th>STL</th>
-            <th>SPG</th>
-            <th>BLK</th>
-            <th>BPG</th>
-            <th>TOV</th>
-            <th>TOVPG</th>
-            <th>PF</th>
-            <th>EFF</th>
+              <th>GP</th>
+              <th>PTS</th>
+              <th>PPG</th>
+              <th>FGM</th>
+              <th>FGA</th>
+              <th>FG%</th>
+              <th>2PM</th>
+              <th>2PA</th>
+              <th>2P%</th>
+              <th>3PM</th>
+              <th>3PA</th>
+              <th>3P%</th>
+              <th>FTM</th>
+              <th>FTA</th>
+              <th>FT%</th>
+              <th>OREB</th>
+              <th>DREB</th>
+              <th>REB</th>
+              <th>RPG</th>
+              <th>AST</th>
+              <th>APG</th>
+              <th>STL</th>
+              <th>SPG</th>
+              <th>BLK</th>
+              <th>BPG</th>
+              <th>TOV</th>
+              <th>TOVPG</th>
+              <th>PF</th>
+              <th>EFF</th>
           </tr>
           <tbody></tbody>
           <tfoot>
