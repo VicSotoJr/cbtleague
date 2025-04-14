@@ -148,8 +148,8 @@
             FGP: 0
           };
           for (let k = 0; k < team.roster[j].stats.length; k++) {
-            player.FGM += team.roster[j].stats[k].FieldGoalsMade;
-            player.FGA += team.roster[j].stats[k].FieldGoalAttempts;
+            player.FGM = team.roster[j].stats[k].FieldGoalsMade + team.roster[j].stats[k].ThreesMade;
+            player.FGA = team.roster[j].stats[k].FieldGoalAttempts + team.roster[j].stats[k].ThreesAttempts;
           }
           if (player.FGA > 10) {
             const fieldgoalattempts = player.FGA;
