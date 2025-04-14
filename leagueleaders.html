@@ -145,15 +145,19 @@
             name: team.roster[j].name,
             FGM: 0,
             FGA: 0,
+            threesMade: 0,
+            threesAttempted: 0,
             FGP: 0
           };
           for (let k = 0; k < team.roster[j].stats.length; k++) {
-            player.FGM = team.roster[j].stats[k].FieldGoalsMade + team.roster[j].stats[k].ThreesMade;
-            player.FGA = team.roster[j].stats[k].FieldGoalAttempts + team.roster[j].stats[k].ThreesAttempts;
+            player.threesMade += team.roster[j].stats[k].ThreesMade;
+            player.threesAttempted += team.roster[j].stats[k].ThreesAttempts;
+            player.FGM = team.roster[j].stats[k].FieldGoalsMade;
+            player.FGA = team.roster[j].stats[k].FieldGoalAttempts;
           }
-          if (player.FGA > 10) {
+          if ((player.FGA + player.threesAttempted) > 10) {
             const fieldgoalattempts = player.FGA;
-            player.FGP = parseFloat(((player.FGM / player.FGA) * 100).toFixed(1));
+            player.FGP = parseFloat((((player.FGM + player.threesMade) / (player.FGA + player.threesAttempted)) * 100).toFixed(1));
             qualifiedPlayers.push(player);
           }
         }
