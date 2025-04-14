@@ -113,6 +113,8 @@
                     <th>PTS</th>
                     <th>FGM</th>
                     <th>FGA</th>
+                    <th>2PM</th>
+                    <th>2PA</th>
                     <th>3PM</th>
                     <th>3PA</th>
                     <th>FTM</th>
@@ -180,6 +182,8 @@
                         let playerPoints = 0;
                         let playerFGM = 0;
                         let playerFGA = 0;
+                        let player2PM = 0;
+                        let player2PA = 0;
                         let player3PM = 0;
                         let player3PA = 0;
                         let playerFTM = 0;
@@ -196,8 +200,8 @@
 
                         for (let j = 0; j < team.roster[i].stats.length; j++) {
                             playerPoints += team.roster[i].stats[j].Points;
-                            playerFGM += team.roster[i].stats[j].FieldGoalsMade;
-                            playerFGA += team.roster[i].stats[j].FieldGoalAttempts;
+                            player2PM += team.roster[i].stats[j].FieldGoalsMade;
+                            player2PA += team.roster[i].stats[j].FieldGoalAttempts;
                             player3PM += team.roster[i].stats[j].ThreesMade;
                             player3PA += team.roster[i].stats[j].ThreesAttempts;
                             playerFTM += team.roster[i].stats[j].FreeThrowsMade;
@@ -211,6 +215,9 @@
                             playerTOV += team.roster[i].stats[j].Turnovers;
                             playerPF += team.roster[i].stats[j].PersonalFouls;
                         }
+
+                            playerFGM = player2PM + player3PM;
+                            playerFGA = player2PA + player3PA;
 
                         $("#roster").append(
 
@@ -273,6 +280,8 @@ $.each(data, function (i, team) {
             let playerPoints = 0;
             let playerFGM = 0;
             let playerFGA = 0;
+            let player2PM = 0;
+            let player2PA = 0;
             let player3PM = 0;
             let player3PA = 0;
             let playerFTM = 0;
@@ -288,22 +297,25 @@ $.each(data, function (i, team) {
 
 
             for (let j = 0; j < team.roster[i].stats.length; j++) {
-                playerPoints += team.roster[i].stats[j].Points;
-                playerFGM += team.roster[i].stats[j].FieldGoalsMade;
-                playerFGA += team.roster[i].stats[j].FieldGoalAttempts;
-                player3PM += team.roster[i].stats[j].ThreesMade;
-                player3PA += team.roster[i].stats[j].ThreesAttempts;
-                playerFTM += team.roster[i].stats[j].FreeThrowsMade;
-                playerFTA += team.roster[i].stats[j].FreeThrowsAttempts;
-                playerRebounds += team.roster[i].stats[j].Rebounds;
-                playerOREB += team.roster[i].stats[j].Offrebounds;
-                playerDREB += team.roster[i].stats[j].Defrebounds;
-                playerAssists += team.roster[i].stats[j].Assists;
-                playerBlocks += team.roster[i].stats[j].Blocks;
-                playerSteals += team.roster[i].stats[j].Steals;
-                playerTOV += team.roster[i].stats[j].Turnovers;
-                playerPF += team.roster[i].stats[j].PersonalFouls;
+            playerPoints += team.roster[i].stats[j].Points;
+            player2PM += team.roster[i].stats[j].FieldGoalsMade;
+            player2PA += team.roster[i].stats[j].FieldGoalAttempts;
+            player3PM += team.roster[i].stats[j].ThreesMade;
+            player3PA += team.roster[i].stats[j].ThreesAttempts;
+            playerFTM += team.roster[i].stats[j].FreeThrowsMade;
+            playerFTA += team.roster[i].stats[j].FreeThrowsAttempts;
+            playerRebounds += team.roster[i].stats[j].Rebounds;
+            playerOREB += team.roster[i].stats[j].Offrebounds;
+            playerDREB += team.roster[i].stats[j].Defrebounds;
+            playerAssists += team.roster[i].stats[j].Assists;
+            playerBlocks += team.roster[i].stats[j].Blocks;
+            playerSteals += team.roster[i].stats[j].Steals;
+            playerTOV += team.roster[i].stats[j].Turnovers;
+            playerPF += team.roster[i].stats[j].PersonalFouls;
             }
+
+            playerFGM = player2PM + player3PM;
+            playerFGA = player2PA + player3PA;
 
             $("#roster").append(
 
@@ -363,6 +375,8 @@ $.each(data, function (i, team) {
                     let teamPoints = 0;
                     let teamFGM = 0;
                     let teamFGA = 0;
+                    let team2PM = 0;
+                    let team2PA = 0;
                     let team3PM = 0;
                     let team3PA = 0;
                     let teamFTM = 0;
@@ -379,8 +393,8 @@ $.each(data, function (i, team) {
                     for (let i = 0; i < team.roster.length; i++) {
                         for (let j = 0; j < team.roster[i].stats.length; j++) {
                             teamPoints += team.roster[i].stats[j].Points;
-                            teamFGM += team.roster[i].stats[j].FieldGoalsMade;
-                            teamFGA += team.roster[i].stats[j].FieldGoalAttempts;
+                            team2PM += team.roster[i].stats[j].FieldGoalsMade;
+                            team2PA += team.roster[i].stats[j].FieldGoalAttempts;
                             team3PM += team.roster[i].stats[j].ThreesMade;
                             team3PA += team.roster[i].stats[j].ThreesAttempts;
                             teamFTM += team.roster[i].stats[j].FreeThrowsMade;
@@ -396,6 +410,9 @@ $.each(data, function (i, team) {
                         }
                     }
 
+                            teamFGM = team2PM + team3PM;
+                            teamFGA = team2PA + team3PA;
+
                     $("#team-table").append(
                         "<tr>" +
                         "<td>" + team.gamesPlayed + "</td>" +
@@ -404,6 +421,8 @@ $.each(data, function (i, team) {
                         "<td>" + teamPoints + "</td>" +
                         "<td>" + teamFGM + "</td>" +
                         "<td>" + teamFGA + "</td>" +
+                        "<td>" + team2PM + "</td>" +
+                        "<td>" + team2PA + "</td>" +
                         "<td>" + team3PM + "</td>" +
                         "<td>" + team3PA + "</td>" +
                         "<td>" + teamFTM + "</td>" +
@@ -431,6 +450,8 @@ $.each(data, function (i, team) {
                     let teamPoints = 0;
                     let teamFGM = 0;
                     let teamFGA = 0;
+                    let team2PM = 0;
+                    let team2PA = 0;
                     let team3PM = 0;
                     let team3PA = 0;
                     let teamFTM = 0;
@@ -447,8 +468,8 @@ $.each(data, function (i, team) {
                     for (let i = 0; i < team.roster.length; i++) {
                         for (let j = 0; j < team.roster[i].stats.length; j++) {
                             teamPoints += team.roster[i].stats[j].Points;
-                            teamFGM += team.roster[i].stats[j].FieldGoalsMade;
-                            teamFGA += team.roster[i].stats[j].FieldGoalAttempts;
+                            team2PM += team.roster[i].stats[j].FieldGoalsMade;
+                            team2PA += team.roster[i].stats[j].FieldGoalAttempts;
                             team3PM += team.roster[i].stats[j].ThreesMade;
                             team3PA += team.roster[i].stats[j].ThreesAttempts;
                             teamFTM += team.roster[i].stats[j].FreeThrowsMade;
@@ -464,6 +485,9 @@ $.each(data, function (i, team) {
                         }
                     }
 
+                            teamFGM = team2PM + team3PM;
+                            teamFGA = team2PA + team3PA;
+
                     $("#team-table").append(
                         "<tr>" +
                         "<td>" + team.gamesPlayed + "</td>" +
@@ -472,6 +496,8 @@ $.each(data, function (i, team) {
                         "<td>" + teamPoints + "</td>" +
                         "<td>" + teamFGM + "</td>" +
                         "<td>" + teamFGA + "</td>" +
+                        "<td>" + team2PM + "</td>" +
+                        "<td>" + team2PA + "</td>" +
                         "<td>" + team3PM + "</td>" +
                         "<td>" + team3PA + "</td>" +
                         "<td>" + teamFTM + "</td>" +
