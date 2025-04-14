@@ -113,12 +113,16 @@
                     <th>PTS</th>
                     <th>FGM</th>
                     <th>FGA</th>
+                    <th>FG%</th>
                     <th>2PM</th>
                     <th>2PA</th>
+                    <th>2P%</th>
                     <th>3PM</th>
                     <th>3PA</th>
+                    <th>3P%</th>
                     <th>FTM</th>
                     <th>FTA</th>
+                    <th>FT%</th>
                     <th>REB</th>
                     <th>OREB</th>
                     <th>DREB</th>
@@ -421,12 +425,16 @@ $.each(data, function (i, team) {
                         "<td>" + teamPoints + "</td>" +
                         "<td>" + teamFGM + "</td>" +
                         "<td>" + teamFGA + "</td>" +
+                        "<td>" + ((teamFGM / teamFGA) * 100).toFixed(1) + "</td>" +
                         "<td>" + team2PM + "</td>" +
                         "<td>" + team2PA + "</td>" +
+                        "<td>" + ((team2PM / team2PA) * 100).toFixed(1) + "</td>" +
                         "<td>" + team3PM + "</td>" +
                         "<td>" + team3PA + "</td>" +
+                        "<td>" + ((team3PM / team3PA) * 100).toFixed(1) + "</td>" +
                         "<td>" + teamFTM + "</td>" +
                         "<td>" + teamFTA + "</td>" +
+                        "<td>" + ((teamFTA / teamFTM) * 100).toFixed(1) + "</td>" +
                         "<td>" + teamRebounds + "</td>" +
                         "<td>" + teamOREB + "</td>" +
                         "<td>" + teamDREB + "</td>" +
@@ -488,7 +496,7 @@ $.each(data, function (i, team) {
                             teamFGM = team2PM + team3PM;
                             teamFGA = team2PA + team3PA;
 
-                    $("#team-table").append(
+                            $("#team-table").append(
                         "<tr>" +
                         "<td>" + team.gamesPlayed + "</td>" +
                         "<td>" + team.wins + "</td>" +
@@ -496,12 +504,16 @@ $.each(data, function (i, team) {
                         "<td>" + teamPoints + "</td>" +
                         "<td>" + teamFGM + "</td>" +
                         "<td>" + teamFGA + "</td>" +
+                        "<td>" + ((teamFGM / teamFGA) * 100).toFixed(1) + "</td>" +
                         "<td>" + team2PM + "</td>" +
                         "<td>" + team2PA + "</td>" +
+                        "<td>" + ((team2PM / team2PA) * 100).toFixed(1) + "</td>" +
                         "<td>" + team3PM + "</td>" +
                         "<td>" + team3PA + "</td>" +
+                        "<td>" + ((team3PM / team3PA) * 100).toFixed(1) + "</td>" +
                         "<td>" + teamFTM + "</td>" +
                         "<td>" + teamFTA + "</td>" +
+                        "<td>" + ((teamFTA / teamFTM) * 100).toFixed(1) + "</td>" +
                         "<td>" + teamRebounds + "</td>" +
                         "<td>" + teamOREB + "</td>" +
                         "<td>" + teamDREB + "</td>" +
