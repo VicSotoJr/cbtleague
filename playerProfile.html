@@ -213,7 +213,7 @@
 
     showTeamDetails();
 
-    //This script gets individual team stats onto a table
+    //This script gets stats onto the player card where the image of the player is
     $.getJSON("assets/json/teams.json", function (data) {
       $.each(data, function (i, team) {
         const playerName = sessionStorage.getItem("player_Name");
@@ -556,7 +556,7 @@
       });
     });
 
-    ////For Season 2
+    ////For Season 2/////////////////////////////////////////////////////////////////////////////
 
     //This script gets individual team stats onto a table
     $.getJSON("assets/json/teams_season2.json", function (data) {
