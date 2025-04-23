@@ -1,4 +1,4 @@
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -94,7 +94,7 @@
 
                         "<td>" + team.roster[i].GamesPlayed + "</td>" +
                         "<td>" + (playerPoints / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
-                        "<td>" + ((playerFGM / playerFGA)*100).toFixed(1) + "%</td>" +
+                        "<td>" + (((playerFGM+player3PM) / (playerFGA+player3PA))*100).toFixed(1) + "%</td>" +
                         "<td>" + ((player3PM / player3PA)*100).toFixed(1) + "%</td>" +
                         "<td>" + ((playerFTM / playerFTA)*100).toFixed(1) + "%</td>" +
                         "<td>" + (playerRebounds / team.roster[i].GamesPlayed).toFixed(1) +
