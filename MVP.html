@@ -135,14 +135,14 @@
     const rows = table.rows;
 
     for (let i = 1; i < rows.length - 1; i++) {
-      let shouldSwitch = false;
+      let shouldSwitch = false; // Moved here (inside loop but before condition checks)
+
       const x = rows[i].getElementsByTagName("td")[n];
       const y = rows[i + 1].getElementsByTagName("td")[n];
       const xContent = x.innerText.trim();
       const yContent = y.innerText.trim();
 
       if (n === colIndex) {
-        // Try to parse numbers, fall back to -Infinity or Infinity for NaNs
         const xVal = parseFloat(xContent);
         const yVal = parseFloat(yContent);
 
@@ -160,17 +160,19 @@
           break;
         }
       }
+
+      // Now `shouldSwitch` is always defined and can be evaluated here
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        switchcount++;
+        break;
+      }
     }
 
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+    if (!switching && switchcount === 0 && dir === "asc") {
+      dir = "desc";
       switching = true;
-      switchcount++;
-    } else {
-      if (switchcount === 0 && dir === "asc") {
-        dir = "desc";
-        switching = true;
-      }
     }
   }
 }
