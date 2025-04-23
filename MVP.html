@@ -142,15 +142,18 @@
       const yContent = y.innerText.trim();
 
       if (n === colIndex) {
-        // Numeric comparison
-        const xVal = parseFloat(xContent) || 0;
-        const yVal = parseFloat(yContent) || 0;
-        if ((dir === "asc" && xVal > yVal) || (dir === "desc" && xVal < yVal)) {
+        // Try to parse numbers, fall back to -Infinity or Infinity for NaNs
+        const xVal = parseFloat(xContent);
+        const yVal = parseFloat(yContent);
+
+        const xSafe = isNaN(xVal) ? (dir === "asc" ? -Infinity : Infinity) : xVal;
+        const ySafe = isNaN(yVal) ? (dir === "asc" ? -Infinity : Infinity) : yVal;
+
+        if ((dir === "asc" && xSafe > ySafe) || (dir === "desc" && xSafe < ySafe)) {
           shouldSwitch = true;
           break;
         }
       } else {
-        // Alphabetical comparison
         if ((dir === "asc" && xContent.toLowerCase() > yContent.toLowerCase()) ||
             (dir === "desc" && xContent.toLowerCase() < yContent.toLowerCase())) {
           shouldSwitch = true;
@@ -171,9 +174,6 @@
     }
   }
 }
-
-
-
 
         //filtering table by Name
         function filterTable() {
