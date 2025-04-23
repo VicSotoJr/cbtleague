@@ -1,4 +1,4 @@
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -111,7 +111,7 @@
                         "<td>" + ((playerPoints / (2 * (playerFGA + player3PA + (0.44 * playerFTA)))) * 100)
                         .toFixed(2) + "%</td>" +
                         //ts = pts/(3(fga+(0.44xfta))
-                        "<td>" + ((playerPoints * (playerPoints / (2 * (playerFGA + 0.01 + (0.44 *
+                        "<td>" + ((playerPoints * (playerPoints / (2 * ((playerFGA+player3PA) + (0.44 *
                                     playerFTA)))) + (1.5 * playerAssists) + (1.2 * playerRebounds) +
                                 (3 * playerBlocks) + (3 * playerSteals) - playerPF - playerTOV) /
                             25).toFixed(2) + "</td>" +
