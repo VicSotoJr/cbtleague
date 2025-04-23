@@ -123,50 +123,49 @@
             sortTable(14);
         });
 
-        //Sort table Alphabetically
         function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("players-table");
-  switching = true;
-  // Set the column index of the "individual output" column
-  var colIndex = 14;
-  // Set the sorting direction to ascending
-  dir = "asc";
+  const table = document.getElementById("players-table");
+  let switching = true;
+  let dir = "asc";
+  let switchcount = 0;
+  const colIndex = 14; // "individual output" column index
+
   while (switching) {
     switching = false;
-    rows = table.getElementsByTagName("tr");
-    for (i = 1; i < (rows.length - 1); i++) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName("td")[n];
-      y = rows[i + 1].getElementsByTagName("td")[n];
-      // Check if we need to switch rows based on the values in the "individual output" column
+    const rows = table.rows;
+
+    for (let i = 1; i < rows.length - 1; i++) {
+      let shouldSwitch = false;
+      const x = rows[i].getElementsByTagName("td")[n];
+      const y = rows[i + 1].getElementsByTagName("td")[n];
+      const xContent = x.innerText.trim();
+      const yContent = y.innerText.trim();
+
       if (n === colIndex) {
-        if (dir === "desc") {
-          if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
-            shouldSwitch = true;
-            break;
-          }
-        } else if (dir === "asc") {
-          if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
-            shouldSwitch = true;
-            break;
-          }
+        // Numeric comparison
+        const xVal = parseFloat(xContent) || 0;
+        const yVal = parseFloat(yContent) || 0;
+        if ((dir === "asc" && xVal > yVal) || (dir === "desc" && xVal < yVal)) {
+          shouldSwitch = true;
+          break;
         }
       } else {
-        // Use the default comparison for non-"individual output" columns
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        // Alphabetical comparison
+        if ((dir === "asc" && xContent.toLowerCase() > yContent.toLowerCase()) ||
+            (dir === "desc" && xContent.toLowerCase() < yContent.toLowerCase())) {
           shouldSwitch = true;
           break;
         }
       }
     }
+
     if (shouldSwitch) {
       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
       switching = true;
-      switchcount ++;
+      switchcount++;
     } else {
-      if (switchcount === 0 && dir === "desc") {
-        dir = "asc";
+      if (switchcount === 0 && dir === "asc") {
+        dir = "desc";
         switching = true;
       }
     }
