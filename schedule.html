@@ -71,6 +71,7 @@ function filterTableRows() {
     const seasonDropdown = document.getElementById("seasonDropdown");
     const season1Table = document.getElementById("scheduleTable");
     const season2Table = document.getElementById("scheduleTableSeason2");
+    const season3Table = document.getElementById("scheduleTableSeason3");
     const filterSelect = document.getElementById("filterSelect");
 
     const teamsBySeason = {
@@ -81,6 +82,10 @@ function filterTableRows() {
         "scheduleTableSeason2": [  // Season 2 - 2025
             "Hidden Rain", "Free Agents", "BTA", 
             "1FAM", "OTF", "Venom", "Get Buck$"
+        ],
+        "scheduleTableSeason3": [  // Season 3 - 2026
+            "MTBM", "Free Agents", "The Mob", 
+            "1FAM", "Dream Chasers", "Venom", "ISP"
         ]
     };
 
@@ -90,9 +95,15 @@ function filterTableRows() {
         if (selectedSeason === "scheduleTable") {
             season1Table.style.display = "";
             season2Table.style.display = "none";
-        } else {
+            season3Table.style.display = "none";
+        }else if (selectedSeason === "scheduleTableSeason2") {
             season1Table.style.display = "none";
             season2Table.style.display = "";
+            season3Table.style.display = "none";
+        }  else {
+            season1Table.style.display = "none";
+            season2Table.style.display = "none";
+            season3Table.style.display = "";
         }
 
         updateTeamDropdown(selectedSeason);
@@ -193,7 +204,8 @@ function filterTableRows() {
             <h3 style="color: white;">Season:</h3>
             <div class="select is-small is-centered">
                 <select id="seasonDropdown">
-                    <option value="scheduleTableSeason2" selected>Season 2 - 2025</option> <!-- Added 'selected' to make this default -->
+                    <option value="scheduleTableSeason3" selected>Season 3 - 2026</option> <!-- Added 'selected' to make this default -->
+                    <option value="scheduleTableSeason2">Season 2 - 2025</option>
                     <option value="scheduleTable">Season 1 - 2023</option>
                 </select>
             </div>
@@ -943,6 +955,240 @@ function filterTableRows() {
                             <td>May 27, 2025</td>
                             <td>8:15 PM</td>
                         </tr>
+            </tbody>
+
+        </table>
+
+        <table id="scheduleTableSeason3" class="table is-striped is-bordered is-max-desktop">
+            <thead>
+                <tr>
+                    <th>Home Team</th>
+                    <th>Score</th>
+                    <th>Away Team</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 1 - February 24, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>February 24, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>February 24, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>February 24, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Free Agents - Bye</td>
+                    <td>February 24, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color:grey;"><strong>Week 2 - March 3, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>March 3, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>March 3, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>March 3, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">MTBM - Bye</td>
+                    <td>March 3, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 3 - March 10, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>March 10, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>March 10, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>March 10, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">1Fam - Bye</td>
+                    <td>March 10, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 4 - March 17, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>March 17, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>March 17, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>March 17, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">The Mob - Bye</td>
+                    <td>March 17, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 5 - March 24, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>March 24, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>Vemon</td>
+                    <td>-</td>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>March 24, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>March 24, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">ISP - Bye</td>
+                    <td>March 24, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 6 - March 31, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>March 31, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>March 31, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>March 31, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">1Fam - Bye</td>
+                    <td>March 31, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 7 - April 7, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>April 7, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>April 7, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>April 7, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">The Mob - Bye</td>
+                    <td>April 7, 2026</td>
+                </tr>
+                
             </tbody>
 
         </table>
