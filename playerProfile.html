@@ -968,6 +968,399 @@
           }
         });
       });
+
     });
+    
+    ////For Season 3/////////////////////////////////////////////////////////////////////////////
+
+    //This script gets individual team stats onto a table
+    $.getJSON("assets/json/teams_season3.json", function (data) {
+      $.each(data, function (i, team) {
+        const playerName = sessionStorage.getItem("player_Name");
+
+        for (let i = 0; i < team.roster.length; i++) {
+          if (team.roster[i].name === playerName) {
+            let playerPoints = 0;
+            let playerFGM = 0;
+            let playerFGA = 0;
+            let player3PM = 0;
+            let player3PA = 0;
+            let playerFTM = 0;
+            let playerFTA = 0;
+            let playerRebounds = 0;
+            let playerOREB = 0;
+            let playerDREB = 0;
+            let playerAssists = 0;
+            let playerBlocks = 0;
+            let playerSteals = 0;
+            let playerTOV = 0;
+            let playerPF = 0;
+
+            for (let j = 0; j < team.roster[i].stats.length; j++) {
+              playerPoints += team.roster[i].stats[j].Points;
+              playerFGM += team.roster[i].stats[j].FieldGoalsMade;
+              playerFGA += team.roster[i].stats[j].FieldGoalAttempts;
+              player3PM += team.roster[i].stats[j].ThreesMade;
+              player3PA += team.roster[i].stats[j].ThreesAttempts;
+              playerFTM += team.roster[i].stats[j].FreeThrowsMade;
+              playerFTA += team.roster[i].stats[j].FreeThrowsAttempts;
+              playerRebounds += team.roster[i].stats[j].Rebounds;
+              playerOREB += team.roster[i].stats[j].Offrebounds;
+              playerDREB += team.roster[i].stats[j].Defrebounds;
+              playerAssists += team.roster[i].stats[j].Assists;
+              playerBlocks += team.roster[i].stats[j].Blocks;
+              playerSteals += team.roster[i].stats[j].Steals;
+              playerTOV += team.roster[i].stats[j].Turnovers;
+              playerPF += team.roster[i].stats[j].PersonalFouls;
+            }
+
+            $("#roster").append(
+              "<div class='column is-one-fifth has-text-centered'>" +
+                "<h1>GP</h1> <p style='color:white;'>" +
+                team.roster[i].GamesPlayed +
+                "</p>" +
+                "</div>" +
+                "<div class='column is-one-fifth has-text-centered'>" +
+                "<h1>PPG</h1><p style='color:white;'>" +
+                (playerPoints / team.roster[i].GamesPlayed).toFixed(1) +
+                "</p>" +
+                "</div>" +
+                "<div class='column is-one-fifth has-text-centered'>" +
+                "<h1>RPG</h1><p style='color:white;'>" +
+                (playerRebounds / team.roster[i].GamesPlayed).toFixed(1) +
+                "</p>" +
+                "</div>" +
+                "<div class='column is-one-fifth has-text-centered'>" +
+                "<h1>APG</h1><p style='color:white;'>" +
+                (playerAssists / team.roster[i].GamesPlayed).toFixed(1) +
+                "</p>" +
+                "</div>" +
+                "<div class='column is-one-fifth has-text-centered'>" +
+                "<h1>EFF</h1><p style='color:white;'>" +
+                (
+                  (playerPoints +
+                    playerRebounds +
+                    playerAssists +
+                    playerSteals +
+                    playerBlocks -
+                    ((playerFGA+player3PA) - (playerFGM+player3PM)) -
+                    (playerFTA - playerFTM) -
+                    playerTOV) /
+                  team.roster[i].GamesPlayed
+                ).toFixed(1) +
+                "</p>" +
+                "</div>"
+            );
+            $("#team_name").append(team.Team + " | #" + team.roster[i].number);
+
+            // Select the playerhead image element
+            var playerHeadContainer = $("#playerhead img");
+
+            // Check if an img tag exists
+            if (playerHeadContainer.length) {
+              // Update the src attribute with the new image URL
+              var imageUrl =
+                "assets/img/player-heads/" +
+                team.roster[i].PlayerHead +
+                "?t=" +
+                new Date().getTime();
+              playerHeadContainer.attr("src", imageUrl);
+            } else {
+              // If no image exists, create a new one
+              if (team.roster[i].PlayerHead) {
+                var imageUrl =
+                  "assets/img/player-heads/" +
+                  team.roster[i].PlayerHead +
+                  "?t=" +
+                  new Date().getTime();
+                playerHeadContainer = $("<img>")
+                  .attr("src", imageUrl)
+                  .attr("alt", "Player Image")
+                  .css("width", "200px");
+                $("#playerhead").append(playerHeadContainer);
+              } else {
+                // Handle missing image case
+                playerHeadContainer = $("<p>").text("No image available");
+                $("#playerhead").append(playerHeadContainer);
+              }
+            }
+          }
+        }
+      });
+    });
+
+    //gets invidiuals career stats
+    $.getJSON("assets/json/teams_season3.json", function (data) {
+      let playerName = sessionStorage.getItem("player_Name");
+      console.log(playerName);
+      $.each(data, function (i, team) {
+        team.roster.forEach(function (player) {
+          if (player.name === playerName) {
+            let playerPoints = 0;
+            let playerFGM = 0;
+            let playerFGA = 0;
+            let player3PM = 0;
+            let player3PA = 0;
+            let playerFTM = 0;
+            let playerFTA = 0;
+            let playerRebounds = 0;
+            let playerOREB = 0;
+            let playerDREB = 0;
+            let playerAssists = 0;
+            let playerBlocks = 0;
+            let playerSteals = 0;
+            let playerTOV = 0;
+            let playerPF = 0;
+
+            for (let j = 0; j < player.stats.length; j++) {
+              playerPoints += player.stats[j].Points;
+              playerFGM += player.stats[j].FieldGoalsMade;
+              playerFGA += player.stats[j].FieldGoalAttempts;
+              player3PM += player.stats[j].ThreesMade;
+              player3PA += player.stats[j].ThreesAttempts;
+              playerFTM += player.stats[j].FreeThrowsMade;
+              playerFTA += player.stats[j].FreeThrowsAttempts;
+              playerRebounds += player.stats[j].Rebounds;
+              playerOREB += player.stats[j].Offrebounds;
+              playerDREB += player.stats[j].Defrebounds;
+              playerAssists += player.stats[j].Assists;
+              playerBlocks += player.stats[j].Blocks;
+              playerSteals += player.stats[j].Steals;
+              playerTOV += player.stats[j].Turnovers;
+              playerPF += player.stats[j].PersonalFouls;
+            }
+
+            $("#players-table").append(
+              "<tr>" +
+                "<td>" +
+                player.GamesPlayed +
+                "</td>" +
+                "<td>" +
+                playerPoints +
+                "</td>" +
+                "<td>" +
+                (playerPoints / player.GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                (playerFGM+player3PM) +
+                "</td>" +
+                "<td>" +
+                (playerFGA+player3PA) +
+                "</td>" +
+                "<td>" +
+                (((playerFGM+player3PM) / (playerFGA+player3PA)) * 100).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerFGM +
+                "</td>" +
+                "<td>" +
+                playerFGA +
+                "</td>" +
+                "<td>" +
+                ((playerFGM / playerFGA) * 100).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                player3PM +
+                "</td>" +
+                "<td>" +
+                player3PA +
+                "</td>" +
+                "<td>" +
+                ((player3PM / player3PA) * 100).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerFTM +
+                "</td>" +
+                "<td>" +
+                playerFTA +
+                "</td>" +
+                "<td>" +
+                ((playerFTM / playerFTA) * 100).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerOREB +
+                "</td>" +
+                "<td>" +
+                playerDREB +
+                "</td>" +
+                "<td>" +
+                playerRebounds +
+                "</td>" +
+                "<td>" +
+                (playerRebounds / player.GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerAssists +
+                "</td>" +
+                "<td>" +
+                (playerAssists / player.GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerSteals +
+                "</td>" +
+                "<td>" +
+                (playerSteals / player.GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerBlocks +
+                "</td>" +
+                "<td>" +
+                (playerBlocks / player.GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerTOV +
+                "</td>" +
+                "<td>" +
+                (playerTOV / player.GamesPlayed).toFixed(1) +
+                "</td>" +
+                "<td>" +
+                playerPF +
+                "</td>" +
+                "<td>" +
+                (
+                  (playerPoints +
+                    playerRebounds +
+                    playerAssists +
+                    playerSteals +
+                    playerBlocks -
+                    ((playerFGA+player3PA) - (playerFGM+player3PM)) -
+                    (playerFTA - playerFTM) -
+                    playerTOV) /
+                  player.GamesPlayed
+                ).toFixed(1) +
+                "</td>" +
+                //(PTS + REB + AST + STL + BLK − Missed FG − Missed FT - TO) / GP.
+                "</tr>"
+            );
+          }
+        });
+      });
+    });
+
+    //Game by Game stats
+
+    $.getJSON("assets/json/teams_season3.json", function (data) {
+      let playerName = sessionStorage.getItem("player_Name");
+      console.log(playerName);
+      $.each(data, function (i, team) {
+        team.roster.forEach(function (player) {
+          if (player.name === playerName) {
+            let playerPoints = 0;
+            let playerFGM = 0;
+            let playerFGA = 0;
+            let player3PM = 0;
+            let player3PA = 0;
+            let playerFTM = 0;
+            let playerFTA = 0;
+            let playerRebounds = 0;
+            let playerOREB = 0;
+            let playerDREB = 0;
+            let playerAssists = 0;
+            let playerBlocks = 0;
+            let playerSteals = 0;
+            let playerTOV = 0;
+            let playerPF = 0;
+
+            for (let j = 0; j < player.stats.length; j++) {
+              if (player.stats[j].opponent !== "") {
+                playerPoints = player.stats[j].Points;
+                playerFGM = player.stats[j].FieldGoalsMade;
+                playerFGA = player.stats[j].FieldGoalAttempts;
+                player3PM = player.stats[j].ThreesMade;
+                player3PA = player.stats[j].ThreesAttempts;
+                playerFTM = player.stats[j].FreeThrowsMade;
+                playerFTA = player.stats[j].FreeThrowsAttempts;
+                playerRebounds = player.stats[j].Rebounds;
+                playerAssists = player.stats[j].Assists;
+                playerBlocks = player.stats[j].Blocks;
+                playerSteals = player.stats[j].Steals;
+                playerTOV = player.stats[j].Turnovers;
+                playerPF = player.stats[j].PersonalFouls;
+
+                $("#games-table").append(
+                  "<tr>" +
+                    "<td>" +
+                    player.stats[j].opponent +
+                    "</td>" +
+                    "<td>" +
+                    playerPoints +
+                    "</td>" +
+                    "<td>" +
+                    (playerFGM+player3PM) +
+                    "</td>" +
+                    "<td>" +
+                    (playerFGA+player3PA) +
+                    "</td>" +
+                    "<td>" +
+                    (((playerFGM+player3PM) / (playerFGA+player3PA)) * 100).toFixed(1) +
+                    "</td>" +
+                    "<td>" +
+                    playerFGM +
+                    "</td>" +
+                    "<td>" +
+                    playerFGA +
+                    "</td>" +
+                    "<td>" +
+                    ((playerFGM / playerFGA) * 100).toFixed(1) +
+                    "</td>" +
+                    "<td>" +
+                    player3PM +
+                    "</td>" +
+                    "<td>" +
+                    player3PA +
+                    "</td>" +
+                    "<td>" +
+                    ((player3PM / player3PA) * 100).toFixed(1) +
+                    "</td>" +
+                    "<td>" +
+                    playerFTM +
+                    "</td>" +
+                    "<td>" +
+                    playerFTA +
+                    "</td>" +
+                    "<td>" +
+                    ((playerFTM / playerFTA) * 100).toFixed(1) +
+                    "</td>" +
+                    "<td>" +
+                    playerRebounds +
+                    "</td>" +
+                    "<td>" +
+                    playerAssists +
+                    "</td>" +
+                    "<td>" +
+                    playerSteals +
+                    "</td>" +
+                    "<td>" +
+                    playerBlocks +
+                    "</td>" +
+                    "<td>" +
+                    playerTOV +
+                    "</td>" +
+                    "<td>" +
+                    playerPF +
+                    "</td>" +
+                    "<td>" +
+                    (
+                      playerPoints +
+                      playerRebounds +
+                      playerAssists +
+                      playerSteals +
+                      playerBlocks -
+                      ((playerFGA+player3PA) - (playerFGM+player3PM)) -
+                      (playerFTA - playerFTM) -
+                      playerTOV
+                    ).toFixed(1) +
+                    "</td>" +
+                    //(PTS + REB + AST + STL + BLK − Missed FG − Missed FT - TO) / GP.
+                    "</tr>"
+                );
+              }
+            }
+          }
+        });
+      })
+    });
+
+    
   </script>
 </html>

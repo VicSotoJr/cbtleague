@@ -369,6 +369,102 @@ $.each(data, function (i, team) {
 
 });
 
+//This is to include the season 3 rosters
+
+        $.getJSON("assets/json/teams_season3.json", function (data) {
+
+$.each(data, function (i, team) {
+    const teamName = sessionStorage.getItem("team_name");
+    const teamColor = sessionStorage.getItem("team_color");
+
+    if (team.Team == teamName)
+        for (let i = 0; i < team.roster.length; i++) {
+            let playerPoints = 0;
+            let playerFGM = 0;
+            let playerFGA = 0;
+            let player2PM = 0;
+            let player2PA = 0;
+            let player3PM = 0;
+            let player3PA = 0;
+            let playerFTM = 0;
+            let playerFTA = 0;
+            let playerRebounds = 0;
+            let playerOREB = 0;
+            let playerDREB = 0;
+            let playerAssists = 0;
+            let playerBlocks = 0;
+            let playerSteals = 0;
+            let playerTOV = 0;
+            let playerPF = 0;
+
+
+            for (let j = 0; j < team.roster[i].stats.length; j++) {
+            playerPoints += team.roster[i].stats[j].Points;
+            player2PM += team.roster[i].stats[j].FieldGoalsMade;
+            player2PA += team.roster[i].stats[j].FieldGoalAttempts;
+            player3PM += team.roster[i].stats[j].ThreesMade;
+            player3PA += team.roster[i].stats[j].ThreesAttempts;
+            playerFTM += team.roster[i].stats[j].FreeThrowsMade;
+            playerFTA += team.roster[i].stats[j].FreeThrowsAttempts;
+            playerRebounds += team.roster[i].stats[j].Rebounds;
+            playerOREB += team.roster[i].stats[j].Offrebounds;
+            playerDREB += team.roster[i].stats[j].Defrebounds;
+            playerAssists += team.roster[i].stats[j].Assists;
+            playerBlocks += team.roster[i].stats[j].Blocks;
+            playerSteals += team.roster[i].stats[j].Steals;
+            playerTOV += team.roster[i].stats[j].Turnovers;
+            playerPF += team.roster[i].stats[j].PersonalFouls;
+            }
+
+            playerFGM = player2PM + player3PM;
+            playerFGA = player2PA + player3PA;
+
+            $("#roster").append(
+
+                "<div class='column is-half'>" +
+                "<a class='playerCard' onclick='getPlayerName(event)' data-player-name='" +
+                team.roster[i].name + "'>" +
+                "<div class='card'>" +
+                "<div class='card-content'>" +
+                "<div class='content'>" +
+                "<div class='columns is-mobile'>" +
+                "<div class='column is-half'>" +
+
+                "<figure class='image is-128x128' id='player-image' style='height: inherit;margin: auto;'>" +
+                "<img src='assets/img/player-heads/" + team.roster[i].PlayerHead +
+                "' alt='Player Image' class='team-logo' data-team-name='Hidden Rain'>" +
+                "</figure>" +
+
+                "</div>" +
+                "<div class='column is-half is-vcentered' style='text-align: center;'>" +
+                "<h2 id='player-name'>#" + team.roster[i].number + " - " + team.roster[
+                    i].name + "</h2>" +
+                "<table class='table'>" +
+                "<tr>" +
+                "<th>GP</th>" +
+                "<th>PPG</th>" +
+                "<th>RPG</th>" +
+                "<th>APG</th>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>" + team.roster[i].GamesPlayed + "</td>" +
+                "<td>" + (playerPoints / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
+                "<td>" + (playerRebounds / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
+                "<td>" + (playerAssists / team.roster[i].GamesPlayed).toFixed(1) + "</td>" +
+                "</tr>" +
+                "</table>" +
+                "<p style='font-size:small; color:#0000EE;'> View Player Profile </p>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</a>" +
+                "</div>"
+            );
+        }
+})});
+
 
 //This is for season 1 team stats
         $.getJSON("assets/json/teams.json", function (data) {
@@ -528,6 +624,84 @@ $.each(data, function (i, team) {
             });
         });
 
+        //This is for season 3 team stats
+        $.getJSON("assets/json/teams_season3.json", function (data) {
+            let teamName = sessionStorage.getItem("team_name");
+
+            $.each(data, function (i, team) {
+                if (team.Team === teamName) {
+                    let teamPoints = 0;
+                    let teamFGM = 0;
+                    let teamFGA = 0;
+                    let team2PM = 0;
+                    let team2PA = 0;
+                    let team3PM = 0;
+                    let team3PA = 0;
+                    let teamFTM = 0;
+                    let teamFTA = 0;
+                    let teamRebounds = 0;
+                    let teamOREB = 0;
+                    let teamDREB = 0;
+                    let teamAssists = 0;
+                    let teamBlocks = 0;
+                    let teamSteals = 0;
+                    let teamTOV = 0;
+                    let teamPF = 0;
+
+                    for (let i = 0; i < team.roster.length; i++) {
+                        for (let j = 0; j < team.roster[i].stats.length; j++) {
+                            teamPoints += team.roster[i].stats[j].Points;
+                            team2PM += team.roster[i].stats[j].FieldGoalsMade;
+                            team2PA += team.roster[i].stats[j].FieldGoalAttempts;
+                            team3PM += team.roster[i].stats[j].ThreesMade;
+                            team3PA += team.roster[i].stats[j].ThreesAttempts;
+                            teamFTM += team.roster[i].stats[j].FreeThrowsMade;
+                            teamFTA += team.roster[i].stats[j].FreeThrowsAttempts;
+                            teamRebounds += team.roster[i].stats[j].Rebounds;
+                            teamOREB += team.roster[i].stats[j].Offrebounds;
+                            teamDREB += team.roster[i].stats[j].Defrebounds;
+                            teamAssists += team.roster[i].stats[j].Assists;
+                            teamBlocks += team.roster[i].stats[j].Blocks;
+                            teamSteals += team.roster[i].stats[j].Steals;
+                            teamTOV += team.roster[i].stats[j].Turnovers;
+                            teamPF += team.roster[i].stats[j].PersonalFouls;
+                        }
+                    }
+
+                            teamFGM = team2PM + team3PM;
+                            teamFGA = team2PA + team3PA;
+
+                            $("#team-table").append(
+                        "<tr>" +
+                        "<td>" + team.gamesPlayed + "</td>" +
+                        "<td>" + team.wins + "</td>" +
+                        "<td>" + team.loss + "</td>" +
+                        "<td>" + teamPoints + "</td>" +
+                        "<td>" + teamFGM + "</td>" +
+                        "<td>" + teamFGA + "</td>" +
+                        "<td>" + ((teamFGM / teamFGA) * 100).toFixed(1) + "</td>" +
+                        "<td>" + team2PM + "</td>" +
+                        "<td>" + team2PA + "</td>" +
+                        "<td>" + ((team2PM / team2PA) * 100).toFixed(1) + "</td>" +
+                        "<td>" + team3PM + "</td>" +
+                        "<td>" + team3PA + "</td>" +
+                        "<td>" + ((team3PM / team3PA) * 100).toFixed(1) + "</td>" +
+                        "<td>" + teamFTM + "</td>" +
+                        "<td>" + teamFTA + "</td>" +
+                        "<td>" + ((teamFTA / teamFTM) * 100).toFixed(1) + "</td>" +
+                        "<td>" + teamRebounds + "</td>" +
+                        "<td>" + teamOREB + "</td>" +
+                        "<td>" + teamDREB + "</td>" +
+                        "<td>" + teamAssists + "</td>" +
+                        "<td>" + teamBlocks + "</td>" +
+                        "<td>" + teamSteals + "</td>" +
+                        "<td>" + teamTOV + "</td>" +
+                        "<td>" + teamPF + "</td>" +
+                        "</tr>"
+                    );
+                }
+            });
+        });
 
 
 
@@ -541,58 +715,86 @@ $.each(data, function (i, team) {
             const teamName = sessionStorage.getItem("team_name");
             let teamColor; // Declare the variable outside of the if statements
 
-            if(teamName === "Hidden Rain"){
-        console.log("hidden raine");
-        teamColor = "grey"; // Assign a value inside the if statement
-    }
-    if(teamName === "OTF"){
-        console.log("OTF")
-        teamColor = "midnightblue";
-    }
-    if(teamName === "Hidden Rain "){
-        console.log("hidden raine");
-        teamColor = "grey"; // Assign a value inside the if statement
-    }
-    if(teamName === "OTF "){
-        console.log("OTF")
-        teamColor = "midnightblue";
-    }
-    if(teamName === "Tune Squad"){
-        console.log("TUNE")
-        teamColor = "red";
-    }
-    if(teamName === "Free Agents"){
-        console.log("F A")
-        teamColor = "darkorange";
-    }
-    if(teamName === "YAGGA"){
-        console.log("YAGGA")
-        teamColor = "rebeccapurple";
-    }
-    if(teamName === "Integral Construction"){
-        console.log("IC")
-        teamColor = "darkgreen";
-    }
-    if(teamName === "BTA"){
-        console.log("BTA")
-        teamColor = "grey";
-    }
-    if(teamName === "Venom"){
-        console.log("venom")
-        teamColor = "black";
-    }
-    if(teamName === "1Fam"){
-        console.log("1fam")
-        teamColor = "black";
-    }
-    if(teamName === "GetBuck$"){
-        console.log("getbuck$")
-        teamColor = "darkblue";
-    }
-    if(teamName === "Free Agents "){
-        console.log("FA")
-        teamColor = "yellow";
-    };
+            if (teamName === "Hidden Rain") {
+          console.log("hidden raine");
+          teamColor = "grey"; // Assign a value inside the if statement
+        }
+        if (teamName === "Hidden Rain ") {
+          console.log("hidden raine");
+          teamColor = "grey"; // Assign a value inside the if statement
+        }
+        if (teamName === "OTF") {
+          console.log("OTF");
+          teamColor = "midnightblue";
+        }
+        if (teamName === "OTF ") {
+          console.log("OTF");
+          teamColor = "midnightblue";
+        }
+        if (teamName === "Tune Squad") {
+          console.log("TUNE");
+          teamColor = "red";
+        }
+        if (teamName === "Free Agents") {
+          console.log("F A");
+          teamColor = "darkorange";
+        }
+        if (teamName === "YAGGA") {
+          console.log("YAGGA");
+          teamColor = "rebeccapurple";
+        }
+        if (teamName === "Integral Construction") {
+          console.log("IC");
+          teamColor = "darkgreen";
+        }
+        if (teamName === "MTBM") {
+          console.log("MTBM");
+          teamColor = "darkgreen";
+        }
+        if (teamName === "BTA") {
+          console.log("BTA");
+          teamColor = "grey";
+        }
+        if (teamName === "ISP") {
+          console.log("ISP");
+          teamColor = "grey";
+        }
+        if (teamName === "Venom") {
+          console.log("venom");
+          teamColor = "black";
+        }
+        if (teamName === "Venom ") {
+          console.log("venom");
+          teamColor = "Red";
+        }
+        if (teamName === "1Fam") {
+          console.log("1fam");
+          teamColor = "black";
+        }
+        if (teamName === "1Fam ") {
+          console.log("1fam");
+          teamColor = "black";
+        }
+        if (teamName === "GetBuck$") {
+          console.log("getbuck$");
+          teamColor = "darkblue";
+        }
+        if (teamName === "The Mob") {
+          console.log("the mob");
+          teamColor = "darkblue";
+        }
+        if (teamName === "Free Agents ") {
+          console.log("FA");
+          teamColor = "yellow";
+        }
+        if (teamName === "Free Agents  ") {
+          console.log("FA");
+          teamColor = "yellow";
+        }
+        if (teamName === "Dream Chasers") {
+          console.log("Dream chasers");
+          teamColor = "baby blue";
+        }
 
             sessionStorage.setItem("player_Name", playerName);
             sessionStorage.setItem("team_color", teamColor);
