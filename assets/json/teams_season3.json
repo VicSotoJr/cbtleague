@@ -1,5 +1,5 @@
 [{
-        "Team": "1Fam",
+        "Team": "1Fam ",
         "wins": 0,
         "loss": 0,
         "gamesPlayed": 0,
@@ -533,7 +533,7 @@
         ]
     },
     {
-        "Team": "Venom",
+        "Team": "Venom ",
         "wins": 0,
         "loss": 0,
         "gamesPlayed": 0,
@@ -774,7 +774,7 @@
         ]
     },
     {
-        "Team": "Free Agents",
+        "Team": "Free Agents  ",
         "wins": 0,
         "loss": 0,
         "gamesPlayed": 0,
