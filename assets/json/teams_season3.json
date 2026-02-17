@@ -668,10 +668,10 @@
                 ]
             },
             {
-                "name": "Ibrahim Jibrell",
+                "name": "Nick Bottone",
                 "number": 21,
                 "GamesPlayed": 0,
-                "PlayerHead": "ibrahimjibrell.jpg",
+                "PlayerHead": "nickbottone.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1020,10 +1020,10 @@
                 ]
             },
             {
-                "name": "Demari Radcliffe",
+                "name": "Henry Smith",
                 "number": 4,
                 "GamesPlayed": 0,
-                "PlayerHead": "demariradcliffe.jpg",
+                "PlayerHead": "henrysmith.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",

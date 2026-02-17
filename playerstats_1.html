@@ -320,8 +320,9 @@
         <h3 style="color: white">Season:</h3>
         <div class="select is-small is-centered">
           <select id="seasonSelector">
-            <option value="season2">Season 2 - 2025</option>
-            <option value="season1" selected>Season 1 - 2023</option>
+            <option value="season3">Season 3 - 2026</option>
+            <option value="season2" selected>Season 2 - 2025</option>
+            <option value="season1">Season 1 - 2023</option>
           </select>
         </div>
       </div>
@@ -571,6 +572,8 @@
           window.location.href = "playerstats_1.html"; // Redirects to playerstats_1.html
         } else if (this.value === "season2") {
           window.location.href = "playerstats.html"; // Redirects to playerstats.html (or wherever you'd want)
+        }else if (this.value === "season3") {
+          window.location.href = "playerstats_s3.html"; // Redirects to playerstats.html (or wherever you'd want)
         }
       });
   </script>
