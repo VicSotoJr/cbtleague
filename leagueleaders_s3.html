@@ -42,7 +42,7 @@
     //This is for Points//
     //////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
 
       // Flatten the data into an array of players
       let players = [];
@@ -83,7 +83,7 @@
     //This is for Points Per GAME//
     ///////////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
       // Flatten the data into an array of players
       let players = [];
       $.each(data, function (i, team) {
@@ -134,7 +134,7 @@
     //This is for fg% //
     //////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
 
        // Flatten the data into an array of players
        let qualifiedPlayers = [];
@@ -190,7 +190,7 @@
     ///////////////////
 
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
 
       // Flatten the data into an array of players
       let players = [];
@@ -233,7 +233,7 @@
     //////////////////////////
 
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
 
       // Initialize an array of qualified players
       let qualifiedPlayers = [];
@@ -286,7 +286,7 @@
     //This is for rebounds//
     ////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
 
       // Flatten the data into an array of players
       let players = [];
@@ -328,7 +328,7 @@
     //This is for Rebounds Per GAME//
     /////////////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
       // Flatten the data into an array of players
       let players = [];
       $.each(data, function (i, team) {
@@ -380,7 +380,7 @@
     //This is for assists //
     ////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
 
       // Flatten the data into an array of players
       let players = [];
@@ -422,7 +422,7 @@
     //This is for Assits Per GAME//
     ///////////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
       // Flatten the data into an array of players
       let players = [];
       $.each(data, function (i, team) {
@@ -472,7 +472,7 @@
     //This is for Blocks  //
     ////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
 
       // Flatten the data into an array of players
       let players = [];
@@ -514,7 +514,7 @@
     //This is for blocks Per GAME//
     ///////////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
       // Flatten the data into an array of players
       let players = [];
       $.each(data, function (i, team) {
@@ -564,7 +564,7 @@
     //This is for steals  //
     ////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
 
       // Flatten the data into an array of players
       let players = [];
@@ -606,7 +606,7 @@
     //This is for steals Per GAME//
     ///////////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
       // Flatten the data into an array of players
       let players = [];
       $.each(data, function (i, team) {
@@ -659,7 +659,7 @@
     //(PTS + REB + AST + STL + BLK − Missed FG − Missed FT - TO) / GP.
 
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
       // Flatten the data into an array of players
       let players = [];
       $.each(data, function (i, team) {
@@ -736,7 +736,7 @@
     //This is for Turnovers //
     //////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
 
       // Flatten the data into an array of players
       let players = [];
@@ -778,7 +778,7 @@
     //This is for TOV Per GAME//
     ////////////////////////////
 
-    $.getJSON("assets/json/teams.json", function (data) {
+    $.getJSON("assets/json/team_season3.json", function (data) {
       // Flatten the data into an array of players
       let players = [];
       $.each(data, function (i, team) {
@@ -874,7 +874,7 @@
           <a href="playerstats_s3.html" class="navbar-item">
             Player Stats
           </a>
-          <a href="leagueleaders.html" class="navbar-item">
+          <a href="leagueleaders_s3.html" class="navbar-item">
             League Leaders
           </a>
         </div>
@@ -891,8 +891,9 @@
       <h3 style="color: white;">Season:</h3>
       <div class="select is-small is-centered">
         <select id="seasonSelector">
+          <option value="season3" selected>Season 3 - 2026</option>
           <option value="season2">Season 2 - 2025</option>
-          <option value="season1" selected>Season 1 - 2023</option>
+          <option value="season1">Season 1 - 2023</option>
       </select> 
       </div>
   </div>
@@ -1216,6 +1217,8 @@
             window.location.href = 'leagueleaders_1.html'; // Redirects to playerstats_1.html
         } else if (this.value === 'season2') {
             window.location.href = 'leagueleaders.html'; // Redirects to playerstats_2.html (or wherever you'd want)
+        }else if (this.value === 'season3') {
+            window.location.href = 'leagueleaders_s3.html'; // Redirects to playerstats_2.html (or wherever you'd want)
         }
     });
   </script>

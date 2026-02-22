@@ -874,7 +874,7 @@
           <a href="playerstats_s3.html" class="navbar-item">
             Player Stats
           </a>
-          <a href="leagueleaders.html" class="navbar-item">
+          <a href="leagueleaders_s3.html" class="navbar-item">
             League Leaders
           </a>
         </div>
@@ -891,6 +891,7 @@
       <h3 style="color: white;">Season:</h3>
       <div class="select is-small is-centered">
         <select id="seasonSelector">
+          <option value="season2">Season 3 - 2026</option>
           <option value="season2">Season 2 - 2025</option>
           <option value="season1" selected>Season 1 - 2023</option>
       </select> 
@@ -1216,6 +1217,8 @@
             window.location.href = 'leagueleaders_1.html'; // Redirects to playerstats_1.html
         } else if (this.value === 'season2') {
             window.location.href = 'leagueleaders.html'; // Redirects to playerstats_2.html (or wherever you'd want)
+        } else if (this.value === 'season3') {
+            window.location.href = 'leagueleaders_s3.html'; // Redirects to playerstats_2.html (or wherever you'd want)
         }
     });
   </script>

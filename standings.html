@@ -58,10 +58,22 @@
       document.addEventListener("DOMContentLoaded", function () {
         const seasonDropdown = document.getElementById("seasonDropdown");
 
-        function updateSeason() {
+       /* function updateSeason() {
           const selectedSeason = seasonDropdown.value;
           const jsonFile =
             selectedSeason === "season1" ? "teams.json" : "teams_season2.json";
+          loadStandings(jsonFile);
+        }*/
+
+        function updateSeason() {
+          const selectedSeason = seasonDropdown.value;
+          const seasonFiles = {
+            season1: "teams.json",
+            season2: "teams_season2.json",
+            season3: "teams_season3.json"
+          };
+          
+          const jsonFile = seasonFiles[selectedSeason || "teams.json"]
           loadStandings(jsonFile);
         }
 
@@ -97,6 +109,8 @@
         const seasonDropdown = document.getElementById("seasonDropdown"); // Assign an id to the dropdown
         const season1Container = document.getElementById("season1");
         const season2Container = document.getElementById("season2");
+        const season3Container = document.getElementById("season3");
+
 
         function toggleSeason() {
           const selectedSeason = seasonDropdown.value;
@@ -104,9 +118,15 @@
           if (selectedSeason === "season1") {
             season1Container.style.display = "block";
             season2Container.style.display = "none";
-          } else {
+            season3Container.style.display = "none";
+          } else if (selectedSeason === "season2"){
             season1Container.style.display = "none";
             season2Container.style.display = "block";
+            season3Container.style.display = "none";
+          } else if (selectedSeason === "season3"){
+            season1Container.style.display = "none";
+            season2Container.style.display = "none";
+            season3Container.style.display = "block";
           }
         }
 
@@ -155,9 +175,9 @@
           <a href="stats.html" class="navbar-link"> Stats </a>
 
           <div class="navbar-dropdown">
-            <a href="stats.html" class="navbar-item"> Team Stats </a>
+            <a href="stats_s3.html" class="navbar-item"> Team Stats </a>
             <a href="playerstats_s3.html" class="navbar-item"> Player Stats </a>
-            <a href="leagueleaders.html" class="navbar-item">
+            <a href="leagueleaders_s3.html" class="navbar-item">
               League Leaders
             </a>
           </div>
@@ -175,6 +195,7 @@
         <h3 style="color: white">Season:</h3>
         <div class="select is-small is-centered">
           <select id="seasonDropdown">
+            <option value="season3">Season 3 - 2026</option>
             <option value="season2">Season 2 - 2025</option>
             <option value="season1">Season 1 - 2023</option>
           </select>
@@ -205,58 +226,86 @@
       console.log(teamName);
       let teamColor; // Declare the variable outside of the if statements
 
-      if (teamName === "Hidden Rain") {
-        console.log("hidden raine");
-        teamColor = "grey"; // Assign a value inside the if statement
-      }
-      if (teamName === "Hidden Rain ") {
-        console.log("hidden raine");
-        teamColor = "grey"; // Assign a value inside the if statement
-      }
-      if (teamName === "OTF") {
-        console.log("OTF");
-        teamColor = "midnightblue";
-      }
-      if (teamName === "OTF ") {
-        console.log("OTF");
-        teamColor = "midnightblue";
-      }
-      if (teamName === "Tune Squad") {
-        console.log("TUNE");
-        teamColor = "red";
-      }
-      if (teamName === "Free Agents") {
-        console.log("F A");
-        teamColor = "darkorange";
-      }
-      if (teamName === "YAGGA") {
-        console.log("YAGGA");
-        teamColor = "rebeccapurple";
-      }
-      if (teamName === "Integral Construction") {
-        console.log("IC");
-        teamColor = "darkgreen";
-      }
-      if (teamName === "BTA") {
-        console.log("BTA");
-        teamColor = "grey";
-      }
-      if (teamName === "Venom") {
-        console.log("venom");
-        teamColor = "black";
-      }
-      if (teamName === "1Fam") {
-        console.log("1fam");
-        teamColor = "black";
-      }
-      if (teamName === "GetBuck$") {
-        console.log("getbuck$");
-        teamColor = "darkblue";
-      }
-      if (teamName === "FreeAgents") {
-        console.log("FA");
-        teamColor = "yellow";
-      }
+          if (teamName === "Hidden Rain") {
+          console.log("hidden raine");
+          teamColor = "grey"; // Assign a value inside the if statement
+        }
+        if (teamName === "Hidden Rain ") {
+          console.log("hidden raine");
+          teamColor = "grey"; // Assign a value inside the if statement
+        }
+        if (teamName === "OTF") {
+          console.log("OTF");
+          teamColor = "midnightblue";
+        }
+        if (teamName === "OTF ") {
+          console.log("OTF");
+          teamColor = "midnightblue";
+        }
+        if (teamName === "Tune Squad") {
+          console.log("TUNE");
+          teamColor = "red";
+        }
+        if (teamName === "Free Agents") {
+          console.log("F A");
+          teamColor = "darkorange";
+        }
+        if (teamName === "YAGGA") {
+          console.log("YAGGA");
+          teamColor = "rebeccapurple";
+        }
+        if (teamName === "Integral Construction") {
+          console.log("IC");
+          teamColor = "darkgreen";
+        }
+        if (teamName === "MTBM") {
+          console.log("MTBM");
+          teamColor = "darkgreen";
+        }
+        if (teamName === "BTA") {
+          console.log("BTA");
+          teamColor = "grey";
+        }
+        if (teamName === "ISP") {
+          console.log("ISP");
+          teamColor = "grey";
+        }
+        if (teamName === "Venom") {
+          console.log("venom");
+          teamColor = "black";
+        }
+        if (teamName === "Venom ") {
+          console.log("venom");
+          teamColor = "Red";
+        }
+        if (teamName === "1Fam") {
+          console.log("1fam");
+          teamColor = "black";
+        }
+        if (teamName === "1Fam ") {
+          console.log("1fam");
+          teamColor = "black";
+        }
+        if (teamName === "GetBuck$") {
+          console.log("getbuck$");
+          teamColor = "darkblue";
+        }
+        if (teamName === "The Mob") {
+          console.log("the mob");
+          teamColor = "darkblue";
+        }
+        if (teamName === "Free Agents ") {
+          console.log("FA");
+          teamColor = "yellow";
+        }
+        if (teamName === "Free Agents  ") {
+          console.log("FA");
+          teamColor = "yellow";
+        }
+        if (teamName === "Dream Chasers") {
+          console.log("Dream chasers");
+          teamColor = "baby blue";
+        }
 
       sessionStorage.setItem("team_name", teamName);
       sessionStorage.setItem("team_color", teamColor);
