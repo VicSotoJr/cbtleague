@@ -805,10 +805,10 @@
                 ]
             },
             {
-                "name": "Tim Adanti",
+                "name": "Jaylin Davis",
                 "number": 1,
                 "GamesPlayed": 0,
-                "PlayerHead": "timadanti.jpg",
+                "PlayerHead": "jaylindavis.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1450,10 +1450,10 @@
         "loss": 0,
         "gamesPlayed": 0,
         "roster": [{
-                "name": "Jay Turner",
+                "name": "Adden Goffe",
                 "number": 11,
                 "GamesPlayed": 0,
-                "PlayerHead": "jayturner.jpg",
+                "PlayerHead": "addengoffe.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
