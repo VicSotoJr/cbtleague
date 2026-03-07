@@ -20,41 +20,58 @@ function getTeamsWithAggregatedStats(seasonId: string): (Team & { aggregated: Ba
 
     return teams.map(team => {
         const aggregated: BaseStats = {
-            Points: 0,
-            FieldGoalsMade: 0,
-            FieldGoalAttempts: 0,
-            ThreesMade: 0,
-            ThreesAttempts: 0,
-            FreeThrowsMade: 0,
-            FreeThrowsAttempts: 0,
-            Rebounds: 0,
-            Offrebounds: 0,
-            Defrebounds: 0,
-            Assists: 0,
-            Blocks: 0,
-            Steals: 0,
-            Turnovers: 0,
-            PersonalFouls: 0
+            Points: 0, FieldGoalsMade: 0, FieldGoalAttempts: 0, ThreesMade: 0, ThreesAttempts: 0,
+            FreeThrowsMade: 0, FreeThrowsAttempts: 0, Rebounds: 0, Offrebounds: 0, Defrebounds: 0,
+            Assists: 0, Blocks: 0, Steals: 0, Turnovers: 0, PersonalFouls: 0
         };
 
         team.roster.forEach(player => {
-            player.stats.forEach(stat => {
-                aggregated.Points += stat.Points || 0;
-                aggregated.FieldGoalsMade += stat.FieldGoalsMade || 0;
-                aggregated.FieldGoalAttempts += stat.FieldGoalAttempts || 0;
-                aggregated.ThreesMade += stat.ThreesMade || 0;
-                aggregated.ThreesAttempts += stat.ThreesAttempts || 0;
-                aggregated.FreeThrowsMade += stat.FreeThrowsMade || 0;
-                aggregated.FreeThrowsAttempts += stat.FreeThrowsAttempts || 0;
-                aggregated.Rebounds += stat.Rebounds || 0;
-                aggregated.Offrebounds += stat.Offrebounds || 0;
-                aggregated.Defrebounds += stat.Defrebounds || 0;
-                aggregated.Assists += stat.Assists || 0;
-                aggregated.Blocks += stat.Blocks || 0;
-                aggregated.Steals += stat.Steals || 0;
-                aggregated.Turnovers += stat.Turnovers || 0;
-                aggregated.PersonalFouls += stat.PersonalFouls || 0;
+            const playerStats = (player.stats || []).reduce((pAcc, s) => {
+                pAcc.Points += s.Points || 0;
+                pAcc.FieldGoalsMade += s.FieldGoalsMade || 0;
+                pAcc.FieldGoalAttempts += s.FieldGoalAttempts || 0;
+                pAcc.ThreesMade += s.ThreesMade || 0;
+                pAcc.ThreesAttempts += s.ThreesAttempts || 0;
+                pAcc.FreeThrowsMade += s.FreeThrowsMade || 0;
+                pAcc.FreeThrowsAttempts += s.FreeThrowsAttempts || 0;
+                pAcc.Rebounds += s.Rebounds || 0;
+                pAcc.Offrebounds += s.Offrebounds || 0;
+                pAcc.Defrebounds += s.Defrebounds || 0;
+                pAcc.Assists += s.Assists || 0;
+                pAcc.Blocks += s.Blocks || 0;
+                pAcc.Steals += s.Steals || 0;
+                pAcc.Turnovers += s.Turnovers || 0;
+                pAcc.PersonalFouls += s.PersonalFouls || 0;
+                return pAcc;
+            }, {
+                Points: 0, FieldGoalsMade: 0, FieldGoalAttempts: 0, ThreesMade: 0, ThreesAttempts: 0,
+                FreeThrowsMade: 0, FreeThrowsAttempts: 0, Rebounds: 0, Offrebounds: 0, Defrebounds: 0,
+                Assists: 0, Blocks: 0, Steals: 0, Turnovers: 0, PersonalFouls: 0
             });
+
+            // Detect format
+            const pointsFromInclusive = ((playerStats.FieldGoalsMade - playerStats.ThreesMade) * 2) + (playerStats.ThreesMade * 3);
+            const pointsFromSeparate = (playerStats.FieldGoalsMade * 2) + (playerStats.ThreesMade * 3);
+            const isInclusive = Math.abs(pointsFromInclusive - playerStats.Points) <= Math.abs(pointsFromSeparate - playerStats.Points);
+
+            const totalFGM = isInclusive ? playerStats.FieldGoalsMade : (playerStats.FieldGoalsMade + playerStats.ThreesMade);
+            const totalFGA = isInclusive ? playerStats.FieldGoalAttempts : (playerStats.FieldGoalAttempts + playerStats.ThreesAttempts);
+
+            aggregated.Points += playerStats.Points;
+            aggregated.FieldGoalsMade += totalFGM;
+            aggregated.FieldGoalAttempts += totalFGA;
+            aggregated.ThreesMade += playerStats.ThreesMade;
+            aggregated.ThreesAttempts += playerStats.ThreesAttempts;
+            aggregated.FreeThrowsMade += playerStats.FreeThrowsMade;
+            aggregated.FreeThrowsAttempts += playerStats.FreeThrowsAttempts;
+            aggregated.Rebounds += playerStats.Rebounds;
+            aggregated.Offrebounds += playerStats.Offrebounds;
+            aggregated.Defrebounds += playerStats.Defrebounds;
+            aggregated.Assists += playerStats.Assists;
+            aggregated.Blocks += playerStats.Blocks;
+            aggregated.Steals += playerStats.Steals;
+            aggregated.Turnovers += playerStats.Turnovers;
+            aggregated.PersonalFouls += playerStats.PersonalFouls;
         });
 
         return { ...team, aggregated };
@@ -127,8 +144,8 @@ export default function TeamStatsClient() {
                         </TableHeader>
                         <TableBody>
                             {teams.map((team) => {
-                                const fgPercent = ((team.aggregated.FieldGoalsMade + team.aggregated.ThreesMade) /
-                                    (team.aggregated.FieldGoalAttempts + team.aggregated.ThreesAttempts) * 100 || 0).toFixed(1);
+                                const fgPercent = (team.aggregated.FieldGoalsMade /
+                                    (team.aggregated.FieldGoalAttempts || 1) * 100 || 0).toFixed(1);
                                 const threePercent = (team.aggregated.ThreesMade / team.aggregated.ThreesAttempts * 100 || 0).toFixed(1);
 
                                 return (
