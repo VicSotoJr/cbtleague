@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trophy, Calendar, Users, BarChart3, Menu, X, ChevronDown, FileText } from "lucide-react";
+import { Trophy, Calendar, Users, BarChart3, Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -29,12 +30,10 @@ export default function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const isProd = process.env.NODE_ENV === 'production';
-    const basePath = isProd ? '/cbtleague' : '';
     const springConfig = { type: "spring" as const, stiffness: 400, damping: 30 };
 
     return (
@@ -55,9 +54,12 @@ export default function Navbar() {
                 )}>
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-white/10 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                            <img
-                                src={`${basePath}/images/cbt-logo1.jpg`}
+                            <Image
+                                src="/images/cbt-logo1.jpg"
                                 alt="CBT League Logo"
+                                fill
+                                sizes="40px"
+                                priority
                                 className="h-full w-full object-cover"
                             />
                         </div>

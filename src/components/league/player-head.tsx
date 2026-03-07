@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface PlayerHeadProps {
@@ -21,10 +22,7 @@ export default function PlayerHead({ playerName, playerHead, className, size = "
         filename += ".jpg";
     }
 
-    const isProd = process.env.NODE_ENV === 'production';
-    const basePath = isProd ? '/cbtleague' : '';
-    const src = `${basePath}/images/player-heads/${filename}`;
-    const fallbackSrc = `${basePath}/images/cbt-logo1.jpg`;
+    const src = `/images/player-heads/${filename}`;
 
     const sizeMap = {
         sm: 32,
@@ -62,9 +60,11 @@ export default function PlayerHead({ playerName, playerHead, className, size = "
                 </svg>
             </div>
 
-            <img
+            <Image
                 src={src}
                 alt={playerName}
+                width={dimension}
+                height={dimension}
                 className={cn(
                     "h-full w-full transition-all duration-500 object-cover object-top",
                     error ? "opacity-0 scale-95" : "opacity-100 scale-100 group-hover:scale-110"
@@ -75,7 +75,7 @@ export default function PlayerHead({ playerName, playerHead, className, size = "
                         setError(true);
                     }
                 }}
-                loading={size === "xl" || size === "lg" ? "eager" : "lazy"}
+                priority={size === "xl" || size === "lg"}
             />
         </div>
     );
