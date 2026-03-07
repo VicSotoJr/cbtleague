@@ -2,26 +2,18 @@
 
 import React from "react";
 import { useSearchParams } from "next/navigation";
-import { GameEntry } from "@/types/league";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
-import allData from "@/data/data.json";
-
-function getSchedules(seasonId: string): GameEntry[] {
-    return (allData as any).seasons[seasonId]?.schedule || [];
-}
+import { getSeasonId, getSeasonLabel, getSeasonSchedule, groupGamesByWeek, SEASON_OPTIONS } from "@/lib/league-data";
 
 export default function ScheduleClient() {
     const searchParams = useSearchParams();
-    const seasonId = searchParams.get("season") || "3";
-    const schedule = getSchedules(seasonId);
+    const seasonId = getSeasonId(searchParams.get("season"));
 
-    const seasons = [
-        { id: "3", label: "Season 3 - 2026" },
-        { id: "2", label: "Season 2 - 2025" },
-        { id: "1", label: "Season 1 - 2023" },
-    ];
+    const schedule = React.useMemo(() => getSeasonSchedule(seasonId), [seasonId]);
+    const gamesByWeek = React.useMemo(() => groupGamesByWeek(schedule), [schedule]);
+    const seasonLabel = getSeasonLabel(seasonId);
 
     return (
         <div className="container mx-auto px-4 py-12 md:px-6">
@@ -38,7 +30,7 @@ export default function ScheduleClient() {
                 <div className="flex items-center gap-3">
                     <span className="text-sm font-bold uppercase tracking-widest text-zinc-500">Season</span>
                     <div className="flex gap-2">
-                        {seasons.map(s => (
+                        {SEASON_OPTIONS.map(s => (
                             <Link
                                 key={s.id}
                                 href={`/schedule?season=${s.id}`}
@@ -57,13 +49,13 @@ export default function ScheduleClient() {
             <div className="mb-8 flex items-center justify-between rounded-xl bg-orange-600/10 p-4 border border-orange-500/20">
                 <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-orange-400 uppercase tracking-tighter">Current View:</span>
-                    <span className="text-lg font-bold text-white">{seasons.find(s => s.id === seasonId)?.label}</span>
+                    <span className="text-lg font-bold text-white">{seasonLabel}</span>
                 </div>
             </div>
 
             <div className="space-y-12">
                 {/* We'll group by Week/Playoffs */}
-                {Array.from(new Set(schedule.map(g => g.week))).map(week => (
+                {gamesByWeek.map(({ week, games }) => (
                     <div
                         key={week}
                         id={week.toLowerCase().replace(/\s+/g, '-')}
@@ -75,9 +67,9 @@ export default function ScheduleClient() {
                         </div>
 
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {schedule.filter(g => g.week === week).map((game, i) => (
+                            {games.map((game, i) => (
                                 <div
-                                    key={i}
+                                    key={`${week}-${game.homeTeam ?? game.byeTeam ?? "bye"}-${i}`}
                                     className={cn(
                                         "relative overflow-hidden rounded-2xl border p-6 transition-all",
                                         game.isPlayoff

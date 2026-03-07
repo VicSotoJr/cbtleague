@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useSearchParams } from "next/navigation";
-import { Team, BaseStats } from "@/types/league";
 import {
     Table,
     TableBody,
@@ -12,82 +11,13 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import allData from "@/data/data.json";
-
-function getTeamsWithAggregatedStats(seasonId: string): (Team & { aggregated: BaseStats })[] {
-    const teams: Team[] = (allData as any).seasons[seasonId]?.teams || [];
-
-    return teams.map(team => {
-        const aggregated: BaseStats = {
-            Points: 0, FieldGoalsMade: 0, FieldGoalAttempts: 0, ThreesMade: 0, ThreesAttempts: 0,
-            FreeThrowsMade: 0, FreeThrowsAttempts: 0, Rebounds: 0, Offrebounds: 0, Defrebounds: 0,
-            Assists: 0, Blocks: 0, Steals: 0, Turnovers: 0, PersonalFouls: 0
-        };
-
-        team.roster.forEach(player => {
-            const playerStats = (player.stats || []).reduce((pAcc, s) => {
-                pAcc.Points += s.Points || 0;
-                pAcc.FieldGoalsMade += s.FieldGoalsMade || 0;
-                pAcc.FieldGoalAttempts += s.FieldGoalAttempts || 0;
-                pAcc.ThreesMade += s.ThreesMade || 0;
-                pAcc.ThreesAttempts += s.ThreesAttempts || 0;
-                pAcc.FreeThrowsMade += s.FreeThrowsMade || 0;
-                pAcc.FreeThrowsAttempts += s.FreeThrowsAttempts || 0;
-                pAcc.Rebounds += s.Rebounds || 0;
-                pAcc.Offrebounds += s.Offrebounds || 0;
-                pAcc.Defrebounds += s.Defrebounds || 0;
-                pAcc.Assists += s.Assists || 0;
-                pAcc.Blocks += s.Blocks || 0;
-                pAcc.Steals += s.Steals || 0;
-                pAcc.Turnovers += s.Turnovers || 0;
-                pAcc.PersonalFouls += s.PersonalFouls || 0;
-                return pAcc;
-            }, {
-                Points: 0, FieldGoalsMade: 0, FieldGoalAttempts: 0, ThreesMade: 0, ThreesAttempts: 0,
-                FreeThrowsMade: 0, FreeThrowsAttempts: 0, Rebounds: 0, Offrebounds: 0, Defrebounds: 0,
-                Assists: 0, Blocks: 0, Steals: 0, Turnovers: 0, PersonalFouls: 0
-            });
-
-            // Detect format
-            const pointsFromInclusive = ((playerStats.FieldGoalsMade - playerStats.ThreesMade) * 2) + (playerStats.ThreesMade * 3);
-            const pointsFromSeparate = (playerStats.FieldGoalsMade * 2) + (playerStats.ThreesMade * 3);
-            const isInclusive = Math.abs(pointsFromInclusive - playerStats.Points) <= Math.abs(pointsFromSeparate - playerStats.Points);
-
-            const totalFGM = isInclusive ? playerStats.FieldGoalsMade : (playerStats.FieldGoalsMade + playerStats.ThreesMade);
-            const totalFGA = isInclusive ? playerStats.FieldGoalAttempts : (playerStats.FieldGoalAttempts + playerStats.ThreesAttempts);
-
-            aggregated.Points += playerStats.Points;
-            aggregated.FieldGoalsMade += totalFGM;
-            aggregated.FieldGoalAttempts += totalFGA;
-            aggregated.ThreesMade += playerStats.ThreesMade;
-            aggregated.ThreesAttempts += playerStats.ThreesAttempts;
-            aggregated.FreeThrowsMade += playerStats.FreeThrowsMade;
-            aggregated.FreeThrowsAttempts += playerStats.FreeThrowsAttempts;
-            aggregated.Rebounds += playerStats.Rebounds;
-            aggregated.Offrebounds += playerStats.Offrebounds;
-            aggregated.Defrebounds += playerStats.Defrebounds;
-            aggregated.Assists += playerStats.Assists;
-            aggregated.Blocks += playerStats.Blocks;
-            aggregated.Steals += playerStats.Steals;
-            aggregated.Turnovers += playerStats.Turnovers;
-            aggregated.PersonalFouls += playerStats.PersonalFouls;
-        });
-
-        return { ...team, aggregated };
-    });
-}
+import { getSeasonId, getSeasonLabel, getSeasonTeamsWithAggregates, SEASON_OPTIONS } from "@/lib/league-data";
 
 export default function TeamStatsClient() {
     const searchParams = useSearchParams();
-    const seasonId = searchParams.get("season") || "3";
-    const teams = getTeamsWithAggregatedStats(seasonId);
-
-    const seasons = [
-        { id: "3", label: "Season 3 - 2026" },
-        { id: "2", label: "Season 2 - 2025" },
-        { id: "1", label: "Season 1 - 2023" },
-    ];
+    const seasonId = getSeasonId(searchParams.get("season"));
+    const teams = React.useMemo(() => getSeasonTeamsWithAggregates(seasonId), [seasonId]);
+    const seasonLabel = getSeasonLabel(seasonId);
 
     return (
         <div className="container mx-auto px-4 py-12 md:px-6">
@@ -102,7 +32,7 @@ export default function TeamStatsClient() {
                 </div>
 
                 <div className="flex gap-2">
-                    {seasons.map(s => (
+                    {SEASON_OPTIONS.map(s => (
                         <Link
                             key={s.id}
                             href={`/stats/teams?season=${s.id}`}
@@ -120,7 +50,7 @@ export default function TeamStatsClient() {
             <div className="mb-8 flex items-center justify-between rounded-xl bg-orange-600/10 p-4 border border-orange-500/20">
                 <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-orange-400 uppercase tracking-tighter">Current View:</span>
-                    <span className="text-lg font-bold text-white">{seasons.find(s => s.id === seasonId)?.label}</span>
+                    <span className="text-lg font-bold text-white">{seasonLabel}</span>
                 </div>
             </div>
 
@@ -144,9 +74,8 @@ export default function TeamStatsClient() {
                         </TableHeader>
                         <TableBody>
                             {teams.map((team) => {
-                                const fgPercent = (team.aggregated.FieldGoalsMade /
-                                    (team.aggregated.FieldGoalAttempts || 1) * 100 || 0).toFixed(1);
-                                const threePercent = (team.aggregated.ThreesMade / team.aggregated.ThreesAttempts * 100 || 0).toFixed(1);
+                                const fgPercent = team.aggregated["FG%"].toFixed(1);
+                                const threePercent = team.aggregated["3P%"].toFixed(1);
 
                                 return (
                                     <TableRow key={team.Team} className="border-white/5 hover:bg-white/5 transition-colors group">

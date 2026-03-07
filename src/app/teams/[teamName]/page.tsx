@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
 import TeamProfileClient from "./team-profile-client";
-import allData from "@/data/data.json";
+import { getLeagueData } from "@/lib/league-data";
 
 export async function generateMetadata(props: {
     params: Promise<{ teamName: string }>;
@@ -18,14 +18,16 @@ export const dynamicParams = false;
 
 export async function generateStaticParams() {
     const teamNames = new Set<string>();
-    Object.values((allData as any).seasons).forEach((season: any) => {
-        season.teams?.forEach((team: any) => {
+    const leagueData = getLeagueData();
+
+    Object.values(leagueData.seasons).forEach((season) => {
+        season.teams.forEach((team) => {
             if (team.Team) {
                 teamNames.add(team.Team.trim());
             }
         });
         // Also include names from schedule as they might differ (e.g., spacing)
-        season.schedule?.forEach((game: any) => {
+        season.schedule.forEach((game) => {
             if (game.homeTeam) teamNames.add(game.homeTeam.trim());
             if (game.awayTeam) teamNames.add(game.awayTeam.trim());
             if (game.byeTeam) teamNames.add(game.byeTeam.trim());

@@ -3,22 +3,15 @@
 import React from "react";
 import { useSearchParams } from "next/navigation";
 import StandingsTable from "@/components/league/standings-table";
-import { Team } from "@/types/league";
-import allData from "@/data/data.json";
 import Link from "next/link";
+import { getSeasonId, getSeasonLabel, getSeasonTeams, SEASON_OPTIONS } from "@/lib/league-data";
 
 export default function StandingsClient() {
     const searchParams = useSearchParams();
-    const seasonId = searchParams.get("season") || "3";
+    const seasonId = getSeasonId(searchParams.get("season"));
+    const teams = React.useMemo(() => getSeasonTeams(seasonId), [seasonId]);
+    const seasonLabel = getSeasonLabel(seasonId);
 
-    // cast to any since we don't have perfect types for data.json structure
-    const teams: Team[] = (allData as any).seasons[seasonId]?.teams || [];
-
-    const seasons = [
-        { id: "3", label: "Season 3 - 2026" },
-        { id: "2", label: "Season 2 - 2025" },
-        { id: "1", label: "Season 1 - 2023" },
-    ];
 
     return (
         <div className="container mx-auto px-4 py-12 md:px-6">
@@ -36,7 +29,7 @@ export default function StandingsClient() {
                     <span className="text-sm font-bold uppercase tracking-widest text-zinc-500">Season</span>
                     <div className="w-[200px]">
                         <div className="flex gap-2">
-                            {seasons.map(s => (
+                            {SEASON_OPTIONS.map(s => (
                                 <Link
                                     key={s.id}
                                     href={`/standings?season=${s.id}`}
@@ -56,7 +49,7 @@ export default function StandingsClient() {
             <div className="mb-8 flex items-center justify-between rounded-xl bg-orange-600/10 p-4 border border-orange-500/20">
                 <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-orange-400 uppercase tracking-tighter">Current View:</span>
-                    <span className="text-lg font-bold text-white">{seasons.find(s => s.id === seasonId)?.label}</span>
+                    <span className="text-lg font-bold text-white">{seasonLabel}</span>
                 </div>
             </div>
 

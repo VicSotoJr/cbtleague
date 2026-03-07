@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
 import PlayerProfileClient from "./player-profile-client";
-import allData from "@/data/data.json";
+import { getLeagueData } from "@/lib/league-data";
 
 export async function generateMetadata(props: {
     params: Promise<{ playerName: string }>;
@@ -18,10 +18,11 @@ export const dynamicParams = false;
 
 export async function generateStaticParams() {
     const playerNames = new Set<string>();
+    const leagueData = getLeagueData();
 
-    Object.values((allData as any).seasons).forEach((season: any) => {
-        season.teams?.forEach((team: any) => {
-            team.roster?.forEach((player: any) => {
+    Object.values(leagueData.seasons).forEach((season) => {
+        season.teams.forEach((team) => {
+            team.roster.forEach((player) => {
                 if (player.name) {
                     playerNames.add(player.name.trim());
                 }

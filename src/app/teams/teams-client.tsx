@@ -2,18 +2,12 @@
 
 import React from "react";
 import { useSearchParams } from "next/navigation";
-import { Team } from "@/types/league";
 import Link from "next/link";
-import { Users, ArrowRight } from "lucide-react";
 import TeamLogo from "@/components/league/team-logo";
 import { cn } from "@/lib/utils";
-import allData from "@/data/data.json";
+import { getSeasonId, getSeasonTeams, SEASON_OPTIONS } from "@/lib/league-data";
 
 import { motion } from "framer-motion";
-
-function getTeams(seasonId: string): Team[] {
-    return (allData as any).seasons[seasonId]?.teams || [];
-}
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -35,14 +29,8 @@ const itemVariants = {
 
 export default function TeamsClient() {
     const searchParams = useSearchParams();
-    const seasonId = searchParams.get("season") || "3";
-    const teams = getTeams(seasonId);
-
-    const seasons = [
-        { id: "3", label: "Season 3 - 2026" },
-        { id: "2", label: "Season 2 - 2025" },
-        { id: "1", label: "Season 1 - 2023" },
-    ];
+    const seasonId = getSeasonId(searchParams.get("season"));
+    const teams = React.useMemo(() => getSeasonTeams(seasonId), [seasonId]);
 
     return (
         <div className="container mx-auto px-4 py-24 md:px-6">
@@ -59,7 +47,7 @@ export default function TeamsClient() {
                 <div className="flex items-center gap-4 bg-white/5 p-2 rounded-2xl border border-white/5">
                     <span className="pl-3 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Season</span>
                     <div className="flex gap-1">
-                        {seasons.map(s => (
+                        {SEASON_OPTIONS.map(s => (
                             <Link
                                 key={s.id}
                                 href={`/teams?season=${s.id}`}

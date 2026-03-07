@@ -17,7 +17,7 @@ export interface BaseStats {
 }
 
 export interface PlayerStat extends BaseStats {
-    game_number: string;
+    game_number: string | number;
     opponent: string;
 }
 
@@ -52,3 +52,33 @@ export interface GameEntry {
 
 export type SeasonData = Team[];
 export type SchedulesData = Record<string, GameEntry[]>;
+
+export interface Season {
+    name: string;
+    teams: Team[];
+    schedule: GameEntry[];
+}
+
+export interface LeagueData {
+    seasons: Record<string, Season>;
+}
+
+export interface AggregatedBaseStats extends BaseStats {
+    twoPM: number;
+    twoPA: number;
+    "FG%": number;
+    "2P%": number;
+    "3P%": number;
+    "FT%": number;
+}
+
+export interface AggregatedPlayerMetrics extends AggregatedBaseStats {
+    PPG: number;
+    RPG: number;
+    APG: number;
+    SPG: number;
+    BPG: number;
+    TOVPG: number;
+    EFF: number;
+    GAMES: number;
+}

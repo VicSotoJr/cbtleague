@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import TeamLogo from "./team-logo";
 import {
@@ -22,9 +21,18 @@ interface StandingsTableProps {
 }
 
 type SortConfig = {
-    key: keyof Team | "winPct";
+    key: "Team" | "wins" | "loss" | "gamesPlayed" | "winPct";
     direction: "asc" | "desc";
 };
+
+type SortableValue = string | number;
+
+function getSortValue(team: Team, key: SortConfig["key"]): SortableValue {
+    if (key === "winPct") {
+        return team.wins / (team.wins + team.loss) || 0;
+    }
+    return team[key];
+}
 
 export default function StandingsTable({ teams, seasonId }: StandingsTableProps) {
     const [sortConfig, setSortConfig] = useState<SortConfig>({
@@ -42,13 +50,10 @@ export default function StandingsTable({ teams, seasonId }: StandingsTableProps)
     const getWinPct = (t: Team) => t.wins / (t.wins + t.loss) || 0;
 
     const sortedTeams = [...teams].sort((a, b) => {
-        let valA: any = sortConfig.key === "winPct" ? getWinPct(a) : a[sortConfig.key as keyof Team];
-        let valB: any = sortConfig.key === "winPct" ? getWinPct(b) : b[sortConfig.key as keyof Team];
-
-        if (typeof valA === "string") {
-            valA = valA.toLowerCase();
-            valB = valB.toLowerCase();
-        }
+        const rawA = getSortValue(a, sortConfig.key);
+        const rawB = getSortValue(b, sortConfig.key);
+        const valA = typeof rawA === "string" ? rawA.toLowerCase() : rawA;
+        const valB = typeof rawB === "string" ? rawB.toLowerCase() : rawB;
 
         if (valA < valB) return sortConfig.direction === "asc" ? -1 : 1;
         if (valA > valB) return sortConfig.direction === "asc" ? 1 : -1;
