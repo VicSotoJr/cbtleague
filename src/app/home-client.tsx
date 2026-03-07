@@ -147,50 +147,6 @@ export default function HomeClient() {
                 </div>
             </section>
 
-            {/* The Commissioner Section */}
-            <section className="container mx-auto px-4 py-32 md:px-6">
-                <div className="relative overflow-hidden rounded-[3rem] border border-white/5 bg-gradient-to-br from-zinc-900 via-black to-zinc-900 p-12 md:p-24 shadow-2xl">
-                    <div className="absolute top-0 right-0 h-96 w-96 bg-orange-600/5 rounded-full blur-[120px] -mr-32 -mt-32" />
-
-                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-16">
-                        <div className="shrink-0 relative">
-                            <div className="h-48 w-48 rounded-3xl bg-zinc-800 border-2 border-orange-500/20 flex items-center justify-center p-8">
-                                <Trophy className="h-full w-full text-orange-500" />
-                            </div>
-                            <div className="absolute -bottom-4 -right-4 h-16 w-16 bg-orange-600 rounded-2xl flex items-center justify-center shadow-2xl">
-                                <ShieldAlert className="h-8 w-8 text-white" />
-                            </div>
-                        </div>
-
-                        <div className="flex-1 space-y-8">
-                            <div>
-                                <h4 className="text-xs font-black uppercase tracking-[0.4em] text-orange-500 mb-4">The Authority</h4>
-                                <h2 className="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter leading-none">
-                                    Coach <span className="text-orange-500">Byrd</span>
-                                </h2>
-                                <p className="text-sm font-black text-zinc-600 uppercase tracking-widest mt-2">League Commissioner</p>
-                            </div>
-
-                            <blockquote className="relative">
-                                <div className="absolute -left-6 -top-4 text-6xl text-orange-500/20 font-black italic">"</div>
-                                <p className="text-xl md:text-2xl font-medium text-zinc-300 leading-relaxed italic border-l-2 border-orange-500/50 pl-8">
-                                    This is a no NONSENSE league. I am more than fair but the league will not tolerate any disrespect.
-                                    We play hard, we keep it professional, and we respect the game.
-                                </p>
-                            </blockquote>
-
-                            <div className="pt-4">
-                                <Link
-                                    href="/rules"
-                                    className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-orange-500 hover:text-white transition-colors"
-                                >
-                                    READ THE FULL RULEBOOK <ArrowRight className="h-4 w-4" />
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* Social Signal */}
             <section className="w-full bg-[#09090b] py-32 border-t border-white/5">
@@ -220,6 +176,19 @@ export default function HomeClient() {
                     </div>
                 </div>
             </section>
+
+            {/* The Commissioner Section */}
+        <section className="container mx-auto px-4 py-12 md:px-6">
+          <div className="flex items-center gap-4 border-l-2 border-orange-500 pl-6">
+            <Trophy className="h-6 w-6 text-orange-500 shrink-0" />
+            <div>
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500">Commissioner</p>
+                <p className="text-lg font-black uppercase tracking-tight text-white">
+                    Coach <span className="text-orange-500">Byrd</span>
+                </p>
+            </div>
+          </div>
+        </section>
 
             {/* Footer */}
             <footer className="w-full py-12 border-t border-white/5 text-center">
