@@ -16,8 +16,8 @@ export default function TeamLogo({ teamName, className, size = 100 }: TeamLogoPr
     const formattedName = teamName.trim().toLowerCase().replace(/\s+/g, "-");
 
     // Potential paths to check (Legacy used .jpg primarily)
-    const src = `/images/team-logos/${formattedName}.jpg`;
-    const fallbackSrc = "/images/cbt-logo1.jpg";
+    const src = `/cbtleague/images/team-logos/${formattedName}.jpg`;
+    const fallbackSrc = "/cbtleague/images/cbt-logo1.jpg";
 
     return (
         <div
