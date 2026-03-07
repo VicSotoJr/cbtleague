@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "generate:summary": "node scripts/generate-league-summary.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

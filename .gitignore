@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local admin export artifacts
 cbtleague-updates-*.json
+
+# generated local image thumbs (not shipped)
+public/images/player-heads/thumbs/

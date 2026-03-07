@@ -4,8 +4,8 @@ import React from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import TeamLogo from "@/components/league/team-logo";
-import { cn } from "@/lib/utils";
-import { getSeasonId, getSeasonTeams, SEASON_OPTIONS } from "@/lib/league-data";
+import SeasonToggle from "@/components/league/season-toggle";
+import { getSeasonId, getSeasonTeams, SEASON_OPTIONS } from "@/lib/league-summary";
 
 import { motion } from "framer-motion";
 
@@ -44,25 +44,11 @@ export default function TeamsClient() {
                     </p>
                 </div>
 
-                <div className="flex items-center gap-4 bg-white/5 p-2 rounded-2xl border border-white/5">
-                    <span className="pl-3 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Season</span>
-                    <div className="flex gap-1">
-                        {SEASON_OPTIONS.map(s => (
-                            <Link
-                                key={s.id}
-                                href={`/teams?season=${s.id}`}
-                                className={cn(
-                                    "rounded-xl px-5 py-2 text-xs font-black transition-all uppercase tracking-widest",
-                                    seasonId === s.id
-                                        ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20"
-                                        : "text-zinc-500 hover:text-white hover:bg-white/5"
-                                )}
-                            >
-                                {s.id}
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+                <SeasonToggle
+                    seasonId={seasonId}
+                    options={SEASON_OPTIONS}
+                    hrefForSeason={(id) => `/teams/?season=${id}`}
+                />
             </div>
 
             <motion.div
@@ -74,7 +60,8 @@ export default function TeamsClient() {
                 {teams.map((team) => (
                     <motion.div key={team.Team} variants={itemVariants}>
                         <Link
-                            href={`/teams/${encodeURIComponent(team.Team.trim())}?season=${seasonId}`}
+                            href={`/teams/${encodeURIComponent(team.Team.trim())}/?season=${seasonId}`}
+                            prefetch={false}
                             className="group relative flex flex-col items-center overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-950 p-8 text-center transition-all hover:border-orange-500/30 hover:bg-zinc-900 active:scale-95"
                         >
                             <div className="mb-8 relative">
@@ -91,7 +78,7 @@ export default function TeamsClient() {
                             <div className="mt-4 grid grid-cols-2 w-full gap-4 pt-6 border-t border-white/5">
                                 <div className="text-left">
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-1">Players</p>
-                                    <p className="text-lg font-bold text-white leading-none">{team.roster.length}</p>
+                                    <p className="text-lg font-bold text-white leading-none">{team.playerCount}</p>
                                 </div>
                                 <div className="text-right">
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-1">Record</p>

@@ -46,7 +46,8 @@ export default function PlayerSearch({ players }: PlayerSearchProps) {
                             {filteredPlayers.map((player) => (
                                 <Link
                                     key={player.name + player.team}
-                                    href={`/players/${encodeURIComponent(player.name.trim())}`}
+                                    href={`/players/${encodeURIComponent(player.name.trim())}/`}
+                                    prefetch={false}
                                     className="flex items-center gap-3 rounded-xl p-3 hover:bg-white/5 transition-colors group"
                                     onClick={() => setQuery("")}
                                 >

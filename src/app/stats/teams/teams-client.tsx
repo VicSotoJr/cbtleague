@@ -11,7 +11,8 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { getSeasonId, getSeasonLabel, getSeasonTeamsWithAggregates, SEASON_OPTIONS } from "@/lib/league-data";
+import SeasonToggle from "@/components/league/season-toggle";
+import { getSeasonId, getSeasonLabel, getSeasonTeamsWithAggregates, SEASON_OPTIONS } from "@/lib/league-summary";
 
 export default function TeamStatsClient() {
     const searchParams = useSearchParams();
@@ -31,20 +32,11 @@ export default function TeamStatsClient() {
                     </p>
                 </div>
 
-                <div className="flex gap-2">
-                    {SEASON_OPTIONS.map(s => (
-                        <Link
-                            key={s.id}
-                            href={`/stats/teams?season=${s.id}`}
-                            className={`rounded-lg px-4 py-2 text-sm font-bold transition-all ${seasonId === s.id
-                                ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                                : "bg-zinc-900 text-zinc-400 hover:bg-zinc-800"
-                                }`}
-                        >
-                            {s.id}
-                        </Link>
-                    ))}
-                </div>
+                <SeasonToggle
+                    seasonId={seasonId}
+                    options={SEASON_OPTIONS}
+                    hrefForSeason={(id) => `/stats/teams/?season=${id}`}
+                />
             </div>
 
             <div className="mb-8 flex items-center justify-between rounded-xl bg-orange-600/10 p-4 border border-orange-500/20">
@@ -80,7 +72,7 @@ export default function TeamStatsClient() {
                                 return (
                                     <TableRow key={team.Team} className="border-white/5 hover:bg-white/5 transition-colors group">
                                         <TableCell className="sticky left-0 bg-zinc-900/90 backdrop-blur-md z-10 font-bold text-white group-hover:text-orange-500">
-                                            <Link href={`/teams/${encodeURIComponent(team.Team.trim())}?season=${seasonId}`}>
+                                            <Link href={`/teams/${encodeURIComponent(team.Team.trim())}/?season=${seasonId}`} prefetch={false}>
                                                 {team.Team}
                                             </Link>
                                         </TableCell>

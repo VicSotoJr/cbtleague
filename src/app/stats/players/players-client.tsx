@@ -12,26 +12,77 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import PlayerHead from "@/components/league/player-head";
-import { getSeasonId, getSeasonLabel, getSeasonPlayersWithAggregates, SEASON_OPTIONS } from "@/lib/league-data";
+import SeasonToggle from "@/components/league/season-toggle";
+import { getSeasonId, getSeasonLabel, getSeasonPlayersWithAggregates, SEASON_OPTIONS } from "@/lib/league-summary";
+
+const ROWS_PER_PAGE = 50;
+
+const PLAYER_STAT_COLUMNS = [
+  "GP",
+  "PTS",
+  "PPG",
+  "FGM",
+  "FGA",
+  "FG%",
+  "2PM",
+  "2PA",
+  "2P%",
+  "3PM",
+  "3PA",
+  "3P%",
+  "FTM",
+  "FTA",
+  "FT%",
+  "OREB",
+  "DREB",
+  "REB",
+  "RPG",
+  "AST",
+  "APG",
+  "STL",
+  "SPG",
+  "BLK",
+  "BPG",
+  "TOV",
+  "TOVPG",
+  "PF",
+  "EFF",
+] as const;
 
 export default function PlayersClient() {
   const searchParams = useSearchParams();
   const seasonId = getSeasonId(searchParams.get("season"));
 
-  const players = React.useMemo(
-    () => getSeasonPlayersWithAggregates(seasonId).toSorted((a, b) => b.aggregated.PPG - a.aggregated.PPG),
-    [seasonId]
-  );
+  const players = React.useMemo(() => getSeasonPlayersWithAggregates(seasonId), [seasonId]);
 
   const [searchQuery, setSearchQuery] = React.useState("");
-  const searchValue = searchQuery.trim().toLowerCase();
+  const [page, setPage] = React.useState(1);
+  const deferredSearchQuery = React.useDeferredValue(searchQuery);
+  const searchValue = deferredSearchQuery.trim().toLowerCase();
   const filteredPlayers = React.useMemo(
     () => players.filter((entry) => entry.player.name.toLowerCase().includes(searchValue)),
     [players, searchValue]
   );
+  const totalPages = Math.max(1, Math.ceil(filteredPlayers.length / ROWS_PER_PAGE));
+
+  React.useEffect(() => {
+    setPage(1);
+  }, [seasonId, searchValue]);
+
+  React.useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
+  const paginatedPlayers = React.useMemo(() => {
+    const start = (page - 1) * ROWS_PER_PAGE;
+    return filteredPlayers.slice(start, start + ROWS_PER_PAGE);
+  }, [filteredPlayers, page]);
 
   const seasonLabel = getSeasonLabel(seasonId);
+  const pageStart = filteredPlayers.length === 0 ? 0 : (page - 1) * ROWS_PER_PAGE + 1;
+  const pageEnd = Math.min(page * ROWS_PER_PAGE, filteredPlayers.length);
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-6">
@@ -53,25 +104,11 @@ export default function PlayersClient() {
               className="w-full rounded-xl border border-white/10 bg-zinc-900/50 px-4 py-2 text-white placeholder:text-zinc-600 focus:border-orange-500/50 focus:outline-none focus:ring-1 focus:ring-orange-500/20"
             />
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-bold uppercase tracking-widest text-zinc-500">Season</span>
-            <div className="flex gap-2">
-              {SEASON_OPTIONS.map((season) => (
-                <Link
-                  key={season.id}
-                  href={`/stats/players?season=${season.id}`}
-                  className={cn(
-                    "rounded-lg px-4 py-2 text-sm font-bold transition-all",
-                    seasonId === season.id
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                      : "bg-zinc-900 text-zinc-400 hover:bg-zinc-800"
-                  )}
-                >
-                  {season.id}
-                </Link>
-              ))}
-            </div>
-          </div>
+          <SeasonToggle
+            seasonId={seasonId}
+            options={SEASON_OPTIONS}
+            hrefForSeason={(id) => `/stats/players/?season=${id}`}
+          />
         </div>
       </div>
 
@@ -87,41 +124,11 @@ export default function PlayersClient() {
           <Table>
             <TableHeader className="bg-white/5">
               <TableRow className="border-white/5 hover:bg-transparent">
-                <TableHead className="sticky left-0 bg-zinc-900 z-10 min-w-[200px] font-bold text-white uppercase tracking-tighter italic">
+                <TableHead className="min-w-[200px] font-bold text-white uppercase tracking-tighter italic">
                   Player
                 </TableHead>
                 <TableHead className="min-w-[120px] font-bold text-zinc-500 uppercase tracking-tighter">Team</TableHead>
-                {[
-                  "GP",
-                  "PTS",
-                  "PPG",
-                  "FGM",
-                  "FGA",
-                  "FG%",
-                  "2PM",
-                  "2PA",
-                  "2P%",
-                  "3PM",
-                  "3PA",
-                  "3P%",
-                  "FTM",
-                  "FTA",
-                  "FT%",
-                  "OREB",
-                  "DREB",
-                  "REB",
-                  "RPG",
-                  "AST",
-                  "APG",
-                  "STL",
-                  "SPG",
-                  "BLK",
-                  "BPG",
-                  "TOV",
-                  "TOVPG",
-                  "PF",
-                  "EFF",
-                ].map((stat) => (
+                {PLAYER_STAT_COLUMNS.map((stat) => (
                   <TableHead
                     key={stat}
                     className={cn(
@@ -135,28 +142,23 @@ export default function PlayersClient() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredPlayers.map((entry, i) => {
+              {paginatedPlayers.map((entry, i) => {
                 const { player, teamName, aggregated } = entry;
 
                 return (
                   <TableRow
-                    key={`${player.name}-${teamName}-${i}`}
+                    key={`${player.name}-${teamName}-${page}-${i}`}
                     className="border-white/5 hover:bg-white/5 transition-colors group"
                   >
-                    <TableCell className="sticky left-0 bg-zinc-900/90 backdrop-blur-md z-10 font-bold text-white group-hover:text-orange-500">
-                      <Link href={`/players/${encodeURIComponent(player.name.trim())}`} className="flex items-center gap-3">
-                        <PlayerHead
-                          playerName={player.name}
-                          playerHead={player.PlayerHead}
-                          size="sm"
-                          className="rounded-full"
-                        />
-                        <span className="uppercase tracking-tight whitespace-nowrap">{player.name}</span>
+                    <TableCell className="font-bold text-white group-hover:text-orange-500">
+                      <Link href={`/players/${encodeURIComponent(player.name.trim())}/`} prefetch={false} className="block uppercase tracking-tight whitespace-nowrap">
+                        {player.name}
                       </Link>
                     </TableCell>
                     <TableCell className="text-zinc-500 font-bold text-sm uppercase tracking-tight whitespace-nowrap">
                       <Link
-                        href={`/teams/${encodeURIComponent(teamName.trim())}?season=${seasonId}`}
+                        href={`/teams/${encodeURIComponent(teamName.trim())}/?season=${seasonId}`}
+                        prefetch={false}
                         className="hover:text-white transition-colors"
                       >
                         {teamName}
@@ -196,6 +198,33 @@ export default function PlayersClient() {
               })}
             </TableBody>
           </Table>
+        </div>
+        <div className="flex flex-col gap-3 border-t border-white/5 bg-zinc-950/70 px-4 py-4 text-sm text-zinc-400 md:flex-row md:items-center md:justify-between">
+          <div>
+            Showing <span className="font-bold text-white">{pageStart}-{pageEnd}</span> of{" "}
+            <span className="font-bold text-white">{filteredPlayers.length}</span> players
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setPage((current) => Math.max(1, current - 1))}
+              disabled={page === 1}
+              className="rounded-lg border border-white/10 bg-zinc-900 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white transition-colors enabled:hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Prev
+            </button>
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+              Page {page}/{totalPages}
+            </span>
+            <button
+              type="button"
+              onClick={() => setPage((current) => Math.min(totalPages, current + 1))}
+              disabled={page === totalPages}
+              className="rounded-lg border border-white/10 bg-zinc-900 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white transition-colors enabled:hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>

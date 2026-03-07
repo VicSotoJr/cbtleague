@@ -13,10 +13,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { aggregatePlayerStats, getLeagueData } from "@/lib/league-data";
 import type { AggregatedPlayerMetrics } from "@/types/league";
 
-interface SeasonStats {
+export interface SeasonStats {
   seasonId: string;
   seasonName: string;
   teamName: string;
@@ -25,39 +24,19 @@ interface SeasonStats {
   gameLogs: PlayerStat[];
 }
 
-function getPlayerData(playerName: string): SeasonStats[] {
-  const leagueData = getLeagueData();
-  const results: SeasonStats[] = [];
-  const normalizedPlayerName = playerName.trim().toLowerCase();
-
-  for (const [seasonId, seasonData] of Object.entries(leagueData.seasons)) {
-    for (const team of seasonData.teams) {
-      const player = team.roster.find((entry) => entry.name.trim().toLowerCase() === normalizedPlayerName);
-      if (!player) continue;
-
-      results.push({
-        seasonId,
-        seasonName: seasonData.name,
-        teamName: team.Team,
-        stats: aggregatePlayerStats(player),
-        playerHead: player.PlayerHead,
-        gameLogs: player.stats ?? [],
-      });
-    }
-  }
-
-  return results;
+interface PlayerProfileClientProps {
+  playerName: string;
+  seasonData: SeasonStats[];
 }
 
-export default function PlayerProfileClient({ playerName }: { playerName: string }) {
-  const seasonData = React.useMemo(() => getPlayerData(playerName), [playerName]);
+export default function PlayerProfileClient({ playerName, seasonData }: PlayerProfileClientProps) {
 
   if (seasonData.length === 0) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
         <h1 className="text-4xl font-bold">Player Not Found</h1>
         <p className="mt-4 text-zinc-400">We couldn&apos;t find any historical records for {playerName}.</p>
-        <Link href="/stats/leaders" className="mt-8 inline-flex text-orange-500 hover:underline">
+        <Link href="/stats/leaders/" prefetch={false} className="mt-8 inline-flex text-orange-500 hover:underline">
           View League Leaders
         </Link>
       </div>
@@ -73,7 +52,8 @@ export default function PlayerProfileClient({ playerName }: { playerName: string
   return (
     <div className="container mx-auto px-4 py-12 md:px-6">
       <Link
-        href={`/teams/${encodeURIComponent(latestSeason.teamName)}?season=${latestSeason.seasonId}`}
+        href={`/teams/${encodeURIComponent(latestSeason.teamName)}/?season=${latestSeason.seasonId}`}
+        prefetch={false}
         className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-zinc-500 hover:text-white transition-colors uppercase"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -117,7 +97,8 @@ export default function PlayerProfileClient({ playerName }: { playerName: string
               <div className="flex items-center gap-4">
                 <h2 className="text-3xl font-black text-white uppercase tracking-tight">{season.seasonName}</h2>
                 <Link
-                  href={`/teams/${encodeURIComponent(season.teamName)}?season=${season.seasonId}`}
+                  href={`/teams/${encodeURIComponent(season.teamName)}/?season=${season.seasonId}`}
+                  prefetch={false}
                   className="rounded-full bg-white/5 px-4 py-1 text-xs font-bold text-zinc-400 border border-white/10 hover:bg-white/10 transition-colors"
                 >
                   {season.teamName}

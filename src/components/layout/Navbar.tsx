@@ -27,6 +27,7 @@ export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [statsOpen, setStatsOpen] = useState(false);
     const pathname = usePathname();
+    const normalizedPathname = pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
     const isProd = process.env.NODE_ENV === "production";
     const basePath = isProd ? "/cbtleague" : "";
 
@@ -73,11 +74,12 @@ export default function Navbar() {
                     {/* Desktop Navigation */}
                     <div className="hidden items-center gap-2 md:flex">
                         {navItems.map((item) => {
-                            const isActive = pathname === item.href;
+                            const isActive = normalizedPathname === item.href;
                             return (
                                 <Link
                                     key={item.name}
-                                    href={item.href}
+                                    href={item.href === "/" ? "/" : `${item.href}/`}
+                                    prefetch={false}
                                     className={cn(
                                         "relative px-4 py-2 text-sm font-bold transition-colors uppercase tracking-tight",
                                         isActive ? "text-white" : "text-zinc-500 hover:text-white"
@@ -120,7 +122,8 @@ export default function Navbar() {
                                             {statsItems.map((item) => (
                                                 <Link
                                                     key={item.name}
-                                                    href={item.href}
+                                                    href={`${item.href}/`}
+                                                    prefetch={false}
                                                     className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-xs font-bold text-zinc-400 hover:bg-orange-600/10 hover:text-orange-500 transition-all uppercase tracking-widest"
                                                 >
                                                     {item.name}
@@ -157,10 +160,11 @@ export default function Navbar() {
                                 {navItems.map((item) => (
                                     <Link
                                         key={item.name}
-                                        href={item.href}
+                                        href={item.href === "/" ? "/" : `${item.href}/`}
+                                        prefetch={false}
                                         className={cn(
                                             "flex items-center gap-4 rounded-2xl px-4 py-4 text-xl font-black uppercase italic tracking-tighter transition-all",
-                                            pathname === item.href ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20" : "text-zinc-500 hover:text-white hover:bg-white/5"
+                                            normalizedPathname === item.href ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20" : "text-zinc-500 hover:text-white hover:bg-white/5"
                                         )}
                                         onClick={() => setIsOpen(false)}
                                     >
@@ -176,7 +180,8 @@ export default function Navbar() {
                                     {statsItems.map((item) => (
                                         <Link
                                             key={item.name}
-                                            href={item.href}
+                                            href={`${item.href}/`}
+                                            prefetch={false}
                                             className="flex flex-col gap-1 rounded-2xl bg-white/5 p-4 text-sm font-bold text-zinc-400 hover:text-orange-500 transition-all uppercase tracking-tight"
                                             onClick={() => setIsOpen(false)}
                                         >

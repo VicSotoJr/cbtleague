@@ -5,7 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
-import { getSeasonId, getSeasonLabel, getSeasonSchedule, groupGamesByWeek, SEASON_OPTIONS } from "@/lib/league-data";
+import SeasonToggle from "@/components/league/season-toggle";
+import { getSeasonId, getSeasonLabel, getSeasonSchedule, groupGamesByWeek, SEASON_OPTIONS } from "@/lib/league-summary";
 
 export default function ScheduleClient() {
     const searchParams = useSearchParams();
@@ -27,23 +28,11 @@ export default function ScheduleClient() {
                     </p>
                 </div>
 
-                <div className="flex items-center gap-3">
-                    <span className="text-sm font-bold uppercase tracking-widest text-zinc-500">Season</span>
-                    <div className="flex gap-2">
-                        {SEASON_OPTIONS.map(s => (
-                            <Link
-                                key={s.id}
-                                href={`/schedule?season=${s.id}`}
-                                className={`rounded-lg px-4 py-2 text-sm font-bold transition-all ${seasonId === s.id
-                                    ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                                    : "bg-zinc-900 text-zinc-400 hover:bg-zinc-800"
-                                    }`}
-                            >
-                                {s.id}
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+                <SeasonToggle
+                    seasonId={seasonId}
+                    options={SEASON_OPTIONS}
+                    hrefForSeason={(id) => `/schedule/?season=${id}`}
+                />
             </div>
 
             <div className="mb-8 flex items-center justify-between rounded-xl bg-orange-600/10 p-4 border border-orange-500/20">
@@ -100,7 +89,8 @@ export default function ScheduleClient() {
                                                 <div className="flex-1 space-y-1">
                                                     <p className="text-sm font-medium text-zinc-500">Home</p>
                                                     <Link
-                                                        href={`/teams/${encodeURIComponent(game.homeTeam || "")}?season=${seasonId}`}
+                                                        href={`/teams/${encodeURIComponent(game.homeTeam || "")}/?season=${seasonId}`}
+                                                        prefetch={false}
                                                         className="text-lg font-bold text-white line-clamp-1 hover:text-orange-500 transition-colors"
                                                     >
                                                         {game.homeTeam}
@@ -121,7 +111,8 @@ export default function ScheduleClient() {
                                                 <div className="flex-1 space-y-1">
                                                     <p className="text-sm font-medium text-zinc-500">Away</p>
                                                     <Link
-                                                        href={`/teams/${encodeURIComponent(game.awayTeam || "")}?season=${seasonId}`}
+                                                        href={`/teams/${encodeURIComponent(game.awayTeam || "")}/?season=${seasonId}`}
+                                                        prefetch={false}
                                                         className="text-lg font-bold text-white line-clamp-1 hover:text-orange-500 transition-colors"
                                                     >
                                                         {game.awayTeam}

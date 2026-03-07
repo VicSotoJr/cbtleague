@@ -70,14 +70,16 @@ export default function HomeClient() {
                     >
 
                         <Link
-                            href="/schedule"
+                            href="/schedule/"
+                            prefetch={false}
                             className="group flex h-16 items-center justify-center gap-3 rounded-2xl bg-orange-600 px-10 text-lg font-black uppercase italic tracking-tighter text-white transition-all hover:bg-orange-700 active:scale-95 shadow-[0_20px_40px_-15px_rgba(234,88,12,0.4)]"
                         >
                             Explore Schedule
                             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                         </Link>
                         <Link
-                            href="/rules"
+                            href="/rules/"
+                            prefetch={false}
                             className="flex h-16 items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-10 text-lg font-black uppercase italic tracking-tighter text-white backdrop-blur-md transition-all hover:bg-white/10 active:scale-95"
                         >
                             Rules
@@ -99,7 +101,8 @@ export default function HomeClient() {
                 <div className="grid gap-6 md:grid-cols-12 md:grid-rows-2 h-auto md:h-[700px]">
                     {/* Big Feature Card */}
                     <Link
-                        href="/stats/leaders"
+                        href="/stats/leaders/"
+                        prefetch={false}
                         className="group relative md:col-span-8 md:row-span-2 overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/50 p-12 transition-all hover:bg-zinc-900 hover:scale-[1.01] flex flex-col justify-between"
                     >
                         <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform">
@@ -116,7 +119,8 @@ export default function HomeClient() {
 
                     {/* Smaller Feature Cards */}
                     <Link
-                        href="/teams"
+                        href="/teams/"
+                        prefetch={false}
                         className="group relative md:col-span-4 overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/50 p-10 transition-all hover:bg-zinc-900 hover:scale-[1.01] flex flex-col justify-between"
                     >
                         <Users className="h-10 w-10 text-orange-500 mb-6" />
@@ -130,7 +134,8 @@ export default function HomeClient() {
                     </Link>
 
                     <Link
-                        href="/stats/all-time"
+                        href="/stats/all-time/"
+                        prefetch={false}
                         className="group relative md:col-span-4 overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/50 p-10 transition-all hover:bg-zinc-900 hover:scale-[1.01] flex flex-col justify-between"
                     >
                         <Trophy className="h-10 w-10 text-orange-500 mb-6" />

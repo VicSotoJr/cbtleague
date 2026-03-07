@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Trophy, Star, ArrowRight } from "lucide-react";
-import PlayerHead from "@/components/league/player-head";
 import { aggregatePlayerStats, getLeagueData } from "@/lib/league-data";
 import type { BaseStats } from "@/types/league";
 
@@ -40,7 +39,6 @@ type Averages = Record<AverageKey, number>;
 type CareerAccumulator = {
   stats: BaseStats;
   gp: number;
-  head: string;
   teams: Set<string>;
 };
 
@@ -81,7 +79,6 @@ function getAllTimeStats(): Record<string, CareerAccumulator> {
         const existing = playerCareer.get(player.name) ?? {
           stats: createBaseStats(),
           gp: 0,
-          head: player.PlayerHead,
           teams: new Set<string>(),
         };
 
@@ -92,10 +89,6 @@ function getAllTimeStats(): Record<string, CareerAccumulator> {
 
         existing.gp += aggregated.GAMES;
         existing.teams.add(team.Team);
-
-        if (!existing.head && player.PlayerHead) {
-          existing.head = player.PlayerHead;
-        }
 
         playerCareer.set(player.name, existing);
       }
@@ -201,7 +194,8 @@ export default function AllTimePage() {
                 {top5.map((player, i) => (
                   <Link
                     key={player.name}
-                    href={`/players/${encodeURIComponent(player.name)}`}
+                    href={`/players/${encodeURIComponent(player.name)}/`}
+                    prefetch={false}
                     className="group flex items-center gap-4 rounded-2xl border border-white/5 bg-zinc-900/40 p-4 transition-all hover:bg-zinc-900"
                   >
                     <div
@@ -218,7 +212,6 @@ export default function AllTimePage() {
                     >
                       {i + 1}
                     </div>
-                    <PlayerHead playerName={player.name} playerHead={player.data.head} size="md" className="rounded-xl" />
                     <div className="flex-1">
                       <h3 className="font-bold text-white group-hover:text-orange-500 transition-colors uppercase tracking-tight">
                         {player.name}
@@ -250,7 +243,8 @@ export default function AllTimePage() {
           Explore the detailed season-by-season breakdown in our expanded league leaders section.
         </p>
         <Link
-          href="/stats/leaders"
+          href="/stats/leaders/"
+          prefetch={false}
           className="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-8 py-4 font-bold text-white hover:bg-orange-700 transition-all"
         >
           LEAGUE LEADERS <ArrowRight className="h-5 w-5" />

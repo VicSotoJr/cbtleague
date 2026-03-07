@@ -1,7 +1,52 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
-import TeamProfileClient from "./team-profile-client";
-import { getLeagueData } from "@/lib/league-data";
+import TeamProfileClient, { type TeamProfileSeason } from "./team-profile-client";
+import { aggregatePlayerStats, getLeagueData, getSeasonTeamsWithAggregates } from "@/lib/league-data";
+
+function normalizeTeamKey(value: string): string {
+    return value.replace(/\s+/g, "").trim().toLowerCase();
+}
+
+function getTeamSeasons(teamName: string): TeamProfileSeason[] {
+    const normalizedName = normalizeTeamKey(teamName);
+    const seasonIds = Object.keys(getLeagueData().seasons).toSorted((a, b) => Number(b) - Number(a));
+
+    const results: TeamProfileSeason[] = [];
+
+    for (const seasonId of seasonIds) {
+        const seasonTeams = getSeasonTeamsWithAggregates(seasonId);
+        const match = seasonTeams.find((team) => normalizeTeamKey(team.Team) === normalizedName);
+        if (!match) {
+            continue;
+        }
+
+        results.push({
+            seasonId,
+            team: {
+                Team: match.Team,
+                wins: match.wins,
+                loss: match.loss,
+                gamesPlayed: match.gamesPlayed,
+                aggregated: match.aggregated,
+                roster: match.roster.map((player) => {
+                    const aggregatedPlayer = aggregatePlayerStats(player);
+
+                    return {
+                        name: player.name,
+                        number: player.number,
+                        PlayerHead: player.PlayerHead,
+                        gp: aggregatedPlayer.GAMES,
+                        ppg: aggregatedPlayer.PPG,
+                        apg: aggregatedPlayer.APG,
+                        rpg: aggregatedPlayer.RPG,
+                    };
+                }),
+            },
+        });
+    }
+
+    return results;
+}
 
 export async function generateMetadata(props: {
     params: Promise<{ teamName: string }>;
@@ -55,10 +100,11 @@ export default async function TeamProfilePage(props: {
 }) {
     const params = await props.params;
     const teamName = decodeURIComponent(params.teamName).trim();
+    const seasons = getTeamSeasons(teamName);
 
     return (
         <Suspense fallback={<div className="container mx-auto px-4 py-12 text-center text-white">Loading...</div>}>
-            <TeamProfileClient teamName={teamName} />
+            <TeamProfileClient seasons={seasons} />
         </Suspense>
     );
 }

@@ -6,33 +6,69 @@ import Link from "next/link";
 import TeamLogo from "@/components/league/team-logo";
 import PlayerHead from "@/components/league/player-head";
 import { ArrowLeft } from "lucide-react";
-import { getSeasonId, getSeasonTeamsWithAggregates } from "@/lib/league-data";
+import type { AggregatedBaseStats } from "@/types/league";
 
-type TeamWithAggregates = ReturnType<typeof getSeasonTeamsWithAggregates>[number];
+type TeamProfileRosterPlayer = {
+  name: string;
+  number: string | number;
+  PlayerHead?: string;
+  gp: number;
+  ppg: number;
+  apg: number;
+  rpg: number;
+};
 
-function findTeam(teams: TeamWithAggregates[], teamName: string): TeamWithAggregates | null {
-  const exact = teams.find((team) => team.Team.trim() === teamName);
-  if (exact) return exact;
+type TeamProfileSnapshot = {
+  Team: string;
+  wins: number;
+  loss: number;
+  gamesPlayed: number;
+  aggregated: AggregatedBaseStats;
+  roster: TeamProfileRosterPlayer[];
+};
 
-  const normalizedInput = teamName.replace(/\s+/g, "").toLowerCase();
-  return teams.find((team) => team.Team.replace(/\s+/g, "").toLowerCase() === normalizedInput) ?? null;
+export type TeamProfileSeason = {
+  seasonId: string;
+  team: TeamProfileSnapshot;
+};
+
+interface TeamProfileClientProps {
+  seasons: TeamProfileSeason[];
 }
 
-export default function TeamProfileClient({ teamName }: { teamName: string }) {
-  const searchParams = useSearchParams();
-  const seasonId = getSeasonId(searchParams.get("season"));
+function RosterStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg border border-white/5 bg-zinc-950/60 px-2 py-1.5 text-center">
+      <p className="text-[9px] font-black uppercase tracking-[0.18em] text-zinc-600">{label}</p>
+      <p className="mt-1 text-sm font-black text-white">{value}</p>
+    </div>
+  );
+}
 
-  const team = React.useMemo(() => {
-    const seasonTeams = getSeasonTeamsWithAggregates(seasonId);
-    return findTeam(seasonTeams, teamName);
-  }, [seasonId, teamName]);
+export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
+  const searchParams = useSearchParams();
+  const requestedSeason = searchParams.get("season");
+
+  const seasonId = React.useMemo(() => {
+    if (requestedSeason && seasons.some((season) => season.seasonId === requestedSeason)) {
+      return requestedSeason;
+    }
+
+    return seasons[0]?.seasonId ?? "3";
+  }, [requestedSeason, seasons]);
+
+  const selectedSeason = React.useMemo(
+    () => seasons.find((season) => season.seasonId === seasonId) ?? null,
+    [seasonId, seasons]
+  );
+  const team = selectedSeason?.team ?? null;
 
   if (!team) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
         <h1 className="text-4xl font-bold">Team Not Found</h1>
         <p className="mt-4 text-zinc-400">The team you are looking for does not exist in season {seasonId}.</p>
-        <Link href="/teams" className="mt-8 inline-flex text-orange-500 hover:underline">
+        <Link href="/teams/" prefetch={false} className="mt-8 inline-flex text-orange-500 hover:underline">
           Back to Teams
         </Link>
       </div>
@@ -42,7 +78,8 @@ export default function TeamProfileClient({ teamName }: { teamName: string }) {
   return (
     <div className="container mx-auto px-4 py-12 md:px-6">
       <Link
-        href={`/teams?season=${seasonId}`}
+        href={`/teams/?season=${seasonId}`}
+        prefetch={false}
         className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-zinc-500 hover:text-white transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -84,24 +121,30 @@ export default function TeamProfileClient({ teamName }: { teamName: string }) {
             {team.roster.map((player, i) => (
               <Link
                 key={`${player.name}-${i}`}
-                href={`/players/${encodeURIComponent(player.name.trim())}`}
-                className="group flex items-center gap-4 rounded-2xl border border-white/5 bg-zinc-900/50 p-4 transition-all hover:bg-zinc-900 hover:scale-[1.02] active:scale-[0.98]"
+                href={`/players/${encodeURIComponent(player.name.trim())}/`}
+                prefetch={false}
+                className="group rounded-2xl border border-white/5 bg-zinc-900/50 p-4 transition-all hover:bg-zinc-900 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <PlayerHead
-                  playerName={player.name}
-                  playerHead={player.PlayerHead}
-                  size={64}
-                  className="rounded-xl group-hover:scale-110 transition-transform"
-                />
-                <div className="flex-1">
-                  <h3 className="font-bold text-white group-hover:text-orange-500 transition-colors uppercase tracking-tight">
-                    {player.name}
-                  </h3>
-                  <p className="text-sm font-mono text-zinc-500">#{player.number}</p>
+                <div className="flex items-center gap-4">
+                  <PlayerHead
+                    playerName={player.name}
+                    playerHead={player.PlayerHead}
+                    size={64}
+                    className="rounded-xl group-hover:scale-110 transition-transform"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <h3 className="truncate font-bold text-white group-hover:text-orange-500 transition-colors uppercase tracking-tight">
+                      {player.name}
+                    </h3>
+                    <p className="text-sm font-mono text-zinc-500">#{player.number}</p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Games</p>
-                  <p className="font-black text-white">{player.GamesPlayed}</p>
+
+                <div className="mt-4 grid grid-cols-4 gap-2 border-t border-white/5 pt-3">
+                  <RosterStat label="GP" value={String(player.gp)} />
+                  <RosterStat label="PPG" value={player.ppg.toFixed(1)} />
+                  <RosterStat label="APG" value={player.apg.toFixed(1)} />
+                  <RosterStat label="RPG" value={player.rpg.toFixed(1)} />
                 </div>
               </Link>
             ))}
