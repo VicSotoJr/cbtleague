@@ -53,6 +53,20 @@ function getLeagueLeaders(seasonId: string): PlayerWithTeam[] {
             });
 
             const gp = player.GamesPlayed || 1;
+
+            // Critical: Data consistency fix. Season 1 has inclusive FGM, Season 2 has separate FGM.
+            // We detect the format dynamically per player to ensure accuracy.
+            const pointsFromInclusive = ((aggregated.FieldGoalsMade - aggregated.ThreesMade) * 2) + (aggregated.ThreesMade * 3);
+            const pointsFromSeparate = (aggregated.FieldGoalsMade * 2) + (aggregated.ThreesMade * 3);
+            const isInclusive = Math.abs(pointsFromInclusive - aggregated.Points) <= Math.abs(pointsFromSeparate - aggregated.Points);
+
+            const totalFGM = isInclusive ? aggregated.FieldGoalsMade : (aggregated.FieldGoalsMade + aggregated.ThreesMade);
+            const totalFGA = isInclusive ? aggregated.FieldGoalAttempts : (aggregated.FieldGoalAttempts + aggregated.ThreesAttempts);
+            const threePM = aggregated.ThreesMade;
+            const threePA = aggregated.ThreesAttempts;
+            const twoPM = totalFGM - threePM;
+            const twoPA = totalFGA - threePA;
+
             aggregated.PPG = Number((aggregated.Points / gp).toFixed(1));
             aggregated.RPG = Number((aggregated.Rebounds / gp).toFixed(1));
             aggregated.APG = Number((aggregated.Assists / gp).toFixed(1));
@@ -60,16 +74,9 @@ function getLeagueLeaders(seasonId: string): PlayerWithTeam[] {
             aggregated.BPG = Number((aggregated.Blocks / gp).toFixed(1));
             (aggregated as any).TOVPG = Number((aggregated.Turnovers / gp).toFixed(1));
 
-            const missedFG = (aggregated.FieldGoalAttempts + aggregated.ThreesAttempts) - (aggregated.FieldGoalsMade + aggregated.ThreesMade);
+            const missedFG = totalFGA - totalFGM;
             const missedFT = aggregated.FreeThrowsAttempts - aggregated.FreeThrowsMade;
             aggregated.EFF = Number(((aggregated.Points + aggregated.Rebounds + aggregated.Assists + aggregated.Steals + aggregated.Blocks - missedFG - missedFT - aggregated.Turnovers) / gp).toFixed(1));
-
-            const totalFGM = aggregated.FieldGoalsMade;
-            const totalFGA = aggregated.FieldGoalAttempts;
-            const threePM = aggregated.ThreesMade;
-            const threePA = aggregated.ThreesAttempts;
-            const twoPM = totalFGM - threePM;
-            const twoPA = totalFGA - threePA;
 
             aggregated["FG%"] = Number(((totalFGM / (totalFGA || 1)) * 100).toFixed(1));
             aggregated["3P%"] = Number(((threePM / (threePA || 1)) * 100).toFixed(1));

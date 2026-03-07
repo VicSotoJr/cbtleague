@@ -45,7 +45,16 @@ function getPlayerData(playerName: string): SeasonStats[] {
                 });
 
                 const gp = player.GamesPlayed || 1;
-                const missedFG = (aggregated.FieldGoalAttempts + aggregated.ThreesAttempts) - (aggregated.FieldGoalsMade + aggregated.ThreesMade);
+
+                // Critical: Data consistency fix for negative stats. Season 1 has inclusive FGM, Season 2 has separate FGM.
+                const pointsFromInclusive = ((aggregated.FieldGoalsMade - aggregated.ThreesMade) * 2) + (aggregated.ThreesMade * 3);
+                const pointsFromSeparate = (aggregated.FieldGoalsMade * 2) + (aggregated.ThreesMade * 3);
+                const isInclusive = Math.abs(pointsFromInclusive - aggregated.Points) <= Math.abs(pointsFromSeparate - aggregated.Points);
+
+                const totalFGM = isInclusive ? aggregated.FieldGoalsMade : (aggregated.FieldGoalsMade + aggregated.ThreesMade);
+                const totalFGA = isInclusive ? aggregated.FieldGoalAttempts : (aggregated.FieldGoalAttempts + aggregated.ThreesAttempts);
+
+                const missedFG = totalFGA - totalFGM;
                 const missedFT = aggregated.FreeThrowsAttempts - aggregated.FreeThrowsMade;
 
                 const eff = (aggregated.Points + aggregated.Rebounds + aggregated.Assists + aggregated.Steals + aggregated.Blocks - missedFG - missedFT - aggregated.Turnovers) / gp;
@@ -198,12 +207,17 @@ export default function PlayerProfileClient({ playerName }: { playerName: string
                                     </TableHeader>
                                     <TableBody>
                                         {season.gameLogs.map((log, idx) => {
-                                            const twoPM = log.FieldGoalsMade - log.ThreesMade; // Corrected to be 2PM
-                                            const twoPA = log.FieldGoalAttempts - log.ThreesAttempts; // Corrected to be 2PA
+                                            // Data consistency detection for individual games
+                                            const pointsFromInclusive = ((log.FieldGoalsMade - log.ThreesMade) * 2) + (log.ThreesMade * 3);
+                                            const pointsFromSeparate = (log.FieldGoalsMade * 2) + (log.ThreesMade * 3);
+                                            const isInclusive = Math.abs(pointsFromInclusive - log.Points) <= Math.abs(pointsFromSeparate - log.Points);
+
+                                            const totalFGM = isInclusive ? log.FieldGoalsMade : (log.FieldGoalsMade + log.ThreesMade);
+                                            const totalFGA = isInclusive ? log.FieldGoalAttempts : (log.FieldGoalAttempts + log.ThreesAttempts);
                                             const threePM = log.ThreesMade;
                                             const threePA = log.ThreesAttempts;
-                                            const totalFGM = log.FieldGoalsMade; // Total FGM is already in log.FieldGoalsMade
-                                            const totalFGA = log.FieldGoalAttempts; // Total FGA is already in log.FieldGoalAttempts
+                                            const twoPM = totalFGM - threePM;
+                                            const twoPA = totalFGA - threePA;
 
                                             const fgPct = ((totalFGM / (totalFGA || 1)) * 100).toFixed(1);
                                             const twoPct = ((twoPM / (twoPA || 1)) * 100).toFixed(1);
