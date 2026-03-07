@@ -70,11 +70,7 @@ export default function HomeClient() {
                         variants={itemVariants}
                         className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center"
                     >
-                        <img
-                            src={`${basePath}/images/cbt-hero-silhouette.png`}
-                            alt="CBT Player Silhouette"
-                            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] max-w-[600px] md:max-w-[800px] lg:max-w-[1000px] xl:max-w-[1200px] opacity-20 pointer-events-none"
-                        />
+
                         <Link
                             href="/schedule"
                             className="group flex h-16 items-center justify-center gap-3 rounded-2xl bg-orange-600 px-10 text-lg font-black uppercase italic tracking-tighter text-white transition-all hover:bg-orange-700 active:scale-95 shadow-[0_20px_40px_-15px_rgba(234,88,12,0.4)]"
