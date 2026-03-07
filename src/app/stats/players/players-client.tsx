@@ -198,8 +198,10 @@ export default function PlayersClient() {
                                 const totalFGA = player.aggregated.FieldGoalAttempts;
                                 const threePM = player.aggregated.ThreesMade;
                                 const threePA = player.aggregated.ThreesAttempts;
-                                const twoPM = totalFGM - threePM;
-                                const twoPA = totalFGA - threePA;
+
+                                // Robust safety guards for the table display
+                                const twoPM = Math.max(0, totalFGM - threePM);
+                                const twoPA = Math.max(twoPM, totalFGA - threePA);
 
                                 const fgPct = ((totalFGM / (totalFGA || 1)) * 100).toFixed(1);
                                 const twoPct = ((twoPM / (twoPA || 1)) * 100).toFixed(1);
