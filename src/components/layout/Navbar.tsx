@@ -33,6 +33,8 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const isProd = process.env.NODE_ENV === 'production';
+    const basePath = isProd ? '/cbtleague' : '';
     const springConfig = { type: "spring" as const, stiffness: 400, damping: 30 };
 
     return (
@@ -54,7 +56,7 @@ export default function Navbar() {
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-white/10 shadow-lg group-hover:scale-105 transition-transform duration-300">
                             <img
-                                src="/cbtleague/images/cbt-logo1.jpg"
+                                src={`${basePath}/images/cbt-logo1.jpg`}
                                 alt="CBT League Logo"
                                 className="h-full w-full object-cover"
                             />
