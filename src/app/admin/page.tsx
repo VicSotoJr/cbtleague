@@ -5,9 +5,11 @@ import Link from "next/link";
 import { Save, AlertCircle, CheckCircle2, User, Calendar, ArrowLeft, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getSeasonData } from "@/lib/league-data";
+import type { AdminStatsUpdatePayload, AdminStatsUpdateResponse } from "@/types/admin-api";
 import type { BaseStats, Team } from "@/types/league";
 
 const LOCAL_UPDATES_KEY = "cbtleague-admin-updates";
+const ADMIN_API_ENDPOINT = process.env.NEXT_PUBLIC_ADMIN_API_URL ?? "/api/admin/update-stats";
 
 type StatKey = keyof BaseStats;
 
@@ -35,8 +37,14 @@ type AdminQueuedUpdate = {
   teamName: string;
   playerName: string;
   opponent: string;
+  gameNumber: string;
   gameLog: BaseStats;
 };
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  return "Failed to save stats";
+}
 
 function readQueuedUpdates(): AdminQueuedUpdate[] {
   if (typeof window === "undefined") return [];
@@ -105,13 +113,42 @@ export default function AdminPage() {
 
   const resetStats = useCallback(() => setStats(EMPTY_STATS), []);
 
-  const handleSave = useCallback(() => {
+  const handleSave = useCallback(async () => {
     if (!selectedPlayer || !selectedGame || hasErrors || !selectedTeam) return;
 
     setIsSaving(true);
     setStatus({ type: null, message: "" });
 
     try {
+      const opponent = selectedTeam === selectedGame.homeTeam ? selectedGame.awayTeam : selectedGame.homeTeam;
+      const gameNumber = selectedGame.week;
+
+      const payload: AdminStatsUpdatePayload = {
+        seasonId,
+        teamName: selectedTeam,
+        playerName: selectedPlayer,
+        opponent: opponent ?? "Unknown",
+        gameNumber,
+        gameLog: stats,
+      };
+
+      const response = await fetch(ADMIN_API_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = (await response.json()) as AdminStatsUpdateResponse;
+      if (!response.ok || !result.ok) {
+        throw new Error(result.message || "Failed to save stats");
+      }
+
+      setStatus({
+        type: "success",
+        message: `Saved ${selectedPlayer} to GitHub (${result.commitSha.slice(0, 7)}).`,
+      });
+      resetStats();
+    } catch (error) {
       const opponent = selectedTeam === selectedGame.homeTeam ? selectedGame.awayTeam : selectedGame.homeTeam;
 
       const queuedUpdate: AdminQueuedUpdate = {
@@ -120,6 +157,7 @@ export default function AdminPage() {
         teamName: selectedTeam,
         playerName: selectedPlayer,
         opponent: opponent ?? "Unknown",
+        gameNumber: selectedGame.week,
         gameLog: stats,
       };
 
@@ -129,12 +167,9 @@ export default function AdminPage() {
       setQueuedCount(nextUpdates.length);
 
       setStatus({
-        type: "success",
-        message: `Queued entry for ${selectedPlayer}. Export updates to apply them in the repository.`,
+        type: "error",
+        message: `${getErrorMessage(error)}. Entry queued locally (${nextUpdates.length}) for export.`,
       });
-      resetStats();
-    } catch {
-      setStatus({ type: "error", message: "Failed to queue update locally" });
     } finally {
       setIsSaving(false);
     }
@@ -333,7 +368,7 @@ export default function AdminPage() {
                       : "bg-orange-600 text-white hover:bg-orange-700 shadow-[0_20px_40px_-15px_rgba(234,88,12,0.4)] active:scale-95"
                   )}
                 >
-                  {isSaving ? "Saving..." : "Queue Stats"}
+                  {isSaving ? "Saving..." : "Save Stats"}
                   <Save className="h-5 w-5" />
                 </button>
 
@@ -346,8 +381,8 @@ export default function AdminPage() {
                 </button>
 
                 <p className="mt-6 text-[10px] text-zinc-700 text-center font-bold uppercase leading-relaxed">
-                  Static deploy mode: updates are queued in your browser. <br />
-                  Export JSON and apply changes in `src/data/data.json` locally.
+                  Primary mode: save directly to GitHub via API. <br />
+                  If API is unavailable, updates are queued in your browser for export.
                 </p>
               </div>
             </div>
