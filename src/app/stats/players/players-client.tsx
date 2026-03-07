@@ -51,8 +51,21 @@ function getAggregatedPlayers(seasonId: string): AggregatedPlayer[] {
             const totalFGM = isInclusive ? aggregated.FieldGoalsMade : (aggregated.FieldGoalsMade + aggregated.ThreesMade);
             const totalFGA = isInclusive ? aggregated.FieldGoalAttempts : (aggregated.FieldGoalAttempts + aggregated.ThreesAttempts);
 
-            const missedFG = totalFGA - totalFGM;
-            const missedFT = aggregated.FreeThrowsAttempts - aggregated.FreeThrowsMade;
+            // Robust safety guards
+            const threePM = aggregated.ThreesMade;
+            const threePA = aggregated.ThreesAttempts;
+            const twoPM = Math.max(0, totalFGM - threePM);
+            const twoPA = Math.max(twoPM, totalFGA - threePA);
+
+            (aggregated as any).PPG = Number((aggregated.Points / gp).toFixed(1));
+            (aggregated as any).RPG = Number((aggregated.Rebounds / gp).toFixed(1));
+            (aggregated as any).APG = Number((aggregated.Assists / gp).toFixed(1));
+            (aggregated as any).SPG = Number((aggregated.Steals / gp).toFixed(1));
+            (aggregated as any).BPG = Number((aggregated.Blocks / gp).toFixed(1));
+            (aggregated as any).TOVPG = Number((aggregated.Turnovers / gp).toFixed(1));
+
+            const missedFG = Math.max(0, totalFGA - totalFGM);
+            const missedFT = Math.max(0, aggregated.FreeThrowsAttempts - aggregated.FreeThrowsMade);
             const eff = (aggregated.Points + aggregated.Rebounds + aggregated.Assists + aggregated.Steals + aggregated.Blocks - missedFG - missedFT - aggregated.Turnovers) / gp;
 
             players.push({

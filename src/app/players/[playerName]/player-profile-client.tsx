@@ -54,8 +54,14 @@ function getPlayerData(playerName: string): SeasonStats[] {
                 const totalFGM = isInclusive ? aggregated.FieldGoalsMade : (aggregated.FieldGoalsMade + aggregated.ThreesMade);
                 const totalFGA = isInclusive ? aggregated.FieldGoalAttempts : (aggregated.FieldGoalAttempts + aggregated.ThreesAttempts);
 
-                const missedFG = totalFGA - totalFGM;
-                const missedFT = aggregated.FreeThrowsAttempts - aggregated.FreeThrowsMade;
+                // Robust safety guards for negative stats (e.g. Dwayne Davila data errors)
+                const threePM = aggregated.ThreesMade;
+                const threePA = aggregated.ThreesAttempts;
+                const twoPM = Math.max(0, totalFGM - threePM);
+                const twoPA = Math.max(twoPM, totalFGA - threePA);
+
+                const missedFG = Math.max(0, totalFGA - totalFGM);
+                const missedFT = Math.max(0, aggregated.FreeThrowsAttempts - aggregated.FreeThrowsMade);
 
                 const eff = (aggregated.Points + aggregated.Rebounds + aggregated.Assists + aggregated.Steals + aggregated.Blocks - missedFG - missedFT - aggregated.Turnovers) / gp;
 
@@ -216,16 +222,18 @@ export default function PlayerProfileClient({ playerName }: { playerName: string
                                             const totalFGA = isInclusive ? log.FieldGoalAttempts : (log.FieldGoalAttempts + log.ThreesAttempts);
                                             const threePM = log.ThreesMade;
                                             const threePA = log.ThreesAttempts;
-                                            const twoPM = totalFGM - threePM;
-                                            const twoPA = totalFGA - threePA;
+
+                                            // Robust safety guards for individual game logs
+                                            const twoPM = Math.max(0, totalFGM - threePM);
+                                            const twoPA = Math.max(twoPM, totalFGA - threePA);
 
                                             const fgPct = ((totalFGM / (totalFGA || 1)) * 100).toFixed(1);
                                             const twoPct = ((twoPM / (twoPA || 1)) * 100).toFixed(1);
                                             const threePct = ((threePM / (threePA || 1)) * 100).toFixed(1);
                                             const ftPct = ((log.FreeThrowsMade / (log.FreeThrowsAttempts || 1)) * 100).toFixed(1);
 
-                                            const missedFG = totalFGA - totalFGM;
-                                            const missedFT = log.FreeThrowsAttempts - log.FreeThrowsMade;
+                                            const missedFG = Math.max(0, totalFGA - totalFGM);
+                                            const missedFT = Math.max(0, log.FreeThrowsAttempts - log.FreeThrowsMade);
                                             const eff = (log.Points + log.Rebounds + log.Assists + log.Steals + log.Blocks - missedFG - missedFT - log.Turnovers);
 
                                             return (

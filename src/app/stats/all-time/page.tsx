@@ -36,9 +36,38 @@ async function getAllTimeStats() {
                 career.teams.add(team.Team);
 
                 player.stats.forEach(stat => {
-                    Object.keys(career.stats).forEach(key => {
-                        if (key in stat) (career.stats as any)[key] += (stat as any)[key] || 0;
-                    });
+                    const totalPTS = stat.Points || 0;
+                    const totalFGM = stat.FieldGoalsMade || 0;
+                    const totalFGA = stat.FieldGoalAttempts || 0;
+                    const total3PM = stat.ThreesMade || 0;
+                    const total3PA = stat.ThreesAttempts || 0;
+
+                    const pointsFromInclusive = ((totalFGM - total3PM) * 2) + (total3PM * 3);
+                    const pointsFromSeparate = (totalFGM * 2) + (total3PM * 3);
+                    const isInclusive = Math.abs(pointsFromInclusive - totalPTS) <= Math.abs(pointsFromSeparate - totalPTS);
+
+                    const realFGM = isInclusive ? totalFGM : (totalFGM + total3PM);
+                    const realFGA = isInclusive ? totalFGA : (totalFGA + total3PA);
+
+                    // Robust safety guards for negative stats
+                    const twoPM = Math.max(0, realFGM - total3PM);
+                    const twoPA = Math.max(twoPM, realFGA - total3PA);
+
+                    career.stats.Points += totalPTS;
+                    career.stats.FieldGoalsMade += realFGM;
+                    career.stats.FieldGoalAttempts += realFGA;
+                    career.stats.ThreesMade += total3PM;
+                    career.stats.ThreesAttempts += total3PA;
+                    career.stats.FreeThrowsMade += stat.FreeThrowsMade || 0;
+                    career.stats.FreeThrowsAttempts += stat.FreeThrowsAttempts || 0;
+                    career.stats.Rebounds += stat.Rebounds || 0;
+                    career.stats.Offrebounds += stat.Offrebounds || 0;
+                    career.stats.Defrebounds += stat.Defrebounds || 0;
+                    career.stats.Assists += stat.Assists || 0;
+                    career.stats.Blocks += stat.Blocks || 0;
+                    career.stats.Steals += stat.Steals || 0;
+                    career.stats.Turnovers += stat.Turnovers || 0;
+                    career.stats.PersonalFouls += stat.PersonalFouls || 0;
                 });
             });
         });
@@ -54,8 +83,8 @@ export default async function AllTimePage() {
     const validRecords = Object.entries(records).map(([name, data]) => {
         const stats = data.stats;
         const gp = data.gp || 1;
-        const missedFG = (stats.FieldGoalAttempts + stats.ThreesAttempts) - (stats.FieldGoalsMade + stats.ThreesMade);
-        const missedFT = stats.FreeThrowsAttempts - stats.FreeThrowsMade;
+        const missedFG = Math.max(0, stats.FieldGoalAttempts - stats.FieldGoalsMade);
+        const missedFT = Math.max(0, stats.FreeThrowsAttempts - stats.FreeThrowsMade);
         const totalEff = stats.Points + stats.Rebounds + stats.Assists + stats.Steals + stats.Blocks - missedFG - missedFT - stats.Turnovers;
 
         return {

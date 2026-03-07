@@ -185,8 +185,11 @@ export default function TeamProfileClient({ teamName }: { teamName: string }) {
 
                                         const totalFGM = stats.fgm;
                                         const totalFGA = stats.fga;
-                                        const twoPM = totalFGM - stats.threeM;
-                                        const twoPA = totalFGA - stats.threeA;
+
+                                        // Robust safety guards for team totals
+                                        const twoPM = Math.max(0, totalFGM - stats.threeM);
+                                        const twoPA = Math.max(twoPM, totalFGA - stats.threeA);
+
                                         const fgPct = ((totalFGM / (totalFGA || 1)) * 100).toFixed(1);
                                         const twoPct = ((twoPM / (twoPA || 1)) * 100).toFixed(1);
                                         const threePct = ((stats.threeM / (stats.threeA || 1)) * 100).toFixed(1);

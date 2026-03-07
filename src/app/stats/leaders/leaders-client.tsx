@@ -64,8 +64,10 @@ function getLeagueLeaders(seasonId: string): PlayerWithTeam[] {
             const totalFGA = isInclusive ? aggregated.FieldGoalAttempts : (aggregated.FieldGoalAttempts + aggregated.ThreesAttempts);
             const threePM = aggregated.ThreesMade;
             const threePA = aggregated.ThreesAttempts;
-            const twoPM = totalFGM - threePM;
-            const twoPA = totalFGA - threePA;
+
+            // Robust safety guards
+            const twoPM = Math.max(0, totalFGM - threePM);
+            const twoPA = Math.max(twoPM, totalFGA - threePA);
 
             aggregated.PPG = Number((aggregated.Points / gp).toFixed(1));
             aggregated.RPG = Number((aggregated.Rebounds / gp).toFixed(1));
@@ -74,8 +76,8 @@ function getLeagueLeaders(seasonId: string): PlayerWithTeam[] {
             aggregated.BPG = Number((aggregated.Blocks / gp).toFixed(1));
             (aggregated as any).TOVPG = Number((aggregated.Turnovers / gp).toFixed(1));
 
-            const missedFG = totalFGA - totalFGM;
-            const missedFT = aggregated.FreeThrowsAttempts - aggregated.FreeThrowsMade;
+            const missedFG = Math.max(0, totalFGA - totalFGM);
+            const missedFT = Math.max(0, aggregated.FreeThrowsAttempts - aggregated.FreeThrowsMade);
             aggregated.EFF = Number(((aggregated.Points + aggregated.Rebounds + aggregated.Assists + aggregated.Steals + aggregated.Blocks - missedFG - missedFT - aggregated.Turnovers) / gp).toFixed(1));
 
             aggregated["FG%"] = Number(((totalFGM / (totalFGA || 1)) * 100).toFixed(1));
