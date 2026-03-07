@@ -54,7 +54,7 @@ export default function Navbar() {
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-white/10 shadow-lg group-hover:scale-105 transition-transform duration-300">
                             <img
-                                src="/images/cbt-logo1.jpg"
+                                src="/cbtleague/images/cbt-logo1.jpg"
                                 alt="CBT League Logo"
                                 className="h-full w-full object-cover"
                             />
