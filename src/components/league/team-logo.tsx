@@ -12,13 +12,15 @@ interface TeamLogoProps {
 
 export default function TeamLogo({ teamName, className, size = 100 }: TeamLogoProps) {
     const [error, setError] = useState(false);
+    const isProd = process.env.NODE_ENV === "production";
+    const basePath = isProd ? "/cbtleague" : "";
 
     // Format team name for file matching: lowercase, hyphens, trimmed
     const formattedName = teamName.trim().toLowerCase().replace(/\s+/g, "-");
 
     // Potential paths to check (Legacy used .jpg primarily)
-    const src = `/images/team-logos/${formattedName}.jpg`;
-    const fallbackSrc = `/images/cbt-logo1.jpg`;
+    const src = `${basePath}/images/team-logos/${formattedName}.jpg`;
+    const fallbackSrc = `${basePath}/images/cbt-logo1.jpg`;
 
     return (
         <div

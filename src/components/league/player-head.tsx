@@ -13,6 +13,8 @@ interface PlayerHeadProps {
 
 export default function PlayerHead({ playerName, playerHead, className, size = "md" }: PlayerHeadProps) {
     const [error, setError] = useState(false);
+    const isProd = process.env.NODE_ENV === "production";
+    const basePath = isProd ? "/cbtleague" : "";
 
     // Robust filename handling
     let filename = (playerHead || playerName).trim().toLowerCase().replace(/\s+/g, "");
@@ -22,7 +24,7 @@ export default function PlayerHead({ playerName, playerHead, className, size = "
         filename += ".jpg";
     }
 
-    const src = `/images/player-heads/${filename}`;
+    const src = `${basePath}/images/player-heads/${filename}`;
 
     const sizeMap = {
         sm: 32,
