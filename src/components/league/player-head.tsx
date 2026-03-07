@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { MISSING_PLAYER_HEADSHOT_KEYS, PLAYER_HEADSHOT_ALIASES } from "@/lib/player-headshot-map";
 
@@ -12,31 +11,108 @@ interface PlayerHeadProps {
     size?: "sm" | "md" | "lg" | "xl" | number;
 }
 
-type SourceMode = "full" | "error";
+function stripFileExtension(value: string): string {
+    return value.replace(/\.[a-z0-9]+$/i, "");
+}
+
+function hasFileExtension(value: string): boolean {
+    return /\.[a-z0-9]+$/i.test(value);
+}
+
+function sanitizeCandidate(value: string): string {
+    return value
+        .trim()
+        .replace(/^.*[\\/]/, "")
+        .replace(/[?#].*$/, "");
+}
+
+function normalizePlayerName(value: string): string {
+    return value
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/['’`]/g, "")
+        .replace(/[^a-z0-9._-]/g, "");
+}
+
+function isKnownMissingHeadshot(fileName: string): boolean {
+    const key = stripFileExtension(fileName).toLowerCase();
+    return MISSING_PLAYER_HEADSHOT_KEYS.has(key);
+}
+
+function buildHeadshotCandidates(playerName: string, playerHead?: string): string[] {
+    const candidates: string[] = [];
+    const seen = new Set<string>();
+
+    const pushCandidate = (rawValue: string) => {
+        const cleaned = sanitizeCandidate(rawValue);
+        if (!cleaned) return;
+        if (isKnownMissingHeadshot(cleaned)) return;
+
+        const lowered = cleaned.toLowerCase();
+        const baseKey = stripFileExtension(lowered);
+        const aliasBase = PLAYER_HEADSHOT_ALIASES[baseKey] ?? baseKey;
+
+        // Prefer canonical ".jpg" keys to avoid extensionless 404s and case-mismatch churn.
+        const canonicalJpg = `${baseKey}.jpg`;
+        const aliasJpg = `${aliasBase}.jpg`;
+        const variants = hasFileExtension(lowered)
+            ? [aliasJpg, lowered]
+            : [aliasJpg, canonicalJpg];
+
+        for (const variant of variants) {
+            if (!seen.has(variant)) {
+                seen.add(variant);
+                candidates.push(variant);
+            }
+        }
+    };
+
+    if (playerHead) {
+        pushCandidate(playerHead);
+    }
+
+    const normalizedFromName = normalizePlayerName(playerName);
+    if (normalizedFromName) {
+        pushCandidate(normalizedFromName);
+    }
+
+    return candidates;
+}
 
 function PlayerHeadImage({
     playerName,
     dimension,
-    fullSrc,
+    sources,
     priority,
-    initialMode,
     canZoom,
 }: {
     playerName: string;
     dimension: number;
-    fullSrc: string;
+    sources: string[];
     priority: boolean;
-    initialMode: SourceMode;
     canZoom: boolean;
 }) {
-    const [sourceMode, setSourceMode] = useState<SourceMode>(initialMode);
-    const showFallback = sourceMode === "error";
+    const [sourceIndex, setSourceIndex] = useState(0);
+    const [hasError, setHasError] = useState(sources.length === 0);
+    const activeSrc = hasError ? null : sources[sourceIndex] ?? null;
+
+    const handleImageError = () => {
+        const nextIndex = sourceIndex + 1;
+        if (nextIndex < sources.length) {
+            setSourceIndex(nextIndex);
+            return;
+        }
+        setHasError(true);
+    };
+
+    const showPlaceholder = hasError;
 
     return (
         <>
             <div className={cn(
                 "absolute inset-0 flex items-center justify-center bg-gradient-to-b from-zinc-800 to-zinc-950 transition-opacity duration-500",
-                showFallback ? "opacity-100" : "opacity-0"
+                showPlaceholder ? "opacity-100" : "opacity-0"
             )}>
                 <svg
                     viewBox="0 0 24 24"
@@ -45,29 +121,32 @@ function PlayerHeadImage({
                     strokeWidth="1"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="h-2/3 w-2/3 text-zinc-700/50"
+                    className="h-2/3 w-2/3 text-zinc-500/70"
                 >
                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                 </svg>
             </div>
 
-            {sourceMode === "full" && (
-                <Image
-                    src={fullSrc}
+            {activeSrc && (
+                // Static export + dynamic fallback sources are more reliable here with native img.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                    src={activeSrc}
                     alt={playerName}
                     width={dimension}
                     height={dimension}
-                    sizes={`${dimension}px`}
                     className={cn(
                         "h-full w-full object-cover object-top",
                         canZoom ? "transition-all duration-500" : "transition-opacity duration-200",
-                        showFallback ? "opacity-0" : "opacity-100 scale-100",
+                        "opacity-100 scale-100",
                         canZoom && "group-hover:scale-110"
                     )}
-                    onError={() => setSourceMode("error")}
-                    priority={priority}
+                    onError={handleImageError}
                     loading={priority ? "eager" : "lazy"}
+                    decoding="async"
+                    fetchPriority={priority ? "high" : "auto"}
+                    draggable={false}
                 />
             )}
         </>
@@ -87,32 +166,26 @@ export default function PlayerHead({ playerName, playerHead, className, size = "
 
     const dimension = typeof size === "number" ? size : sizeMap[size];
 
-    const { fullSrc, initialMode } = useMemo(() => {
-        const rawValue = (playerHead || playerName).trim().toLowerCase();
-        const normalized = rawValue
-            .replace(/\s+/g, "")
-            .replace(/['’`]/g, "")
-            .replace(/[^a-z0-9._-]/g, "");
+    const sources = useMemo(() => {
+        const fileCandidates = buildHeadshotCandidates(playerName, playerHead);
+        const sourceList: string[] = [];
+        const seen = new Set<string>();
 
-        const dot = normalized.lastIndexOf(".");
-        const noExt = dot > 0 ? normalized.slice(0, dot) : normalized;
-        const resolvedBaseName = PLAYER_HEADSHOT_ALIASES[noExt] ?? noExt;
-        const fullFileName = `${resolvedBaseName}.jpg`;
+        const addSource = (url: string) => {
+            if (!seen.has(url)) {
+                seen.add(url);
+                sourceList.push(url);
+            }
+        };
 
-        if (MISSING_PLAYER_HEADSHOT_KEYS.has(resolvedBaseName)) {
-            return {
-                fullSrc: `${basePath}/images/player-heads/${fullFileName}`,
-                initialMode: "error" as const,
-            };
+        for (const fileName of fileCandidates) {
+            addSource(`${basePath}/images/player-heads/${fileName}`);
         }
 
-        return {
-            fullSrc: `${basePath}/images/player-heads/${fullFileName}`,
-            initialMode: "full" as const,
-        };
+        return sourceList;
     }, [basePath, playerHead, playerName]);
 
-    const imageKey = `${fullSrc}`;
+    const imageKey = `${sources.join("|")}|${dimension}`;
     return (
         <div
             className={cn(
@@ -125,9 +198,8 @@ export default function PlayerHead({ playerName, playerHead, className, size = "
                 key={imageKey}
                 playerName={playerName}
                 dimension={dimension}
-                fullSrc={fullSrc}
+                sources={sources}
                 priority={size === "xl" || size === "lg"}
-                initialMode={initialMode}
                 canZoom={dimension >= 64}
             />
         </div>

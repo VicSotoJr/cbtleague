@@ -2,10 +2,12 @@ export const PLAYER_HEADSHOT_ALIASES: Readonly<Record<string, string>> = {
   mekhimcniel: "mehkimcniel",
   nazvereen: "nazvareen",
   pasqualevillano: "pasqualevilliano",
+  julianallen: "idk",
 };
 
 export const MISSING_PLAYER_HEADSHOT_KEYS: ReadonlySet<string> = new Set<string>([
   "edmundscott",
+  "terongriffin",
   "terrongriffin",
   "khalidmoreland",
   "ryanboehm",
@@ -13,6 +15,7 @@ export const MISSING_PLAYER_HEADSHOT_KEYS: ReadonlySet<string> = new Set<string>
   "tiyornecoleman",
   "jamesjackson",
   "alexbeliard",
+  "alandbeliard",
   "jaylencrawford",
   "kylefederici",
   "jermainefoster",
@@ -20,6 +23,7 @@ export const MISSING_PLAYER_HEADSHOT_KEYS: ReadonlySet<string> = new Set<string>
   "permjackson",
   "anthonymiller",
   "dashonsmith",
+  "darricmyers",
   "derricmyers",
   "nickbottone",
   "tylermarchese",

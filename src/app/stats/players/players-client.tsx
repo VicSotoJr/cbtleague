@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import SeasonToggle from "@/components/league/season-toggle";
+import PlayerHead from "@/components/league/player-head";
 import { getSeasonId, getSeasonLabel, getSeasonPlayersWithAggregates, SEASON_OPTIONS } from "@/lib/league-summary";
 
 const ROWS_PER_PAGE = 50;
@@ -151,8 +152,18 @@ export default function PlayersClient() {
                     className="border-white/5 hover:bg-white/5 transition-colors group"
                   >
                     <TableCell className="font-bold text-white group-hover:text-orange-500">
-                      <Link href={`/players/${encodeURIComponent(player.name.trim())}/`} prefetch={false} className="block uppercase tracking-tight whitespace-nowrap">
-                        {player.name}
+                      <Link
+                        href={`/players/${encodeURIComponent(player.name.trim())}/`}
+                        prefetch={false}
+                        className="flex items-center gap-3 whitespace-nowrap"
+                      >
+                        <PlayerHead
+                          playerName={player.name}
+                          playerHead={player.PlayerHead}
+                          size={32}
+                          className="rounded-md shrink-0"
+                        />
+                        <span className="uppercase tracking-tight">{player.name}</span>
                       </Link>
                     </TableCell>
                     <TableCell className="text-zinc-500 font-bold text-sm uppercase tracking-tight whitespace-nowrap">

@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import SeasonToggle from "@/components/league/season-toggle";
+import PlayerHead from "@/components/league/player-head";
 import {
   getSeasonId,
   getSeasonPlayersWithAggregates,
@@ -146,6 +147,13 @@ export default function LeadersClient() {
                           >
                             {i + 1}
                           </div>
+
+                          <PlayerHead
+                            playerName={entry.player.name}
+                            playerHead={entry.player.PlayerHead}
+                            size={40}
+                            className="rounded-lg shrink-0"
+                          />
 
                           <div className="flex-1 overflow-hidden">
                             <h3 className="font-bold text-white group-hover:text-orange-500 transition-colors uppercase tracking-tight text-sm truncate">

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Trophy, Star, ArrowRight } from "lucide-react";
+import PlayerHead from "@/components/league/player-head";
 import { aggregatePlayerStats, getLeagueData } from "@/lib/league-data";
 import type { BaseStats } from "@/types/league";
 
@@ -40,10 +41,12 @@ type CareerAccumulator = {
   stats: BaseStats;
   gp: number;
   teams: Set<string>;
+  playerHead?: string;
 };
 
 type CareerRecord = {
   name: string;
+  playerHead?: string;
   data: CareerAccumulator;
   totals: Totals;
   averages: Averages;
@@ -55,14 +58,12 @@ type LeaderCategory =
       label: string;
       icon: typeof Trophy;
       isAvg: false;
-      color: string;
     }
   | {
       key: AverageKey;
       label: string;
       icon: typeof Star;
       isAvg: true;
-      color: string;
     };
 
 function createBaseStats(): BaseStats {
@@ -80,6 +81,7 @@ function getAllTimeStats(): Record<string, CareerAccumulator> {
           stats: createBaseStats(),
           gp: 0,
           teams: new Set<string>(),
+          playerHead: "",
         };
 
         const aggregated = aggregatePlayerStats(player);
@@ -89,6 +91,9 @@ function getAllTimeStats(): Record<string, CareerAccumulator> {
 
         existing.gp += aggregated.GAMES;
         existing.teams.add(team.Team);
+        if (!existing.playerHead && player.PlayerHead) {
+          existing.playerHead = player.PlayerHead;
+        }
 
         playerCareer.set(player.name, existing);
       }
@@ -116,6 +121,7 @@ function buildCareerRecords(records: Record<string, CareerAccumulator>): CareerR
 
     return {
       name,
+      playerHead: data.playerHead,
       data,
       totals: {
         Points: stats.Points,
@@ -153,17 +159,17 @@ export default function AllTimePage() {
   const validRecords = buildCareerRecords(records);
 
   const categories: LeaderCategory[] = [
-    { key: "Points", label: "Total Points", icon: Trophy, isAvg: false, color: "text-orange-500" },
-    { key: "Rebounds", label: "Total Rebounds", icon: Trophy, isAvg: false, color: "text-blue-500" },
-    { key: "Assists", label: "Total Assists", icon: Trophy, isAvg: false, color: "text-green-500" },
-    { key: "Steals", label: "Total Steals", icon: Trophy, isAvg: false, color: "text-purple-500" },
-    { key: "Blocks", label: "Total Blocks", icon: Trophy, isAvg: false, color: "text-amber-500" },
-    { key: "EFF", label: "Career Efficiency", icon: Star, isAvg: true, color: "text-pink-500" },
-    { key: "Points", label: "Career PPG (Min. 5 GP)", icon: Star, isAvg: true, color: "text-orange-500" },
-    { key: "Rebounds", label: "Career RPG (Min. 5 GP)", icon: Star, isAvg: true, color: "text-blue-500" },
-    { key: "Assists", label: "Career APG (Min. 5 GP)", icon: Star, isAvg: true, color: "text-green-500" },
-    { key: "Steals", label: "Career SPG (Min. 5 GP)", icon: Star, isAvg: true, color: "text-purple-500" },
-    { key: "Blocks", label: "Career BPG (Min. 5 GP)", icon: Star, isAvg: true, color: "text-amber-500" },
+    { key: "Points", label: "Total Points", icon: Trophy, isAvg: false },
+    { key: "Rebounds", label: "Total Rebounds", icon: Trophy, isAvg: false },
+    { key: "Assists", label: "Total Assists", icon: Trophy, isAvg: false },
+    { key: "Steals", label: "Total Steals", icon: Trophy, isAvg: false },
+    { key: "Blocks", label: "Total Blocks", icon: Trophy, isAvg: false },
+    { key: "EFF", label: "Career Efficiency", icon: Star, isAvg: true },
+    { key: "Points", label: "Career PPG (Min. 5 GP)", icon: Star, isAvg: true },
+    { key: "Rebounds", label: "Career RPG (Min. 5 GP)", icon: Star, isAvg: true },
+    { key: "Assists", label: "Career APG (Min. 5 GP)", icon: Star, isAvg: true },
+    { key: "Steals", label: "Career SPG (Min. 5 GP)", icon: Star, isAvg: true },
+    { key: "Blocks", label: "Career BPG (Min. 5 GP)", icon: Star, isAvg: true },
   ];
 
   return (
@@ -185,7 +191,7 @@ export default function AllTimePage() {
           return (
             <div key={category.label + idx} className="space-y-8">
               <div className="flex items-center gap-4">
-                <Icon className={cn("h-6 w-6", category.color)} />
+                <Icon className="h-6 w-6 text-zinc-400" />
                 <h2 className="text-2xl font-black text-white uppercase tracking-tight">{category.label}</h2>
                 <div className="h-px flex-1 bg-white/10" />
               </div>
@@ -212,6 +218,12 @@ export default function AllTimePage() {
                     >
                       {i + 1}
                     </div>
+                    <PlayerHead
+                      playerName={player.name}
+                      playerHead={player.playerHead}
+                      size={40}
+                      className="rounded-lg shrink-0"
+                    />
                     <div className="flex-1">
                       <h3 className="font-bold text-white group-hover:text-orange-500 transition-colors uppercase tracking-tight">
                         {player.name}
@@ -221,7 +233,7 @@ export default function AllTimePage() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className={cn("text-2xl font-black italic", category.color)}>
+                      <p className="text-2xl font-black italic text-white">
                         {category.isAvg
                           ? player.averages[category.key].toFixed(1)
                           : player.totals[category.key]}
