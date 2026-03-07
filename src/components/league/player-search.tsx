@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
-import { Search, User } from "lucide-react";
+import { Search } from "lucide-react";
 import Link from "next/link";
 import PlayerHead from "./player-head";
 

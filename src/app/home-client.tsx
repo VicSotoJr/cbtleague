@@ -3,11 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Trophy, Users, Calendar, Instagram, Youtube, FileText, BarChart3, ChevronRight, ShieldAlert } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ArrowRight, Trophy, Users, Instagram, Youtube, BarChart3 } from "lucide-react";
 
 export default function HomeClient() {
-    const basePath = process.env.NODE_ENV === 'production' ? '/cbtleague' : '';
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
