@@ -35,19 +35,22 @@ export default function ScheduleClient() {
                     </p>
                 </div>
 
-                <div className="flex gap-2">
-                    {seasons.map(s => (
-                        <Link
-                            key={s.id}
-                            href={`/schedule?season=${s.id}`}
-                            className={`rounded-lg px-4 py-2 text-sm font-bold transition-all ${seasonId === s.id
-                                ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                                : "bg-zinc-900 text-zinc-400 hover:bg-zinc-800"
-                                }`}
-                        >
-                            {s.id}
-                        </Link>
-                    ))}
+                <div className="flex items-center gap-3">
+                    <span className="text-sm font-bold uppercase tracking-widest text-zinc-500">Season</span>
+                    <div className="flex gap-2">
+                        {seasons.map(s => (
+                            <Link
+                                key={s.id}
+                                href={`/schedule?season=${s.id}`}
+                                className={`rounded-lg px-4 py-2 text-sm font-bold transition-all ${seasonId === s.id
+                                    ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                                    : "bg-zinc-900 text-zinc-400 hover:bg-zinc-800"
+                                    }`}
+                            >
+                                {s.id}
+                            </Link>
+                        ))}
+                    </div>
                 </div>
             </div>
 

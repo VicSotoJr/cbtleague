@@ -14,24 +14,32 @@ export async function generateMetadata(props: {
     };
 }
 
-export async function generateStaticParams() {
-    const paths: { playerName: string }[] = [];
+export const dynamicParams = false;
 
-    Object.entries((allData as any).seasons).forEach(([seasonId, seasonData]: [string, any]) => {
-        seasonData.teams.forEach((team: any) => {
-            team.roster.forEach((player: any) => {
+export async function generateStaticParams() {
+    const playerNames = new Set<string>();
+
+    Object.values((allData as any).seasons).forEach((season: any) => {
+        season.teams?.forEach((team: any) => {
+            team.roster?.forEach((player: any) => {
                 if (player.name) {
-                    paths.push({ playerName: player.name.trim() });
-                    // Next.js can be extremely flaky with encoded static params
-                    // Generate both the unencoded and encoded versions just in case
-                    paths.push({ playerName: encodeURIComponent(player.name.trim()) });
+                    playerNames.add(player.name.trim());
                 }
             });
         });
     });
 
-    const uniquePlayers = Array.from(new Set(paths.map(p => p.playerName)));
-    return uniquePlayers.map(p => ({ playerName: String(p) }));
+    const paths: { playerName: string }[] = [];
+    playerNames.forEach(name => {
+        paths.push({ playerName: name });
+        if (name.includes(" ") || name.includes("$")) {
+            paths.push({ playerName: encodeURIComponent(name) });
+        }
+    });
+
+    return Array.from(new Set(paths.map(p => p.playerName))).map(name => ({
+        playerName: name,
+    }));
 }
 
 export default async function PlayerProfilePage(props: {

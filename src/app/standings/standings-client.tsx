@@ -61,20 +61,6 @@ export default function StandingsClient() {
             </div>
 
             <StandingsTable teams={teams} seasonId={seasonId} />
-
-            <div className="mt-12 rounded-2xl bg-zinc-900/30 p-8 border border-white/5">
-                <h2 className="text-xl font-bold mb-4">Qualification Rules</h2>
-                <ul className="grid gap-4 text-sm text-zinc-400 md:grid-cols-2">
-                    <li className="flex gap-3">
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-[10px] font-bold text-orange-500">1</span>
-                        Teams must complete all scheduled games to qualify for the playoffs.
-                    </li>
-                    <li className="flex gap-3">
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-[10px] font-bold text-orange-500">2</span>
-                        Tie-breakers are determined by head-to-head record, then point differential.
-                    </li>
-                </ul>
-            </div>
         </div>
     );
 }

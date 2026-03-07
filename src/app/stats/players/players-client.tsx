@@ -86,6 +86,12 @@ export default function PlayersClient() {
     const players = getAggregatedPlayers(seasonId);
     const allPlayers = getAllPlayersForSearch(seasonId);
 
+    const [searchQuery, setSearchQuery] = React.useState("");
+
+    const filteredPlayers = React.useMemo(() => {
+        return players.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }, [players, searchQuery]);
+
     const seasons = [
         { id: "3", label: "Season 3 - 2026" },
         { id: "2", label: "Season 2 - 2025" },
@@ -96,7 +102,7 @@ export default function PlayersClient() {
         <div className="container mx-auto px-4 py-12 md:px-6">
             <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
                 <div>
-                    <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+                    <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl uppercase italic">
                         Player <span className="text-orange-500">Stats</span>
                     </h1>
                     <p className="mt-2 text-zinc-400">
@@ -105,22 +111,33 @@ export default function PlayersClient() {
                 </div>
 
                 <div className="flex w-full flex-col gap-4 md:w-auto md:flex-row md:items-center">
-                    <PlayerSearch players={allPlayers} />
-                    <div className="flex gap-2">
-                        {seasons.map(s => (
-                            <Link
-                                key={s.id}
-                                href={`/stats/players?season=${s.id}`}
-                                className={cn(
-                                    "rounded-lg px-4 py-2 text-sm font-bold transition-all",
-                                    seasonId === s.id
-                                        ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                                        : "bg-zinc-900 text-zinc-400 hover:bg-zinc-800"
-                                )}
-                            >
-                                {s.id}
-                            </Link>
-                        ))}
+                    <div className="relative w-full max-w-sm">
+                        <input
+                            type="text"
+                            placeholder="Search players..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full rounded-xl border border-white/10 bg-zinc-900/50 px-4 py-2 text-white placeholder:text-zinc-600 focus:border-orange-500/50 focus:outline-none focus:ring-1 focus:ring-orange-500/20"
+                        />
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <span className="text-sm font-bold uppercase tracking-widest text-zinc-500">Season</span>
+                        <div className="flex gap-2">
+                            {seasons.map(s => (
+                                <Link
+                                    key={s.id}
+                                    href={`/stats/players?season=${s.id}`}
+                                    className={cn(
+                                        "rounded-lg px-4 py-2 text-sm font-bold transition-all",
+                                        seasonId === s.id
+                                            ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                                            : "bg-zinc-900 text-zinc-400 hover:bg-zinc-800"
+                                    )}
+                                >
+                                    {s.id}
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,38 +156,36 @@ export default function PlayersClient() {
                             <TableRow className="border-white/5 hover:bg-transparent">
                                 <TableHead className="sticky left-0 bg-zinc-900 z-10 min-w-[200px] font-bold text-white uppercase tracking-tighter italic">Player</TableHead>
                                 <TableHead className="min-w-[120px] font-bold text-zinc-500 uppercase tracking-tighter">Team</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">GP</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">PTS</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">FGM</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">FGA</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">3PM</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">3PA</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">FTM</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">FTA</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">OREB</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">DREB</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">REB</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">AST</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">STL</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">BLK</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">TOV</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">PF</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">FG%</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">3P%</TableHead>
-                                <TableHead className="text-center font-bold text-orange-500 uppercase tracking-tighter">PPG</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">RPG</TableHead>
-                                <TableHead className="text-center font-bold text-zinc-500 uppercase tracking-tighter">APG</TableHead>
-                                <TableHead className="text-right font-bold text-zinc-500 uppercase tracking-tighter">EFF</TableHead>
+                                {[
+                                    "GP", "PTS", "PPG", "FGM", "FGA", "FG%", "2PM", "2PA", "2P%", "3PM", "3PA", "3P%",
+                                    "FTM", "FTA", "FT%", "OREB", "DREB", "REB", "RPG", "AST", "APG", "STL", "SPG",
+                                    "BLK", "BPG", "TOV", "TOVPG", "PF", "EFF"
+                                ].map(stat => (
+                                    <TableHead key={stat} className={cn(
+                                        "text-center font-bold uppercase tracking-tighter whitespace-nowrap px-4",
+                                        stat === "PPG" || stat === "EFF" ? "text-orange-500" : "text-zinc-500"
+                                    )}>{stat}</TableHead>
+                                ))}
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {players.map((player) => {
+                            {filteredPlayers.map((player, i) => {
+                                const totalFGM = player.aggregated.FieldGoalsMade;
+                                const totalFGA = player.aggregated.FieldGoalAttempts;
+                                const threePM = player.aggregated.ThreesMade;
+                                const threePA = player.aggregated.ThreesAttempts;
+                                const twoPM = totalFGM - threePM;
+                                const twoPA = totalFGA - threePA;
+
+                                const fgPct = ((totalFGM / (totalFGA || 1)) * 100).toFixed(1);
+                                const twoPct = ((twoPM / (twoPA || 1)) * 100).toFixed(1);
+                                const threePct = ((threePM / (threePA || 1)) * 100).toFixed(1);
+                                const ftPct = ((player.aggregated.FreeThrowsMade / (player.aggregated.FreeThrowsAttempts || 1)) * 100).toFixed(1);
+
                                 const gp = player.GamesPlayed || 1;
-                                const fgPct = (((player.aggregated.FieldGoalsMade + player.aggregated.ThreesMade) / (player.aggregated.FieldGoalAttempts + player.aggregated.ThreesAttempts)) * 100 || 0).toFixed(1);
-                                const threePct = ((player.aggregated.ThreesMade / player.aggregated.ThreesAttempts) * 100 || 0).toFixed(1);
 
                                 return (
-                                    <TableRow key={player.name + player.teamName} className="border-white/5 hover:bg-white/5 transition-colors group">
+                                    <TableRow key={`${player.name}-${player.teamName}-${i}`} className="border-white/5 hover:bg-white/5 transition-colors group">
                                         <TableCell className="sticky left-0 bg-zinc-900/90 backdrop-blur-md z-10 font-bold text-white group-hover:text-orange-500">
                                             <Link href={`/players/${encodeURIComponent(player.name.trim())}`} className="flex items-center gap-3">
                                                 <PlayerHead
@@ -179,36 +194,43 @@ export default function PlayersClient() {
                                                     size="sm"
                                                     className="rounded-full"
                                                 />
-                                                <span className="uppercase tracking-tight">{player.name}</span>
+                                                <span className="uppercase tracking-tight whitespace-nowrap">{player.name}</span>
                                             </Link>
                                         </TableCell>
-                                        <TableCell className="text-zinc-500 font-bold text-xs uppercase tracking-tight">
+                                        <TableCell className="text-zinc-500 font-bold text-sm uppercase tracking-tight whitespace-nowrap">
                                             <Link href={`/teams/${encodeURIComponent(player.teamName.trim())}?season=${seasonId}`} className="hover:text-white transition-colors">
                                                 {player.teamName}
                                             </Link>
                                         </TableCell>
                                         <TableCell className="text-center font-medium text-zinc-400">{player.GamesPlayed}</TableCell>
-                                        <TableCell className="text-center font-medium text-white">{player.aggregated.Points}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.FieldGoalsMade}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.FieldGoalAttempts}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.ThreesMade}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.ThreesAttempts}</TableCell>
+                                        <TableCell className="text-center font-black text-white">{player.aggregated.Points}</TableCell>
+                                        <TableCell className="text-center font-black text-orange-500 italic">{player.aggregated.PPG}</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-400">{totalFGM}</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-400">{totalFGA}</TableCell>
+                                        <TableCell className="text-center font-mono font-bold text-zinc-500">{fgPct}%</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-400">{twoPM}</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-400">{twoPA}</TableCell>
+                                        <TableCell className="text-center font-mono font-bold text-zinc-500">{twoPct}%</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-400">{threePM}</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-400">{threePA}</TableCell>
+                                        <TableCell className="text-center font-mono font-bold text-zinc-500">{threePct}%</TableCell>
                                         <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.FreeThrowsMade}</TableCell>
                                         <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.FreeThrowsAttempts}</TableCell>
+                                        <TableCell className="text-center font-mono font-bold text-zinc-500">{ftPct}%</TableCell>
                                         <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.Offrebounds}</TableCell>
                                         <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.Defrebounds}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.Rebounds}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.Assists}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.Steals}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.Blocks}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.Turnovers}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-400">{player.aggregated.PersonalFouls}</TableCell>
-                                        <TableCell className="text-center font-mono font-bold text-zinc-400">{fgPct}%</TableCell>
-                                        <TableCell className="text-center font-mono font-bold text-zinc-400">{threePct}%</TableCell>
-                                        <TableCell className="text-center font-black text-orange-500">{player.aggregated.PPG}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-300">{player.aggregated.RPG}</TableCell>
-                                        <TableCell className="text-center font-medium text-zinc-300">{player.aggregated.APG}</TableCell>
-                                        <TableCell className="text-right font-black text-white italic">{player.aggregated.EFF}</TableCell>
+                                        <TableCell className="text-center font-bold text-zinc-300">{player.aggregated.Rebounds}</TableCell>
+                                        <TableCell className="text-center font-mono text-zinc-400">{player.aggregated.RPG}</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-300">{player.aggregated.Assists}</TableCell>
+                                        <TableCell className="text-center font-mono text-zinc-400">{player.aggregated.APG}</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-300">{player.aggregated.Steals}</TableCell>
+                                        <TableCell className="text-center font-mono text-zinc-400">{(player.aggregated.Steals / gp).toFixed(1)}</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-300">{player.aggregated.Blocks}</TableCell>
+                                        <TableCell className="text-center font-mono text-zinc-400">{(player.aggregated.Blocks / gp).toFixed(1)}</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-300">{player.aggregated.Turnovers}</TableCell>
+                                        <TableCell className="text-center font-mono text-zinc-400">{(player.aggregated.Turnovers / gp).toFixed(1)}</TableCell>
+                                        <TableCell className="text-center font-medium text-zinc-300">{player.aggregated.PersonalFouls}</TableCell>
+                                        <TableCell className="text-right font-black text-orange-500 italic">{player.aggregated.EFF}</TableCell>
                                     </TableRow>
                                 );
                             })}

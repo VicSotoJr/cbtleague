@@ -11,7 +11,16 @@ import allData from "@/data/data.json";
 
 function getTeamData(teamName: string, seasonId: string): Team | null {
     const teams: Team[] = (allData as any).seasons[seasonId]?.teams || [];
-    return teams.find(t => t.Team.trim() === teamName) || null;
+    // Try exact match first
+    let team = teams.find(t => t.Team.trim() === teamName);
+
+    // If no exact match, try fuzzy match (ignoring spaces and case)
+    if (!team) {
+        const normalizedInput = teamName.replace(/\s+/g, "").toLowerCase();
+        team = teams.find(t => t.Team.replace(/\s+/g, "").toLowerCase() === normalizedInput);
+    }
+
+    return team || null;
 }
 
 export default function TeamProfileClient({ teamName }: { teamName: string }) {
@@ -61,18 +70,18 @@ export default function TeamProfileClient({ teamName }: { teamName: string }) {
                 </div>
             </div>
 
-            <div className="grid gap-12 lg:grid-cols-3">
+            <div className="space-y-12">
                 {/* Roster Section */}
-                <div className="lg:col-span-2 space-y-8">
+                <div className="space-y-8">
                     <div className="flex items-center gap-4">
-                        <h2 className="text-2xl font-bold text-white shrink-0">Team Roster</h2>
+                        <h2 className="text-2xl font-bold text-white shrink-0 italic uppercase tracking-tighter">Team Roster</h2>
                         <div className="h-px w-full bg-white/10" />
                     </div>
 
-                    <div className="grid gap-4 sm:grid-cols-2">
-                        {team.roster.map((player) => (
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {team.roster.map((player, i) => (
                             <Link
-                                key={player.name}
+                                key={`${player.name}-${i}`}
                                 href={`/players/${encodeURIComponent(player.name.trim())}`}
                                 className="group flex items-center gap-4 rounded-2xl border border-white/5 bg-zinc-900/50 p-4 transition-all hover:bg-zinc-900 hover:scale-[1.02] active:scale-[0.98]"
                             >
@@ -95,34 +104,98 @@ export default function TeamProfileClient({ teamName }: { teamName: string }) {
                     </div>
                 </div>
 
-                {/* Quick Stats Summary */}
+                {/* Team Stats Section */}
                 <div className="space-y-8">
                     <div className="flex items-center gap-4">
-                        <h2 className="text-2xl font-bold text-white shrink-0">Summary</h2>
+                        <h2 className="text-2xl font-bold text-white shrink-0 italic uppercase tracking-tighter">Season Statistics</h2>
                         <div className="h-px w-full bg-white/10" />
                     </div>
 
-                    <div className="rounded-2xl border border-white/5 bg-zinc-900/50 p-6 space-y-6">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="h-8 w-8 rounded-lg bg-orange-500/20 flex items-center justify-center">
-                                    <Trophy className="h-4 w-4 text-orange-500" />
-                                </div>
-                                <span className="font-bold text-zinc-300">Total Games</span>
-                            </div>
-                            <span className="text-xl font-bold text-white">{team.gamesPlayed}</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                                    <BarChart2 className="h-4 w-4 text-blue-500" />
-                                </div>
-                                <span className="font-bold text-zinc-300">Average PPG</span>
-                            </div>
-                            <span className="text-xl font-bold text-white">72.4</span>
+                    <div className="overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/50">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse">
+                                <thead className="bg-white/5">
+                                    <tr>
+                                        {[
+                                            "GP", "W", "L", "PTS", "FGM", "FGA", "FG%", "2PM", "2PA", "2P%",
+                                            "3PM", "3PA", "3P%", "FTM", "FTA", "FT%", "REB", "OREB", "DREB",
+                                            "AST", "BLK", "STL", "TOV", "PF"
+                                        ].map(header => (
+                                            <th key={header} className="px-4 py-4 text-center text-[10px] font-bold text-zinc-500 uppercase tracking-widest whitespace-nowrap">
+                                                {header}
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-white/5">
+                                    {(() => {
+                                        const stats = team.roster.reduce((acc, p) => {
+                                            p.stats.forEach(s => {
+                                                acc.pts += s.Points || 0;
+                                                acc.fgm += s.FieldGoalsMade || 0;
+                                                acc.fga += s.FieldGoalAttempts || 0;
+                                                acc.threeM += s.ThreesMade || 0;
+                                                acc.threeA += s.ThreesAttempts || 0;
+                                                acc.ftm += s.FreeThrowsMade || 0;
+                                                acc.fta += s.FreeThrowsAttempts || 0;
+                                                acc.reb += s.Rebounds || 0;
+                                                acc.oreb += s.Offrebounds || 0;
+                                                acc.dreb += s.Defrebounds || 0;
+                                                acc.ast += s.Assists || 0;
+                                                acc.blk += s.Blocks || 0;
+                                                acc.stl += s.Steals || 0;
+                                                acc.tov += s.Turnovers || 0;
+                                                acc.pf += s.PersonalFouls || 0;
+                                            });
+                                            return acc;
+                                        }, {
+                                            pts: 0, fgm: 0, fga: 0, threeM: 0, threeA: 0,
+                                            ftm: 0, fta: 0, reb: 0, oreb: 0, dreb: 0,
+                                            ast: 0, blk: 0, stl: 0, tov: 0, pf: 0
+                                        });
+
+                                        const totalFGM = stats.fgm;
+                                        const totalFGA = stats.fga;
+                                        const twoPM = totalFGM - stats.threeM;
+                                        const twoPA = totalFGA - stats.threeA;
+                                        const fgPct = ((totalFGM / (totalFGA || 1)) * 100).toFixed(1);
+                                        const twoPct = ((twoPM / (twoPA || 1)) * 100).toFixed(1);
+                                        const threePct = ((stats.threeM / (stats.threeA || 1)) * 100).toFixed(1);
+                                        const ftPct = ((stats.ftm / (stats.fta || 1)) * 100).toFixed(1);
+
+                                        return (
+                                            <tr className="hover:bg-white/5 transition-colors">
+                                                <td className="px-4 py-6 text-center text-white font-bold">{team.gamesPlayed}</td>
+                                                <td className="px-4 py-6 text-center text-green-500 font-bold">{team.wins}</td>
+                                                <td className="px-4 py-6 text-center text-red-500 font-bold">{team.loss}</td>
+                                                <td className="px-4 py-6 text-center text-white font-black italic">{stats.pts}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{totalFGM}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{totalFGA}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-300 font-mono font-bold">{fgPct}%</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{twoPM}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{twoPA}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-300 font-mono font-bold">{twoPct}%</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{stats.threeM}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{stats.threeA}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-300 font-mono font-bold">{threePct}%</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{stats.ftm}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{stats.fta}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-300 font-mono font-bold">{ftPct}%</td>
+                                                <td className="px-4 py-6 text-center text-zinc-200 font-bold">{stats.reb}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{stats.oreb}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-400">{stats.dreb}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-300">{stats.ast}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-300">{stats.blk}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-300">{stats.stl}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-300">{stats.tov}</td>
+                                                <td className="px-4 py-6 text-center text-zinc-300">{stats.pf}</td>
+                                            </tr>
+                                        );
+                                    })()}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

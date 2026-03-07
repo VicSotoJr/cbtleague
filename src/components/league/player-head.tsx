@@ -21,8 +21,8 @@ export default function PlayerHead({ playerName, playerHead, className, size = "
         filename += ".jpg";
     }
 
-    const src = `/cbtleague/images/player-heads/${filename}`;
-    const fallbackSrc = "/cbtleague/images/cbt-logo1.jpg";
+    const src = `/images/player-heads/${filename}`;
+    const fallbackSrc = "/images/cbt-logo1.jpg";
 
     const sizeMap = {
         sm: 32,

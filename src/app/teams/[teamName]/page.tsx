@@ -14,20 +14,38 @@ export async function generateMetadata(props: {
     };
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
-    const paths: { teamName: string }[] = [];
-    Object.keys((allData as any).seasons).forEach(seasonId => {
-        const teams = (allData as any).seasons[seasonId]?.teams || [];
-        teams.forEach((team: any) => {
-            const trimmedTeam = team.Team.trim();
-            paths.push({ teamName: trimmedTeam });
-            paths.push({ teamName: encodeURIComponent(trimmedTeam) });
+    const teamNames = new Set<string>();
+    Object.values((allData as any).seasons).forEach((season: any) => {
+        season.teams?.forEach((team: any) => {
+            if (team.Team) {
+                teamNames.add(team.Team.trim());
+            }
+        });
+        // Also include names from schedule as they might differ (e.g., spacing)
+        season.schedule?.forEach((game: any) => {
+            if (game.homeTeam) teamNames.add(game.homeTeam.trim());
+            if (game.awayTeam) teamNames.add(game.awayTeam.trim());
+            if (game.byeTeam) teamNames.add(game.byeTeam.trim());
         });
     });
 
-    // De-dupe by teamName to avoid warnings if the same team is in multiple seasons
-    const uniqueTeams = Array.from(new Set(paths.map(p => p.teamName)));
-    return uniqueTeams.map(t => ({ teamName: String(t) }));
+    const paths: { teamName: string }[] = [];
+    teamNames.forEach(name => {
+        paths.push({ teamName: name });
+        if (name.includes(" ") || name.includes("$")) {
+            paths.push({ teamName: encodeURIComponent(name) });
+        }
+    });
+
+    // De-dupe the objects
+    const uniquePaths = Array.from(new Set(paths.map(p => p.teamName))).map(name => ({
+        teamName: name,
+    }));
+
+    return uniquePaths;
 }
 
 export default async function TeamProfilePage(props: {

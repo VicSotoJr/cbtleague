@@ -94,9 +94,12 @@ export default function PlayerProfileClient({ playerName }: { playerName: string
 
     return (
         <div className="container mx-auto px-4 py-12 md:px-6">
-            <Link href="/stats/leaders" className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-zinc-500 hover:text-white transition-colors">
+            <Link
+                href={`/teams/${encodeURIComponent(seasonData[seasonData.length - 1].teamName)}?season=${seasonData[seasonData.length - 1].seasonId}`}
+                className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-zinc-500 hover:text-white transition-colors uppercase"
+            >
                 <ArrowLeft className="h-4 w-4" />
-                BACK TO LEADERS
+                BACK TO {latestTeam}
             </Link>
 
             {/* Profile Header */}
@@ -137,7 +140,12 @@ export default function PlayerProfileClient({ playerName }: { playerName: string
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4">
                                 <h2 className="text-3xl font-black text-white uppercase tracking-tight">{season.seasonName}</h2>
-                                <span className="rounded-full bg-white/5 px-4 py-1 text-xs font-bold text-zinc-400 border border-white/10">{season.teamName}</span>
+                                <Link
+                                    href={`/teams/${encodeURIComponent(season.teamName)}?season=${season.seasonId}`}
+                                    className="rounded-full bg-white/5 px-4 py-1 text-xs font-bold text-zinc-400 border border-white/10 hover:bg-white/10 transition-colors"
+                                >
+                                    {season.teamName}
+                                </Link>
                             </div>
                             <div className="h-px flex-1 mx-8 bg-white/5 hidden md:block" />
                         </div>
@@ -152,37 +160,98 @@ export default function PlayerProfileClient({ playerName }: { playerName: string
 
                         {/* Game Log Table */}
                         <div className="overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/50">
-                            <Table>
-                                <TableHeader className="bg-white/5">
-                                    <TableRow className="border-white/5">
-                                        <TableHead className="w-16">Game</TableHead>
-                                        <TableHead>Opponent</TableHead>
-                                        <TableHead className="text-center">PTS</TableHead>
-                                        <TableHead className="text-center">REB</TableHead>
-                                        <TableHead className="text-center">AST</TableHead>
-                                        <TableHead className="text-center">STL</TableHead>
-                                        <TableHead className="text-center">BLK</TableHead>
-                                        <TableHead className="text-right">FG%</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {season.gameLogs.map((log, idx) => {
-                                        const fgPct = (((log.FieldGoalsMade + log.ThreesMade) / (log.FieldGoalAttempts + log.ThreesAttempts)) * 100 || 0).toFixed(1);
-                                        return (
-                                            <TableRow key={`${log.game_number}-${idx}`} className="border-white/5 hover:bg-white/5 transition-colors">
-                                                <TableCell className="font-mono text-zinc-500">#{log.game_number}</TableCell>
-                                                <TableCell className="font-bold text-white">{log.opponent || "—"}</TableCell>
-                                                <TableCell className="text-center font-bold text-orange-500">{log.Points}</TableCell>
-                                                <TableCell className="text-center text-zinc-300">{log.Rebounds}</TableCell>
-                                                <TableCell className="text-center text-zinc-300">{log.Assists}</TableCell>
-                                                <TableCell className="text-center text-zinc-300">{log.Steals}</TableCell>
-                                                <TableCell className="text-center text-zinc-300">{log.Blocks}</TableCell>
-                                                <TableCell className="text-right font-mono text-zinc-400">{fgPct}%</TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                </TableBody>
-                            </Table>
+                            <div className="overflow-x-auto">
+                                <Table>
+                                    <TableHeader className="bg-white/5">
+                                        <TableRow className="border-white/5 hover:bg-transparent">
+                                            <TableHead className="w-16 whitespace-nowrap sticky left-0 bg-zinc-900/90 backdrop-blur-md z-10">Game</TableHead>
+                                            <TableHead className="whitespace-nowrap">Opponent</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-white uppercase tracking-tighter italic">PTS</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">PPG</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">FGM</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">FGA</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">FG%</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">2PM</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">2PA</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">2P%</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">3PM</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">3PA</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">3P%</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">FTM</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">FTA</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">FT%</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">OREB</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">DREB</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">REB</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">RPG</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">AST</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">APG</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">STL</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">SPG</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">BLK</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">BPG</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">TOV</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">TOVPG</TableHead>
+                                            <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">PF</TableHead>
+                                            <TableHead className="text-right whitespace-nowrap font-bold text-orange-500 uppercase tracking-tighter italic">EFF</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {season.gameLogs.map((log, idx) => {
+                                            const twoPM = log.FieldGoalsMade - log.ThreesMade; // Corrected to be 2PM
+                                            const twoPA = log.FieldGoalAttempts - log.ThreesAttempts; // Corrected to be 2PA
+                                            const threePM = log.ThreesMade;
+                                            const threePA = log.ThreesAttempts;
+                                            const totalFGM = log.FieldGoalsMade; // Total FGM is already in log.FieldGoalsMade
+                                            const totalFGA = log.FieldGoalAttempts; // Total FGA is already in log.FieldGoalAttempts
+
+                                            const fgPct = ((totalFGM / (totalFGA || 1)) * 100).toFixed(1);
+                                            const twoPct = ((twoPM / (twoPA || 1)) * 100).toFixed(1);
+                                            const threePct = ((threePM / (threePA || 1)) * 100).toFixed(1);
+                                            const ftPct = ((log.FreeThrowsMade / (log.FreeThrowsAttempts || 1)) * 100).toFixed(1);
+
+                                            const missedFG = totalFGA - totalFGM;
+                                            const missedFT = log.FreeThrowsAttempts - log.FreeThrowsMade;
+                                            const eff = (log.Points + log.Rebounds + log.Assists + log.Steals + log.Blocks - missedFG - missedFT - log.Turnovers);
+
+                                            return (
+                                                <TableRow key={`${log.game_number}-${idx}`} className="border-white/5 hover:bg-white/5 transition-colors group">
+                                                    <TableCell className="font-mono text-zinc-500 whitespace-nowrap sticky left-0 bg-zinc-900/90 backdrop-blur-md z-10">#{log.game_number}</TableCell>
+                                                    <TableCell className="font-bold text-white whitespace-nowrap">{log.opponent || "—"}</TableCell>
+                                                    <TableCell className="text-center font-bold text-white italic">{log.Points}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400 font-mono">{(log.Points / 1).toFixed(1)}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{totalFGM}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{totalFGA}</TableCell>
+                                                    <TableCell className="text-center font-mono font-bold text-zinc-500">{fgPct}%</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{twoPM}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{twoPA}</TableCell>
+                                                    <TableCell className="text-center font-mono text-zinc-500">{twoPct}%</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{threePM}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{threePA}</TableCell>
+                                                    <TableCell className="text-center font-mono text-zinc-500">{threePct}%</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{log.FreeThrowsMade}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{log.FreeThrowsAttempts}</TableCell>
+                                                    <TableCell className="text-center font-mono text-zinc-500">{ftPct}%</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{log.Offrebounds}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400">{log.Defrebounds}</TableCell>
+                                                    <TableCell className="text-center font-bold text-zinc-300">{log.Rebounds}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400 font-mono">{(log.Rebounds / 1).toFixed(1)}</TableCell>
+                                                    <TableCell className="text-center text-zinc-300">{log.Assists}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400 font-mono">{(log.Assists / 1).toFixed(1)}</TableCell>
+                                                    <TableCell className="text-center text-zinc-300">{log.Steals}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400 font-mono">{(log.Steals / 1).toFixed(1)}</TableCell>
+                                                    <TableCell className="text-center text-zinc-300">{log.Blocks}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400 font-mono">{(log.Blocks / 1).toFixed(1)}</TableCell>
+                                                    <TableCell className="text-center text-zinc-300">{log.Turnovers}</TableCell>
+                                                    <TableCell className="text-center text-zinc-400 font-mono">{(log.Turnovers / 1).toFixed(1)}</TableCell>
+                                                    <TableCell className="text-center text-zinc-300">{log.PersonalFouls}</TableCell>
+                                                    <TableCell className="text-right font-black text-orange-500 italic">{eff}</TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
+                                    </TableBody>
+                                </Table>
+                            </div>
                         </div>
                     </div>
                 ))}
