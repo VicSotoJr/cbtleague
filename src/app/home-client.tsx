@@ -147,6 +147,18 @@ export default function HomeClient() {
                 </div>
             </section>
 
+            {/* The Commissioner Section */}
+            <section className="container mx-auto px-4 py-12 md:px-6">
+                <div className="flex items-center gap-4 border-l-2 border-orange-500 pl-6">
+                    <Trophy className="h-6 w-6 text-orange-500 shrink-0" />
+                    <div>
+                        <p className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500">Commissioner</p>
+                        <p className="text-lg font-black uppercase tracking-tight text-white">
+                            Coach <span className="text-orange-500">Byrd</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
 
             {/* Social Signal */}
             <section className="w-full bg-[#09090b] py-32 border-t border-white/5">
@@ -176,20 +188,6 @@ export default function HomeClient() {
                     </div>
                 </div>
             </section>
-
-            {/* The Commissioner Section */}
-        <section className="container mx-auto px-4 py-12 md:px-6">
-          <div className="flex items-center gap-4 border-l-2 border-orange-500 pl-6">
-            <Trophy className="h-6 w-6 text-orange-500 shrink-0" />
-            <div>
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500">Commissioner</p>
-                <p className="text-lg font-black uppercase tracking-tight text-white">
-                    Coach <span className="text-orange-500">Byrd</span>
-                </p>
-            </div>
-          </div>
-        </section>
-
             {/* Footer */}
             <footer className="w-full py-12 border-t border-white/5 text-center">
                 <p className="text-xs font-black uppercase tracking-[0.4em] text-zinc-700">© 2026 CBT League. All Rights Reserved.</p>
