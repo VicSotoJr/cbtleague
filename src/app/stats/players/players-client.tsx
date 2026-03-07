@@ -42,7 +42,16 @@ function getAggregatedPlayers(seasonId: string): AggregatedPlayer[] {
             });
 
             const gp = player.GamesPlayed || 1;
-            const missedFG = (aggregated.FieldGoalAttempts + aggregated.ThreesAttempts) - (aggregated.FieldGoalsMade + aggregated.ThreesMade);
+
+            // Critical: Data consistency fix. Season 1 has inclusive FGM, Season 2 has separate FGM.
+            const pointsFromInclusive = ((aggregated.FieldGoalsMade - aggregated.ThreesMade) * 2) + (aggregated.ThreesMade * 3);
+            const pointsFromSeparate = (aggregated.FieldGoalsMade * 2) + (aggregated.ThreesMade * 3);
+            const isInclusive = Math.abs(pointsFromInclusive - aggregated.Points) <= Math.abs(pointsFromSeparate - aggregated.Points);
+
+            const totalFGM = isInclusive ? aggregated.FieldGoalsMade : (aggregated.FieldGoalsMade + aggregated.ThreesMade);
+            const totalFGA = isInclusive ? aggregated.FieldGoalAttempts : (aggregated.FieldGoalAttempts + aggregated.ThreesAttempts);
+
+            const missedFG = totalFGA - totalFGM;
             const missedFT = aggregated.FreeThrowsAttempts - aggregated.FreeThrowsMade;
             const eff = (aggregated.Points + aggregated.Rebounds + aggregated.Assists + aggregated.Steals + aggregated.Blocks - missedFG - missedFT - aggregated.Turnovers) / gp;
 
@@ -51,6 +60,8 @@ function getAggregatedPlayers(seasonId: string): AggregatedPlayer[] {
                 teamName: team.Team,
                 aggregated: {
                     ...aggregated,
+                    FieldGoalsMade: totalFGM, // Store the correctly calculated total
+                    FieldGoalAttempts: totalFGA,
                     PPG: Number((aggregated.Points / gp).toFixed(1)),
                     RPG: Number((aggregated.Rebounds / gp).toFixed(1)),
                     APG: Number((aggregated.Assists / gp).toFixed(1)),
