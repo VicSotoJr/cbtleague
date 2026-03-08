@@ -45,3 +45,9 @@ cbtleague-updates-*.json
 
 # generated local image thumbs (not shipped)
 public/images/player-heads/thumbs/
+
+# local agent tooling and archived assets
+.agents/
+migration_backup/
+skills-lock.json
+random.txt

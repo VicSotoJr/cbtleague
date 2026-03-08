@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CBT League
 
-## Getting Started
+CBT League is a static-first basketball league web app built with Next.js App Router and TypeScript.
+It serves standings, schedules, team pages, player profiles, league leaders, and all-time records from JSON data, with an admin workflow for writing stat updates back to GitHub.
 
-First, run the development server:
+## What This Project Solves
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Replaces a legacy static site with a typed, maintainable codebase.
+- Keeps public pages fast and deployable to GitHub Pages via static export.
+- Preserves rich UI/animation while handling large stat tables and multi-season data.
+- Supports admin stat entry with GitHub commit automation through a serverless endpoint.
+
+## Core Features
+
+- Multi-season league navigation (`Season 1`, `Season 2`, `Season 3`)
+- Team profiles with roster + team-level metrics
+- Player profiles with per-game box score logs
+- League leaders and all-time records
+- Admin stat-entry page with validation and queued local fallback on API failure
+- Typed aggregation pipeline for PPG/RPG/APG/efficiency and shooting percentages
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript (strict mode)
+- Tailwind CSS v4
+- shadcn setup + Radix primitives + Lucide icons
+- Framer Motion
+- ESLint + Next.js type/build checks
+
+## Architecture Notes
+
+- Public site is statically generated (`next.config.ts` uses `output: "export"`).
+- GitHub Pages compatibility is handled with production `basePath` and `trailingSlash`.
+- Image optimization is disabled for static export compatibility (`images.unoptimized = true`).
+- League data is loaded from JSON and processed through typed utilities in `src/lib/league-data.ts`.
+- A summary generator script (`scripts/generate-league-summary.mjs`) precomputes compact season summaries.
+
+## Repository Layout
+
+```text
+api/
+  admin/update-stats.ts        # Vercel-compatible API: writes stats.json to GitHub
+src/
+  app/                         # Next.js App Router pages
+  components/                  # UI + league components
+  data/                        # Source league JSON data
+  lib/                         # Typed data helpers and aggregation
+  types/                       # Shared TypeScript domain types
+scripts/
+  generate-league-summary.mjs  # Data precompute utility
+public/
+  images/                      # Team logos and player headshots
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Local Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Useful commands:
 
-## Learn More
+```bash
+npm run lint
+npm run build
+npm run generate:summary
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Admin Stat Sync (GitHub Write-Back)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The admin page posts stat updates to an API endpoint (`/api/admin/update-stats` by default). The endpoint:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Reads the current stats file from the GitHub repository.
+2. Decodes and updates the targeted player/game log.
+3. Re-encodes the JSON.
+4. Commits changes with message: `Update stats via admin panel`.
 
-## Deploy on Vercel
+### Frontend env
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `NEXT_PUBLIC_ADMIN_API_URL` (optional)
+  - Use this when your admin API is hosted on a different domain than the static site.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### API env (required for write-back)
+
+- `GITHUB_TOKEN` (required)
+- `GITHUB_REPO_OWNER` (required unless Vercel Git env is available)
+- `GITHUB_REPO_NAME` (required unless Vercel Git env is available)
+
+### API env (optional)
+
+- `GITHUB_BRANCH` (defaults to `main`)
+- `GITHUB_STATS_PATH` (stats file path override)
+- `ADMIN_ALLOWED_ORIGIN` (CORS allowlist)
+
+## Deployment Model
+
+This repo uses a split deployment model:
+
+- Static public site: GitHub Pages
+- Admin write-back API: Vercel serverless function
+
+That keeps the public app purely static while still allowing secure authenticated stats updates.
+
+## License
+
+MIT (see `LICENSE`).
