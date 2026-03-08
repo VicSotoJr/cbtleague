@@ -137,7 +137,6 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                       <TableHead className="w-16 whitespace-nowrap sticky left-0 bg-zinc-900/90 backdrop-blur-md z-10">Game</TableHead>
                       <TableHead className="whitespace-nowrap">Opponent</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-white uppercase tracking-tighter italic">PTS</TableHead>
-                      <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">PPG</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">FGM</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">FGA</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">FG%</TableHead>
@@ -153,15 +152,10 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">OREB</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">DREB</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">REB</TableHead>
-                      <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">RPG</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">AST</TableHead>
-                      <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">APG</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">STL</TableHead>
-                      <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">SPG</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">BLK</TableHead>
-                      <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">BPG</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">TOV</TableHead>
-                      <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">TOVPG</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">PF</TableHead>
                       <TableHead className="text-right whitespace-nowrap font-bold text-orange-500 uppercase tracking-tighter italic">EFF</TableHead>
                     </TableRow>
@@ -196,7 +190,6 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                           </TableCell>
                           <TableCell className="font-bold text-white whitespace-nowrap">{log.opponent || "—"}</TableCell>
                           <TableCell className="text-center font-bold text-white italic">{log.Points}</TableCell>
-                          <TableCell className="text-center text-zinc-400 font-mono">{log.Points.toFixed(1)}</TableCell>
                           <TableCell className="text-center text-zinc-400">{totalFGM}</TableCell>
                           <TableCell className="text-center text-zinc-400">{totalFGA}</TableCell>
                           <TableCell className="text-center font-mono font-bold text-zinc-500">{fgPct}%</TableCell>
@@ -212,15 +205,10 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                           <TableCell className="text-center text-zinc-400">{log.Offrebounds}</TableCell>
                           <TableCell className="text-center text-zinc-400">{log.Defrebounds}</TableCell>
                           <TableCell className="text-center font-bold text-zinc-300">{log.Rebounds}</TableCell>
-                          <TableCell className="text-center text-zinc-400 font-mono">{log.Rebounds.toFixed(1)}</TableCell>
                           <TableCell className="text-center text-zinc-300">{log.Assists}</TableCell>
-                          <TableCell className="text-center text-zinc-400 font-mono">{log.Assists.toFixed(1)}</TableCell>
                           <TableCell className="text-center text-zinc-300">{log.Steals}</TableCell>
-                          <TableCell className="text-center text-zinc-400 font-mono">{log.Steals.toFixed(1)}</TableCell>
                           <TableCell className="text-center text-zinc-300">{log.Blocks}</TableCell>
-                          <TableCell className="text-center text-zinc-400 font-mono">{log.Blocks.toFixed(1)}</TableCell>
                           <TableCell className="text-center text-zinc-300">{log.Turnovers}</TableCell>
-                          <TableCell className="text-center text-zinc-400 font-mono">{log.Turnovers.toFixed(1)}</TableCell>
                           <TableCell className="text-center text-zinc-300">{log.PersonalFouls}</TableCell>
                           <TableCell className="text-right font-black text-orange-500 italic">{eff}</TableCell>
                         </TableRow>
