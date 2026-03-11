@@ -96,15 +96,9 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
             <span className="rounded-full bg-orange-600/10 px-3 py-1 text-xs font-bold text-orange-500 border border-orange-500/20 uppercase tracking-widest">
               Season {seasonId}
             </span>
-            {championTeam && (
-              <span
-                className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-widest ${
-                  isChampion
-                    ? "border-amber-400/30 bg-amber-400/10 text-amber-300"
-                    : "border-white/10 bg-white/5 text-zinc-300"
-                }`}
-              >
-                {isChampion ? "Season Champion" : `Champion: ${championTeam}`}
+            {isChampion && (
+              <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-300">
+                Season Champion
               </span>
             )}
           </div>
