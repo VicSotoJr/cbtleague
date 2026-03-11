@@ -5,11 +5,13 @@ import { useSearchParams } from "next/navigation";
 import StandingsTable from "@/components/league/standings-table";
 import SeasonToggle from "@/components/league/season-toggle";
 import { getSeasonId, getSeasonLabel, getSeasonTeams, SEASON_OPTIONS } from "@/lib/league-summary";
+import { getSeasonRecordAudit } from "@/lib/season-record-audit";
 
 export default function StandingsClient() {
     const searchParams = useSearchParams();
     const seasonId = getSeasonId(searchParams.get("season"));
     const teams = React.useMemo(() => getSeasonTeams(seasonId), [seasonId]);
+    const recordAudit = React.useMemo(() => getSeasonRecordAudit(seasonId), [seasonId]);
     const seasonLabel = getSeasonLabel(seasonId);
 
 
@@ -39,7 +41,18 @@ export default function StandingsClient() {
                 </div>
             </div>
 
-            <StandingsTable teams={teams} seasonId={seasonId} />
+            {recordAudit.hasFlags && (
+                <div className="mb-6 rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4">
+                    <p className="text-sm font-black uppercase tracking-[0.2em] text-amber-300">Historical Record Notes</p>
+                    <div className="mt-2 space-y-2 text-sm text-amber-100/90">
+                        {recordAudit.seasonNotes.map((note) => (
+                            <p key={note}>{note}</p>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            <StandingsTable teams={teams} seasonId={seasonId} recordAudit={recordAudit.teams} />
         </div>
     );
 }
