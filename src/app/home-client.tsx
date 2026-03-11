@@ -173,14 +173,24 @@ export default function HomeClient() {
                         </div>
 
                         <div className="flex gap-4">
-                            <a href="https://www.instagram.com/_cbtleague/" target="_blank" className="flex items-center gap-4 rounded-3xl border border-white/10 bg-white/5 px-8 py-6 hover:bg-white/10 transition-all group">
+                            <a
+                                href="https://www.instagram.com/_cbtleague/"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex items-center gap-4 rounded-3xl border border-white/10 bg-white/5 px-8 py-6 hover:bg-white/10 transition-all group"
+                            >
                                 <Instagram className="h-8 w-8 text-orange-500" />
                                 <div className="text-left leading-none">
                                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-1">Follow us</p>
                                     <p className="text-lg font-bold text-white uppercase tracking-tighter">Instagram</p>
                                 </div>
                             </a>
-                            <a href="https://www.youtube.com/@coachbyrd7973/streams" target="_blank" className="flex items-center gap-4 rounded-3xl border border-white/10 bg-white/5 px-8 py-6 hover:bg-white/10 transition-all group">
+                            <a
+                                href="https://www.youtube.com/@coachbyrd7973/streams"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex items-center gap-4 rounded-3xl border border-white/10 bg-white/5 px-8 py-6 hover:bg-white/10 transition-all group"
+                            >
                                 <Youtube className="h-8 w-8 text-red-500" />
                                 <div className="text-left leading-none">
                                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-1">Watch Live</p>

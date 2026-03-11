@@ -99,10 +99,13 @@ export default function Navbar() {
 
                         <div className="relative pl-4 ml-4 border-l border-white/10">
                             <button
+                                type="button"
                                 className={cn(
                                     "flex items-center gap-1 text-sm font-bold transition-colors hover:text-white uppercase tracking-tight",
                                     pathname.includes("/stats") ? "text-orange-500" : "text-zinc-500"
                                 )}
+                                aria-expanded={statsOpen}
+                                aria-haspopup="menu"
                                 onMouseEnter={() => setStatsOpen(true)}
                                 onClick={() => setStatsOpen(!statsOpen)}
                             >
@@ -138,7 +141,11 @@ export default function Navbar() {
 
                     {/* Mobile Menu Button */}
                     <button
+                        type="button"
                         className="rounded-xl bg-white/5 border border-white/10 p-2 text-white hover:bg-white/10 md:hidden active:scale-95 transition-all"
+                        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+                        aria-expanded={isOpen}
+                        aria-controls="mobile-navigation"
                         onClick={() => setIsOpen(!isOpen)}
                     >
                         {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -150,6 +157,7 @@ export default function Navbar() {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        id="mobile-navigation"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}

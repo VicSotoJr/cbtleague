@@ -43,4 +43,6 @@ export const MISSING_PLAYER_HEADSHOT_KEYS: ReadonlySet<string> = new Set<string>
   "willbarton",
   "anthonyireland",
   "lateefbilewu",
+  "kuroniverson",
+  "tyshawnsmith",
 ]);

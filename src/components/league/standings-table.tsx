@@ -64,36 +64,51 @@ export default function StandingsTable({ teams, seasonId }: StandingsTableProps)
         [sortConfig.direction, sortConfig.key, teams]
     );
 
+    const renderSortButton = (key: SortConfig["key"], label: string, align: "left" | "center" | "right" = "left") => {
+        const isActive = sortConfig.key === key;
+        const justificationClass =
+            align === "center"
+                ? "justify-center"
+                : align === "right"
+                    ? "justify-end"
+                    : "justify-start";
+
+        return (
+            <button
+                type="button"
+                onClick={() => handleSort(key)}
+                className={cn(
+                    "flex w-full items-center gap-1 text-xs font-bold uppercase tracking-wider transition-colors hover:text-white",
+                    justificationClass,
+                    isActive ? "text-white" : "text-zinc-500"
+                )}
+                aria-label={`Sort standings by ${label}`}
+                aria-pressed={isActive}
+            >
+                <span>{label}</span>
+                <ArrowUpDown className="h-3 w-3" />
+            </button>
+        );
+    };
+
     return (
         <div className="overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/50 backdrop-blur-sm">
             <Table>
                 <TableHeader className="bg-white/5">
                     <TableRow className="border-white/5 hover:bg-transparent">
                         <TableHead className="w-16 text-center text-xs font-bold uppercase tracking-wider text-zinc-500">Rank</TableHead>
-                        <TableHead
-                            className="text-xs font-bold uppercase tracking-wider text-zinc-500 cursor-pointer hover:text-white transition-colors"
-                            onClick={() => handleSort("Team")}
-                        >
-                            <div className="flex items-center gap-2">Team <ArrowUpDown className="h-3 w-3" /></div>
+                        <TableHead className="text-xs font-bold uppercase tracking-wider">
+                            {renderSortButton("Team", "Team")}
                         </TableHead>
-                        <TableHead
-                            className="text-center text-xs font-bold uppercase tracking-wider text-zinc-500 cursor-pointer hover:text-white transition-colors"
-                            onClick={() => handleSort("wins")}
-                        >
-                            <div className="flex items-center justify-center gap-1">W <ArrowUpDown className="h-3 w-3" /></div>
+                        <TableHead className="text-center text-xs font-bold uppercase tracking-wider">
+                            {renderSortButton("wins", "W", "center")}
                         </TableHead>
-                        <TableHead
-                            className="text-center text-xs font-bold uppercase tracking-wider text-zinc-500 cursor-pointer hover:text-white transition-colors"
-                            onClick={() => handleSort("loss")}
-                        >
-                            <div className="flex items-center justify-center gap-1">L <ArrowUpDown className="h-3 w-3" /></div>
+                        <TableHead className="text-center text-xs font-bold uppercase tracking-wider">
+                            {renderSortButton("loss", "L", "center")}
                         </TableHead>
                         <TableHead className="text-center text-xs font-bold uppercase tracking-wider text-zinc-500">GP</TableHead>
-                        <TableHead
-                            className="text-right text-xs font-bold uppercase tracking-wider text-zinc-500 cursor-pointer hover:text-white transition-colors"
-                            onClick={() => handleSort("winPct")}
-                        >
-                            <div className="flex items-center justify-end gap-1">Win % <ArrowUpDown className="h-3 w-3" /></div>
+                        <TableHead className="text-right text-xs font-bold uppercase tracking-wider">
+                            {renderSortButton("winPct", "Win %", "right")}
                         </TableHead>
                     </TableRow>
                 </TableHeader>
