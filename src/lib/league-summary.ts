@@ -45,6 +45,21 @@ export type SummaryTeamWithAggregates = SummaryTeam & {
   aggregated: AggregatedBaseStats;
 };
 
+export type ScheduleSectionId = "regular" | "playoffs" | "special";
+
+export type GroupedScheduleWeek = {
+  week: string;
+  games: GameEntry[];
+};
+
+export type ScheduleSection = {
+  id: ScheduleSectionId;
+  title: string;
+  description: string;
+  inferred: boolean;
+  weeks: GroupedScheduleWeek[];
+};
+
 type SummarySeason = {
   id: string;
   name: string;
@@ -132,17 +147,195 @@ export function getTopPlayersByStat(
   return ranked;
 }
 
-export function groupGamesByWeek(schedule: GameEntry[]): Array<{ week: string; games: GameEntry[] }> {
+function groupGamesByWeekInternal(entries: Array<{ week: string; game: GameEntry }>): GroupedScheduleWeek[] {
   const grouped = new Map<string, GameEntry[]>();
 
-  for (const game of schedule) {
-    const existing = grouped.get(game.week);
+  for (const entry of entries) {
+    const existing = grouped.get(entry.week);
     if (existing) {
-      existing.push(game);
+      existing.push(entry.game);
     } else {
-      grouped.set(game.week, [game]);
+      grouped.set(entry.week, [entry.game]);
     }
   }
 
   return Array.from(grouped.entries()).map(([week, games]) => ({ week, games }));
+}
+
+function parseDisplayDate(value: string | undefined): number | null {
+  if (!value) {
+    return null;
+  }
+
+  const parsed = Date.parse(value);
+  return Number.isNaN(parsed) ? null : parsed;
+}
+
+function getWeekNumber(label: string | undefined): number | null {
+  if (!label) {
+    return null;
+  }
+
+  const match = label.match(/^Week\s+(\d+)/i);
+  if (!match) {
+    return null;
+  }
+
+  return Number(match[1]);
+}
+
+function getWeekLabelDate(label: string | undefined): number | null {
+  if (!label) {
+    return null;
+  }
+
+  const parts = label.split(" - ");
+  if (parts.length < 2) {
+    return null;
+  }
+
+  return parseDisplayDate(parts.slice(1).join(" - "));
+}
+
+function isSpecialEventGame(game: GameEntry): boolean {
+  return /allstar|all-star|skills challenge|3 point|1 on 1|dunk contest/i.test(game.week);
+}
+
+function isExplicitPlayoffGame(game: GameEntry): boolean {
+  return Boolean(game.isPlayoff) || /playoff|championship/i.test(game.week);
+}
+
+function getPlayoffInferenceBoundary(schedule: GameEntry[]) {
+  let lastRegularWeekNumber = 0;
+  let lastRegularWeekLabel: string | null = null;
+  let lastRegularWeekDate: number | null = null;
+
+  for (const game of schedule) {
+    if (isSpecialEventGame(game) || isExplicitPlayoffGame(game)) {
+      continue;
+    }
+
+    const weekNumber = getWeekNumber(game.week);
+    if (weekNumber === null || weekNumber < lastRegularWeekNumber) {
+      continue;
+    }
+
+    const weekDate = getWeekLabelDate(game.week);
+    if (weekNumber > lastRegularWeekNumber) {
+      lastRegularWeekNumber = weekNumber;
+      lastRegularWeekLabel = game.week;
+      lastRegularWeekDate = weekDate;
+      continue;
+    }
+
+    if ((weekDate ?? -Infinity) > (lastRegularWeekDate ?? -Infinity)) {
+      lastRegularWeekLabel = game.week;
+      lastRegularWeekDate = weekDate;
+    }
+  }
+
+  return {
+    lastRegularWeekNumber,
+    lastRegularWeekLabel,
+    lastRegularWeekDate,
+  };
+}
+
+function isInferredPlayoffGame(
+  game: GameEntry,
+  boundary: ReturnType<typeof getPlayoffInferenceBoundary>
+): boolean {
+  if (isSpecialEventGame(game) || isExplicitPlayoffGame(game)) {
+    return false;
+  }
+
+  if (!boundary.lastRegularWeekLabel || boundary.lastRegularWeekDate === null) {
+    return false;
+  }
+
+  if (getWeekNumber(game.week) !== boundary.lastRegularWeekNumber) {
+    return false;
+  }
+
+  const gameDate = parseDisplayDate(game.date);
+  return gameDate !== null && gameDate > boundary.lastRegularWeekDate;
+}
+
+function getScheduleBucketLabel(
+  game: GameEntry,
+  sectionId: ScheduleSectionId,
+  inferredPlayoff: boolean
+): string {
+  if (sectionId === "playoffs" && inferredPlayoff) {
+    return `Playoffs - ${game.date}`;
+  }
+
+  return game.week;
+}
+
+export function getScheduleSections(schedule: GameEntry[]): ScheduleSection[] {
+  const boundary = getPlayoffInferenceBoundary(schedule);
+  const regularEntries: Array<{ week: string; game: GameEntry }> = [];
+  const playoffEntries: Array<{ week: string; game: GameEntry }> = [];
+  const specialEntries: Array<{ week: string; game: GameEntry }> = [];
+  let hasInferredPlayoffs = false;
+
+  for (const game of schedule) {
+    if (isSpecialEventGame(game)) {
+      specialEntries.push({ week: game.week, game });
+      continue;
+    }
+
+    const inferredPlayoff = isInferredPlayoffGame(game, boundary);
+    if (isExplicitPlayoffGame(game) || inferredPlayoff) {
+      hasInferredPlayoffs = hasInferredPlayoffs || inferredPlayoff;
+      playoffEntries.push({
+        week: getScheduleBucketLabel(game, "playoffs", inferredPlayoff),
+        game,
+      });
+      continue;
+    }
+
+    regularEntries.push({ week: game.week, game });
+  }
+
+  const sections: ScheduleSection[] = [];
+
+  if (regularEntries.length > 0) {
+    sections.push({
+      id: "regular",
+      title: "Regular Season",
+      description: "Weekly regular-season matchups and byes.",
+      inferred: false,
+      weeks: groupGamesByWeekInternal(regularEntries),
+    });
+  }
+
+  if (playoffEntries.length > 0) {
+    sections.push({
+      id: "playoffs",
+      title: "Playoffs",
+      description: hasInferredPlayoffs
+        ? "Postseason games, including historical playoff dates inferred from the archived schedule."
+        : "Postseason bracket matchups and championship games.",
+      inferred: hasInferredPlayoffs,
+      weeks: groupGamesByWeekInternal(playoffEntries),
+    });
+  }
+
+  if (specialEntries.length > 0) {
+    sections.push({
+      id: "special",
+      title: "Special Events",
+      description: "All-Star Weekend and other league event entries.",
+      inferred: false,
+      weeks: groupGamesByWeekInternal(specialEntries),
+    });
+  }
+
+  return sections;
+}
+
+export function groupGamesByWeek(schedule: GameEntry[]): GroupedScheduleWeek[] {
+  return groupGamesByWeekInternal(schedule.map((game) => ({ week: game.week, game })));
 }
