@@ -29,6 +29,7 @@ type TeamProfileSnapshot = {
 
 export type TeamProfileSeason = {
   seasonId: string;
+  championTeam: string | null;
   team: TeamProfileSnapshot;
 };
 
@@ -62,6 +63,8 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
     [seasonId, seasons]
   );
   const team = selectedSeason?.team ?? null;
+  const championTeam = selectedSeason?.championTeam ?? null;
+  const isChampion = championTeam === team?.Team;
 
   if (!team) {
     return (
@@ -93,6 +96,17 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
             <span className="rounded-full bg-orange-600/10 px-3 py-1 text-xs font-bold text-orange-500 border border-orange-500/20 uppercase tracking-widest">
               Season {seasonId}
             </span>
+            {championTeam && (
+              <span
+                className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-widest ${
+                  isChampion
+                    ? "border-amber-400/30 bg-amber-400/10 text-amber-300"
+                    : "border-white/10 bg-white/5 text-zinc-300"
+                }`}
+              >
+                {isChampion ? "Season Champion" : `Champion: ${championTeam}`}
+              </span>
+            )}
           </div>
           <h1 className="text-5xl font-black tracking-tighter text-white md:text-7xl uppercase">{team.Team}</h1>
           <div className="mt-4 flex flex-wrap justify-center gap-6 md:justify-start">

@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Metadata } from "next";
 import TeamProfileClient, { type TeamProfileSeason } from "./team-profile-client";
 import { aggregatePlayerStats, getLeagueData, getSeasonTeamsWithAggregates } from "@/lib/league-data";
+import { getSeasonChampion } from "@/lib/season-honors";
 
 function normalizeTeamKey(value: string): string {
     return value.replace(/\s+/g, "").trim().toLowerCase();
@@ -22,6 +23,7 @@ function getTeamSeasons(teamName: string): TeamProfileSeason[] {
 
         results.push({
             seasonId,
+            championTeam: getSeasonChampion(seasonId)?.teamName ?? null,
             team: {
                 Team: match.Team,
                 wins: match.wins,
