@@ -8,6 +8,25 @@ import { Calendar as CalendarIcon, Clock } from "lucide-react";
 import SeasonToggle from "@/components/league/season-toggle";
 import { getSeasonId, getSeasonLabel, getSeasonSchedule, groupGamesByWeek, SEASON_OPTIONS } from "@/lib/league-summary";
 
+function getScoreTone(score: string | number | undefined, opponentScore: string | number | undefined) {
+    const current = Number(score);
+    const opponent = Number(opponentScore);
+
+    if (!Number.isFinite(current) || !Number.isFinite(opponent)) {
+        return "text-zinc-400";
+    }
+
+    if (current > opponent) {
+        return "text-orange-500";
+    }
+
+    if (current < opponent) {
+        return "text-zinc-400";
+    }
+
+    return "text-white";
+}
+
 export default function ScheduleClient() {
     const searchParams = useSearchParams();
     const seasonId = getSeasonId(searchParams.get("season"));
@@ -97,7 +116,9 @@ export default function ScheduleClient() {
                                                     </Link>
                                                 </div>
                                                 <div className="flex flex-col items-center">
-                                                    <span className="text-2xl font-black text-orange-500">{game.homeScore || "—"}</span>
+                                                    <span className={cn("text-2xl font-black", getScoreTone(game.homeScore, game.awayScore))}>
+                                                        {game.homeScore || "—"}
+                                                    </span>
                                                 </div>
                                             </div>
 
@@ -119,7 +140,9 @@ export default function ScheduleClient() {
                                                     </Link>
                                                 </div>
                                                 <div className="flex flex-col items-center">
-                                                    <span className="text-2xl font-black text-zinc-400">{game.awayScore || "—"}</span>
+                                                    <span className={cn("text-2xl font-black", getScoreTone(game.awayScore, game.homeScore))}>
+                                                        {game.awayScore || "—"}
+                                                    </span>
                                                 </div>
                                             </div>
 
