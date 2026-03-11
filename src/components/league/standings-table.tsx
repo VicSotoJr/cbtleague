@@ -12,14 +12,12 @@ import {
     TableRow
 } from "@/components/ui/table";
 import type { SummaryTeam } from "@/lib/league-summary";
-import type { TeamRecordAudit } from "@/lib/season-record-audit";
 import { cn } from "@/lib/utils";
-import { AlertTriangle, ArrowUpDown, Flag } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 
 interface StandingsTableProps {
     teams: SummaryTeam[];
     seasonId: string;
-    recordAudit: Record<string, TeamRecordAudit>;
 }
 
 type SortConfig = {
@@ -36,7 +34,7 @@ function getSortValue(team: SummaryTeam, key: SortConfig["key"]): SortableValue 
     return team[key];
 }
 
-export default function StandingsTable({ teams, seasonId, recordAudit }: StandingsTableProps) {
+export default function StandingsTable({ teams, seasonId }: StandingsTableProps) {
     const [sortConfig, setSortConfig] = useState<SortConfig>({
         key: "winPct",
         direction: "desc"
@@ -118,7 +116,6 @@ export default function StandingsTable({ teams, seasonId, recordAudit }: Standin
                     {sortedTeams.map((team, index) => {
                         const winPct = getWinPct(team).toFixed(3);
                         const rank = index + 1;
-                        const audit = recordAudit[team.Team];
 
                         return (
                             <TableRow key={team.Team} className="border-white/5 hover:bg-white/5 transition-colors group">
@@ -140,52 +137,14 @@ export default function StandingsTable({ teams, seasonId, recordAudit }: Standin
                                             size={40}
                                             className="rounded-lg"
                                         />
-                                        <div className="min-w-0">
-                                            <span className="font-bold text-white group-hover:text-orange-500 transition-colors">
-                                                {team.Team}
-                                            </span>
-
-                                            {audit && (audit.includesPlayoffsInStoredRecord || audit.hasMismatch) && (
-                                                <div className="mt-1 flex flex-wrap items-center gap-2">
-                                                    {audit.includesPlayoffsInStoredRecord && (
-                                                        <span
-                                                            className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-300"
-                                                            title={audit.notes.join(" ")}
-                                                        >
-                                                            <Flag className="h-3 w-3" />
-                                                            Includes Playoffs
-                                                        </span>
-                                                    )}
-
-                                                    {audit.hasMismatch && (
-                                                        <span
-                                                            className="inline-flex items-center gap-1 rounded-full bg-rose-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-300"
-                                                            title={audit.notes.join(" ")}
-                                                        >
-                                                            <AlertTriangle className="h-3 w-3" />
-                                                            Archive Mismatch
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            )}
-
-                                            {audit?.includesPlayoffsInStoredRecord && (
-                                                <p className="mt-1 text-xs text-zinc-500">
-                                                    Schedule split: {audit.regularSeason.wins}-{audit.regularSeason.loss} regular, {audit.playoffs.wins}-{audit.playoffs.loss} playoffs.
-                                                </p>
-                                            )}
-
-                                            {audit?.hasMismatch && (
-                                                <p className="mt-1 text-xs text-zinc-500">
-                                                    Archived schedule totals {audit.totalFromSchedule.wins}-{audit.totalFromSchedule.loss}, which does not match the stored record.
-                                                </p>
-                                            )}
-                                        </div>
+                                        <span className="font-bold text-white group-hover:text-orange-500 transition-colors">
+                                            {team.Team}
+                                        </span>
                                     </Link>
                                 </TableCell>
                                 <TableCell className="text-center font-medium text-white">{team.wins}</TableCell>
                                 <TableCell className="text-center font-medium text-white">{team.loss}</TableCell>
-                                <TableCell className="text-center text-zinc-500">{team.gamesPlayed}</TableCell>
+                                <TableCell className="text-center text-zinc-500">{team.wins + team.loss}</TableCell>
                                 <TableCell className="text-right font-mono font-bold text-orange-500">
                                     {winPct}
                                 </TableCell>

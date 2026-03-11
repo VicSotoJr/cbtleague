@@ -1,9 +1,9 @@
 [
   {
     "Team": "Hidden Rain",
-    "wins": 7,
+    "wins": 6,
     "loss": 0,
-    "gamesPlayed": 8,
+    "gamesPlayed": 6,
     "roster": [
       {
         "name": "Kevin Rivera",
@@ -1603,7 +1603,7 @@
     "Team": "Venom",
     "wins": 0,
     "loss": 7,
-    "gamesPlayed": 8,
+    "gamesPlayed": 7,
     "roster": [
       {
         "name": "Matt Evarts",
@@ -3683,7 +3683,7 @@
     "Team": "GetBuck$",
     "wins": 1,
     "loss": 6,
-    "gamesPlayed": 8,
+    "gamesPlayed": 7,
     "roster": [
       {
         "name": "TJ Green",
@@ -5424,7 +5424,7 @@
     "Team": "1Fam",
     "wins": 6,
     "loss": 1,
-    "gamesPlayed": 10,
+    "gamesPlayed": 7,
     "roster": [
       {
         "name": "Matt Perez",
@@ -7233,7 +7233,7 @@
     "Team": "Free Agents",
     "wins": 3,
     "loss": 4,
-    "gamesPlayed": 8,
+    "gamesPlayed": 7,
     "roster": [
       {
         "name": "Ali Jefferson",
@@ -8833,7 +8833,7 @@
     "Team": "BTA",
     "wins": 5,
     "loss": 2,
-    "gamesPlayed": 9,
+    "gamesPlayed": 7,
     "roster": [
       {
         "name": "Tamaron Hargett",
@@ -10764,7 +10764,7 @@
     "Team": "OTF",
     "wins": 3,
     "loss": 4,
-    "gamesPlayed": 9,
+    "gamesPlayed": 7,
     "roster": [
       {
         "name": "Bryant Washington",
