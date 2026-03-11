@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { buildLeagueSummary } from "../src/lib/league-summary-builder";
+import { buildLeagueSummary } from "../src/lib/league-summary-builder-runtime.mjs";
 
 const sourcePath = path.join(process.cwd(), "src/data/data.json");
 const outputPath = path.join(process.cwd(), "src/data/league-summary.json");
