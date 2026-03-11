@@ -301,7 +301,7 @@
             $("#playerhead").append(
               "<img src='assets/img/player-heads/" +
                 team.roster[i].PlayerHead +
-                "' alt='Player Image' style='width:200px !important;'>"
+                "' alt='Player Image' style='width:200px !important;' onerror=\"this.onerror=null;this.src='assets/img/player-heads/cbt-logo1.jpg';\">"
             );
           }
         }
@@ -673,7 +673,12 @@
                 team.roster[i].PlayerHead +
                 "?t=" +
                 new Date().getTime();
-              playerHeadContainer.attr("src", imageUrl);
+              playerHeadContainer
+                .off("error")
+                .on("error", function () {
+                  $(this).off("error").attr("src", "assets/img/player-heads/cbt-logo1.jpg");
+                })
+                .attr("src", imageUrl);
             } else {
               // If no image exists, create a new one
               if (team.roster[i].PlayerHead) {
@@ -683,6 +688,9 @@
                   "?t=" +
                   new Date().getTime();
                 playerHeadContainer = $("<img>")
+                  .on("error", function () {
+                    $(this).off("error").attr("src", "assets/img/player-heads/cbt-logo1.jpg");
+                  })
                   .attr("src", imageUrl)
                   .attr("alt", "Player Image")
                   .css("width", "200px");
@@ -1064,7 +1072,12 @@
                 team.roster[i].PlayerHead +
                 "?t=" +
                 new Date().getTime();
-              playerHeadContainer.attr("src", imageUrl);
+              playerHeadContainer
+                .off("error")
+                .on("error", function () {
+                  $(this).off("error").attr("src", "assets/img/player-heads/cbt-logo1.jpg");
+                })
+                .attr("src", imageUrl);
             } else {
               // If no image exists, create a new one
               if (team.roster[i].PlayerHead) {
@@ -1074,6 +1087,9 @@
                   "?t=" +
                   new Date().getTime();
                 playerHeadContainer = $("<img>")
+                  .on("error", function () {
+                    $(this).off("error").attr("src", "assets/img/player-heads/cbt-logo1.jpg");
+                  })
                   .attr("src", imageUrl)
                   .attr("alt", "Player Image")
                   .css("width", "200px");
