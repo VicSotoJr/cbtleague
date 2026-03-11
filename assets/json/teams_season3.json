@@ -7,7 +7,7 @@
                 "name": "Matt Perez",
                 "number": 13,
                 "GamesPlayed": 0,
-                "PlayerHead": "cbt-logo1.jpg",
+                "PlayerHead": "mattperez.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -33,7 +33,7 @@
                 "name": "Rodney Cook",
                 "number": 5,
                 "GamesPlayed": 0,
-                "PlayerHead": "cbt-logo1.jpg",
+                "PlayerHead": "rodneycook.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -137,7 +137,7 @@
                 "name": "Marcell Robinson",
                 "number": 3,
                 "GamesPlayed": 0,
-                "PlayerHead": "cbt-logo1.jpg",
+                "PlayerHead": "marcellrobinson.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -619,7 +619,7 @@
                 "name": "Darric Myers",
                 "number": 11,
                 "GamesPlayed": 1,
-                "PlayerHead": "cbt-logo1.jpg",
+                "PlayerHead": "darricmeyers3.jpg",
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Dream Chasers",
@@ -723,7 +723,7 @@
                 "name": "Kuron Iverson",
                 "number": 23,
                 "GamesPlayed": 0,
-                "PlayerHead": "cbt-logo1.jpg",
+                "PlayerHead": "kuranIverson.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -938,7 +938,7 @@
                 "name": "Eric Cummings",
                 "number": 0,
                 "GamesPlayed": 1,
-                "PlayerHead": "cbt-logo1.jpg",
+                "PlayerHead": "ericcommings3.jpg",
                 "stats": [{
                             "game_number": "1",
                             "opponent": "The Mob",
@@ -1127,7 +1127,7 @@
                 "name": "David Crenshaw",
                 "number": 13,
                 "GamesPlayed": 0,
-                "PlayerHead": "cbt-logo1.jpg",
+                "PlayerHead": "davidcrenshaw.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1205,7 +1205,7 @@
                 "name": "Jamaul Wynter",
                 "number": 7,
                 "GamesPlayed": 0,
-                "PlayerHead": "cbt-logo1.jpg",
+                "PlayerHead": "jamaulwynter.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1368,7 +1368,7 @@
                 "name": "Javon Taylor",
                 "number": 15,
                 "GamesPlayed": 0,
-                "PlayerHead": "cbt-logo1.jpg",
+                "PlayerHead": "javontaylor.jpg",
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1446,7 +1446,7 @@
                 "name": "Siah Tait",
                 "number": 23,
                 "GamesPlayed": 1,
-                "PlayerHead": "siahtait3.jpg",
+                "PlayerHead": "siahtate3.jpg",
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Venom",
