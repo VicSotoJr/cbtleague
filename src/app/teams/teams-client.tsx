@@ -67,7 +67,7 @@ export default function TeamsClient() {
                             className="group relative flex flex-col items-center overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-950 p-8 text-center transition-all hover:border-orange-500/30 hover:bg-zinc-900 active:scale-95"
                         >
                             {champion?.teamName === team.Team && (
-                                <div className="absolute right-4 top-4 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-amber-300">
+                                <div className="absolute right-4 top-4 z-20 rounded-full border border-amber-400/30 bg-zinc-950/90 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-amber-300 shadow-lg backdrop-blur-sm">
                                     Champion
                                 </div>
                             )}
