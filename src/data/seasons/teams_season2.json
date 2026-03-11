@@ -1,6 +1,6 @@
 [
   {
-    "Team": "Hidden Rain ",
+    "Team": "Hidden Rain",
     "wins": 7,
     "loss": 0,
     "gamesPlayed": 8,
@@ -13,7 +13,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 6,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 3,
@@ -70,7 +70,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 7,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 2,
@@ -108,7 +108,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 12,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 7,
@@ -145,43 +145,43 @@
             "PersonalFouls": 0
           },
           {
-                "game_number": "9",
-    "opponent": "Rd 2 Playoffs - OTF ",
-    "Points": 2,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 0,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 3,
-    "Offrebounds": 0,
-    "Defrebounds": 3,
-    "Assists": 4,
-    "Blocks": 1,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - OTF",
+            "Points": 2,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 0,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 3,
+            "Offrebounds": 0,
+            "Defrebounds": 3,
+            "Assists": 4,
+            "Blocks": 1,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
           },
-            {
-    "game_number": "11",
-    "opponent": "Championship - 1Fam",
-    "Points": 2,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 0,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 6,
-    "Offrebounds": 0,
-    "Defrebounds": 6,
-    "Assists": 2,
-    "Blocks": 1,
-    "Steals": 0,
-    "Turnovers": 3,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "11",
+            "opponent": "Championship - 1Fam",
+            "Points": 2,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 0,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 6,
+            "Offrebounds": 0,
+            "Defrebounds": 6,
+            "Assists": 2,
+            "Blocks": 1,
+            "Steals": 0,
+            "Turnovers": 3,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -249,7 +249,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 4,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -324,43 +324,43 @@
             "PersonalFouls": 0
           },
           {
-                "game_number": "9",
-    "opponent": "Rd 2 Playoffs - OTF ",
-    "Points": 8,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 2,
-    "Offrebounds": 1,
-    "Defrebounds": 1,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - OTF",
+            "Points": 8,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 2,
+            "Offrebounds": 1,
+            "Defrebounds": 1,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
           },
-            {
-    "game_number": "11",
-    "opponent": "Championship - 1Fam",
-    "Points": 0,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 0,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 2,
-    "Offrebounds": 0,
-    "Defrebounds": 2,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "11",
+            "opponent": "Championship - 1Fam",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 2,
+            "Offrebounds": 0,
+            "Defrebounds": 2,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -371,7 +371,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 24,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -428,7 +428,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 28,
             "FieldGoalsMade": 10,
             "FieldGoalAttempts": 14,
@@ -466,7 +466,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 16,
             "FieldGoalsMade": 7,
             "FieldGoalAttempts": 11,
@@ -503,43 +503,43 @@
             "PersonalFouls": 0
           },
           {
-                "game_number": "9",
-    "opponent": "Rd 2 Playoffs - OTF ",
-    "Points": 25,
-    "FieldGoalsMade": 7,
-    "FieldGoalAttempts": 14,
-    "ThreesMade": 3,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 3,
-    "Rebounds": 10,
-    "Offrebounds": 4,
-    "Defrebounds": 6,
-    "Assists": 5,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - OTF",
+            "Points": 25,
+            "FieldGoalsMade": 7,
+            "FieldGoalAttempts": 14,
+            "ThreesMade": 3,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 3,
+            "Rebounds": 10,
+            "Offrebounds": 4,
+            "Defrebounds": 6,
+            "Assists": 5,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
           },
-            {
-    "game_number": "11",
-    "opponent": "Championship - 1Fam",
-    "Points": 14,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 6,
-    "ThreesMade": 0,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 6,
-    "FreeThrowsAttempts": 8,
-    "Rebounds": 2,
-    "Offrebounds": 1,
-    "Defrebounds": 1,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 4,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "11",
+            "opponent": "Championship - 1Fam",
+            "Points": 14,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 6,
+            "ThreesMade": 0,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 6,
+            "FreeThrowsAttempts": 8,
+            "Rebounds": 2,
+            "Offrebounds": 1,
+            "Defrebounds": 1,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 4,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -550,7 +550,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 6,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -607,7 +607,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 10,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -645,7 +645,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 9,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -682,43 +682,43 @@
             "PersonalFouls": 0
           },
           {
-                "game_number": "9",
-    "opponent": "Rd 2 Playoffs - OTF ",
-    "Points": 21,
-    "FieldGoalsMade": 6,
-    "FieldGoalAttempts": 6,
-    "ThreesMade": 3,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 18,
-    "Offrebounds": 10,
-    "Defrebounds": 8,
-    "Assists": 8,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 2,
-    "PersonalFouls": 0
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - OTF",
+            "Points": 21,
+            "FieldGoalsMade": 6,
+            "FieldGoalAttempts": 6,
+            "ThreesMade": 3,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 18,
+            "Offrebounds": 10,
+            "Defrebounds": 8,
+            "Assists": 8,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 2,
+            "PersonalFouls": 0
           },
-            {
-    "game_number": "11",
-    "opponent": "Championship - 1Fam",
-    "Points": 11,
-    "FieldGoalsMade": 2,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 1,
-    "ThreesAttempts": 3,
-    "FreeThrowsMade": 4,
-    "FreeThrowsAttempts": 5,
-    "Rebounds": 7,
-    "Offrebounds": 1,
-    "Defrebounds": 6,
-    "Assists": 7,
-    "Blocks": 0,
-    "Steals": 2,
-    "Turnovers": 5,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "11",
+            "opponent": "Championship - 1Fam",
+            "Points": 11,
+            "FieldGoalsMade": 2,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 1,
+            "ThreesAttempts": 3,
+            "FreeThrowsMade": 4,
+            "FreeThrowsAttempts": 5,
+            "Rebounds": 7,
+            "Offrebounds": 1,
+            "Defrebounds": 6,
+            "Assists": 7,
+            "Blocks": 0,
+            "Steals": 2,
+            "Turnovers": 5,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -729,7 +729,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 11,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 4,
@@ -824,7 +824,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 9,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 8,
@@ -879,25 +879,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "11",
-    "opponent": "Championship - 1Fam",
-    "Points": 3,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 1,
-    "ThreesMade": 1,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 0,
-    "Offrebounds": 0,
-    "Defrebounds": 0,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "11",
+            "opponent": "Championship - 1Fam",
+            "Points": 3,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 1,
+            "ThreesMade": 1,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -908,7 +908,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 12,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 5,
@@ -965,7 +965,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 8,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 7,
@@ -1003,7 +1003,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 5,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 6,
@@ -1040,43 +1040,43 @@
             "PersonalFouls": 0
           },
           {
-                "game_number": "9",
-    "opponent": "Rd 2 Playoffs - OTF ",
-    "Points": 8,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 8,
-    "Offrebounds": 5,
-    "Defrebounds": 3,
-    "Assists": 6,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - OTF",
+            "Points": 8,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 8,
+            "Offrebounds": 5,
+            "Defrebounds": 3,
+            "Assists": 6,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
           },
-            {
-    "game_number": "11",
-    "opponent": "Championship - 1Fam",
-    "Points": 2,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 4,
-    "Offrebounds": 4,
-    "Defrebounds": 0,
-    "Assists": 2,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "11",
+            "opponent": "Championship - 1Fam",
+            "Points": 2,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 4,
+            "Offrebounds": 4,
+            "Defrebounds": 0,
+            "Assists": 2,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -1087,7 +1087,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 16,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 2,
@@ -1144,7 +1144,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 19,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 10,
@@ -1182,7 +1182,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 14,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 5,
@@ -1219,54 +1219,54 @@
             "PersonalFouls": 0
           },
           {
-                "game_number": "9",
-    "opponent": "Rd 2 Playoffs - OTF ",
-    "Points": 12,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 4,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 7,
-    "Offrebounds": 0,
-    "Defrebounds": 7,
-    "Assists": 4,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 1,
-    "PersonalFouls": 0
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - OTF",
+            "Points": 12,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 4,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 7,
+            "Offrebounds": 0,
+            "Defrebounds": 7,
+            "Assists": 4,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 1,
+            "PersonalFouls": 0
           },
-            {
-    "game_number": "11",
-    "opponent": "Championship - 1Fam",
-    "Points": 13,
-    "FieldGoalsMade": 6,
-    "FieldGoalAttempts": 8,
-    "ThreesMade": 0,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 8,
-    "Offrebounds": 0,
-    "Defrebounds": 8,
-    "Assists": 2,
-    "Blocks": 1,
-    "Steals": 1,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "11",
+            "opponent": "Championship - 1Fam",
+            "Points": 13,
+            "FieldGoalsMade": 6,
+            "FieldGoalAttempts": 8,
+            "ThreesMade": 0,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 8,
+            "Offrebounds": 0,
+            "Defrebounds": 8,
+            "Assists": 2,
+            "Blocks": 1,
+            "Steals": 1,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
-        "name": "Alex Hopkins ",
+        "name": "Alex Hopkins",
         "number": 0,
         "GamesPlayed": 6,
         "PlayerHead": "alexhopkins.jpg",
         "stats": [
           {
             "game_number": 1,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 6,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 3,
@@ -1323,7 +1323,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 28,
             "FieldGoalsMade": 11,
             "FieldGoalAttempts": 12,
@@ -1398,23 +1398,23 @@
             "PersonalFouls": 0
           },
           {
-                "game_number": "9",
-    "opponent": "Rd 2 Playoffs - OTF ",
-    "Points": 4,
-    "FieldGoalsMade": 2,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 0,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 4,
-    "Offrebounds": 1,
-    "Defrebounds": 3,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - OTF",
+            "Points": 4,
+            "FieldGoalsMade": 2,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 0,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 4,
+            "Offrebounds": 1,
+            "Defrebounds": 3,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
           }
         ]
       },
@@ -1426,7 +1426,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 21,
             "FieldGoalsMade": 7,
             "FieldGoalAttempts": 11,
@@ -1521,7 +1521,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 11,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 5,
@@ -1558,43 +1558,43 @@
             "PersonalFouls": 0
           },
           {
-                "game_number": "9",
-    "opponent": "Rd 2 Playoffs - OTF ",
-    "Points": 9,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 0,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 3,
-    "FreeThrowsAttempts": 4,
-    "Rebounds": 8,
-    "Offrebounds": 1,
-    "Defrebounds": 7,
-    "Assists": 1,
-    "Blocks": 1,
-    "Steals": 1,
-    "Turnovers": 0,
-    "PersonalFouls": 0
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - OTF",
+            "Points": 9,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 0,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 3,
+            "FreeThrowsAttempts": 4,
+            "Rebounds": 8,
+            "Offrebounds": 1,
+            "Defrebounds": 7,
+            "Assists": 1,
+            "Blocks": 1,
+            "Steals": 1,
+            "Turnovers": 0,
+            "PersonalFouls": 0
           },
-            {
-    "game_number": "11",
-    "opponent": "Championship - 1Fam",
-    "Points": 10,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 1,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 4,
-    "Rebounds": 3,
-    "Offrebounds": 2,
-    "Defrebounds": 1,
-    "Assists": 1,
-    "Blocks": 1,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "11",
+            "opponent": "Championship - 1Fam",
+            "Points": 10,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 1,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 4,
+            "Rebounds": 3,
+            "Offrebounds": 2,
+            "Defrebounds": 1,
+            "Assists": 1,
+            "Blocks": 1,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       }
     ]
@@ -1632,7 +1632,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 6,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -1651,7 +1651,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 15,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -1670,7 +1670,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 6,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -1689,7 +1689,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -1763,25 +1763,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - 1Fam",
-    "Points": 0,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 0,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 0,
-    "Offrebounds": 0,
-    "Defrebounds": 0,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - 1Fam",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -1811,7 +1811,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 9,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 4,
@@ -1830,7 +1830,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 4,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -1849,7 +1849,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 1,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -1868,7 +1868,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 6,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -1942,25 +1942,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - 1Fam",
-    "Points": 17,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 2,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 3,
-    "FreeThrowsAttempts": 6,
-    "Rebounds": 10,
-    "Offrebounds": 1,
-    "Defrebounds": 9,
-    "Assists": 7,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - 1Fam",
+            "Points": 17,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 2,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 3,
+            "FreeThrowsAttempts": 6,
+            "Rebounds": 10,
+            "Offrebounds": 1,
+            "Defrebounds": 9,
+            "Assists": 7,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -1990,7 +1990,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 6,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -2009,7 +2009,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 14,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 1,
@@ -2028,7 +2028,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 8,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 6,
@@ -2047,7 +2047,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 11,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 8,
@@ -2104,7 +2104,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 10,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 5,
@@ -2121,25 +2121,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs -  ",
-    "Points": 22,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 10,
-    "ThreesMade": 4,
-    "ThreesAttempts": 9,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 3,
-    "Rebounds": 5,
-    "Offrebounds": 4,
-    "Defrebounds": 1,
-    "Assists": 3,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs",
+            "Points": 22,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 10,
+            "ThreesMade": 4,
+            "ThreesAttempts": 9,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 3,
+            "Rebounds": 5,
+            "Offrebounds": 4,
+            "Defrebounds": 1,
+            "Assists": 3,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -2169,7 +2169,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -2188,7 +2188,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 1,
@@ -2207,7 +2207,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -2226,7 +2226,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -2283,7 +2283,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 2,
@@ -2329,7 +2329,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 1,
@@ -2348,7 +2348,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 4,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 2,
@@ -2386,7 +2386,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -2443,7 +2443,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -2489,7 +2489,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 27,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 9,
@@ -2508,7 +2508,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 11,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -2687,7 +2687,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 5,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -2706,7 +2706,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 8,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -2780,25 +2780,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - 1Fam",
-    "Points": 3,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 1,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 3,
-    "Offrebounds": 1,
-    "Defrebounds": 2,
-    "Assists": 2,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - 1Fam",
+            "Points": 3,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 1,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 3,
+            "Offrebounds": 1,
+            "Defrebounds": 2,
+            "Assists": 2,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -2828,7 +2828,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 14,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 6,
@@ -2847,7 +2847,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 4,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 3,
@@ -2866,7 +2866,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 25,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 8,
@@ -2885,7 +2885,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 19,
             "FieldGoalsMade": 7,
             "FieldGoalAttempts": 11,
@@ -2942,7 +2942,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 25,
             "FieldGoalsMade": 9,
             "FieldGoalAttempts": 14,
@@ -2959,25 +2959,25 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - 1Fam",
-    "Points": 15,
-    "FieldGoalsMade": 5,
-    "FieldGoalAttempts": 11,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 5,
-    "FreeThrowsAttempts": 5,
-    "Rebounds": 8,
-    "Offrebounds": 4,
-    "Defrebounds": 4,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - 1Fam",
+            "Points": 15,
+            "FieldGoalsMade": 5,
+            "FieldGoalAttempts": 11,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 5,
+            "FreeThrowsAttempts": 5,
+            "Rebounds": 8,
+            "Offrebounds": 4,
+            "Defrebounds": 4,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -3007,7 +3007,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -3045,7 +3045,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 6,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 5,
@@ -3064,7 +3064,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -3121,7 +3121,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 7,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 10,
@@ -3138,25 +3138,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - 1Fam",
-    "Points": 0,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 0,
-    "Offrebounds": 0,
-    "Defrebounds": 2,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - 1Fam",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 2,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -3186,7 +3186,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 4,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 2,
@@ -3205,7 +3205,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 10,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 6,
@@ -3224,7 +3224,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 3,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 4,
@@ -3243,7 +3243,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 8,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -3300,7 +3300,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 16,
             "FieldGoalsMade": 8,
             "FieldGoalAttempts": 10,
@@ -3317,25 +3317,25 @@
             "Turnovers": 2,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - 1Fam",
-    "Points": 6,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 4,
-    "Offrebounds": 1,
-    "Defrebounds": 3,
-    "Assists": 0,
-    "Blocks": 1,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - 1Fam",
+            "Points": 6,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 4,
+            "Offrebounds": 1,
+            "Defrebounds": 3,
+            "Assists": 0,
+            "Blocks": 1,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -3365,7 +3365,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -3384,7 +3384,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 2,
@@ -3422,7 +3422,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -3479,7 +3479,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -3544,7 +3544,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 18,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 3,
@@ -3563,7 +3563,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 14,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -3582,7 +3582,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 12,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 1,
@@ -3639,7 +3639,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 26,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 8,
@@ -3656,25 +3656,25 @@
             "Turnovers": 2,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - 1Fam",
-    "Points": 12,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 3,
-    "ThreesAttempts": 8,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 7,
-    "Offrebounds": 2,
-    "Defrebounds": 5,
-    "Assists": 2,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - 1Fam",
+            "Points": 12,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 3,
+            "ThreesAttempts": 8,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 7,
+            "Offrebounds": 2,
+            "Defrebounds": 5,
+            "Assists": 2,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       }
     ]
@@ -3731,7 +3731,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 21,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 3,
@@ -3788,7 +3788,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 14,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 10,
@@ -3807,7 +3807,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 21,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -3843,29 +3843,29 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - BTA",
-    "Points": 14,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 1,
-    "ThreesAttempts": 9,
-    "FreeThrowsMade": 5,
-    "FreeThrowsAttempts": 7,
-    "Rebounds": 5,
-    "Offrebounds": 1,
-    "Defrebounds": 4,
-    "Assists": 4,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - BTA",
+            "Points": 14,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 1,
+            "ThreesAttempts": 9,
+            "FreeThrowsMade": 5,
+            "FreeThrowsAttempts": 7,
+            "Rebounds": 5,
+            "Offrebounds": 1,
+            "Defrebounds": 4,
+            "Assists": 4,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
-        "name": "Javi Hernandez ",
+        "name": "Javi Hernandez",
         "number": 12,
         "GamesPlayed": 7,
         "PlayerHead": "javihernandez.jpg",
@@ -3910,7 +3910,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 11,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 10,
@@ -3967,7 +3967,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 9,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 7,
@@ -3986,7 +3986,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 23,
             "FieldGoalsMade": 9,
             "FieldGoalAttempts": 13,
@@ -4022,25 +4022,25 @@
             "Turnovers": 3,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - BTA",
-    "Points": 12,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 8,
-    "ThreesMade": 1,
-    "ThreesAttempts": 3,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 6,
-    "Offrebounds": 2,
-    "Defrebounds": 4,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - BTA",
+            "Points": 12,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 8,
+            "ThreesMade": 1,
+            "ThreesAttempts": 3,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 6,
+            "Offrebounds": 2,
+            "Defrebounds": 4,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -4089,7 +4089,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 3,
@@ -4146,7 +4146,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 13,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 6,
@@ -4165,7 +4165,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 11,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -4201,25 +4201,25 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - BTA",
-    "Points": 3,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 1,
-    "ThreesAttempts": 3,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 6,
-    "Offrebounds": 2,
-    "Defrebounds": 4,
-    "Assists": 3,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - BTA",
+            "Points": 3,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 1,
+            "ThreesAttempts": 3,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 6,
+            "Offrebounds": 2,
+            "Defrebounds": 4,
+            "Assists": 3,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -4268,7 +4268,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 7,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 2,
@@ -4325,7 +4325,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 4,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -4344,7 +4344,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 11,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 4,
@@ -4380,25 +4380,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - BTA",
-    "Points": 3,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 1,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 1,
-    "Offrebounds": 0,
-    "Defrebounds": 1,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - BTA",
+            "Points": 3,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 1,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 1,
+            "Offrebounds": 0,
+            "Defrebounds": 1,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -4447,7 +4447,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 2,
@@ -4504,7 +4504,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -4664,7 +4664,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 13,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 6,
@@ -4719,25 +4719,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - BTA",
-    "Points": 9,
-    "FieldGoalsMade": 2,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 1,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 3,
-    "Offrebounds": 2,
-    "Defrebounds": 1,
-    "Assists": 0,
-    "Blocks": 1,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - BTA",
+            "Points": 9,
+            "FieldGoalsMade": 2,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 1,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 3,
+            "Offrebounds": 2,
+            "Defrebounds": 1,
+            "Assists": 0,
+            "Blocks": 1,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -4786,7 +4786,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 6,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 2,
@@ -4843,7 +4843,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -4946,7 +4946,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 6,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 7,
@@ -5003,7 +5003,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 3,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 4,
@@ -5022,7 +5022,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 17,
             "FieldGoalsMade": 8,
             "FieldGoalAttempts": 14,
@@ -5058,25 +5058,25 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - BTA",
-    "Points": 9,
-    "FieldGoalsMade": 2,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 1,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 2,
-    "Offrebounds": 0,
-    "Defrebounds": 2,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - BTA",
+            "Points": 9,
+            "FieldGoalsMade": 2,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 1,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 2,
+            "Offrebounds": 0,
+            "Defrebounds": 2,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -5182,7 +5182,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 14,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 6,
@@ -5201,7 +5201,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 18,
             "FieldGoalsMade": 6,
             "FieldGoalAttempts": 8,
@@ -5237,25 +5237,25 @@
             "Turnovers": 3,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - BTA",
-    "Points": 6,
-    "FieldGoalsMade": 2,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 0,
-    "ThreesAttempts": 4,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 3,
-    "Offrebounds": 1,
-    "Defrebounds": 2,
-    "Assists": 0,
-    "Blocks": 1,
-    "Steals": 0,
-    "Turnovers": 5,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - BTA",
+            "Points": 6,
+            "FieldGoalsMade": 2,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 0,
+            "ThreesAttempts": 4,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 3,
+            "Offrebounds": 1,
+            "Defrebounds": 2,
+            "Assists": 0,
+            "Blocks": 1,
+            "Steals": 0,
+            "Turnovers": 5,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -5453,7 +5453,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 21,
             "FieldGoalsMade": 6,
             "FieldGoalAttempts": 8,
@@ -5472,7 +5472,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -5510,7 +5510,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 23,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 9,
@@ -5567,7 +5567,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 14,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 4,
@@ -5583,63 +5583,64 @@
             "Steals": 1,
             "Turnovers": 3,
             "PersonalFouls": 0
-          },  {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Venom",
-    "Points": 19,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 3,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 4,
-    "FreeThrowsAttempts": 6,
-    "Rebounds": 8,
-    "Offrebounds": 2,
-    "Defrebounds": 6,
-    "Assists": 10,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - BTA ",
-    "Points": 16,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 3,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 10,
-    "Offrebounds": 2,
-    "Defrebounds": 8,
-    "Assists": 9,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "11",
-    "opponent": "Championship - Hidden Rain",
-    "Points": 3,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 1,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 4,
-    "Offrebounds": 2,
-    "Defrebounds": 2,
-    "Assists": 3,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 5,
-    "PersonalFouls": 0
-  }
+          },
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Venom",
+            "Points": 19,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 3,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 4,
+            "FreeThrowsAttempts": 6,
+            "Rebounds": 8,
+            "Offrebounds": 2,
+            "Defrebounds": 6,
+            "Assists": 10,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - BTA",
+            "Points": 16,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 3,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 10,
+            "Offrebounds": 2,
+            "Defrebounds": 8,
+            "Assists": 9,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "11",
+            "opponent": "Championship - Hidden Rain",
+            "Points": 3,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 1,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 4,
+            "Offrebounds": 2,
+            "Defrebounds": 2,
+            "Assists": 3,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 5,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -5650,7 +5651,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 24,
             "FieldGoalsMade": 6,
             "FieldGoalAttempts": 12,
@@ -5669,7 +5670,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 20,
             "FieldGoalsMade": 8,
             "FieldGoalAttempts": 10,
@@ -5688,7 +5689,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 6,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 5,
@@ -5726,7 +5727,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 19,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 8,
@@ -5783,7 +5784,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 8,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 6,
@@ -5800,63 +5801,63 @@
             "Turnovers": 2,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Venom",
-    "Points": 14,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 7,
-    "ThreesMade": 2,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 3,
-    "Rebounds": 16,
-    "Offrebounds": 4,
-    "Defrebounds": 12,
-    "Assists": 13,
-    "Blocks": 1,
-    "Steals": 2,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - BTA ",
-    "Points": 3,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 0,
-    "ThreesAttempts": 3,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 16,
-    "Offrebounds": 6,
-    "Defrebounds": 10,
-    "Assists": 6,
-    "Blocks": 3,
-    "Steals": 2,
-    "Turnovers": 3,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "11",
-    "opponent": "Championship - Hidden Rain",
-    "Points": 20,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 4,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 15,
-    "Offrebounds": 0,
-    "Defrebounds": 15,
-    "Assists": 8,
-    "Blocks": 1,
-    "Steals": 5,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Venom",
+            "Points": 14,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 7,
+            "ThreesMade": 2,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 3,
+            "Rebounds": 16,
+            "Offrebounds": 4,
+            "Defrebounds": 12,
+            "Assists": 13,
+            "Blocks": 1,
+            "Steals": 2,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - BTA",
+            "Points": 3,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 0,
+            "ThreesAttempts": 3,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 16,
+            "Offrebounds": 6,
+            "Defrebounds": 10,
+            "Assists": 6,
+            "Blocks": 3,
+            "Steals": 2,
+            "Turnovers": 3,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "11",
+            "opponent": "Championship - Hidden Rain",
+            "Points": 20,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 4,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 15,
+            "Offrebounds": 0,
+            "Defrebounds": 15,
+            "Assists": 8,
+            "Blocks": 1,
+            "Steals": 5,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -5867,7 +5868,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 15,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 6,
@@ -5886,7 +5887,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 19,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 11,
@@ -5905,7 +5906,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 25,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 13,
@@ -5943,7 +5944,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 38,
             "FieldGoalsMade": 13,
             "FieldGoalAttempts": 15,
@@ -6000,7 +6001,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 34,
             "FieldGoalsMade": 10,
             "FieldGoalAttempts": 17,
@@ -6017,63 +6018,63 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Venom",
-    "Points": 24,
-    "FieldGoalsMade": 6,
-    "FieldGoalAttempts": 10,
-    "ThreesMade": 3,
-    "ThreesAttempts": 8,
-    "FreeThrowsMade": 3,
-    "FreeThrowsAttempts": 5,
-    "Rebounds": 4,
-    "Offrebounds": 0,
-    "Defrebounds": 4,
-    "Assists": 0,
-    "Blocks": 3,
-    "Steals": 0,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - BTA ",
-    "Points": 13,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 1,
-    "ThreesAttempts": 9,
-    "FreeThrowsMade": 4,
-    "FreeThrowsAttempts": 6,
-    "Rebounds": 7,
-    "Offrebounds": 0,
-    "Defrebounds": 7,
-    "Assists": 2,
-    "Blocks": 3,
-    "Steals": 3,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "11",
-    "opponent": "Championship - Hidden Rain",
-    "Points": 12,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 11,
-    "ThreesMade": 2,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 3,
-    "Offrebounds": 0,
-    "Defrebounds": 3,
-    "Assists": 1,
-    "Blocks": 1,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Venom",
+            "Points": 24,
+            "FieldGoalsMade": 6,
+            "FieldGoalAttempts": 10,
+            "ThreesMade": 3,
+            "ThreesAttempts": 8,
+            "FreeThrowsMade": 3,
+            "FreeThrowsAttempts": 5,
+            "Rebounds": 4,
+            "Offrebounds": 0,
+            "Defrebounds": 4,
+            "Assists": 0,
+            "Blocks": 3,
+            "Steals": 0,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - BTA",
+            "Points": 13,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 1,
+            "ThreesAttempts": 9,
+            "FreeThrowsMade": 4,
+            "FreeThrowsAttempts": 6,
+            "Rebounds": 7,
+            "Offrebounds": 0,
+            "Defrebounds": 7,
+            "Assists": 2,
+            "Blocks": 3,
+            "Steals": 3,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "11",
+            "opponent": "Championship - Hidden Rain",
+            "Points": 12,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 11,
+            "ThreesMade": 2,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 3,
+            "Offrebounds": 0,
+            "Defrebounds": 3,
+            "Assists": 1,
+            "Blocks": 1,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -6084,7 +6085,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 6,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -6103,7 +6104,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 7,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -6122,7 +6123,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -6160,7 +6161,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 17,
             "FieldGoalsMade": 7,
             "FieldGoalAttempts": 10,
@@ -6217,7 +6218,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -6234,63 +6235,63 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Venom",
-    "Points": 21,
-    "FieldGoalsMade": 5,
-    "FieldGoalAttempts": 6,
-    "ThreesMade": 3,
-    "ThreesAttempts": 4,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 3,
-    "Offrebounds": 1,
-    "Defrebounds": 2,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - BTA ",
-    "Points": 18,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 4,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 3,
-    "Offrebounds": 1,
-    "Defrebounds": 2,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "11",
-    "opponent": "Championship - Hidden Rain",
-    "Points": 6,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 1,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 4,
-    "Rebounds": 0,
-    "Offrebounds": 0,
-    "Defrebounds": 0,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Venom",
+            "Points": 21,
+            "FieldGoalsMade": 5,
+            "FieldGoalAttempts": 6,
+            "ThreesMade": 3,
+            "ThreesAttempts": 4,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 3,
+            "Offrebounds": 1,
+            "Defrebounds": 2,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - BTA",
+            "Points": 18,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 4,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 3,
+            "Offrebounds": 1,
+            "Defrebounds": 2,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "11",
+            "opponent": "Championship - Hidden Rain",
+            "Points": 6,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 1,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 4,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -6301,7 +6302,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 11,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 8,
@@ -6320,7 +6321,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 9,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -6339,7 +6340,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 13,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 6,
@@ -6377,7 +6378,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 11,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -6434,7 +6435,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 18,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 3,
@@ -6451,63 +6452,63 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Venom",
-    "Points": 11,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 1,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 3,
-    "Rebounds": 3,
-    "Offrebounds": 1,
-    "Defrebounds": 2,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "9",
-    "opponent": "Rd 2 Playoffs - BTA ",
-    "Points": 14,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 2,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 6,
-    "Offrebounds": 3,
-    "Defrebounds": 3,
-    "Assists": 2,
-    "Blocks": 1,
-    "Steals": 3,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "11",
-    "opponent": "Championship - Hidden Rain",
-    "Points": 9,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 1,
-    "ThreesMade": 3,
-    "ThreesAttempts": 4,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 5,
-    "Offrebounds": 1,
-    "Defrebounds": 4,
-    "Assists": 3,
-    "Blocks": 0,
-    "Steals": 2,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Venom",
+            "Points": 11,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 1,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 3,
+            "Rebounds": 3,
+            "Offrebounds": 1,
+            "Defrebounds": 2,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - BTA",
+            "Points": 14,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 2,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 6,
+            "Offrebounds": 3,
+            "Defrebounds": 3,
+            "Assists": 2,
+            "Blocks": 1,
+            "Steals": 3,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "11",
+            "opponent": "Championship - Hidden Rain",
+            "Points": 9,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 1,
+            "ThreesMade": 3,
+            "ThreesAttempts": 4,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 5,
+            "Offrebounds": 1,
+            "Defrebounds": 4,
+            "Assists": 3,
+            "Blocks": 0,
+            "Steals": 2,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -6518,7 +6519,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 7,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 2,
@@ -6556,7 +6557,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 3,
@@ -6594,7 +6595,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -6651,7 +6652,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 18,
             "FieldGoalsMade": 8,
             "FieldGoalAttempts": 10,
@@ -6668,44 +6669,44 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - BTA ",
-    "Points": 0,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 1,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 3,
-    "Offrebounds": 1,
-    "Defrebounds": 2,
-    "Assists": 2,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "11",
-    "opponent": "Championship - Hidden Rain",
-    "Points": 0,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 0,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 0,
-    "Offrebounds": 0,
-    "Defrebounds": 0,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - BTA",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 1,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 3,
+            "Offrebounds": 1,
+            "Defrebounds": 2,
+            "Assists": 2,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "11",
+            "opponent": "Championship - Hidden Rain",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -6716,7 +6717,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 14,
             "FieldGoalsMade": 6,
             "FieldGoalAttempts": 9,
@@ -6735,7 +6736,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 11,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 7,
@@ -6792,7 +6793,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 8,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 5,
@@ -6866,25 +6867,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "11",
-    "opponent": "Championship - Hidden Rain",
-    "Points": 2,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 0,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 2,
-    "Offrebounds": 1,
-    "Defrebounds": 1,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "11",
+            "opponent": "Championship - Hidden Rain",
+            "Points": 2,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 0,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 2,
+            "Offrebounds": 1,
+            "Defrebounds": 1,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -7055,7 +7056,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -7074,7 +7075,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -7093,7 +7094,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -7131,7 +7132,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 8,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 7,
@@ -7205,31 +7206,31 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Venom",
-    "Points": 6,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 2,
-    "Offrebounds": 0,
-    "Defrebounds": 2,
-    "Assists": 1,
-    "Blocks": 1,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Venom",
+            "Points": 6,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 2,
+            "Offrebounds": 0,
+            "Defrebounds": 2,
+            "Assists": 1,
+            "Blocks": 1,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       }
     ]
   },
   {
-    "Team": "Free Agents ",
+    "Team": "Free Agents",
     "wins": 3,
     "loss": 4,
     "gamesPlayed": 8,
@@ -7280,7 +7281,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 10,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -7337,7 +7338,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 1,
@@ -7392,25 +7393,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - OTF",
-    "Points": 3,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 0,
-    "ThreesMade": 1,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 2,
-    "Offrebounds": 0,
-    "Defrebounds": 2,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - OTF",
+            "Points": 3,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 1,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 2,
+            "Offrebounds": 0,
+            "Defrebounds": 2,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -7459,7 +7460,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 22,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 3,
@@ -7478,7 +7479,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 15,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -7516,7 +7517,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 11,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 5,
@@ -7571,25 +7572,25 @@
             "Turnovers": 2,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - OTF",
-    "Points": 11,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 8,
-    "ThreesMade": 1,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 7,
-    "Offrebounds": 1,
-    "Defrebounds": 6,
-    "Assists": 8,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - OTF",
+            "Points": 11,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 8,
+            "ThreesMade": 1,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 7,
+            "Offrebounds": 1,
+            "Defrebounds": 6,
+            "Assists": 8,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -7638,7 +7639,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 3,
@@ -7657,7 +7658,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 4,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -7695,7 +7696,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 4,
@@ -7750,25 +7751,25 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - OTF",
-    "Points": 2,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 3,
-    "Offrebounds": 1,
-    "Defrebounds": 2,
-    "Assists": 2,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - OTF",
+            "Points": 2,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 3,
+            "Offrebounds": 1,
+            "Defrebounds": 2,
+            "Assists": 2,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -7817,7 +7818,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 7,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 3,
@@ -7836,7 +7837,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 10,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -7874,7 +7875,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 25,
             "FieldGoalsMade": 8,
             "FieldGoalAttempts": 8,
@@ -7929,25 +7930,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - OTF",
-    "Points": 20,
-    "FieldGoalsMade": 2,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 5,
-    "ThreesAttempts": 8,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 2,
-    "Offrebounds": 2,
-    "Defrebounds": 0,
-    "Assists": 3,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - OTF",
+            "Points": 20,
+            "FieldGoalsMade": 2,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 5,
+            "ThreesAttempts": 8,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 2,
+            "Offrebounds": 2,
+            "Defrebounds": 0,
+            "Assists": 3,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -7996,7 +7997,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 2,
@@ -8015,7 +8016,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 4,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 5,
@@ -8108,25 +8109,25 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - OTF",
-    "Points": 0,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 0,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 0,
-    "Offrebounds": 0,
-    "Defrebounds": 0,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - OTF",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 0,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -8175,7 +8176,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 4,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 3,
@@ -8194,7 +8195,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 8,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 7,
@@ -8232,7 +8233,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 3,
@@ -8287,25 +8288,25 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - OTF",
-    "Points": 0,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 0,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 0,
-    "Offrebounds": 0,
-    "Defrebounds": 0,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - OTF",
+            "Points": 0,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -8354,7 +8355,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 8,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -8373,7 +8374,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -8411,7 +8412,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -8533,7 +8534,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 22,
             "FieldGoalsMade": 6,
             "FieldGoalAttempts": 15,
@@ -8571,7 +8572,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 26,
             "FieldGoalsMade": 7,
             "FieldGoalAttempts": 16,
@@ -8626,25 +8627,25 @@
             "Turnovers": 2,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - OTF",
-    "Points": 31,
-    "FieldGoalsMade": 9,
-    "FieldGoalAttempts": 13,
-    "ThreesMade": 3,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 4,
-    "FreeThrowsAttempts": 6,
-    "Rebounds": 12,
-    "Offrebounds": 4,
-    "Defrebounds": 8,
-    "Assists": 7,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 4,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - OTF",
+            "Points": 31,
+            "FieldGoalsMade": 9,
+            "FieldGoalAttempts": 13,
+            "ThreesMade": 3,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 4,
+            "FreeThrowsAttempts": 6,
+            "Rebounds": 12,
+            "Offrebounds": 4,
+            "Defrebounds": 8,
+            "Assists": 7,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 4,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -8693,7 +8694,7 @@
           },
           {
             "game_number": 3,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 6,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 7,
@@ -8712,7 +8713,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 6,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 9,
@@ -8750,7 +8751,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 7,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 6,
@@ -8805,25 +8806,25 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - OTF",
-    "Points": 2,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 2,
-    "Offrebounds": 0,
-    "Defrebounds": 2,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 3,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - OTF",
+            "Points": 2,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 2,
+            "Offrebounds": 0,
+            "Defrebounds": 2,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 3,
+            "PersonalFouls": 0
+          }
         ]
       }
     ]
@@ -8899,7 +8900,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 10,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 7,
@@ -8918,7 +8919,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 1,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -8956,7 +8957,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 9,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 9,
@@ -8975,7 +8976,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 8,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 8,
@@ -8992,44 +8993,44 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Get Buck$",
-    "Points": 5,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 3,
-    "FreeThrowsAttempts": 4,
-    "Rebounds": 4,
-    "Offrebounds": 1,
-    "Defrebounds": 3,
-    "Assists": 2,
-    "Blocks": 1,
-    "Steals": 2,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - 1Fam",
-    "Points": 14,
-    "FieldGoalsMade": 6,
-    "FieldGoalAttempts": 11,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 4,
-    "Rebounds": 8,
-    "Offrebounds": 3,
-    "Defrebounds": 5,
-    "Assists": 4,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - GetBuck$",
+            "Points": 5,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 3,
+            "FreeThrowsAttempts": 4,
+            "Rebounds": 4,
+            "Offrebounds": 1,
+            "Defrebounds": 3,
+            "Assists": 2,
+            "Blocks": 1,
+            "Steals": 2,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - 1Fam",
+            "Points": 14,
+            "FieldGoalsMade": 6,
+            "FieldGoalAttempts": 11,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 4,
+            "Rebounds": 8,
+            "Offrebounds": 3,
+            "Defrebounds": 5,
+            "Assists": 4,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -9059,7 +9060,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 8,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 4,
@@ -9097,7 +9098,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 12,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -9116,7 +9117,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 0,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 1,
@@ -9154,7 +9155,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 16,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 5,
@@ -9173,7 +9174,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 9,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -9190,44 +9191,44 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Get Buck$",
-    "Points": 6,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 1,
-    "ThreesMade": 2,
-    "ThreesAttempts": 6,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 11,
-    "Offrebounds": 0,
-    "Defrebounds": 11,
-    "Assists": 3,
-    "Blocks": 0,
-    "Steals": 2,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs -  ",
-    "Points": 1,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 0,
-    "ThreesMade": 0,
-    "ThreesAttempts": 3,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 3,
-    "Offrebounds": 1,
-    "Defrebounds": 2,
-    "Assists": 2,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - GetBuck$",
+            "Points": 6,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 1,
+            "ThreesMade": 2,
+            "ThreesAttempts": 6,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 11,
+            "Offrebounds": 0,
+            "Defrebounds": 11,
+            "Assists": 3,
+            "Blocks": 0,
+            "Steals": 2,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs",
+            "Points": 1,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 0,
+            "ThreesMade": 0,
+            "ThreesAttempts": 3,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 3,
+            "Offrebounds": 1,
+            "Defrebounds": 2,
+            "Assists": 2,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -9257,7 +9258,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 5,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -9295,7 +9296,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 4,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 5,
@@ -9314,7 +9315,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -9371,7 +9372,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 7,
@@ -9388,44 +9389,44 @@
             "Turnovers": 2,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Get Buck$",
-    "Points": 6,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 0,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 3,
-    "Offrebounds": 1,
-    "Defrebounds": 2,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - 1Fam",
-    "Points": 2,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 1,
-    "Offrebounds": 0,
-    "Defrebounds": 1,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - GetBuck$",
+            "Points": 6,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 0,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 3,
+            "Offrebounds": 1,
+            "Defrebounds": 2,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - 1Fam",
+            "Points": 2,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 1,
+            "Offrebounds": 0,
+            "Defrebounds": 1,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -9455,7 +9456,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 10,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -9493,7 +9494,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 1,
@@ -9512,7 +9513,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -9569,7 +9570,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 4,
@@ -9586,44 +9587,44 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Get Buck$",
-    "Points": 7,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 0,
-    "ThreesAttempts": 3,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 3,
-    "Rebounds": 3,
-    "Offrebounds": 2,
-    "Defrebounds": 1,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - 1Fam",
-    "Points": 2,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 5,
-    "Offrebounds": 1,
-    "Defrebounds": 4,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - GetBuck$",
+            "Points": 7,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 0,
+            "ThreesAttempts": 3,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 3,
+            "Rebounds": 3,
+            "Offrebounds": 2,
+            "Defrebounds": 1,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - 1Fam",
+            "Points": 2,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 5,
+            "Offrebounds": 1,
+            "Defrebounds": 4,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -9653,7 +9654,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 9,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -9691,7 +9692,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -9710,7 +9711,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 12,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 2,
@@ -9748,7 +9749,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 12,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 3,
@@ -9767,7 +9768,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 8,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -9784,44 +9785,44 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Get Buck$",
-    "Points": 5,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 1,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 4,
-    "Offrebounds": 0,
-    "Defrebounds": 4,
-    "Assists": 3,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - 1Fam",
-    "Points": 3,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 1,
-    "ThreesAttempts": 4,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 4,
-    "Offrebounds": 0,
-    "Defrebounds": 4,
-    "Assists": 4,
-    "Blocks": 0,
-    "Steals": 2,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - GetBuck$",
+            "Points": 5,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 1,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 4,
+            "Offrebounds": 0,
+            "Defrebounds": 4,
+            "Assists": 3,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - 1Fam",
+            "Points": 3,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 1,
+            "ThreesAttempts": 4,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 4,
+            "Offrebounds": 0,
+            "Defrebounds": 4,
+            "Assists": 4,
+            "Blocks": 0,
+            "Steals": 2,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -9851,7 +9852,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 8,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 5,
@@ -9889,7 +9890,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 8,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 6,
@@ -9908,7 +9909,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 17,
             "FieldGoalsMade": 8,
             "FieldGoalAttempts": 9,
@@ -9946,7 +9947,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 14,
             "FieldGoalsMade": 7,
             "FieldGoalAttempts": 13,
@@ -9965,7 +9966,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 9,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 7,
@@ -9982,44 +9983,44 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Get Buck$",
-    "Points": 8,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 0,
-    "ThreesAttempts": 0,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 1,
-    "Rebounds": 4,
-    "Offrebounds": 2,
-    "Defrebounds": 2,
-    "Assists": 0,
-    "Blocks": 2,
-    "Steals": 1,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - 1Fam",
-    "Points": 9,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 0,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 3,
-    "FreeThrowsAttempts": 4,
-    "Rebounds": 4,
-    "Offrebounds": 3,
-    "Defrebounds": 1,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - GetBuck$",
+            "Points": 8,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 0,
+            "ThreesAttempts": 0,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 1,
+            "Rebounds": 4,
+            "Offrebounds": 2,
+            "Defrebounds": 2,
+            "Assists": 0,
+            "Blocks": 2,
+            "Steals": 1,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - 1Fam",
+            "Points": 9,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 0,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 3,
+            "FreeThrowsAttempts": 4,
+            "Rebounds": 4,
+            "Offrebounds": 3,
+            "Defrebounds": 1,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -10049,7 +10050,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 12,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 5,
@@ -10106,7 +10107,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 11,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 5,
@@ -10209,7 +10210,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 7,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 3,
@@ -10247,7 +10248,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 26,
             "FieldGoalsMade": 6,
             "FieldGoalAttempts": 14,
@@ -10266,7 +10267,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 8,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 6,
@@ -10304,7 +10305,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 20,
             "FieldGoalsMade": 8,
             "FieldGoalAttempts": 12,
@@ -10323,7 +10324,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 28,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 9,
@@ -10340,44 +10341,44 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Get Buck$",
-    "Points": 18,
-    "FieldGoalsMade": 6,
-    "FieldGoalAttempts": 11,
-    "ThreesMade": 2,
-    "ThreesAttempts": 4,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 8,
-    "Offrebounds": 4,
-    "Defrebounds": 4,
-    "Assists": 7,
-    "Blocks": 0,
-    "Steals": 3,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - 1Fam",
-    "Points": 17,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 12,
-    "ThreesMade": 3,
-    "ThreesAttempts": 9,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 9,
-    "Offrebounds": 4,
-    "Defrebounds": 5,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - GetBuck$",
+            "Points": 18,
+            "FieldGoalsMade": 6,
+            "FieldGoalAttempts": 11,
+            "ThreesMade": 2,
+            "ThreesAttempts": 4,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 8,
+            "Offrebounds": 4,
+            "Defrebounds": 4,
+            "Assists": 7,
+            "Blocks": 0,
+            "Steals": 3,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - 1Fam",
+            "Points": 17,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 12,
+            "ThreesMade": 3,
+            "ThreesAttempts": 9,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 9,
+            "Offrebounds": 4,
+            "Defrebounds": 5,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -10407,7 +10408,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 5,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 6,
@@ -10445,7 +10446,7 @@
           },
           {
             "game_number": 4,
-            "opponent": "OTF ",
+            "opponent": "OTF",
             "Points": 14,
             "FieldGoalsMade": 7,
             "FieldGoalAttempts": 10,
@@ -10464,7 +10465,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 4,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 5,
@@ -10502,7 +10503,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 12,
             "FieldGoalsMade": 6,
             "FieldGoalAttempts": 11,
@@ -10521,7 +10522,7 @@
           },
           {
             "game_number": 8,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 14,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 6,
@@ -10538,25 +10539,25 @@
             "Turnovers": 2,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Get Buck$",
-    "Points": 11,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 9,
-    "ThreesMade": 1,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 8,
-    "Offrebounds": 4,
-    "Defrebounds": 4,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 0,
-    "Turnovers": 3,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - GetBuck$",
+            "Points": 11,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 9,
+            "ThreesMade": 1,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 8,
+            "Offrebounds": 4,
+            "Defrebounds": 4,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 0,
+            "Turnovers": 3,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -10586,7 +10587,7 @@
           },
           {
             "game_number": 2,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 1,
@@ -10643,7 +10644,7 @@
           },
           {
             "game_number": 5,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 14,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -10717,49 +10718,50 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Get Buck$",
-    "Points": 9,
-    "FieldGoalsMade": 2,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 1,
-    "ThreesAttempts": 4,
-    "FreeThrowsMade": 2,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 0,
-    "Offrebounds": 0,
-    "Defrebounds": 0,
-    "Assists": 0,
-    "Blocks": 0,
-    "Steals": 2,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  },  {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - 1Fam",
-    "Points": 9,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 4,
-    "ThreesMade": 3,
-    "ThreesAttempts": 7,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 5,
-    "Offrebounds": 0,
-    "Defrebounds": 5,
-    "Assists": 2,
-    "Blocks": 0,
-    "Steals": 3,
-    "Turnovers": 2,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - GetBuck$",
+            "Points": 9,
+            "FieldGoalsMade": 2,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 1,
+            "ThreesAttempts": 4,
+            "FreeThrowsMade": 2,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 0,
+            "Offrebounds": 0,
+            "Defrebounds": 0,
+            "Assists": 0,
+            "Blocks": 0,
+            "Steals": 2,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - 1Fam",
+            "Points": 9,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 4,
+            "ThreesMade": 3,
+            "ThreesAttempts": 7,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 5,
+            "Offrebounds": 0,
+            "Defrebounds": 5,
+            "Assists": 2,
+            "Blocks": 0,
+            "Steals": 3,
+            "Turnovers": 2,
+            "PersonalFouls": 0
+          }
         ]
       }
     ]
   },
   {
-    "Team": "OTF ",
+    "Team": "OTF",
     "wins": 3,
     "loss": 4,
     "gamesPlayed": 9,
@@ -10772,7 +10774,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 16,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 4,
@@ -10867,7 +10869,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 12,
             "FieldGoalsMade": 6,
             "FieldGoalAttempts": 11,
@@ -10886,7 +10888,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 10,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 6,
@@ -10922,7 +10924,7 @@
             "Turnovers": 1,
             "PersonalFouls": 0
           },
-            {
+          {
             "game_number": "9",
             "opponent": "Rd 1 Playoffs - Free Agents",
             "Points": 12,
@@ -10941,25 +10943,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - Hidden Rain ",
-    "Points": 10,
-    "FieldGoalsMade": 2,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 2,
-    "ThreesAttempts": 8,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 7,
-    "Offrebounds": 1,
-    "Defrebounds": 6,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - Hidden Rain",
+            "Points": 10,
+            "FieldGoalsMade": 2,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 2,
+            "ThreesAttempts": 8,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 7,
+            "Offrebounds": 1,
+            "Defrebounds": 6,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -10970,7 +10972,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 4,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 2,
@@ -11130,7 +11132,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 0,
@@ -11290,7 +11292,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 2,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 1,
@@ -11385,7 +11387,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 5,
             "FieldGoalsMade": 2,
             "FieldGoalAttempts": 6,
@@ -11450,7 +11452,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 13,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 6,
@@ -11545,7 +11547,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 38,
             "FieldGoalsMade": 8,
             "FieldGoalAttempts": 12,
@@ -11564,7 +11566,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 49,
             "FieldGoalsMade": 7,
             "FieldGoalAttempts": 10,
@@ -11619,25 +11621,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - Hidden Rain ",
-    "Points": 6,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 0,
-    "ThreesAttempts": 10,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 2,
-    "Offrebounds": 1,
-    "Defrebounds": 1,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - Hidden Rain",
+            "Points": 6,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 0,
+            "ThreesAttempts": 10,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 2,
+            "Offrebounds": 1,
+            "Defrebounds": 1,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -11648,7 +11650,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 24,
             "FieldGoalsMade": 8,
             "FieldGoalAttempts": 11,
@@ -11762,7 +11764,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 18,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 5,
@@ -11798,44 +11800,44 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Free Agents",
-    "Points": 24,
-    "FieldGoalsMade": 8,
-    "FieldGoalAttempts": 12,
-    "ThreesMade": 1,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 5,
-    "FreeThrowsAttempts": 7,
-    "Rebounds": 13,
-    "Offrebounds": 4,
-    "Defrebounds": 9,
-    "Assists": 8,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 1,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - Hidden Rain ",
-    "Points": 18,
-    "FieldGoalsMade": 4,
-    "FieldGoalAttempts": 7,
-    "ThreesMade": 1,
-    "ThreesAttempts": 2,
-    "FreeThrowsMade": 7,
-    "FreeThrowsAttempts": 8,
-    "Rebounds": 5,
-    "Offrebounds": 0,
-    "Defrebounds": 5,
-    "Assists": 1,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 3,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Free Agents",
+            "Points": 24,
+            "FieldGoalsMade": 8,
+            "FieldGoalAttempts": 12,
+            "ThreesMade": 1,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 5,
+            "FreeThrowsAttempts": 7,
+            "Rebounds": 13,
+            "Offrebounds": 4,
+            "Defrebounds": 9,
+            "Assists": 8,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 1,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - Hidden Rain",
+            "Points": 18,
+            "FieldGoalsMade": 4,
+            "FieldGoalAttempts": 7,
+            "ThreesMade": 1,
+            "ThreesAttempts": 2,
+            "FreeThrowsMade": 7,
+            "FreeThrowsAttempts": 8,
+            "Rebounds": 5,
+            "Offrebounds": 0,
+            "Defrebounds": 5,
+            "Assists": 1,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 3,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -11846,7 +11848,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 3,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 2,
@@ -11941,7 +11943,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 6,
             "FieldGoalsMade": 3,
             "FieldGoalAttempts": 10,
@@ -11960,7 +11962,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 10,
             "FieldGoalsMade": 5,
             "FieldGoalAttempts": 10,
@@ -11996,25 +11998,25 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Free Agents",
-    "Points": 7,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 3,
-    "ThreesMade": 0,
-    "ThreesAttempts": 1,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 3,
-    "Rebounds": 4,
-    "Offrebounds": 2,
-    "Defrebounds": 2,
-    "Assists": 3,
-    "Blocks": 0,
-    "Steals": 7,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Free Agents",
+            "Points": 7,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 3,
+            "ThreesMade": 0,
+            "ThreesAttempts": 1,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 3,
+            "Rebounds": 4,
+            "Offrebounds": 2,
+            "Defrebounds": 2,
+            "Assists": 3,
+            "Blocks": 0,
+            "Steals": 7,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -12120,7 +12122,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 9,
             "FieldGoalsMade": 0,
             "FieldGoalAttempts": 2,
@@ -12139,7 +12141,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 9,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 2,
@@ -12175,44 +12177,44 @@
             "Turnovers": 2,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Free Agents",
-    "Points": 7,
-    "FieldGoalsMade": 0,
-    "FieldGoalAttempts": 2,
-    "ThreesMade": 2,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 6,
-    "Offrebounds": 2,
-    "Defrebounds": 4,
-    "Assists": 3,
-    "Blocks": 1,
-    "Steals": 1,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  },  
-  {
-    "game_number": "10",
-    "opponent": "Rd 2 Playoffs - Hidden Rain ",
-    "Points": 9,
-    "FieldGoalsMade": 1,
-    "FieldGoalAttempts": 1,
-    "ThreesMade": 2,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 1,
-    "FreeThrowsAttempts": 2,
-    "Rebounds": 5,
-    "Offrebounds": 1,
-    "Defrebounds": 4,
-    "Assists": 1,
-    "Blocks": 1,
-    "Steals": 1,
-    "Turnovers": 0,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Free Agents",
+            "Points": 7,
+            "FieldGoalsMade": 0,
+            "FieldGoalAttempts": 2,
+            "ThreesMade": 2,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 6,
+            "Offrebounds": 2,
+            "Defrebounds": 4,
+            "Assists": 3,
+            "Blocks": 1,
+            "Steals": 1,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "10",
+            "opponent": "Rd 2 Playoffs - Hidden Rain",
+            "Points": 9,
+            "FieldGoalsMade": 1,
+            "FieldGoalAttempts": 1,
+            "ThreesMade": 2,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 1,
+            "FreeThrowsAttempts": 2,
+            "Rebounds": 5,
+            "Offrebounds": 1,
+            "Defrebounds": 4,
+            "Assists": 1,
+            "Blocks": 1,
+            "Steals": 1,
+            "Turnovers": 0,
+            "PersonalFouls": 0
+          }
         ]
       },
       {
@@ -12318,7 +12320,7 @@
           },
           {
             "game_number": 6,
-            "opponent": "Free Agents ",
+            "opponent": "Free Agents",
             "Points": 1,
             "FieldGoalsMade": 4,
             "FieldGoalAttempts": 0,
@@ -12337,7 +12339,7 @@
           },
           {
             "game_number": 7,
-            "opponent": "Get Buck$",
+            "opponent": "GetBuck$",
             "Points": 1,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -12383,7 +12385,7 @@
         "stats": [
           {
             "game_number": 1,
-            "opponent": "Hidden Rain ",
+            "opponent": "Hidden Rain",
             "Points": 23,
             "FieldGoalsMade": 1,
             "FieldGoalAttempts": 3,
@@ -12533,44 +12535,44 @@
             "Turnovers": 0,
             "PersonalFouls": 0
           },
-            {
-    "game_number": "9",
-    "opponent": "Rd 1 Playoffs - Free Agents",
-    "Points": 16,
-    "FieldGoalsMade": 5,
-    "FieldGoalAttempts": 9,
-    "ThreesMade": 2,
-    "ThreesAttempts": 5,
-    "FreeThrowsMade": 0,
-    "FreeThrowsAttempts": 0,
-    "Rebounds": 12,
-    "Offrebounds": 1,
-    "Defrebounds": 11,
-    "Assists": 8,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 3,
-    "PersonalFouls": 0
-  },
-    {
-    "game_number": "9",
-    "opponent": "Rd 2 Playoffs - OTF ",
-    "Points": 20,
-    "FieldGoalsMade": 3,
-    "FieldGoalAttempts": 5,
-    "ThreesMade": 3,
-    "ThreesAttempts": 6,
-    "FreeThrowsMade": 5,
-    "FreeThrowsAttempts": 5,
-    "Rebounds": 8,
-    "Offrebounds": 1,
-    "Defrebounds": 7,
-    "Assists": 8,
-    "Blocks": 0,
-    "Steals": 1,
-    "Turnovers": 3,
-    "PersonalFouls": 0
-  }
+          {
+            "game_number": "9",
+            "opponent": "Rd 1 Playoffs - Free Agents",
+            "Points": 16,
+            "FieldGoalsMade": 5,
+            "FieldGoalAttempts": 9,
+            "ThreesMade": 2,
+            "ThreesAttempts": 5,
+            "FreeThrowsMade": 0,
+            "FreeThrowsAttempts": 0,
+            "Rebounds": 12,
+            "Offrebounds": 1,
+            "Defrebounds": 11,
+            "Assists": 8,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 3,
+            "PersonalFouls": 0
+          },
+          {
+            "game_number": "9",
+            "opponent": "Rd 2 Playoffs - OTF",
+            "Points": 20,
+            "FieldGoalsMade": 3,
+            "FieldGoalAttempts": 5,
+            "ThreesMade": 3,
+            "ThreesAttempts": 6,
+            "FreeThrowsMade": 5,
+            "FreeThrowsAttempts": 5,
+            "Rebounds": 8,
+            "Offrebounds": 1,
+            "Defrebounds": 7,
+            "Assists": 8,
+            "Blocks": 0,
+            "Steals": 1,
+            "Turnovers": 3,
+            "PersonalFouls": 0
+          }
         ]
       }
     ]
