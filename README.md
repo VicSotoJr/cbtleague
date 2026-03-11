@@ -82,6 +82,7 @@ The admin page posts stat updates to an API endpoint (`/api/admin/update-stats` 
 
 - `NEXT_PUBLIC_ADMIN_API_URL` (optional)
   - Use this when your admin API is hosted on a different domain than the static site.
+  - Example: `https://your-admin-api.vercel.app/api/admin/update-stats`
 
 ### API env (required for write-back)
 
@@ -94,6 +95,7 @@ The admin page posts stat updates to an API endpoint (`/api/admin/update-stats` 
 - `GITHUB_BRANCH` (defaults to `main`)
 - `GITHUB_STATS_PATH` (stats file path override)
 - `ADMIN_ALLOWED_ORIGIN` (CORS allowlist)
+- `ADMIN_API_KEY` (shared bearer token for admin requests)
 
 ## Deployment Model
 
@@ -103,6 +105,14 @@ This repo uses a split deployment model:
 - Admin write-back API: Vercel serverless function
 
 That keeps the public app purely static while still allowing secure authenticated stats updates.
+
+### Mobile Admin Flow
+
+1. Open the public `/admin` page from your phone.
+2. Paste your Vercel API URL into the `Admin API URL` field.
+3. Enter your shared `Admin Key` if you configured `ADMIN_API_KEY` on Vercel.
+4. Save stats from the phone. The Vercel API commits updated JSON back to GitHub.
+5. GitHub Pages rebuilds from `main` and publishes the updated public site.
 
 ## License
 

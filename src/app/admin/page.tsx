@@ -9,6 +9,7 @@ import type { AdminStatsUpdatePayload, AdminStatsUpdateResponse } from "@/types/
 import type { BaseStats, Team } from "@/types/league";
 
 const LOCAL_UPDATES_KEY = "cbtleague-admin-updates";
+const LOCAL_ADMIN_SETTINGS_KEY = "cbtleague-admin-settings";
 const ADMIN_API_ENDPOINT = process.env.NEXT_PUBLIC_ADMIN_API_URL ?? "/api/admin/update-stats";
 
 type StatKey = keyof BaseStats;
@@ -41,9 +42,43 @@ type AdminQueuedUpdate = {
   gameLog: BaseStats;
 };
 
+type AdminSettings = {
+  apiUrl: string;
+  adminKey: string;
+};
+
 function getErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message;
   return "Failed to save stats";
+}
+
+function getGameNumberFromWeek(weekLabel: string | undefined, fallbackIndex: number): string {
+  const match = weekLabel?.match(/^Week\s+(\d+)/i);
+  if (match) {
+    return match[1];
+  }
+
+  return String(fallbackIndex + 1);
+}
+
+function toStatsValue(log?: Partial<BaseStats>): BaseStats {
+  return {
+    Points: log?.Points ?? 0,
+    FieldGoalsMade: log?.FieldGoalsMade ?? 0,
+    FieldGoalAttempts: log?.FieldGoalAttempts ?? 0,
+    ThreesMade: log?.ThreesMade ?? 0,
+    ThreesAttempts: log?.ThreesAttempts ?? 0,
+    FreeThrowsMade: log?.FreeThrowsMade ?? 0,
+    FreeThrowsAttempts: log?.FreeThrowsAttempts ?? 0,
+    Rebounds: log?.Rebounds ?? 0,
+    Offrebounds: log?.Offrebounds ?? 0,
+    Defrebounds: log?.Defrebounds ?? 0,
+    Assists: log?.Assists ?? 0,
+    Blocks: log?.Blocks ?? 0,
+    Steals: log?.Steals ?? 0,
+    Turnovers: log?.Turnovers ?? 0,
+    PersonalFouls: log?.PersonalFouls ?? 0,
+  };
 }
 
 function readQueuedUpdates(): AdminQueuedUpdate[] {
@@ -65,6 +100,32 @@ function writeQueuedUpdates(updates: AdminQueuedUpdate[]): void {
   window.localStorage.setItem(LOCAL_UPDATES_KEY, JSON.stringify(updates, null, 2));
 }
 
+function readAdminSettings(): AdminSettings {
+  if (typeof window === "undefined") {
+    return { apiUrl: ADMIN_API_ENDPOINT, adminKey: "" };
+  }
+
+  try {
+    const raw = window.localStorage.getItem(LOCAL_ADMIN_SETTINGS_KEY);
+    if (!raw) {
+      return { apiUrl: ADMIN_API_ENDPOINT, adminKey: "" };
+    }
+
+    const parsed = JSON.parse(raw) as Partial<AdminSettings>;
+    return {
+      apiUrl: typeof parsed.apiUrl === "string" && parsed.apiUrl.trim() ? parsed.apiUrl : ADMIN_API_ENDPOINT,
+      adminKey: typeof parsed.adminKey === "string" ? parsed.adminKey : "",
+    };
+  } catch {
+    return { apiUrl: ADMIN_API_ENDPOINT, adminKey: "" };
+  }
+}
+
+function writeAdminSettings(settings: AdminSettings): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(LOCAL_ADMIN_SETTINGS_KEY, JSON.stringify(settings));
+}
+
 export default function AdminPage() {
   const seasonId = "3";
   const season = getSeasonData(seasonId);
@@ -78,15 +139,28 @@ export default function AdminPage() {
   });
   const [isSaving, setIsSaving] = useState(false);
   const [queuedCount, setQueuedCount] = useState(0);
+  const [apiUrl, setApiUrl] = useState(ADMIN_API_ENDPOINT);
+  const [adminKey, setAdminKey] = useState("");
 
   const [stats, setStats] = useState<BaseStats>(EMPTY_STATS);
 
   useEffect(() => {
     setQueuedCount(readQueuedUpdates().length);
+    const settings = readAdminSettings();
+    setApiUrl(settings.apiUrl);
+    setAdminKey(settings.adminKey);
   }, []);
+
+  useEffect(() => {
+    writeAdminSettings({ apiUrl, adminKey });
+  }, [apiUrl, adminKey]);
 
   const games = useMemo(() => (season?.schedule ?? []).filter((game) => !game.isBye), [season]);
   const selectedGame = selectedGameIdx !== "" ? games[selectedGameIdx] : null;
+  const selectedGameNumber = React.useMemo(
+    () => (selectedGameIdx === "" ? "" : getGameNumberFromWeek(selectedGame?.week, selectedGameIdx)),
+    [selectedGame, selectedGameIdx]
+  );
 
   const gameTeams = useMemo(
     () =>
@@ -103,6 +177,24 @@ export default function AdminPage() {
         : [],
     [season, selectedTeam]
   );
+
+  useEffect(() => {
+    if (!selectedTeam || !selectedPlayer || !selectedGame || selectedGameIdx === "") {
+      setStats(EMPTY_STATS);
+      return;
+    }
+
+    const opponent = selectedTeam === selectedGame.homeTeam ? selectedGame.awayTeam : selectedGame.homeTeam;
+    const team = season?.teams.find((candidate: Team) => candidate.Team === selectedTeam);
+    const player = team?.roster.find((candidate) => candidate.name === selectedPlayer);
+    const existingLog = player?.stats?.find(
+      (entry) =>
+        String(entry.game_number) === selectedGameNumber &&
+        (entry.opponent === opponent || entry.opponent.trim() === "")
+    );
+
+    setStats(toStatsValue(existingLog));
+  }, [season, selectedGame, selectedGameIdx, selectedGameNumber, selectedPlayer, selectedTeam]);
 
   const errors = {
     fg: stats.FieldGoalsMade > stats.FieldGoalAttempts,
@@ -121,20 +213,27 @@ export default function AdminPage() {
 
     try {
       const opponent = selectedTeam === selectedGame.homeTeam ? selectedGame.awayTeam : selectedGame.homeTeam;
-      const gameNumber = selectedGame.week;
+      const endpoint = apiUrl.trim() || ADMIN_API_ENDPOINT;
+
+      if (!endpoint) {
+        throw new Error("Missing admin API URL");
+      }
 
       const payload: AdminStatsUpdatePayload = {
         seasonId,
         teamName: selectedTeam,
         playerName: selectedPlayer,
         opponent: opponent ?? "Unknown",
-        gameNumber,
+        gameNumber: selectedGameNumber || selectedGame.week,
         gameLog: stats,
       };
 
-      const response = await fetch(ADMIN_API_ENDPOINT, {
+      const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(adminKey.trim() ? { Authorization: `Bearer ${adminKey.trim()}` } : {}),
+        },
         body: JSON.stringify(payload),
       });
 
@@ -157,7 +256,7 @@ export default function AdminPage() {
         teamName: selectedTeam,
         playerName: selectedPlayer,
         opponent: opponent ?? "Unknown",
-        gameNumber: selectedGame.week,
+        gameNumber: selectedGameNumber || selectedGame.week,
         gameLog: stats,
       };
 
@@ -173,7 +272,7 @@ export default function AdminPage() {
     } finally {
       setIsSaving(false);
     }
-  }, [hasErrors, resetStats, seasonId, selectedGame, selectedPlayer, selectedTeam, stats]);
+  }, [adminKey, apiUrl, hasErrors, resetStats, seasonId, selectedGame, selectedGameNumber, selectedPlayer, selectedTeam, stats]);
 
   const handleExportUpdates = useCallback(() => {
     const updates = readQueuedUpdates();
@@ -221,6 +320,34 @@ export default function AdminPage() {
         </header>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
+          <div className="space-y-3 lg:col-span-3 rounded-3xl border border-white/5 bg-zinc-900/30 p-6">
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <label className="ml-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Admin API URL</label>
+                <input
+                  type="url"
+                  value={apiUrl}
+                  onChange={(e) => setApiUrl(e.target.value)}
+                  placeholder="https://your-admin-api.vercel.app/api/admin/update-stats"
+                  className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                />
+                <p className="text-xs text-zinc-500">Use your Vercel endpoint here when you’re saving from the GitHub Pages site or from your phone.</p>
+              </div>
+
+              <div className="space-y-2">
+                <label className="ml-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Admin Key</label>
+                <input
+                  type="password"
+                  value={adminKey}
+                  onChange={(e) => setAdminKey(e.target.value)}
+                  placeholder="Optional bearer key"
+                  className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                />
+                <p className="text-xs text-zinc-500">Stored only in this browser so you can reuse it on mobile without editing the site.</p>
+              </div>
+            </div>
+          </div>
+
           <div className="space-y-3">
             <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">1. Select Matchup</label>
             <select

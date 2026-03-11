@@ -1,12 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { AdminStatsUpdatePayload, AdminStatsUpdateResponse } from "../../src/types/admin-api";
 import type { BaseStats, LeagueData, PlayerStat } from "../../src/types/league";
+import { buildLeagueSummary } from "../../src/lib/league-summary-builder";
 
 const COMMIT_MESSAGE = "Update stats via admin panel";
 const GITHUB_API_VERSION = "2022-11-28";
 const DEFAULT_BRANCH = "main";
 const DEFAULT_STATS_PATH = "data/stats.json";
 const FALLBACK_STATS_PATH = "src/data/data.json";
+const SUMMARY_PATH = "src/data/league-summary.json";
 const STAT_KEYS: Array<keyof BaseStats> = [
   "Points",
   "FieldGoalsMade",
@@ -37,6 +39,18 @@ interface RepositoryConfig {
   repo: string;
   branch: string;
   statsPathCandidates: string[];
+}
+
+interface GitHubRefResponse {
+  object: {
+    sha: string;
+  };
+}
+
+interface GitHubCommitResponse {
+  tree: {
+    sha: string;
+  };
 }
 
 type PlayerUpdateResult =
@@ -82,6 +96,18 @@ function isGitHubContentResponse(value: unknown): value is GitHubContentResponse
   );
 }
 
+function isGitHubRefResponse(value: unknown): value is GitHubRefResponse {
+  return isRecord(value) && isRecord(value.object) && typeof value.object.sha === "string";
+}
+
+function isGitHubCommitResponse(value: unknown): value is GitHubCommitResponse {
+  return isRecord(value) && isRecord(value.tree) && typeof value.tree.sha === "string";
+}
+
+function isShaResponse(value: unknown): value is { sha: string } {
+  return isRecord(value) && typeof value.sha === "string";
+}
+
 function setCorsHeaders(res: NextApiResponse): void {
   const allowedOrigin = process.env.ADMIN_ALLOWED_ORIGIN ?? "*";
   res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
@@ -112,6 +138,14 @@ function getGitHubErrorMessage(value: unknown): string {
     return value.message;
   }
   return "Unknown GitHub API error";
+}
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Unknown error";
 }
 
 function getRepositoryConfig(): RepositoryConfig | null {
@@ -148,6 +182,18 @@ function toGameNumber(value: string): string | number {
   return trimmed;
 }
 
+function hasRecordedOpponent(stat: PlayerStat): boolean {
+  return typeof stat.opponent === "string" && stat.opponent.trim().length > 0;
+}
+
+function hasRecordedStats(stat: PlayerStat): boolean {
+  return STAT_KEYS.some((key) => stat[key] > 0);
+}
+
+function getCompletedGamesPlayed(stats: PlayerStat[]): number {
+  return stats.filter((stat) => hasRecordedOpponent(stat) || hasRecordedStats(stat)).length;
+}
+
 function applyPlayerUpdate(leagueData: LeagueData, payload: AdminStatsUpdatePayload): PlayerUpdateResult {
   const season = leagueData.seasons[payload.seasonId];
   if (!season) {
@@ -172,7 +218,9 @@ function applyPlayerUpdate(leagueData: LeagueData, payload: AdminStatsUpdatePayl
 
   const existingStats = Array.isArray(player.stats) ? player.stats : [];
   const existingIndex = existingStats.findIndex(
-    (entry) => String(entry.game_number) === String(nextStat.game_number) && entry.opponent === nextStat.opponent
+    (entry) =>
+      String(entry.game_number) === String(nextStat.game_number) &&
+      (entry.opponent === nextStat.opponent || !hasRecordedOpponent(entry))
   );
 
   if (existingIndex >= 0) {
@@ -181,17 +229,52 @@ function applyPlayerUpdate(leagueData: LeagueData, payload: AdminStatsUpdatePayl
     existingStats.push(nextStat);
   }
 
-  player.stats = existingStats;
-  player.GamesPlayed = existingStats.length;
+  player.stats = existingStats.toSorted((a, b) => Number(a.game_number) - Number(b.game_number));
+  player.GamesPlayed = getCompletedGamesPlayed(player.stats);
 
   return { ok: true };
 }
 
-function getCommitSha(payload: unknown): string {
-  if (!isRecord(payload)) return "";
-  const commit = payload.commit;
-  if (!isRecord(commit)) return "";
-  return typeof commit.sha === "string" ? commit.sha : "";
+function getAdminBearerToken(req: NextApiRequest): string | null {
+  const header = req.headers.authorization;
+  if (!header) {
+    return null;
+  }
+
+  const [scheme, token] = header.split(" ");
+  if (scheme?.toLowerCase() !== "bearer" || !token) {
+    return null;
+  }
+
+  return token.trim();
+}
+
+async function createGitHubBlob(
+  headers: Record<string, string>,
+  repository: RepositoryConfig,
+  content: string
+): Promise<string> {
+  const response = await fetch(
+    `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(repository.repo)}/git/blobs`,
+    {
+      method: "POST",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content,
+        encoding: "utf-8",
+      }),
+    }
+  );
+
+  const payload = await readJsonResponse(response);
+  if (!response.ok || !isShaResponse(payload)) {
+    throw new Error(`Failed to create GitHub blob: ${getGitHubErrorMessage(payload)}`);
+  }
+
+  return payload.sha;
 }
 
 export default async function handler(
@@ -214,6 +297,15 @@ export default async function handler(
   if (!token) {
     res.status(500).json({ ok: false, message: "Missing GITHUB_TOKEN environment variable." });
     return;
+  }
+
+  const requiredAdminKey = process.env.ADMIN_API_KEY;
+  if (requiredAdminKey) {
+    const providedAdminKey = getAdminBearerToken(req);
+    if (providedAdminKey !== requiredAdminKey) {
+      res.status(401).json({ ok: false, message: "Unauthorized admin request." });
+      return;
+    }
   }
 
   const repository = getRepositoryConfig();
@@ -303,31 +395,143 @@ export default async function handler(
   }
 
   const encodedContent = Buffer.from(`${JSON.stringify(leagueData, null, 2)}\n`, "utf8").toString("base64");
-  const updatePath = encodeGitHubPath(selectedStatsPath);
-  const updateUrl = `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(
-    repository.repo
-  )}/contents/${updatePath}`;
+  const summary = buildLeagueSummary(leagueData);
+  const summaryContent = `${JSON.stringify(summary)}\n`;
+  const dataContent = Buffer.from(encodedContent, "base64").toString("utf8");
 
-  const commitResponse = await fetch(updateUrl, {
-    method: "PUT",
-    headers: {
-      ...headers,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      message: COMMIT_MESSAGE,
-      content: encodedContent,
-      sha: filePayload.sha,
-      branch: repository.branch,
-    }),
-  });
-
-  const commitPayload = await readJsonResponse(commitResponse);
-  if (!commitResponse.ok) {
-    res.status(commitResponse.status).json({
+  const refResponse = await fetch(
+    `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(
+      repository.repo
+    )}/git/ref/heads/${encodeURIComponent(repository.branch)}`,
+    { headers }
+  );
+  const refPayload = await readJsonResponse(refResponse);
+  if (!refResponse.ok || !isGitHubRefResponse(refPayload)) {
+    res.status(refResponse.status).json({
       ok: false,
-      message: "Failed to commit updated stats to GitHub.",
-      details: getGitHubErrorMessage(commitPayload),
+      message: "Failed to read repository ref from GitHub.",
+      details: getGitHubErrorMessage(refPayload),
+    });
+    return;
+  }
+
+  const latestCommitSha = refPayload.object.sha;
+
+  const commitLookupResponse = await fetch(
+    `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(
+      repository.repo
+    )}/git/commits/${encodeURIComponent(latestCommitSha)}`,
+    { headers }
+  );
+  const commitLookupPayload = await readJsonResponse(commitLookupResponse);
+  if (!commitLookupResponse.ok || !isGitHubCommitResponse(commitLookupPayload)) {
+    res.status(commitLookupResponse.status).json({
+      ok: false,
+      message: "Failed to read base commit tree from GitHub.",
+      details: getGitHubErrorMessage(commitLookupPayload),
+    });
+    return;
+  }
+
+  const baseTreeSha = commitLookupPayload.tree.sha;
+
+  let dataBlobSha = "";
+  let summaryBlobSha = "";
+  try {
+    dataBlobSha = await createGitHubBlob(headers, repository, dataContent);
+    summaryBlobSha = await createGitHubBlob(headers, repository, summaryContent);
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      message: "Failed to create GitHub blobs for updated data.",
+      details: getErrorMessage(error),
+    });
+    return;
+  }
+
+  const treeResponse = await fetch(
+    `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(repository.repo)}/git/trees`,
+    {
+      method: "POST",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        base_tree: baseTreeSha,
+        tree: [
+          {
+            path: selectedStatsPath,
+            mode: "100644",
+            type: "blob",
+            sha: dataBlobSha,
+          },
+          {
+            path: SUMMARY_PATH,
+            mode: "100644",
+            type: "blob",
+            sha: summaryBlobSha,
+          },
+        ],
+      }),
+    }
+  );
+  const treePayload = await readJsonResponse(treeResponse);
+  if (!treeResponse.ok || !isShaResponse(treePayload)) {
+    res.status(treeResponse.status).json({
+      ok: false,
+      message: "Failed to create GitHub tree for updated stats.",
+      details: getGitHubErrorMessage(treePayload),
+    });
+    return;
+  }
+
+  const createCommitResponse = await fetch(
+    `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(repository.repo)}/git/commits`,
+    {
+      method: "POST",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: COMMIT_MESSAGE,
+        tree: treePayload.sha,
+        parents: [latestCommitSha],
+      }),
+    }
+  );
+  const createCommitPayload = await readJsonResponse(createCommitResponse);
+  if (!createCommitResponse.ok || !isShaResponse(createCommitPayload)) {
+    res.status(createCommitResponse.status).json({
+      ok: false,
+      message: "Failed to create GitHub commit for updated stats.",
+      details: getGitHubErrorMessage(createCommitPayload),
+    });
+    return;
+  }
+
+  const updateRefResponse = await fetch(
+    `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(
+      repository.repo
+    )}/git/refs/heads/${encodeURIComponent(repository.branch)}`,
+    {
+      method: "PATCH",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sha: createCommitPayload.sha,
+      }),
+    }
+  );
+  const updateRefPayload = await readJsonResponse(updateRefResponse);
+  if (!updateRefResponse.ok) {
+    res.status(updateRefResponse.status).json({
+      ok: false,
+      message: "Failed to update repository branch ref.",
+      details: getGitHubErrorMessage(updateRefPayload),
     });
     return;
   }
@@ -335,7 +539,7 @@ export default async function handler(
   res.status(200).json({
     ok: true,
     message: "Stats updated and committed to GitHub.",
-    commitSha: getCommitSha(commitPayload),
+    commitSha: createCommitPayload.sha,
     path: selectedStatsPath,
   });
 }
