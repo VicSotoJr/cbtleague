@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import SeasonToggle from "@/components/league/season-toggle";
 import PlayerHead from "@/components/league/player-head";
 import { getSeasonId, getSeasonLabel, getSeasonPlayersWithAggregates, SEASON_OPTIONS } from "@/lib/league-summary";
+import { buildPlayerProfileHref } from "@/lib/player-links";
 
 const ROWS_PER_PAGE = 50;
 
@@ -153,7 +154,10 @@ export default function PlayersClient() {
                   >
                     <TableCell className="font-bold text-white group-hover:text-copper-500">
                       <Link
-                        href={`/players/${encodeURIComponent(player.name.trim())}/`}
+                        href={buildPlayerProfileHref(player.name, {
+                          seasonId,
+                          teamName,
+                        })}
                         prefetch={false}
                         className="flex items-center gap-3 whitespace-nowrap"
                       >

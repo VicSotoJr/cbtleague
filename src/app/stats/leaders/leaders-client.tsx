@@ -14,6 +14,7 @@ import {
   SEASON_OPTIONS,
 } from "@/lib/league-summary";
 import { motion } from "framer-motion";
+import { buildPlayerProfileHref } from "@/lib/player-links";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -133,7 +134,10 @@ export default function LeadersClient() {
                       {topPlayers.map((entry, i) => (
                         <Link
                           key={`${entry.player.name}-${category.key}-${i}`}
-                          href={`/players/${encodeURIComponent(entry.player.name.trim())}/`}
+                          href={buildPlayerProfileHref(entry.player.name, {
+                            seasonId,
+                            teamName: entry.teamName,
+                          })}
                           prefetch={false}
                           className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-white/5 bg-zinc-950 p-4 transition-all hover:bg-zinc-900 active:scale-[0.98] shadow-sm hover:shadow-xl hover:border-white/10"
                         >

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import PlayerHead from "./player-head";
+import { buildPlayerProfileHref } from "@/lib/player-links";
 
 interface PlayerSummary {
     name: string;
@@ -46,7 +47,7 @@ export default function PlayerSearch({ players }: PlayerSearchProps) {
                             {filteredPlayers.map((player) => (
                                 <Link
                                     key={player.name + player.team}
-                                    href={`/players/${encodeURIComponent(player.name.trim())}/`}
+                                    href={buildPlayerProfileHref(player.name, { teamName: player.team })}
                                     prefetch={false}
                                     className="flex items-center gap-3 rounded-xl p-3 hover:bg-white/5 transition-colors group"
                                     onClick={() => setQuery("")}

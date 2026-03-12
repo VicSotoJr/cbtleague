@@ -7,6 +7,7 @@ import TeamLogo from "@/components/league/team-logo";
 import PlayerHead from "@/components/league/player-head";
 import { ArrowLeft } from "lucide-react";
 import type { AggregatedBaseStats } from "@/types/league";
+import { buildPlayerProfileHref } from "@/lib/player-links";
 
 type TeamProfileRosterPlayer = {
   name: string;
@@ -129,7 +130,10 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
             {team.roster.map((player, i) => (
               <Link
                 key={`${player.name}-${i}`}
-                href={`/players/${encodeURIComponent(player.name.trim())}/`}
+                href={buildPlayerProfileHref(player.name, {
+                  seasonId,
+                  teamName: team.Team,
+                })}
                 prefetch={false}
                 className="group rounded-2xl border border-white/5 bg-zinc-900/50 p-4 transition-all hover:bg-zinc-900 hover:scale-[1.02] active:scale-[0.98]"
               >

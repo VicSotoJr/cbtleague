@@ -3,6 +3,7 @@
 import React from "react";
 import { PlayerStat } from "@/types/league";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Activity, Zap, Target, TrendingUp, ArrowLeft } from "lucide-react";
 import PlayerHead from "@/components/league/player-head";
 import {
@@ -30,6 +31,7 @@ interface PlayerProfileClientProps {
 }
 
 export default function PlayerProfileClient({ playerName, seasonData }: PlayerProfileClientProps) {
+  const searchParams = useSearchParams();
 
   if (seasonData.length === 0) {
     return (
@@ -48,16 +50,25 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
   const avgPPG = totalGames > 0 ? (careerPoints / totalGames).toFixed(1) : "0.0";
   const latestSeason = seasonData[seasonData.length - 1];
   const seasonsDescending = seasonData.toReversed();
+  const requestedSeasonId = searchParams.get("season");
+  const requestedTeamName = searchParams.get("team")?.trim();
+  const returnSeason =
+    seasonData.find((season) => {
+      const matchesSeason = requestedSeasonId ? season.seasonId === requestedSeasonId : true;
+      const matchesTeam = requestedTeamName ? season.teamName === requestedTeamName : true;
+      return matchesSeason && matchesTeam;
+    }) ?? latestSeason;
+  const backHref = `/teams/${encodeURIComponent(returnSeason.teamName)}/?season=${returnSeason.seasonId}`;
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-6">
       <Link
-        href={`/teams/${encodeURIComponent(latestSeason.teamName)}/?season=${latestSeason.seasonId}`}
+        href={backHref}
         prefetch={false}
         className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-zinc-500 hover:text-white transition-colors uppercase"
       >
         <ArrowLeft className="h-4 w-4" />
-        BACK TO {latestSeason.teamName}
+        BACK TO {returnSeason.teamName}
       </Link>
 
       <div className="relative mb-16 flex flex-col items-center gap-10 md:flex-row md:items-end">
