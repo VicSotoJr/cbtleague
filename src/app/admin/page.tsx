@@ -56,6 +56,17 @@ function getErrorMessage(error: unknown): string {
   return "Failed to publish game";
 }
 
+function normalizeAdminApiUrl(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+
+  if (trimmed.endsWith("/api/admin/update-stats")) {
+    return `${trimmed}/`;
+  }
+
+  return trimmed;
+}
+
 function getGameNumberFromWeek(weekLabel: string | undefined, fallbackIndex: number): string {
   const match = weekLabel?.match(/^Week\s+(\d+)/i);
   if (match) {
@@ -131,22 +142,31 @@ function readAdminSettings(): AdminSettings {
   try {
     const raw = window.localStorage.getItem(LOCAL_ADMIN_SETTINGS_KEY);
     if (!raw) {
-      return { apiUrl: ADMIN_API_ENDPOINT, adminKey: "" };
+      return { apiUrl: normalizeAdminApiUrl(ADMIN_API_ENDPOINT), adminKey: "" };
     }
 
     const parsed = JSON.parse(raw) as Partial<AdminSettings>;
     return {
-      apiUrl: typeof parsed.apiUrl === "string" && parsed.apiUrl.trim() ? parsed.apiUrl : ADMIN_API_ENDPOINT,
+      apiUrl:
+        typeof parsed.apiUrl === "string" && parsed.apiUrl.trim()
+          ? normalizeAdminApiUrl(parsed.apiUrl)
+          : normalizeAdminApiUrl(ADMIN_API_ENDPOINT),
       adminKey: typeof parsed.adminKey === "string" ? parsed.adminKey : "",
     };
   } catch {
-    return { apiUrl: ADMIN_API_ENDPOINT, adminKey: "" };
+    return { apiUrl: normalizeAdminApiUrl(ADMIN_API_ENDPOINT), adminKey: "" };
   }
 }
 
 function writeAdminSettings(settings: AdminSettings): void {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(LOCAL_ADMIN_SETTINGS_KEY, JSON.stringify(settings));
+  window.localStorage.setItem(
+    LOCAL_ADMIN_SETTINGS_KEY,
+    JSON.stringify({
+      ...settings,
+      apiUrl: normalizeAdminApiUrl(settings.apiUrl),
+    })
+  );
 }
 
 function buildDraftKey(seasonId: string, gameNumber: string): string {
@@ -416,7 +436,7 @@ export default function AdminPage() {
     setStatus({ type: null, message: "" });
 
     try {
-      const endpoint = apiUrl.trim() || ADMIN_API_ENDPOINT;
+      const endpoint = normalizeAdminApiUrl(apiUrl) || normalizeAdminApiUrl(ADMIN_API_ENDPOINT);
       if (!endpoint) {
         throw new Error("Missing admin API URL");
       }
