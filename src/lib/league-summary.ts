@@ -100,6 +100,42 @@ function getSeasonData(seasonId: string): SummarySeason | undefined {
   return leagueSummary.seasons[selectedSeasonId];
 }
 
+function addInferredByeEntries(schedule: GameEntry[], teamNames: string[]): GameEntry[] {
+  if (schedule.some((game) => game.isBye || game.byeTeam) || teamNames.length === 0) {
+    return schedule;
+  }
+
+  const grouped = groupGamesByWeekInternal(schedule.map((game) => ({ week: game.week, game })));
+
+  return grouped.flatMap(({ games, week }) => {
+    if (games.some((game) => isSpecialEventGame(game) || isExplicitPlayoffGame(game))) {
+      return games;
+    }
+
+    const activeTeams = new Set(
+      games.flatMap((game) => [game.homeTeam, game.awayTeam].filter((team): team is string => Boolean(team)))
+    );
+    const missingTeams = teamNames.filter((team) => !activeTeams.has(team));
+
+    if (missingTeams.length !== 1) {
+      return games;
+    }
+
+    const anchorGame = games[games.length - 1];
+
+    return [
+      ...games,
+      {
+        week,
+        date: anchorGame?.date ?? "",
+        time: anchorGame?.time,
+        isBye: true,
+        byeTeam: missingTeams[0],
+      },
+    ];
+  });
+}
+
 export function getSeasonTeams(seasonId: string): SummaryTeam[] {
   return getSeasonData(seasonId)?.teams ?? [];
 }
@@ -113,7 +149,11 @@ export function getSeasonPlayersWithAggregates(seasonId: string): SummaryPlayerW
 }
 
 export function getSeasonSchedule(seasonId: string): GameEntry[] {
-  return getSeasonData(seasonId)?.schedule ?? [];
+  const season = getSeasonData(seasonId);
+  return addInferredByeEntries(
+    season?.schedule ?? [],
+    (season?.teams ?? []).map((team) => team.Team).filter(Boolean)
+  );
 }
 
 export function getSeasonLabel(seasonId: string): string {

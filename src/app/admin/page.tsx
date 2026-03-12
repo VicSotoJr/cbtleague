@@ -912,11 +912,13 @@ export default function AdminPage() {
 
                 <div className="mb-4 rounded-2xl border border-white/5 bg-white/5 p-4">
                   <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Manual Final Score</p>
-                  <div className="mt-4 grid grid-cols-[1fr_auto_1fr] items-end gap-3">
-                    <div>
-                      <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-zinc-500">
-                        {selectedGame.homeTeam}
-                      </label>
+                  <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-3">
+                    <div className="min-w-0">
+                      <div className="mb-2 flex min-h-10 items-end justify-center">
+                        <label className="text-center text-[10px] font-black uppercase leading-tight tracking-[0.16em] text-zinc-500 break-words">
+                          {selectedGame.homeTeam}
+                        </label>
+                      </div>
                       <input
                         type="text"
                         inputMode="numeric"
@@ -928,14 +930,16 @@ export default function AdminPage() {
                           }))
                         }
                         placeholder="0"
-                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-2xl font-black italic text-white focus:border-copper-600 focus:outline-none"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-xl font-black italic text-white focus:border-copper-600 focus:outline-none sm:text-2xl"
                       />
                     </div>
                     <div className="pb-3 text-sm font-black uppercase tracking-widest text-zinc-600">vs</div>
-                    <div>
-                      <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-zinc-500">
-                        {selectedGame.awayTeam}
-                      </label>
+                    <div className="min-w-0">
+                      <div className="mb-2 flex min-h-10 items-end justify-center">
+                        <label className="text-center text-[10px] font-black uppercase leading-tight tracking-[0.16em] text-zinc-500 break-words">
+                          {selectedGame.awayTeam}
+                        </label>
+                      </div>
                       <input
                         type="text"
                         inputMode="numeric"
@@ -947,11 +951,11 @@ export default function AdminPage() {
                           }))
                         }
                         placeholder="0"
-                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-2xl font-black italic text-white focus:border-copper-600 focus:outline-none"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-xl font-black italic text-white focus:border-copper-600 focus:outline-none sm:text-2xl"
                       />
                     </div>
                   </div>
-                  <p className="mt-3 text-xs text-zinc-500">
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-500">
                     The schedule score comes from these boxes only. It is not auto-calculated from player totals.
                   </p>
                 </div>
