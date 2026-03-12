@@ -133,6 +133,12 @@ function readGameDrafts(): Record<string, AdminGameDraft> {
   }
 }
 
+function sanitizeGameDrafts(drafts: Record<string, AdminGameDraft>): Record<string, AdminGameDraft> {
+  return Object.fromEntries(
+    Object.entries(drafts).filter(([, draft]) => Array.isArray(draft.updates) && draft.updates.length > 0)
+  );
+}
+
 function writeGameDrafts(drafts: Record<string, AdminGameDraft>): void {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(LOCAL_GAME_DRAFTS_KEY, JSON.stringify(drafts));
@@ -258,7 +264,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     setQueuedCount(readQueuedGames().length);
-    setGameDrafts(readGameDrafts());
+    setGameDrafts(sanitizeGameDrafts(readGameDrafts()));
     const settings = readAdminSettings();
     setApiUrl(settings.apiUrl);
     setAdminKey(settings.adminKey);
@@ -830,7 +836,7 @@ export default function AdminPage() {
             </div>
 
             <div className="space-y-6">
-              <div className="sticky top-12 rounded-3xl border border-white/5 bg-zinc-900/50 p-8">
+              <div className="rounded-3xl border border-white/5 bg-zinc-900/50 p-8 lg:sticky lg:top-12">
                 <h3 className="mb-6 text-xs font-black uppercase tracking-widest text-zinc-500">Validation Summary</h3>
 
                 {hasErrors ? (
