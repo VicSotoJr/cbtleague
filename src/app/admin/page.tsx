@@ -135,7 +135,17 @@ function readGameDrafts(): Record<string, AdminGameDraft> {
 
 function sanitizeGameDrafts(drafts: Record<string, AdminGameDraft>): Record<string, AdminGameDraft> {
   return Object.fromEntries(
-    Object.entries(drafts).filter(([, draft]) => Array.isArray(draft.updates) && draft.updates.length > 0)
+    Object.entries(drafts)
+      .filter(([, draft]) => Array.isArray(draft.updates) && draft.updates.length > 0)
+      .map(([key, draft]) => [
+        key,
+        {
+          ...draft,
+          // Score edits now live only in component state; ignore stale persisted values.
+          homeScore: "",
+          awayScore: "",
+        },
+      ])
   );
 }
 
@@ -264,7 +274,9 @@ export default function AdminPage() {
 
   useEffect(() => {
     setQueuedCount(readQueuedGames().length);
-    setGameDrafts(sanitizeGameDrafts(readGameDrafts()));
+    const sanitizedDrafts = sanitizeGameDrafts(readGameDrafts());
+    setGameDrafts(sanitizedDrafts);
+    writeGameDrafts(sanitizedDrafts);
     const settings = readAdminSettings();
     setApiUrl(settings.apiUrl);
     setAdminKey(settings.adminKey);
@@ -354,16 +366,15 @@ export default function AdminPage() {
 
     hydratedGameKeyRef.current = selectedGameKey;
 
-    // Hydrate the score inputs when the matchup changes, then let local input state drive edits.
+    // Hydrate from the saved schedule score only when the matchup changes.
     setGameScore({
-      homeScore: selectedGameDraft?.homeScore ?? defaultGameScore.homeScore,
-      awayScore: selectedGameDraft?.awayScore ?? defaultGameScore.awayScore,
+      homeScore: defaultGameScore.homeScore,
+      awayScore: defaultGameScore.awayScore,
     });
   }, [
     defaultGameScore.awayScore,
     defaultGameScore.homeScore,
     selectedGame,
-    selectedGameDraft,
     selectedGameKey,
     selectedGameNumber,
   ]);
