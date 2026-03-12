@@ -25675,7 +25675,7 @@
               "PlayerHead": "tjpettway3.jpg",
               "stats": [
                 {
-                  "game_number": "1",
+                  "game_number": 1,
                   "opponent": "Free Agents",
                   "Points": 10,
                   "FieldGoalsMade": 5,
@@ -26312,7 +26312,7 @@
         {
           "week": "Week 1 - March 10, 2026",
           "homeTeam": "The Mob",
-          "homeScore": "70",
+          "homeScore": "69",
           "awayTeam": "Free Agents",
           "awayScore": "67",
           "date": "March 10, 2026",
