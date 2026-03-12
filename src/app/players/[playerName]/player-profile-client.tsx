@@ -4,7 +4,7 @@ import React from "react";
 import { PlayerStat } from "@/types/league";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Activity, Zap, Target, TrendingUp, ArrowLeft } from "lucide-react";
+import { Activity, Zap, Target, TrendingUp, ArrowLeft, Trophy } from "lucide-react";
 import PlayerHead from "@/components/league/player-head";
 import {
   Table,
@@ -23,6 +23,7 @@ export interface SeasonStats {
   playerHead?: string;
   stats: AggregatedPlayerMetrics;
   gameLogs: PlayerStat[];
+  overall: number;
 }
 
 interface PlayerProfileClientProps {
@@ -86,6 +87,10 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
               <p className="text-2xl font-black text-white uppercase">{latestSeason.teamName}</p>
             </div>
             <div className="border-l border-white/10 pl-8">
+              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Latest OVR</p>
+              <p className="text-2xl font-black text-copper-400">{latestSeason.overall}</p>
+            </div>
+            <div className="border-l border-white/10 pl-8">
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Career Points</p>
               <p className="text-2xl font-black text-white">{careerPoints}</p>
             </div>
@@ -114,11 +119,20 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                 >
                   {season.teamName}
                 </Link>
+                <span className="rounded-full border border-copper-500/20 bg-copper-500/10 px-4 py-1 text-xs font-black uppercase tracking-[0.16em] text-copper-400">
+                  OVR {season.overall}
+                </span>
               </div>
               <div className="h-px flex-1 mx-8 bg-white/5 hidden md:block" />
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              <StatCard
+                label="OVR"
+                value={season.overall}
+                sub="Season overall"
+                icon={<Trophy className="h-4 w-4 text-copper-400" />}
+              />
               <StatCard label="PPG" value={season.stats.PPG} sub="Points per game" icon={<Zap className="h-4 w-4 text-copper-500" />} />
               <StatCard
                 label="RPG"

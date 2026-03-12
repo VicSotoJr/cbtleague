@@ -16,75 +16,27 @@ import SeasonToggle from "@/components/league/season-toggle";
 import PlayerHead from "@/components/league/player-head";
 import { getSeasonId, getSeasonLabel, getSeasonPlayersWithAggregates, SEASON_OPTIONS } from "@/lib/league-summary";
 import { buildPlayerProfileHref } from "@/lib/player-links";
-
-const ROWS_PER_PAGE = 50;
-
-const PLAYER_STAT_COLUMNS = [
-  "GP",
-  "PTS",
-  "PPG",
-  "FGM",
-  "FGA",
-  "FG%",
-  "2PM",
-  "2PA",
-  "2P%",
-  "3PM",
-  "3PA",
-  "3P%",
-  "FTM",
-  "FTA",
-  "FT%",
-  "OREB",
-  "DREB",
-  "REB",
-  "RPG",
-  "AST",
-  "APG",
-  "STL",
-  "SPG",
-  "BLK",
-  "BPG",
-  "TOV",
-  "TOVPG",
-  "PF",
-  "EFF",
-] as const;
+import { getSeasonPlayerOveralls } from "@/lib/player-overalls";
+import { STAT_TABLE_COLUMNS } from "@/lib/stat-columns";
 
 export default function PlayersClient() {
   const searchParams = useSearchParams();
   const seasonId = getSeasonId(searchParams.get("season"));
 
-  const players = React.useMemo(() => getSeasonPlayersWithAggregates(seasonId), [seasonId]);
+  const players = React.useMemo(
+    () => getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId), seasonId),
+    [seasonId]
+  );
 
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [page, setPage] = React.useState(1);
   const deferredSearchQuery = React.useDeferredValue(searchQuery);
   const searchValue = deferredSearchQuery.trim().toLowerCase();
   const filteredPlayers = React.useMemo(
     () => players.filter((entry) => entry.player.name.toLowerCase().includes(searchValue)),
     [players, searchValue]
   );
-  const totalPages = Math.max(1, Math.ceil(filteredPlayers.length / ROWS_PER_PAGE));
-
-  React.useEffect(() => {
-    setPage(1);
-  }, [seasonId, searchValue]);
-
-  React.useEffect(() => {
-    if (page > totalPages) {
-      setPage(totalPages);
-    }
-  }, [page, totalPages]);
-
-  const paginatedPlayers = React.useMemo(() => {
-    const start = (page - 1) * ROWS_PER_PAGE;
-    return filteredPlayers.slice(start, start + ROWS_PER_PAGE);
-  }, [filteredPlayers, page]);
 
   const seasonLabel = getSeasonLabel(seasonId);
-  const pageStart = filteredPlayers.length === 0 ? 0 : (page - 1) * ROWS_PER_PAGE + 1;
-  const pageEnd = Math.min(page * ROWS_PER_PAGE, filteredPlayers.length);
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-6">
@@ -114,11 +66,16 @@ export default function PlayersClient() {
         </div>
       </div>
 
-      <div className="mb-8 flex items-center justify-between rounded-xl bg-copper-600/10 p-4 border border-copper-500/20">
+      <div className="mb-8 flex flex-col gap-3 rounded-xl border border-copper-500/20 bg-copper-600/10 p-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm font-bold text-copper-400 uppercase tracking-tighter">Current View:</span>
           <span className="text-lg font-bold text-white">{seasonLabel}</span>
         </div>
+        <p className="max-w-2xl text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
+          Season-only overall prototype based on league-relative scoring, shooting, playmaking, rebounding, defense,
+          efficiency, and games played. Season 3 uses a lighter early-season penalty so one-week ratings are less
+          compressed.
+        </p>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/50 backdrop-blur-sm shadow-2xl">
@@ -130,7 +87,10 @@ export default function PlayersClient() {
                   Player
                 </TableHead>
                 <TableHead className="min-w-[120px] font-bold text-zinc-500 uppercase tracking-tighter">Team</TableHead>
-                {PLAYER_STAT_COLUMNS.map((stat) => (
+                <TableHead className="text-center font-bold text-copper-500 uppercase tracking-tighter whitespace-nowrap px-4">
+                  OVR
+                </TableHead>
+                {STAT_TABLE_COLUMNS.map((stat) => (
                   <TableHead
                     key={stat}
                     className={cn(
@@ -144,12 +104,12 @@ export default function PlayersClient() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {paginatedPlayers.map((entry, i) => {
+              {filteredPlayers.map((entry, i) => {
                 const { player, teamName, aggregated } = entry;
 
                 return (
                   <TableRow
-                    key={`${player.name}-${teamName}-${page}-${i}`}
+                    key={`${player.name}-${teamName}-${i}`}
                     className="border-white/5 hover:bg-white/5 transition-colors group"
                   >
                     <TableCell className="font-bold text-white group-hover:text-copper-500">
@@ -178,6 +138,11 @@ export default function PlayersClient() {
                       >
                         {teamName}
                       </Link>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <span className="inline-flex min-w-11 items-center justify-center rounded-full border border-copper-500/20 bg-copper-500/10 px-2.5 py-1 text-sm font-black italic text-copper-400">
+                        {entry.overall}
+                      </span>
                     </TableCell>
                     <TableCell className="text-center font-medium text-zinc-400">{aggregated.GAMES}</TableCell>
                     <TableCell className="text-center font-black text-white">{aggregated.Points}</TableCell>
@@ -216,29 +181,7 @@ export default function PlayersClient() {
         </div>
         <div className="flex flex-col gap-3 border-t border-white/5 bg-zinc-950/70 px-4 py-4 text-sm text-zinc-400 md:flex-row md:items-center md:justify-between">
           <div>
-            Showing <span className="font-bold text-white">{pageStart}-{pageEnd}</span> of{" "}
-            <span className="font-bold text-white">{filteredPlayers.length}</span> players
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setPage((current) => Math.max(1, current - 1))}
-              disabled={page === 1}
-              className="rounded-lg border border-white/10 bg-zinc-900 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white transition-colors enabled:hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              Prev
-            </button>
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-              Page {page}/{totalPages}
-            </span>
-            <button
-              type="button"
-              onClick={() => setPage((current) => Math.min(totalPages, current + 1))}
-              disabled={page === totalPages}
-              className="rounded-lg border border-white/10 bg-zinc-900 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white transition-colors enabled:hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              Next
-            </button>
+            Showing <span className="font-bold text-white">{filteredPlayers.length}</span> players
           </div>
         </div>
       </div>

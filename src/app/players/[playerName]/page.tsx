@@ -1,7 +1,8 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
 import PlayerProfileClient, { type SeasonStats } from "./player-profile-client";
-import { aggregatePlayerStats, getLeagueData } from "@/lib/league-data";
+import { aggregatePlayerStats, getLeagueData, getSeasonPlayersWithAggregates } from "@/lib/league-data";
+import { getSeasonPlayerOveralls } from "@/lib/player-overalls";
 
 function normalizePlayerKey(value: string): string {
     return value.trim().toLowerCase();
@@ -15,6 +16,12 @@ function getPlayerSeasonStats(playerName: string): SeasonStats[] {
 
     for (const seasonId of seasonIds) {
         const seasonData = leagueData.seasons[seasonId];
+        const overallsByPlayerName = new Map(
+            getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId), seasonId).map((entry) => [
+                normalizePlayerKey(entry.player.name),
+                entry.overall,
+            ])
+        );
 
         for (const team of seasonData.teams) {
             const player = team.roster.find((entry) => normalizePlayerKey(entry.name) === normalizedPlayerName);
@@ -29,6 +36,7 @@ function getPlayerSeasonStats(playerName: string): SeasonStats[] {
                 stats: aggregatePlayerStats(player),
                 playerHead: player.PlayerHead,
                 gameLogs: player.stats ?? [],
+                overall: overallsByPlayerName.get(normalizedPlayerName) ?? 60,
             });
         }
     }
