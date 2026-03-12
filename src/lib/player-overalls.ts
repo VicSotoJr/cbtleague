@@ -8,8 +8,6 @@ export type PlayerOverallBreakdown = {
   rebounding: number;
   defense: number;
   efficiency: number;
-  availability: number;
-  samplePenalty: number;
 };
 
 export type SummaryPlayerWithOverall = SummaryPlayerWithTeamStats & {
@@ -18,7 +16,6 @@ export type SummaryPlayerWithOverall = SummaryPlayerWithTeamStats & {
 };
 
 const overallsCache = new WeakMap<SummaryPlayerWithTeamStats[], SummaryPlayerWithOverall[]>();
-const CURRENT_SEASON_ID = "3";
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
@@ -55,28 +52,6 @@ function regressToNeutral(score: number, factor: number, neutral = 45): number {
   return neutral + (score - neutral) * factor;
 }
 
-function getSamplePenalty(games: number, seasonId?: string): number {
-  if (seasonId === CURRENT_SEASON_ID) {
-    if (games >= 8) return 1;
-    if (games >= 6) return 0.995;
-    if (games === 5) return 0.99;
-    if (games === 4) return 0.985;
-    if (games === 3) return 0.98;
-    if (games === 2) return 0.93;
-    if (games === 1) return 0.86;
-    return 0.6;
-  }
-
-  if (games >= 8) return 1;
-  if (games >= 6) return 0.99;
-  if (games === 5) return 0.985;
-  if (games === 4) return 0.975;
-  if (games === 3) return 0.96;
-  if (games === 2) return 0.84;
-  if (games === 1) return 0.74;
-  return 0.5;
-}
-
 function getMetricArrays(players: SummaryPlayerWithTeamStats[]) {
   const metrics = {
     ppg: [] as number[],
@@ -91,7 +66,6 @@ function getMetricArrays(players: SummaryPlayerWithTeamStats[]) {
     spg: [] as number[],
     bpg: [] as number[],
     eff: [] as number[],
-    games: [] as number[],
   };
 
   for (const entry of players) {
@@ -109,7 +83,6 @@ function getMetricArrays(players: SummaryPlayerWithTeamStats[]) {
     metrics.spg.push(aggregated.SPG);
     metrics.bpg.push(aggregated.BPG);
     metrics.eff.push(aggregated.EFF);
-    metrics.games.push(aggregated.GAMES);
   }
 
   return metrics;
@@ -136,10 +109,7 @@ function getPlaymakingScore(aggregated: AggregatedPlayerMetrics, metricArrays: R
   return assistsScore * 0.7 + adjustedTurnoverControl * 0.3;
 }
 
-export function getSeasonPlayerOveralls(
-  players: SummaryPlayerWithTeamStats[],
-  seasonId?: string
-): SummaryPlayerWithOverall[] {
+export function getSeasonPlayerOveralls(players: SummaryPlayerWithTeamStats[]): SummaryPlayerWithOverall[] {
   const cached = overallsCache.get(players);
   if (cached) {
     return cached;
@@ -162,24 +132,20 @@ export function getSeasonPlayerOveralls(
       percentileRank(metricArrays.spg, aggregated.SPG) * 0.55 +
       percentileRank(metricArrays.bpg, aggregated.BPG) * 0.45;
     const efficiency = percentileRank(metricArrays.eff, aggregated.EFF);
-    const availability = percentileRank(metricArrays.games, aggregated.GAMES);
-    const samplePenalty = getSamplePenalty(aggregated.GAMES, seasonId);
     const eliteTraitCount = [scoring, shooting, playmaking, rebounding, defense, efficiency].filter(
       (score) => score >= 80
     ).length;
 
     const composite =
-      scoring * 0.26 +
-      shooting * 0.16 +
-      playmaking * 0.18 +
-      rebounding * 0.13 +
+      scoring * 0.27 +
+      shooting * 0.17 +
+      playmaking * 0.19 +
+      rebounding * 0.14 +
       defense * 0.12 +
-      efficiency * 0.11 +
-      availability * 0.05;
+      efficiency * 0.11;
 
     const eliteLift = Math.max(0, composite - 72) * 0.24 + eliteTraitCount * 0.9;
-    const rawOverall = clamp(60 + composite * 0.31 + eliteLift, 60, 99);
-    const overall = Math.round(clamp(60 + (rawOverall - 60) * samplePenalty, 60, 99));
+    const overall = Math.round(clamp(60 + composite * 0.31 + eliteLift, 60, 99));
 
     return {
       ...entry,
@@ -191,8 +157,6 @@ export function getSeasonPlayerOveralls(
         rebounding: Number(rebounding.toFixed(1)),
         defense: Number(defense.toFixed(1)),
         efficiency: Number(efficiency.toFixed(1)),
-        availability: Number(availability.toFixed(1)),
-        samplePenalty,
       },
     };
   });

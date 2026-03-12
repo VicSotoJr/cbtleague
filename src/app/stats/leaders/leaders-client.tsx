@@ -8,6 +8,7 @@ import SeasonToggle from "@/components/league/season-toggle";
 import PlayerHead from "@/components/league/player-head";
 import {
   getSeasonId,
+  getSeasonLabel,
   getSeasonPlayersWithAggregates,
   getTopPlayersByStat,
   type LeaderStatKey,
@@ -80,6 +81,7 @@ const leaderCategories: Array<{
 export default function LeadersClient() {
   const searchParams = useSearchParams();
   const seasonId = getSeasonId(searchParams.get("season"));
+  const seasonLabel = getSeasonLabel(seasonId);
 
   const players = React.useMemo(() => getSeasonPlayersWithAggregates(seasonId), [seasonId]);
   const topPlayersByCategory = React.useMemo(() => {
@@ -113,6 +115,16 @@ export default function LeadersClient() {
           options={SEASON_OPTIONS}
           hrefForSeason={(id) => `/stats/leaders/?season=${id}`}
         />
+      </div>
+
+      <div className="mb-12 flex flex-col gap-3 rounded-xl border border-copper-500/20 bg-copper-600/10 p-4 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-bold uppercase tracking-tighter text-copper-400">Current View:</span>
+          <span className="text-lg font-bold text-white">{seasonLabel}</span>
+        </div>
+        <p className="max-w-2xl text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
+          Leaderboards refresh by season, so every ranking on this page reflects the selected CBT campaign.
+        </p>
       </div>
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-32">

@@ -17,7 +17,7 @@ function getPlayerSeasonStats(playerName: string): SeasonStats[] {
     for (const seasonId of seasonIds) {
         const seasonData = leagueData.seasons[seasonId];
         const overallsByPlayerName = new Map(
-            getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId), seasonId).map((entry) => [
+            getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId)).map((entry) => [
                 normalizePlayerKey(entry.player.name),
                 entry.overall,
             ])

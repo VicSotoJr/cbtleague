@@ -17,6 +17,7 @@ import PlayerHead from "@/components/league/player-head";
 import { getSeasonId, getSeasonLabel, getSeasonPlayersWithAggregates, SEASON_OPTIONS } from "@/lib/league-summary";
 import { buildPlayerProfileHref } from "@/lib/player-links";
 import { getSeasonPlayerOveralls } from "@/lib/player-overalls";
+import { getOverallTierClasses } from "@/lib/player-overall-tier";
 import { STAT_TABLE_COLUMNS } from "@/lib/stat-columns";
 
 export default function PlayersClient() {
@@ -24,7 +25,7 @@ export default function PlayersClient() {
   const seasonId = getSeasonId(searchParams.get("season"));
 
   const players = React.useMemo(
-    () => getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId), seasonId),
+    () => getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId)),
     [seasonId]
   );
 
@@ -73,8 +74,7 @@ export default function PlayersClient() {
         </div>
         <p className="max-w-2xl text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
           Season-only overall prototype based on league-relative scoring, shooting, playmaking, rebounding, defense,
-          efficiency, and games played. Season 3 uses a lighter early-season penalty so one-week ratings are less
-          compressed.
+          and efficiency, with no games-played penalty baked into the rating.
         </p>
       </div>
 
@@ -106,6 +106,7 @@ export default function PlayersClient() {
             <TableBody>
               {filteredPlayers.map((entry, i) => {
                 const { player, teamName, aggregated } = entry;
+                const overallClasses = getOverallTierClasses(entry.overall);
 
                 return (
                   <TableRow
@@ -140,7 +141,12 @@ export default function PlayersClient() {
                       </Link>
                     </TableCell>
                     <TableCell className="text-center">
-                      <span className="inline-flex min-w-11 items-center justify-center rounded-full border border-copper-500/20 bg-copper-500/10 px-2.5 py-1 text-sm font-black italic text-copper-400">
+                      <span
+                        className={cn(
+                          "inline-flex min-w-11 items-center justify-center rounded-full px-2.5 py-1 text-sm font-black italic",
+                          overallClasses.badge
+                        )}
+                      >
                         {entry.overall}
                       </span>
                     </TableCell>

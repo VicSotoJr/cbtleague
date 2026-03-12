@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import TeamLogo from "@/components/league/team-logo";
 import SeasonToggle from "@/components/league/season-toggle";
-import { getSeasonId, getSeasonTeams, SEASON_OPTIONS } from "@/lib/league-summary";
+import { getSeasonId, getSeasonLabel, getSeasonTeams, SEASON_OPTIONS } from "@/lib/league-summary";
 import { getSeasonChampion } from "@/lib/season-honors";
 
 import { motion } from "framer-motion";
@@ -31,6 +31,7 @@ const itemVariants = {
 export default function TeamsClient() {
     const searchParams = useSearchParams();
     const seasonId = getSeasonId(searchParams.get("season"));
+    const seasonLabel = getSeasonLabel(seasonId);
     const teams = React.useMemo(() => getSeasonTeams(seasonId), [seasonId]);
     const champion = React.useMemo(() => getSeasonChampion(seasonId), [seasonId]);
 
@@ -51,6 +52,16 @@ export default function TeamsClient() {
                     options={SEASON_OPTIONS}
                     hrefForSeason={(id) => `/teams/?season=${id}`}
                 />
+            </div>
+
+            <div className="mb-12 flex flex-col gap-3 rounded-xl border border-copper-500/20 bg-copper-600/10 p-4 md:flex-row md:items-center md:justify-between">
+                <div className="flex items-center gap-2">
+                    <span className="text-sm font-bold uppercase tracking-tighter text-copper-400">Current View:</span>
+                    <span className="text-lg font-bold text-white">{seasonLabel}</span>
+                </div>
+                <p className="max-w-2xl text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
+                    Team cards, rosters, and champion status on this page all reflect the selected CBT season.
+                </p>
             </div>
 
             <motion.div

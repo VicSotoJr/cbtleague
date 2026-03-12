@@ -23,7 +23,7 @@ function getTeamSeasons(teamName: string): TeamProfileSeason[] {
     for (const seasonId of seasonIds) {
         const seasonTeams = getSeasonTeamsWithAggregates(seasonId);
         const overallsByPlayerName = new Map(
-            getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId), seasonId).map((entry) => [
+            getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId)).map((entry) => [
                 entry.player.name.trim().toLowerCase(),
                 entry.overall,
             ])

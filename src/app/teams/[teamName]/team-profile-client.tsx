@@ -8,6 +8,8 @@ import PlayerHead from "@/components/league/player-head";
 import { ArrowLeft } from "lucide-react";
 import type { AggregatedBaseStats } from "@/types/league";
 import { buildPlayerProfileHref } from "@/lib/player-links";
+import { cn } from "@/lib/utils";
+import { getOverallTierClasses } from "@/lib/player-overall-tier";
 
 type TeamProfileRosterPlayer = {
   name: string;
@@ -128,44 +130,53 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {team.roster.map((player, i) => (
-              <Link
-                key={`${player.name}-${i}`}
-                href={buildPlayerProfileHref(player.name, {
-                  seasonId,
-                  teamName: team.Team,
-                })}
-                prefetch={false}
-                className="group rounded-2xl border border-white/5 bg-zinc-900/50 p-4 transition-all hover:bg-zinc-900 hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <div className="flex items-center gap-4">
-                  <PlayerHead
-                    playerName={player.name}
-                    playerHead={player.PlayerHead}
-                    size={64}
-                    className="rounded-xl group-hover:scale-110 transition-transform"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <h3 className="truncate font-bold text-white group-hover:text-copper-500 transition-colors uppercase tracking-tight">
-                      {player.name}
-                    </h3>
-                    <div className="mt-1 flex items-center gap-2">
-                      <p className="text-sm font-mono text-zinc-500">#{player.number}</p>
-                      <span className="inline-flex items-center rounded-full border border-copper-500/20 bg-copper-500/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.16em] text-copper-400">
-                        OVR {player.overall}
-                      </span>
+            {team.roster.map((player, i) => {
+              const overallClasses = getOverallTierClasses(player.overall);
+
+              return (
+                <Link
+                  key={`${player.name}-${i}`}
+                  href={buildPlayerProfileHref(player.name, {
+                    seasonId,
+                    teamName: team.Team,
+                  })}
+                  prefetch={false}
+                  className="group rounded-2xl border border-white/5 bg-zinc-900/50 p-4 transition-all hover:bg-zinc-900 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <div className="flex items-center gap-4">
+                    <PlayerHead
+                      playerName={player.name}
+                      playerHead={player.PlayerHead}
+                      size={64}
+                      className="rounded-xl group-hover:scale-110 transition-transform"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <h3 className="truncate font-bold text-white group-hover:text-copper-500 transition-colors uppercase tracking-tight">
+                        {player.name}
+                      </h3>
+                      <div className="mt-1 flex items-center gap-2">
+                        <p className="text-sm font-mono text-zinc-500">#{player.number}</p>
+                        <span
+                          className={cn(
+                            "inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.16em]",
+                            overallClasses.badge
+                          )}
+                        >
+                          OVR {player.overall}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="mt-4 grid grid-cols-4 gap-2 border-t border-white/5 pt-3">
-                  <RosterStat label="GP" value={String(player.gp)} />
-                  <RosterStat label="PPG" value={player.ppg.toFixed(1)} />
-                  <RosterStat label="APG" value={player.apg.toFixed(1)} />
-                  <RosterStat label="RPG" value={player.rpg.toFixed(1)} />
-                </div>
-              </Link>
-            ))}
+                  <div className="mt-4 grid grid-cols-4 gap-2 border-t border-white/5 pt-3">
+                    <RosterStat label="GP" value={String(player.gp)} />
+                    <RosterStat label="PPG" value={player.ppg.toFixed(1)} />
+                    <RosterStat label="APG" value={player.apg.toFixed(1)} />
+                    <RosterStat label="RPG" value={player.rpg.toFixed(1)} />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
 
