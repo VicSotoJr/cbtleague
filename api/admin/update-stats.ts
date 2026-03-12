@@ -1,5 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { AdminStatsUpdatePayload, AdminStatsUpdateResponse } from "../../src/types/admin-api";
+import type {
+  AdminPlayerGameUpdate,
+  AdminStatsUpdatePayload,
+  AdminStatsUpdateResponse,
+} from "../../src/types/admin-api";
 import type { BaseStats, LeagueData, PlayerStat } from "../../src/types/league";
 import { buildLeagueSummary } from "../../src/lib/league-summary-builder";
 
@@ -57,6 +61,15 @@ type PlayerUpdateResult =
   | { ok: true }
   | { ok: false; status: number; message: string; details?: string };
 
+type LegacyAdminStatsUpdatePayload = {
+  seasonId: string;
+  teamName: string;
+  playerName: string;
+  opponent: string;
+  gameNumber: string;
+  gameLog: BaseStats;
+};
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
@@ -75,6 +88,27 @@ function isBaseStats(value: unknown): value is BaseStats {
 }
 
 function isAdminStatsUpdatePayload(value: unknown): value is AdminStatsUpdatePayload {
+  if (!isRecord(value)) return false;
+  return (
+    isNonEmptyString(value.seasonId) &&
+    isNonEmptyString(value.gameNumber) &&
+    Array.isArray(value.updates) &&
+    value.updates.length > 0 &&
+    value.updates.every(isAdminPlayerGameUpdate)
+  );
+}
+
+function isAdminPlayerGameUpdate(value: unknown): value is AdminPlayerGameUpdate {
+  if (!isRecord(value)) return false;
+  return (
+    isNonEmptyString(value.teamName) &&
+    isNonEmptyString(value.playerName) &&
+    isNonEmptyString(value.opponent) &&
+    isBaseStats(value.gameLog)
+  );
+}
+
+function isLegacyAdminStatsUpdatePayload(value: unknown): value is LegacyAdminStatsUpdatePayload {
   if (!isRecord(value)) return false;
   return (
     isNonEmptyString(value.seasonId) &&
@@ -194,26 +228,31 @@ function getCompletedGamesPlayed(stats: PlayerStat[]): number {
   return stats.filter((stat) => hasRecordedOpponent(stat) || hasRecordedStats(stat)).length;
 }
 
-function applyPlayerUpdate(leagueData: LeagueData, payload: AdminStatsUpdatePayload): PlayerUpdateResult {
-  const season = leagueData.seasons[payload.seasonId];
+function applyPlayerUpdate(
+  leagueData: LeagueData,
+  seasonId: string,
+  gameNumber: string,
+  update: AdminPlayerGameUpdate
+): PlayerUpdateResult {
+  const season = leagueData.seasons[seasonId];
   if (!season) {
     return { ok: false, status: 404, message: "Season not found" };
   }
 
-  const team = season.teams.find((candidate) => candidate.Team === payload.teamName);
+  const team = season.teams.find((candidate) => candidate.Team === update.teamName);
   if (!team) {
     return { ok: false, status: 404, message: "Team not found" };
   }
 
-  const player = team.roster.find((candidate) => candidate.name === payload.playerName);
+  const player = team.roster.find((candidate) => candidate.name === update.playerName);
   if (!player) {
     return { ok: false, status: 404, message: "Player not found" };
   }
 
   const nextStat: PlayerStat = {
-    game_number: toGameNumber(payload.gameNumber),
-    opponent: payload.opponent.trim(),
-    ...payload.gameLog,
+    game_number: toGameNumber(gameNumber),
+    opponent: update.opponent.trim(),
+    ...update.gameLog,
   };
 
   const existingStats = Array.isArray(player.stats) ? player.stats : [];
@@ -233,6 +272,29 @@ function applyPlayerUpdate(leagueData: LeagueData, payload: AdminStatsUpdatePayl
   player.GamesPlayed = getCompletedGamesPlayed(player.stats);
 
   return { ok: true };
+}
+
+function normalizeAdminStatsPayload(payload: unknown): AdminStatsUpdatePayload | null {
+  if (isAdminStatsUpdatePayload(payload)) {
+    return payload;
+  }
+
+  if (isLegacyAdminStatsUpdatePayload(payload)) {
+    return {
+      seasonId: payload.seasonId,
+      gameNumber: payload.gameNumber,
+      updates: [
+        {
+          teamName: payload.teamName,
+          playerName: payload.playerName,
+          opponent: payload.opponent,
+          gameLog: payload.gameLog,
+        },
+      ],
+    };
+  }
+
+  return null;
 }
 
 function getAdminBearerToken(req: NextApiRequest): string | null {
@@ -326,7 +388,9 @@ export default async function handler(
     return;
   }
 
-  if (!isAdminStatsUpdatePayload(payload)) {
+  const normalizedPayload = normalizeAdminStatsPayload(payload);
+
+  if (!normalizedPayload) {
     res.status(400).json({ ok: false, message: "Invalid payload shape." });
     return;
   }
@@ -384,14 +448,21 @@ export default async function handler(
     return;
   }
 
-  const updateResult = applyPlayerUpdate(leagueData, payload);
-  if (!updateResult.ok) {
-    res.status(updateResult.status).json({
-      ok: false,
-      message: updateResult.message,
-      details: updateResult.details,
-    });
-    return;
+  for (const update of normalizedPayload.updates) {
+    const updateResult = applyPlayerUpdate(
+      leagueData,
+      normalizedPayload.seasonId,
+      normalizedPayload.gameNumber,
+      update
+    );
+    if (!updateResult.ok) {
+      res.status(updateResult.status).json({
+        ok: false,
+        message: updateResult.message,
+        details: updateResult.details,
+      });
+      return;
+    }
   }
 
   const encodedContent = Buffer.from(`${JSON.stringify(leagueData, null, 2)}\n`, "utf8").toString("base64");
@@ -495,7 +566,7 @@ export default async function handler(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: COMMIT_MESSAGE,
+        message: `${COMMIT_MESSAGE} (${normalizedPayload.seasonId} / Game ${normalizedPayload.gameNumber})`,
         tree: treePayload.sha,
         parents: [latestCommitSha],
       }),
@@ -541,5 +612,6 @@ export default async function handler(
     message: "Stats updated and committed to GitHub.",
     commitSha: createCommitPayload.sha,
     path: selectedStatsPath,
+    updatedPlayers: normalizedPayload.updates.length,
   });
 }

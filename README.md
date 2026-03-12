@@ -16,7 +16,7 @@ It serves standings, schedules, team pages, player profiles, league leaders, and
 - Team profiles with roster + team-level metrics
 - Player profiles with per-game box score logs
 - League leaders and all-time records
-- Admin stat-entry page with validation and queued local fallback on API failure
+- Admin stat-entry page with per-game draft publishing and queued local fallback on API failure
 - Typed aggregation pipeline for PPG/RPG/APG/efficiency and shooting percentages
 
 ## Tech Stack
@@ -71,12 +71,12 @@ npm run generate:summary
 
 ## Admin Stat Sync (GitHub Write-Back)
 
-The admin page posts stat updates to an API endpoint (`/api/admin/update-stats` by default). The endpoint:
+The admin page builds a local draft for a selected matchup, then posts the whole game to an API endpoint (`/api/admin/update-stats` by default). The endpoint:
 
 1. Reads the current stats file from the GitHub repository.
-2. Decodes and updates the targeted player/game log.
-3. Re-encodes the JSON.
-4. Commits changes with message: `Update stats via admin panel`.
+2. Decodes and updates every drafted player log for that matchup in one request.
+3. Rebuilds the compact league summary JSON.
+4. Commits the game update back to GitHub in a single commit.
 
 ### Frontend env
 
@@ -111,8 +111,9 @@ That keeps the public app purely static while still allowing secure authenticate
 1. Open the public `/admin` page from your phone.
 2. Paste your Vercel API URL into the `Admin API URL` field.
 3. Enter your shared `Admin Key` if you configured `ADMIN_API_KEY` on Vercel.
-4. Save stats from the phone. The Vercel API commits updated JSON back to GitHub.
-5. GitHub Pages rebuilds from `main` and publishes the updated public site.
+4. Draft each player for the matchup, then tap `Publish Game`.
+5. The Vercel API commits updated JSON back to GitHub in one game-level commit.
+6. GitHub Pages rebuilds from `main` and publishes the updated public site.
 
 ## License
 

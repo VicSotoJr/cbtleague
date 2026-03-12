@@ -1,12 +1,16 @@
 import type { BaseStats } from "@/types/league";
 
-export interface AdminStatsUpdatePayload {
-  seasonId: string;
+export interface AdminPlayerGameUpdate {
   teamName: string;
   playerName: string;
   opponent: string;
-  gameNumber: string;
   gameLog: BaseStats;
+}
+
+export interface AdminStatsUpdatePayload {
+  seasonId: string;
+  gameNumber: string;
+  updates: AdminPlayerGameUpdate[];
 }
 
 export interface AdminStatsUpdateSuccess {
@@ -14,6 +18,7 @@ export interface AdminStatsUpdateSuccess {
   message: string;
   commitSha: string;
   path: string;
+  updatedPlayers: number;
 }
 
 export interface AdminStatsUpdateError {

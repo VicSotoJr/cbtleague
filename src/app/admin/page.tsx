@@ -2,13 +2,14 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Save, AlertCircle, CheckCircle2, User, Calendar, ArrowLeft, Download } from "lucide-react";
+import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Download, Save, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getSeasonData } from "@/lib/league-data";
-import type { AdminStatsUpdatePayload, AdminStatsUpdateResponse } from "@/types/admin-api";
+import type { AdminPlayerGameUpdate, AdminStatsUpdatePayload, AdminStatsUpdateResponse } from "@/types/admin-api";
 import type { BaseStats, Team } from "@/types/league";
 
-const LOCAL_UPDATES_KEY = "cbtleague-admin-updates";
+const LOCAL_GAME_DRAFTS_KEY = "cbtleague-admin-game-drafts";
+const LOCAL_QUEUED_GAMES_KEY = "cbtleague-admin-queued-games";
 const LOCAL_ADMIN_SETTINGS_KEY = "cbtleague-admin-settings";
 const ADMIN_API_ENDPOINT = process.env.NEXT_PUBLIC_ADMIN_API_URL ?? "/api/admin/update-stats";
 
@@ -32,14 +33,17 @@ const EMPTY_STATS: BaseStats = {
   PersonalFouls: 0,
 };
 
-type AdminQueuedUpdate = {
-  savedAt: string;
+type AdminGameDraft = {
   seasonId: string;
-  teamName: string;
-  playerName: string;
-  opponent: string;
   gameNumber: string;
-  gameLog: BaseStats;
+  gameLabel: string;
+  homeTeam: string;
+  awayTeam: string;
+  updates: AdminPlayerGameUpdate[];
+};
+
+type AdminQueuedGameUpdate = AdminGameDraft & {
+  savedAt: string;
 };
 
 type AdminSettings = {
@@ -49,7 +53,7 @@ type AdminSettings = {
 
 function getErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message;
-  return "Failed to save stats";
+  return "Failed to publish game";
 }
 
 function getGameNumberFromWeek(weekLabel: string | undefined, fallbackIndex: number): string {
@@ -81,23 +85,42 @@ function toStatsValue(log?: Partial<BaseStats>): BaseStats {
   };
 }
 
-function readQueuedUpdates(): AdminQueuedUpdate[] {
+function readGameDrafts(): Record<string, AdminGameDraft> {
+  if (typeof window === "undefined") return {};
+
+  try {
+    const raw = window.localStorage.getItem(LOCAL_GAME_DRAFTS_KEY);
+    if (!raw) return {};
+
+    const parsed = JSON.parse(raw) as Record<string, AdminGameDraft>;
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeGameDrafts(drafts: Record<string, AdminGameDraft>): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(LOCAL_GAME_DRAFTS_KEY, JSON.stringify(drafts));
+}
+
+function readQueuedGames(): AdminQueuedGameUpdate[] {
   if (typeof window === "undefined") return [];
 
   try {
-    const raw = window.localStorage.getItem(LOCAL_UPDATES_KEY);
+    const raw = window.localStorage.getItem(LOCAL_QUEUED_GAMES_KEY);
     if (!raw) return [];
 
-    const parsed = JSON.parse(raw) as AdminQueuedUpdate[];
+    const parsed = JSON.parse(raw) as AdminQueuedGameUpdate[];
     return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
 }
 
-function writeQueuedUpdates(updates: AdminQueuedUpdate[]): void {
+function writeQueuedGames(games: AdminQueuedGameUpdate[]): void {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(LOCAL_UPDATES_KEY, JSON.stringify(updates, null, 2));
+  window.localStorage.setItem(LOCAL_QUEUED_GAMES_KEY, JSON.stringify(games, null, 2));
 }
 
 function readAdminSettings(): AdminSettings {
@@ -126,6 +149,46 @@ function writeAdminSettings(settings: AdminSettings): void {
   window.localStorage.setItem(LOCAL_ADMIN_SETTINGS_KEY, JSON.stringify(settings));
 }
 
+function buildDraftKey(seasonId: string, gameNumber: string): string {
+  return `${seasonId}:${gameNumber}`;
+}
+
+function buildDraftFromGame(args: {
+  seasonId: string;
+  gameNumber: string;
+  gameLabel: string;
+  homeTeam?: string;
+  awayTeam?: string;
+  updates?: AdminPlayerGameUpdate[];
+}): AdminGameDraft {
+  return {
+    seasonId: args.seasonId,
+    gameNumber: args.gameNumber,
+    gameLabel: args.gameLabel,
+    homeTeam: args.homeTeam ?? "Home Team",
+    awayTeam: args.awayTeam ?? "Away Team",
+    updates: args.updates ?? [],
+  };
+}
+
+function findExistingGameLog(args: {
+  season: ReturnType<typeof getSeasonData> | null | undefined;
+  selectedTeam: string;
+  selectedPlayer: string;
+  selectedGameNumber: string;
+  opponent: string;
+}): BaseStats | null {
+  const team = args.season?.teams.find((candidate: Team) => candidate.Team === args.selectedTeam);
+  const player = team?.roster.find((candidate) => candidate.name === args.selectedPlayer);
+  const existingLog = player?.stats?.find(
+    (entry) =>
+      String(entry.game_number) === args.selectedGameNumber &&
+      (entry.opponent === args.opponent || entry.opponent.trim() === "")
+  );
+
+  return existingLog ? toStatsValue(existingLog) : null;
+}
+
 export default function AdminPage() {
   const seasonId = "3";
   const season = getSeasonData(seasonId);
@@ -139,13 +202,14 @@ export default function AdminPage() {
   });
   const [isSaving, setIsSaving] = useState(false);
   const [queuedCount, setQueuedCount] = useState(0);
+  const [gameDrafts, setGameDrafts] = useState<Record<string, AdminGameDraft>>({});
   const [apiUrl, setApiUrl] = useState(ADMIN_API_ENDPOINT);
   const [adminKey, setAdminKey] = useState("");
-
   const [stats, setStats] = useState<BaseStats>(EMPTY_STATS);
 
   useEffect(() => {
-    setQueuedCount(readQueuedUpdates().length);
+    setQueuedCount(readQueuedGames().length);
+    setGameDrafts(readGameDrafts());
     const settings = readAdminSettings();
     setApiUrl(settings.apiUrl);
     setAdminKey(settings.adminKey);
@@ -155,11 +219,20 @@ export default function AdminPage() {
     writeAdminSettings({ apiUrl, adminKey });
   }, [apiUrl, adminKey]);
 
+  useEffect(() => {
+    writeGameDrafts(gameDrafts);
+  }, [gameDrafts]);
+
   const games = useMemo(() => (season?.schedule ?? []).filter((game) => !game.isBye), [season]);
   const selectedGame = selectedGameIdx !== "" ? games[selectedGameIdx] : null;
-  const selectedGameNumber = React.useMemo(
+  const selectedGameNumber = useMemo(
     () => (selectedGameIdx === "" ? "" : getGameNumberFromWeek(selectedGame?.week, selectedGameIdx)),
     [selectedGame, selectedGameIdx]
+  );
+  const selectedGameKey = selectedGameNumber ? buildDraftKey(seasonId, selectedGameNumber) : "";
+  const selectedGameDraft = useMemo(
+    () => (selectedGameKey ? gameDrafts[selectedGameKey] ?? null : null),
+    [gameDrafts, selectedGameKey]
   );
 
   const gameTeams = useMemo(
@@ -178,23 +251,61 @@ export default function AdminPage() {
     [season, selectedTeam]
   );
 
+  const selectedOpponent = useMemo(() => {
+    if (!selectedGame || !selectedTeam) return "";
+    return selectedTeam === selectedGame.homeTeam ? selectedGame.awayTeam ?? "" : selectedGame.homeTeam ?? "";
+  }, [selectedGame, selectedTeam]);
+
+  const draftedPlayers = useMemo(
+    () =>
+      (selectedGameDraft?.updates ?? []).toSorted((a, b) => {
+        if (a.teamName === b.teamName) {
+          return a.playerName.localeCompare(b.playerName);
+        }
+
+        return a.teamName.localeCompare(b.teamName);
+      }),
+    [selectedGameDraft]
+  );
+
+  const selectedDraftEntry = useMemo(
+    () =>
+      selectedGameDraft?.updates.find(
+        (entry) => entry.teamName === selectedTeam && entry.playerName === selectedPlayer
+      ) ?? null,
+    [selectedGameDraft, selectedPlayer, selectedTeam]
+  );
+
   useEffect(() => {
-    if (!selectedTeam || !selectedPlayer || !selectedGame || selectedGameIdx === "") {
+    if (!selectedTeam || !selectedPlayer || !selectedGame || selectedGameIdx === "" || !selectedGameNumber) {
       setStats(EMPTY_STATS);
       return;
     }
 
-    const opponent = selectedTeam === selectedGame.homeTeam ? selectedGame.awayTeam : selectedGame.homeTeam;
-    const team = season?.teams.find((candidate: Team) => candidate.Team === selectedTeam);
-    const player = team?.roster.find((candidate) => candidate.name === selectedPlayer);
-    const existingLog = player?.stats?.find(
-      (entry) =>
-        String(entry.game_number) === selectedGameNumber &&
-        (entry.opponent === opponent || entry.opponent.trim() === "")
-    );
+    if (selectedDraftEntry) {
+      setStats(toStatsValue(selectedDraftEntry.gameLog));
+      return;
+    }
 
-    setStats(toStatsValue(existingLog));
-  }, [season, selectedGame, selectedGameIdx, selectedGameNumber, selectedPlayer, selectedTeam]);
+    const existingStats = findExistingGameLog({
+      season,
+      selectedTeam,
+      selectedPlayer,
+      selectedGameNumber,
+      opponent: selectedOpponent,
+    });
+
+    setStats(existingStats ?? EMPTY_STATS);
+  }, [
+    season,
+    selectedDraftEntry,
+    selectedGame,
+    selectedGameIdx,
+    selectedGameNumber,
+    selectedOpponent,
+    selectedPlayer,
+    selectedTeam,
+  ]);
 
   const errors = {
     fg: stats.FieldGoalsMade > stats.FieldGoalAttempts,
@@ -205,27 +316,115 @@ export default function AdminPage() {
 
   const resetStats = useCallback(() => setStats(EMPTY_STATS), []);
 
-  const handleSave = useCallback(async () => {
-    if (!selectedPlayer || !selectedGame || hasErrors || !selectedTeam) return;
+  const handleStagePlayer = useCallback(() => {
+    if (!selectedPlayer || !selectedGame || !selectedTeam || !selectedGameKey || !selectedGameNumber || hasErrors) {
+      return;
+    }
+
+    const nextUpdate: AdminPlayerGameUpdate = {
+      teamName: selectedTeam,
+      playerName: selectedPlayer,
+      opponent: selectedOpponent || "Unknown",
+      gameLog: stats,
+    };
+
+    setGameDrafts((prev) => {
+      const existingDraft =
+        prev[selectedGameKey] ??
+        buildDraftFromGame({
+          seasonId,
+          gameNumber: selectedGameNumber,
+          gameLabel: selectedGame.week,
+          homeTeam: selectedGame.homeTeam,
+          awayTeam: selectedGame.awayTeam,
+        });
+
+      const nextUpdates = existingDraft.updates.some(
+        (entry) => entry.teamName === nextUpdate.teamName && entry.playerName === nextUpdate.playerName
+      )
+        ? existingDraft.updates.map((entry) =>
+            entry.teamName === nextUpdate.teamName && entry.playerName === nextUpdate.playerName ? nextUpdate : entry
+          )
+        : [...existingDraft.updates, nextUpdate];
+
+      return {
+        ...prev,
+        [selectedGameKey]: {
+          ...existingDraft,
+          updates: nextUpdates,
+        },
+      };
+    });
+
+    setStatus({
+      type: "success",
+      message: `Drafted ${selectedPlayer} for ${selectedGame.week}.`,
+    });
+    setSelectedPlayer("");
+    resetStats();
+  }, [
+    hasErrors,
+    resetStats,
+    seasonId,
+    selectedGame,
+    selectedGameKey,
+    selectedGameNumber,
+    selectedOpponent,
+    selectedPlayer,
+    selectedTeam,
+    stats,
+  ]);
+
+  const handleRemoveDraftedPlayer = useCallback(() => {
+    if (!selectedGameKey || !selectedPlayer || !selectedTeam) return;
+
+    setGameDrafts((prev) => {
+      const existingDraft = prev[selectedGameKey];
+      if (!existingDraft) return prev;
+
+      const nextUpdates = existingDraft.updates.filter(
+        (entry) => !(entry.teamName === selectedTeam && entry.playerName === selectedPlayer)
+      );
+
+      if (nextUpdates.length === 0) {
+        const nextDrafts = { ...prev };
+        delete nextDrafts[selectedGameKey];
+        return nextDrafts;
+      }
+
+      return {
+        ...prev,
+        [selectedGameKey]: {
+          ...existingDraft,
+          updates: nextUpdates,
+        },
+      };
+    });
+
+    setStatus({
+      type: "success",
+      message: `Removed ${selectedPlayer} from the game draft.`,
+    });
+    setSelectedPlayer("");
+    resetStats();
+  }, [resetStats, selectedGameKey, selectedPlayer, selectedTeam]);
+
+  const handlePublishGame = useCallback(async () => {
+    if (!selectedGameDraft || selectedGameDraft.updates.length === 0 || !selectedGameKey) return;
 
     setIsSaving(true);
     setStatus({ type: null, message: "" });
 
     try {
-      const opponent = selectedTeam === selectedGame.homeTeam ? selectedGame.awayTeam : selectedGame.homeTeam;
       const endpoint = apiUrl.trim() || ADMIN_API_ENDPOINT;
-
       if (!endpoint) {
         throw new Error("Missing admin API URL");
       }
 
       const payload: AdminStatsUpdatePayload = {
         seasonId,
-        teamName: selectedTeam,
-        playerName: selectedPlayer,
-        opponent: opponent ?? "Unknown",
-        gameNumber: selectedGameNumber || selectedGame.week,
-        gameLog: stats,
+        gameNumber: selectedGameDraft.gameNumber,
+        updates: selectedGameDraft.updates,
       };
 
       const response = await fetch(endpoint, {
@@ -239,78 +438,84 @@ export default function AdminPage() {
 
       const result = (await response.json()) as AdminStatsUpdateResponse;
       if (!response.ok || !result.ok) {
-        throw new Error(result.message || "Failed to save stats");
+        throw new Error(result.message || "Failed to publish game");
       }
 
+      setGameDrafts((prev) => {
+        const nextDrafts = { ...prev };
+        delete nextDrafts[selectedGameKey];
+        return nextDrafts;
+      });
+
+      setSelectedTeam("");
+      setSelectedPlayer("");
+      resetStats();
       setStatus({
         type: "success",
-        message: `Saved ${selectedPlayer} to GitHub (${result.commitSha.slice(0, 7)}).`,
+        message: `Published ${result.updatedPlayers} player entries to GitHub (${result.commitSha.slice(0, 7)}).`,
       });
-      resetStats();
     } catch (error) {
-      const opponent = selectedTeam === selectedGame.homeTeam ? selectedGame.awayTeam : selectedGame.homeTeam;
-
-      const queuedUpdate: AdminQueuedUpdate = {
+      const queuedGame: AdminQueuedGameUpdate = {
+        ...selectedGameDraft,
         savedAt: new Date().toISOString(),
-        seasonId,
-        teamName: selectedTeam,
-        playerName: selectedPlayer,
-        opponent: opponent ?? "Unknown",
-        gameNumber: selectedGameNumber || selectedGame.week,
-        gameLog: stats,
       };
 
-      const existing = readQueuedUpdates();
-      const nextUpdates = [...existing, queuedUpdate];
-      writeQueuedUpdates(nextUpdates);
-      setQueuedCount(nextUpdates.length);
+      const existing = readQueuedGames();
+      const nextQueuedGames = [
+        ...existing.filter(
+          (entry) => !(entry.seasonId === queuedGame.seasonId && entry.gameNumber === queuedGame.gameNumber)
+        ),
+        queuedGame,
+      ];
 
+      writeQueuedGames(nextQueuedGames);
+      setQueuedCount(nextQueuedGames.length);
       setStatus({
         type: "error",
-        message: `${getErrorMessage(error)}. Entry queued locally (${nextUpdates.length}) for export.`,
+        message: `${getErrorMessage(error)}. Game queued locally (${nextQueuedGames.length}) for export.`,
       });
     } finally {
       setIsSaving(false);
     }
-  }, [adminKey, apiUrl, hasErrors, resetStats, seasonId, selectedGame, selectedGameNumber, selectedPlayer, selectedTeam, stats]);
+  }, [adminKey, apiUrl, resetStats, seasonId, selectedGameDraft, selectedGameKey]);
 
   const handleExportUpdates = useCallback(() => {
-    const updates = readQueuedUpdates();
+    const queuedGames = readQueuedGames();
 
-    if (updates.length === 0) {
-      setStatus({ type: "error", message: "No queued updates to export" });
+    if (queuedGames.length === 0) {
+      setStatus({ type: "error", message: "No queued games to export" });
       return;
     }
 
-    const blob = new Blob([JSON.stringify(updates, null, 2)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(queuedGames, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `cbtleague-updates-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `cbtleague-game-updates-${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
     URL.revokeObjectURL(url);
 
-    setStatus({ type: "success", message: "Exported queued updates as JSON." });
+    setStatus({ type: "success", message: "Exported queued games as JSON." });
   }, []);
 
   return (
     <div className="min-h-screen bg-[#060608] text-white selection:bg-orange-500/30">
       <div className="max-w-5xl mx-auto px-6 py-16">
-        <header className="mb-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <header className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-center">
           <div className="space-y-2">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest mb-4"
+              className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
             >
               <ArrowLeft className="h-3 w-3" /> Back to League
             </Link>
             <h1 className="text-5xl font-black italic uppercase tracking-tighter leading-none">
               Stat <span className="text-orange-500">Entry</span>
             </h1>
-            <p className="text-zinc-500 font-medium">Season 3 Official Box Score Management</p>
+            <p className="font-medium text-zinc-500">Season 3 game-by-game box score publishing</p>
           </div>
 
-          <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-4 flex items-center gap-4">
+          <div className="flex items-center gap-4 rounded-2xl border border-white/5 bg-zinc-900/50 p-4">
             <Calendar className="h-5 w-5 text-orange-500" />
             <div>
               <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Active Season</p>
@@ -319,8 +524,8 @@ export default function AdminPage() {
           </div>
         </header>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
-          <div className="space-y-3 lg:col-span-3 rounded-3xl border border-white/5 bg-zinc-900/30 p-6">
+        <div className="mb-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="space-y-3 rounded-3xl border border-white/5 bg-zinc-900/30 p-6 lg:col-span-3">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="ml-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Admin API URL</label>
@@ -331,7 +536,9 @@ export default function AdminPage() {
                   placeholder="https://your-admin-api.vercel.app/api/admin/update-stats"
                   className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50"
                 />
-                <p className="text-xs text-zinc-500">Use your Vercel endpoint here when you’re saving from the GitHub Pages site or from your phone.</p>
+                <p className="text-xs text-zinc-500">
+                  Use your Vercel endpoint here when you’re saving from GitHub Pages or from your phone.
+                </p>
               </div>
 
               <div className="space-y-2">
@@ -343,13 +550,15 @@ export default function AdminPage() {
                   placeholder="Optional bearer key"
                   className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50"
                 />
-                <p className="text-xs text-zinc-500">Stored only in this browser so you can reuse it on mobile without editing the site.</p>
+                <p className="text-xs text-zinc-500">
+                  Stored only in this browser so you can reuse it on mobile without editing the site.
+                </p>
               </div>
             </div>
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">1. Select Matchup</label>
+            <label className="ml-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">1. Select Matchup</label>
             <select
               value={selectedGameIdx}
               onChange={(e) => {
@@ -357,7 +566,7 @@ export default function AdminPage() {
                 setSelectedTeam("");
                 setSelectedPlayer("");
               }}
-              className="w-full bg-zinc-900/80 border border-white/5 rounded-2xl px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/50 appearance-none cursor-pointer"
+              className="w-full cursor-pointer appearance-none rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/50"
             >
               <option value="">Choose Game...</option>
               {games.map((game, index) => (
@@ -368,15 +577,15 @@ export default function AdminPage() {
             </select>
           </div>
 
-          <div className={cn("space-y-3 transition-opacity", !selectedGame && "opacity-30 pointer-events-none")}>
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">2. Select Team</label>
+          <div className={cn("space-y-3 transition-opacity", !selectedGame && "pointer-events-none opacity-30")}>
+            <label className="ml-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">2. Select Team</label>
             <select
               value={selectedTeam}
               onChange={(e) => {
                 setSelectedTeam(e.target.value);
                 setSelectedPlayer("");
               }}
-              className="w-full bg-zinc-900/80 border border-white/5 rounded-2xl px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+              className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/50"
             >
               <option value="">Choose Team...</option>
               {gameTeams.map((teamName) => (
@@ -387,12 +596,12 @@ export default function AdminPage() {
             </select>
           </div>
 
-          <div className={cn("space-y-3 transition-opacity", !selectedTeam && "opacity-30 pointer-events-none")}>
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">3. Select Player</label>
+          <div className={cn("space-y-3 transition-opacity", !selectedTeam && "pointer-events-none opacity-30")}>
+            <label className="ml-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">3. Select Player</label>
             <select
               value={selectedPlayer}
               onChange={(e) => setSelectedPlayer(e.target.value)}
-              className="w-full bg-zinc-900/80 border border-white/5 rounded-2xl px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+              className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/50"
             >
               <option value="">Choose Player...</option>
               {players.map((player) => (
@@ -404,36 +613,37 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {selectedPlayer && (
+        {selectedGame && (
           <div className="grid gap-12 lg:grid-cols-[1fr_300px] animate-in slide-in-from-bottom-8 duration-700">
-            <div className="bg-zinc-900/30 border border-white/5 rounded-[2.5rem] p-10 backdrop-blur-md">
-              <div className="flex items-center justify-between mb-10">
+            <div className="rounded-[2.5rem] border border-white/5 bg-zinc-900/30 p-10 backdrop-blur-md">
+              <div className="mb-10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-full bg-orange-600/20 flex items-center justify-center">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-600/20">
                     <User className="h-5 w-5 text-orange-500" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-black italic uppercase tracking-tighter">{selectedPlayer}</h2>
-                    <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">Entering Game Stats</p>
+                    <h2 className="text-2xl font-black italic uppercase tracking-tighter">
+                      {selectedPlayer || "Select a Player"}
+                    </h2>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Drafting Player Stats</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">Opponent</p>
-                  <p className="text-sm font-bold text-white uppercase italic">
-                    {selectedTeam === selectedGame?.homeTeam ? selectedGame?.awayTeam : selectedGame?.homeTeam}
-                  </p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Opponent</p>
+                  <p className="text-sm font-bold uppercase italic text-white">{selectedOpponent || "Choose Team"}</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
+              <div className={cn("grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4", !selectedPlayer && "opacity-40")}>
                 {(Object.entries(stats) as Array<[StatKey, number]>).map(([key, value]) => (
                   <div key={key} className="group">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 group-focus-within:text-orange-500 transition-colors block mb-3">
+                    <label className="mb-3 block text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-orange-500">
                       {key}
                     </label>
                     <input
                       type="text"
                       inputMode="numeric"
+                      disabled={!selectedPlayer}
                       value={value === 0 ? "" : value}
                       onChange={(e) => {
                         const val = e.target.value.replace(/[^0-9]/g, "");
@@ -442,10 +652,11 @@ export default function AdminPage() {
                       onFocus={(e) => e.target.select()}
                       placeholder="0"
                       className={cn(
-                        "w-full bg-transparent border-b-2 text-3xl font-black italic tracking-tighter transition-all focus:outline-none p-0 pb-2 placeholder:text-zinc-800",
+                        "w-full border-b-2 bg-transparent p-0 pb-2 text-3xl font-black italic tracking-tighter transition-all placeholder:text-zinc-800 focus:outline-none",
                         (key === "FieldGoalsMade" && errors.fg) || (key === "ThreesAttempts" && errors.impossibleThree)
                           ? "border-red-500/50 text-red-500"
-                          : "border-white/10 focus:border-orange-600 text-white"
+                          : "border-white/10 text-white focus:border-orange-600",
+                        !selectedPlayer && "cursor-not-allowed"
                       )}
                     />
                   </div>
@@ -454,19 +665,19 @@ export default function AdminPage() {
             </div>
 
             <div className="space-y-6">
-              <div className="bg-zinc-900/50 border border-white/5 rounded-3xl p-8 sticky top-12">
-                <h3 className="text-xs font-black uppercase tracking-widest text-zinc-500 mb-6">Validation Summary</h3>
+              <div className="sticky top-12 rounded-3xl border border-white/5 bg-zinc-900/50 p-8">
+                <h3 className="mb-6 text-xs font-black uppercase tracking-widest text-zinc-500">Validation Summary</h3>
 
                 {hasErrors ? (
-                  <div className="flex items-start gap-4 text-red-400 bg-red-400/5 p-4 rounded-2xl border border-red-500/20 mb-8">
-                    <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
+                  <div className="mb-8 flex items-start gap-4 rounded-2xl border border-red-500/20 bg-red-400/5 p-4 text-red-400">
+                    <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
                     <p className="text-xs font-bold leading-relaxed">
                       Math Error: You have more 3P attempts than total Field Goal attempts. Check your data.
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-center justify-between text-zinc-500 font-bold text-xs uppercase italic">
+                  <div className="mb-8 space-y-4">
+                    <div className="flex items-center justify-between text-xs font-bold uppercase italic text-zinc-500">
                       <span>Accuracy Check</span>
                       <CheckCircle2 className="h-4 w-4 text-green-500" />
                     </div>
@@ -477,7 +688,7 @@ export default function AdminPage() {
                 {status.type && (
                   <div
                     className={cn(
-                      "mb-6 p-4 rounded-xl text-xs font-black uppercase tracking-widest text-center animate-in zoom-in-95",
+                      "mb-6 rounded-xl p-4 text-center text-xs font-black uppercase tracking-widest animate-in zoom-in-95",
                       status.type === "success" ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
                     )}
                   >
@@ -485,31 +696,83 @@ export default function AdminPage() {
                   </div>
                 )}
 
+                <div className="mb-4 rounded-2xl border border-white/5 bg-white/5 p-4">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Current Draft</p>
+                  <p className="mt-2 text-2xl font-black text-white">
+                    {draftedPlayers.length} player{draftedPlayers.length === 1 ? "" : "s"}
+                  </p>
+                  <div className="mt-4 space-y-2 text-xs">
+                    {draftedPlayers.length === 0 ? (
+                      <p className="text-zinc-500">No player entries drafted for this matchup yet.</p>
+                    ) : (
+                      draftedPlayers.map((entry) => (
+                        <div
+                          key={`${entry.teamName}-${entry.playerName}`}
+                          className="flex items-center justify-between gap-3 rounded-xl border border-white/5 bg-zinc-950/60 px-3 py-2"
+                        >
+                          <div>
+                            <p className="font-bold text-white">{entry.playerName}</p>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{entry.teamName}</p>
+                          </div>
+                          <p className="text-sm font-black text-orange-500">{entry.gameLog.Points} PTS</p>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+
                 <button
-                  onClick={handleSave}
-                  disabled={hasErrors || isSaving}
+                  onClick={handleStagePlayer}
+                  disabled={hasErrors || !selectedPlayer || isSaving}
                   className={cn(
-                    "w-full py-6 rounded-2xl font-black uppercase italic tracking-tighter text-xl transition-all flex items-center justify-center gap-3",
-                    hasErrors || isSaving
-                      ? "bg-zinc-800 text-zinc-600 cursor-not-allowed"
-                      : "bg-orange-600 text-white hover:bg-orange-700 shadow-[0_20px_40px_-15px_rgba(234,88,12,0.4)] active:scale-95"
+                    "flex w-full items-center justify-center gap-3 rounded-2xl py-4 text-sm font-black uppercase tracking-widest transition-all",
+                    hasErrors || !selectedPlayer || isSaving
+                      ? "cursor-not-allowed bg-zinc-800 text-zinc-600"
+                      : "bg-white/10 text-white hover:bg-white/15 active:scale-95"
                   )}
                 >
-                  {isSaving ? "Saving..." : "Save Stats"}
+                  {selectedDraftEntry ? "Update Drafted Player" : "Add Player To Draft"}
+                  <Save className="h-4 w-4" />
+                </button>
+
+                <button
+                  onClick={handleRemoveDraftedPlayer}
+                  disabled={!selectedDraftEntry || isSaving}
+                  className={cn(
+                    "mt-3 w-full rounded-2xl border py-3 text-xs font-black uppercase tracking-widest transition-all",
+                    !selectedDraftEntry || isSaving
+                      ? "cursor-not-allowed border-white/5 bg-zinc-900 text-zinc-600"
+                      : "border-white/10 bg-transparent text-zinc-300 hover:bg-white/5"
+                  )}
+                >
+                  Remove Selected Player From Draft
+                </button>
+
+                <button
+                  onClick={handlePublishGame}
+                  disabled={draftedPlayers.length === 0 || isSaving}
+                  className={cn(
+                    "mt-3 flex w-full items-center justify-center gap-3 rounded-2xl py-6 text-xl font-black uppercase italic tracking-tighter transition-all",
+                    draftedPlayers.length === 0 || isSaving
+                      ? "cursor-not-allowed bg-zinc-800 text-zinc-600"
+                      : "bg-orange-600 text-white shadow-[0_20px_40px_-15px_rgba(234,88,12,0.4)] hover:bg-orange-700 active:scale-95"
+                  )}
+                >
+                  {isSaving ? "Publishing..." : `Publish Game (${draftedPlayers.length})`}
                   <Save className="h-5 w-5" />
                 </button>
 
                 <button
                   onClick={handleExportUpdates}
-                  className="mt-3 w-full py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3 border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10"
+                  className="mt-3 flex w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 py-4 text-xs font-black uppercase tracking-widest text-zinc-300 transition-all hover:bg-white/10"
                 >
-                  Export Queued Updates ({queuedCount})
+                  Export Queued Games ({queuedCount})
                   <Download className="h-4 w-4" />
                 </button>
 
-                <p className="mt-6 text-[10px] text-zinc-700 text-center font-bold uppercase leading-relaxed">
-                  Primary mode: save directly to GitHub via API. <br />
-                  If API is unavailable, updates are queued in your browser for export.
+                <p className="mt-6 text-center text-[10px] font-bold uppercase leading-relaxed text-zinc-700">
+                  Draft each player first, then publish one full matchup to GitHub. <br />
+                  If API is unavailable, the whole game is queued in your browser for export.
                 </p>
               </div>
             </div>
