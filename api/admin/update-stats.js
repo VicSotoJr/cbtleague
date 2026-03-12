@@ -1,86 +1,9 @@
-import type {
-  AdminPlayerGameUpdate,
-  AdminStatsUpdatePayload,
-  AdminStatsUpdateResponse,
-} from "../../src/types/admin-api";
-import type { BaseStats, LeagueData, PlayerStat } from "../../src/types/league";
-
 const COMMIT_MESSAGE = "Update stats via admin panel";
 const GITHUB_API_VERSION = "2022-11-28";
 const DEFAULT_BRANCH = "main";
 const DEFAULT_STATS_PATH = "data/stats.json";
 const FALLBACK_STATS_PATH = "src/data/data.json";
 const SUMMARY_PATH = "src/data/league-summary.json";
-const STAT_KEYS: Array<keyof BaseStats> = [
-  "Points",
-  "FieldGoalsMade",
-  "FieldGoalAttempts",
-  "ThreesMade",
-  "ThreesAttempts",
-  "FreeThrowsMade",
-  "FreeThrowsAttempts",
-  "Rebounds",
-  "Offrebounds",
-  "Defrebounds",
-  "Assists",
-  "Blocks",
-  "Steals",
-  "Turnovers",
-  "PersonalFouls",
-];
-
-interface GitHubContentResponse {
-  sha: string;
-  content: string;
-  encoding: string;
-  path: string;
-}
-
-interface RepositoryConfig {
-  owner: string;
-  repo: string;
-  branch: string;
-  statsPathCandidates: string[];
-}
-
-interface GitHubRefResponse {
-  object: {
-    sha: string;
-  };
-}
-
-interface GitHubCommitResponse {
-  tree: {
-    sha: string;
-  };
-}
-
-type PlayerUpdateResult =
-  | { ok: true }
-  | { ok: false; status: number; message: string; details?: string };
-
-type LegacyAdminStatsUpdatePayload = {
-  seasonId: string;
-  teamName: string;
-  playerName: string;
-  opponent: string;
-  gameNumber: string;
-  gameLog: BaseStats;
-};
-
-type ApiRequest = {
-  method?: string;
-  headers: Record<string, string | string[] | undefined>;
-  body?: unknown;
-};
-
-type ApiResponse<T> = {
-  setHeader(name: string, value: string): void;
-  status(code: number): ApiResponse<T>;
-  json(body: T): void;
-  end(): void;
-};
-
 const BASE_STATS_TEMPLATE = {
   Points: 0,
   FieldGoalsMade: 0,
@@ -98,27 +21,36 @@ const BASE_STATS_TEMPLATE = {
   Turnovers: 0,
   PersonalFouls: 0,
 };
+const STAT_KEYS = Object.keys(BASE_STATS_TEMPLATE);
 
-const BASE_STAT_KEYS = Object.keys(BASE_STATS_TEMPLATE) as Array<keyof typeof BASE_STATS_TEMPLATE>;
-
-function isRecord(value: unknown): value is Record<string, unknown> {
+function isRecord(value) {
   return typeof value === "object" && value !== null;
 }
 
-function isNonEmptyString(value: unknown): value is string {
+function isNonEmptyString(value) {
   return typeof value === "string" && value.trim().length > 0;
 }
 
-function isFiniteNumber(value: unknown): value is number {
+function isFiniteNumber(value) {
   return typeof value === "number" && Number.isFinite(value);
 }
 
-function isBaseStats(value: unknown): value is BaseStats {
+function isBaseStats(value) {
   if (!isRecord(value)) return false;
   return STAT_KEYS.every((key) => isFiniteNumber(value[key]));
 }
 
-function isAdminStatsUpdatePayload(value: unknown): value is AdminStatsUpdatePayload {
+function isAdminPlayerGameUpdate(value) {
+  if (!isRecord(value)) return false;
+  return (
+    isNonEmptyString(value.teamName) &&
+    isNonEmptyString(value.playerName) &&
+    isNonEmptyString(value.opponent) &&
+    isBaseStats(value.gameLog)
+  );
+}
+
+function isAdminStatsUpdatePayload(value) {
   if (!isRecord(value)) return false;
   return (
     isNonEmptyString(value.seasonId) &&
@@ -129,17 +61,7 @@ function isAdminStatsUpdatePayload(value: unknown): value is AdminStatsUpdatePay
   );
 }
 
-function isAdminPlayerGameUpdate(value: unknown): value is AdminPlayerGameUpdate {
-  if (!isRecord(value)) return false;
-  return (
-    isNonEmptyString(value.teamName) &&
-    isNonEmptyString(value.playerName) &&
-    isNonEmptyString(value.opponent) &&
-    isBaseStats(value.gameLog)
-  );
-}
-
-function isLegacyAdminStatsUpdatePayload(value: unknown): value is LegacyAdminStatsUpdatePayload {
+function isLegacyAdminStatsUpdatePayload(value) {
   if (!isRecord(value)) return false;
   return (
     isNonEmptyString(value.seasonId) &&
@@ -151,7 +73,7 @@ function isLegacyAdminStatsUpdatePayload(value: unknown): value is LegacyAdminSt
   );
 }
 
-function isGitHubContentResponse(value: unknown): value is GitHubContentResponse {
+function isGitHubContentResponse(value) {
   if (!isRecord(value)) return false;
   return (
     typeof value.sha === "string" &&
@@ -161,51 +83,51 @@ function isGitHubContentResponse(value: unknown): value is GitHubContentResponse
   );
 }
 
-function isGitHubRefResponse(value: unknown): value is GitHubRefResponse {
+function isGitHubRefResponse(value) {
   return isRecord(value) && isRecord(value.object) && typeof value.object.sha === "string";
 }
 
-function isGitHubCommitResponse(value: unknown): value is GitHubCommitResponse {
+function isGitHubCommitResponse(value) {
   return isRecord(value) && isRecord(value.tree) && typeof value.tree.sha === "string";
 }
 
-function isShaResponse(value: unknown): value is { sha: string } {
+function isShaResponse(value) {
   return isRecord(value) && typeof value.sha === "string";
 }
 
-function setCorsHeaders(res: ApiResponse<AdminStatsUpdateResponse>): void {
+function setCorsHeaders(res) {
   const allowedOrigin = process.env.ADMIN_ALLOWED_ORIGIN ?? "*";
   res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
   res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 }
 
-function readBody(req: ApiRequest): unknown {
+function readBody(req) {
   if (typeof req.body === "string") {
-    return JSON.parse(req.body) as unknown;
+    return JSON.parse(req.body);
   }
   return req.body;
 }
 
-async function readJsonResponse(response: Response): Promise<unknown> {
+async function readJsonResponse(response) {
   const raw = await response.text();
   if (!raw) return {};
 
   try {
-    return JSON.parse(raw) as unknown;
+    return JSON.parse(raw);
   } catch {
     return { message: raw };
   }
 }
 
-function getGitHubErrorMessage(value: unknown): string {
+function getGitHubErrorMessage(value) {
   if (isRecord(value) && typeof value.message === "string") {
     return value.message;
   }
   return "Unknown GitHub API error";
 }
 
-function getErrorMessage(error: unknown): string {
+function getErrorMessage(error) {
   if (error instanceof Error) {
     return error.message;
   }
@@ -217,29 +139,28 @@ function createBaseStats() {
   return { ...BASE_STATS_TEMPLATE };
 }
 
-function toSafeNumber(value: unknown) {
+function toSafeNumber(value) {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
 }
 
-function normalizeShotTotals(base: typeof BASE_STATS_TEMPLATE) {
+function normalizeShotTotals(base) {
   const pointsFromInclusive = (base.FieldGoalsMade - base.ThreesMade) * 2 + base.ThreesMade * 3;
   const pointsFromSeparate = base.FieldGoalsMade * 2 + base.ThreesMade * 3;
   const isInclusive = Math.abs(pointsFromInclusive - base.Points) <= Math.abs(pointsFromSeparate - base.Points);
 
   const totalFGM = isInclusive ? base.FieldGoalsMade : base.FieldGoalsMade + base.ThreesMade;
   const totalFGA = isInclusive ? base.FieldGoalAttempts : base.FieldGoalAttempts + base.ThreesAttempts;
-
   const twoPM = Math.max(0, totalFGM - base.ThreesMade);
   const twoPA = Math.max(twoPM, totalFGA - base.ThreesAttempts);
 
   return { totalFGM, totalFGA, twoPM, twoPA };
 }
 
-function sumPlayerStats(player: { GamesPlayed?: number; stats?: PlayerStat[] }) {
+function sumPlayerStats(player) {
   const totals = createBaseStats();
 
   for (const game of player.stats ?? []) {
-    for (const key of BASE_STAT_KEYS) {
+    for (const key of STAT_KEYS) {
       totals[key] += toSafeNumber(game[key]);
     }
   }
@@ -247,7 +168,7 @@ function sumPlayerStats(player: { GamesPlayed?: number; stats?: PlayerStat[] }) 
   return totals;
 }
 
-function aggregatePlayerStats(player: { GamesPlayed?: number; stats?: PlayerStat[] }) {
+function aggregatePlayerStats(player) {
   const totals = sumPlayerStats(player);
   const gamesPlayedRaw = Math.max(player.GamesPlayed ?? 0, 0);
   const gamesPlayedForRate = Math.max(gamesPlayedRaw, 1);
@@ -287,12 +208,12 @@ function aggregatePlayerStats(player: { GamesPlayed?: number; stats?: PlayerStat
   };
 }
 
-function aggregateTeamStats(team: { roster: Array<{ GamesPlayed?: number; stats?: PlayerStat[] }> }) {
+function aggregateTeamStats(team) {
   const totals = createBaseStats();
 
   for (const player of team.roster) {
     const aggregatedPlayer = aggregatePlayerStats(player);
-    for (const key of BASE_STAT_KEYS) {
+    for (const key of STAT_KEYS) {
       totals[key] += aggregatedPlayer[key];
     }
   }
@@ -312,13 +233,13 @@ function aggregateTeamStats(team: { roster: Array<{ GamesPlayed?: number; stats?
   };
 }
 
-function buildLeagueSummary(data: LeagueData) {
+function buildLeagueSummary(data) {
   const summary = {
     metadata: {
       generatedAt: new Date().toISOString(),
       source: "src/data/data.json",
     },
-    seasons: {} as Record<string, unknown>,
+    seasons: {},
   };
 
   for (const [seasonId, season] of Object.entries(data.seasons ?? {})) {
@@ -327,7 +248,7 @@ function buildLeagueSummary(data: LeagueData) {
       wins: team.wins,
       loss: team.loss,
       gamesPlayed: team.gamesPlayed,
-      color: "color" in team && typeof (team as { color?: unknown }).color === "string" ? (team as { color?: string }).color ?? null : null,
+      color: "color" in team && typeof team.color === "string" ? team.color ?? null : null,
       playerCount: Array.isArray(team.roster) ? team.roster.length : 0,
     }));
 
@@ -336,7 +257,7 @@ function buildLeagueSummary(data: LeagueData) {
       wins: team.wins,
       loss: team.loss,
       gamesPlayed: team.gamesPlayed,
-      color: "color" in team && typeof (team as { color?: unknown }).color === "string" ? (team as { color?: string }).color ?? null : null,
+      color: "color" in team && typeof team.color === "string" ? team.color ?? null : null,
       playerCount: Array.isArray(team.roster) ? team.roster.length : 0,
       aggregated: aggregateTeamStats(team),
     }));
@@ -367,15 +288,13 @@ function buildLeagueSummary(data: LeagueData) {
   return summary;
 }
 
-function getRepositoryConfig(): RepositoryConfig | null {
+function getRepositoryConfig() {
   const owner = process.env.GITHUB_REPO_OWNER ?? process.env.VERCEL_GIT_REPO_OWNER;
   const repo = process.env.GITHUB_REPO_NAME ?? process.env.VERCEL_GIT_REPO_SLUG;
   if (!owner || !repo) return null;
 
   const configuredStatsPath = process.env.GITHUB_STATS_PATH;
-  const statsPathCandidates = configuredStatsPath
-    ? [configuredStatsPath]
-    : [DEFAULT_STATS_PATH, FALLBACK_STATS_PATH];
+  const statsPathCandidates = configuredStatsPath ? [configuredStatsPath] : [DEFAULT_STATS_PATH, FALLBACK_STATS_PATH];
 
   return {
     owner,
@@ -385,14 +304,14 @@ function getRepositoryConfig(): RepositoryConfig | null {
   };
 }
 
-function encodeGitHubPath(path: string): string {
+function encodeGitHubPath(path) {
   return path
     .split("/")
     .map((segment) => encodeURIComponent(segment))
     .join("/");
 }
 
-function toGameNumber(value: string): string | number {
+function toGameNumber(value) {
   const trimmed = value.trim();
   const parsed = Number.parseInt(trimmed, 10);
   if (Number.isInteger(parsed) && `${parsed}` === trimmed) {
@@ -401,24 +320,19 @@ function toGameNumber(value: string): string | number {
   return trimmed;
 }
 
-function hasRecordedOpponent(stat: PlayerStat): boolean {
+function hasRecordedOpponent(stat) {
   return typeof stat.opponent === "string" && stat.opponent.trim().length > 0;
 }
 
-function hasRecordedStats(stat: PlayerStat): boolean {
+function hasRecordedStats(stat) {
   return STAT_KEYS.some((key) => stat[key] > 0);
 }
 
-function getCompletedGamesPlayed(stats: PlayerStat[]): number {
+function getCompletedGamesPlayed(stats) {
   return stats.filter((stat) => hasRecordedOpponent(stat) || hasRecordedStats(stat)).length;
 }
 
-function applyPlayerUpdate(
-  leagueData: LeagueData,
-  seasonId: string,
-  gameNumber: string,
-  update: AdminPlayerGameUpdate
-): PlayerUpdateResult {
+function applyPlayerUpdate(leagueData, seasonId, gameNumber, update) {
   const season = leagueData.seasons[seasonId];
   if (!season) {
     return { ok: false, status: 404, message: "Season not found" };
@@ -434,7 +348,7 @@ function applyPlayerUpdate(
     return { ok: false, status: 404, message: "Player not found" };
   }
 
-  const nextStat: PlayerStat = {
+  const nextStat = {
     game_number: toGameNumber(gameNumber),
     opponent: update.opponent.trim(),
     ...update.gameLog,
@@ -459,7 +373,7 @@ function applyPlayerUpdate(
   return { ok: true };
 }
 
-function normalizeAdminStatsPayload(payload: unknown): AdminStatsUpdatePayload | null {
+function normalizeAdminStatsPayload(payload) {
   if (isAdminStatsUpdatePayload(payload)) {
     return payload;
   }
@@ -482,7 +396,7 @@ function normalizeAdminStatsPayload(payload: unknown): AdminStatsUpdatePayload |
   return null;
 }
 
-function getAdminBearerToken(req: ApiRequest): string | null {
+function getAdminBearerToken(req) {
   const rawHeader = req.headers.authorization;
   const header = Array.isArray(rawHeader) ? rawHeader[0] : rawHeader;
   if (!header) {
@@ -497,11 +411,7 @@ function getAdminBearerToken(req: ApiRequest): string | null {
   return token.trim();
 }
 
-async function createGitHubBlob(
-  headers: Record<string, string>,
-  repository: RepositoryConfig,
-  content: string
-): Promise<string> {
+async function createGitHubBlob(headers, repository, content) {
   const response = await fetch(
     `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(repository.repo)}/git/blobs`,
     {
@@ -525,10 +435,7 @@ async function createGitHubBlob(
   return payload.sha;
 }
 
-export default async function handler(
-  req: ApiRequest,
-  res: ApiResponse<AdminStatsUpdateResponse>
-): Promise<void> {
+export default async function handler(req, res) {
   setCorsHeaders(res);
 
   if (req.method === "OPTIONS") {
@@ -566,7 +473,7 @@ export default async function handler(
     return;
   }
 
-  let payload: unknown;
+  let payload;
   try {
     payload = readBody(req);
   } catch {
@@ -575,7 +482,6 @@ export default async function handler(
   }
 
   const normalizedPayload = normalizeAdminStatsPayload(payload);
-
   if (!normalizedPayload) {
     res.status(400).json({ ok: false, message: "Invalid payload shape." });
     return;
@@ -589,7 +495,7 @@ export default async function handler(
   };
 
   let selectedStatsPath = "";
-  let filePayload: GitHubContentResponse | null = null;
+  let filePayload = null;
   let fileErrorStatus = 500;
   const fileErrorMessage = "Failed to fetch stats file from GitHub.";
   let fileErrorDetails = "Unknown GitHub API error";
@@ -625,10 +531,10 @@ export default async function handler(
     return;
   }
 
-  let leagueData: LeagueData;
+  let leagueData;
   try {
     const decoded = Buffer.from(filePayload.content.replace(/\n/g, ""), "base64").toString("utf8");
-    leagueData = JSON.parse(decoded) as LeagueData;
+    leagueData = JSON.parse(decoded);
   } catch {
     res.status(500).json({ ok: false, message: "Failed to decode or parse stats JSON content." });
     return;
@@ -641,6 +547,7 @@ export default async function handler(
       normalizedPayload.gameNumber,
       update
     );
+
     if (!updateResult.ok) {
       res.status(updateResult.status).json({
         ok: false,
