@@ -39,7 +39,7 @@ export default function TeamsClient() {
             <div className="mb-12 flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
                 <div>
                     <h1 className="text-4xl font-black tracking-tighter text-white md:text-6xl uppercase italic leading-none">
-                        League <span className="text-orange-500">Teams</span>
+                        League <span className="text-copper-500">Teams</span>
                     </h1>
                     <p className="mt-4 text-zinc-500 font-medium max-w-lg">
                         Explore the rosters and achievements of every team across the CBT history.
@@ -64,7 +64,7 @@ export default function TeamsClient() {
                         <Link
                             href={`/teams/${encodeURIComponent(team.Team.trim())}/?season=${seasonId}`}
                             prefetch={false}
-                            className="group relative flex flex-col items-center overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-950 p-8 text-center transition-all hover:border-orange-500/30 hover:bg-zinc-900 active:scale-95"
+                            className="group relative flex flex-col items-center overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-950 p-8 text-center transition-all hover:border-copper-500/30 hover:bg-zinc-900 active:scale-95"
                         >
                             {champion?.teamName === team.Team && (
                                 <div className="absolute right-4 top-4 z-20 rounded-full border border-amber-400/30 bg-zinc-950/90 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-amber-300 shadow-lg backdrop-blur-sm">
@@ -73,7 +73,7 @@ export default function TeamsClient() {
                             )}
 
                             <div className="mb-8 relative">
-                                <div className="absolute inset-0 bg-orange-500/20 blur-2xl rounded-full scale-0 group-hover:scale-100 transition-transform duration-500" />
+                                <div className="absolute inset-0 bg-copper-500/20 blur-2xl rounded-full scale-0 group-hover:scale-100 transition-transform duration-500" />
                                 <TeamLogo
                                     teamName={team.Team}
                                     size={140}
@@ -81,7 +81,7 @@ export default function TeamsClient() {
                                 />
                             </div>
 
-                            <h3 className="text-2xl font-black text-white group-hover:text-orange-500 transition-colors uppercase italic tracking-tighter">{team.Team}</h3>
+                            <h3 className="text-2xl font-black text-white group-hover:text-copper-500 transition-colors uppercase italic tracking-tighter">{team.Team}</h3>
 
                             <div className="mt-4 grid grid-cols-2 w-full gap-4 pt-6 border-t border-white/5">
                                 <div className="text-left">
@@ -90,11 +90,11 @@ export default function TeamsClient() {
                                 </div>
                                 <div className="text-right">
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-1">Record</p>
-                                    <p className="text-lg font-bold text-orange-500 leading-none">{team.wins}-{team.loss}</p>
+                                    <p className="text-lg font-bold text-copper-500 leading-none">{team.wins}-{team.loss}</p>
                                 </div>
                             </div>
 
-                            <div className="mt-8 flex h-10 w-full items-center justify-center rounded-xl bg-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 group-hover:bg-orange-600 group-hover:text-white transition-all">
+                            <div className="mt-8 flex h-10 w-full items-center justify-center rounded-xl bg-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 group-hover:bg-copper-600 group-hover:text-white transition-all">
                                 VIEW ROSTER
                             </div>
                         </Link>

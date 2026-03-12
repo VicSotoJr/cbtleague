@@ -88,7 +88,7 @@ export default function Navbar() {
                                     {isActive && (
                                         <motion.div
                                             layoutId="active-pill"
-                                            className="absolute inset-0 z-0 rounded-lg bg-orange-600/10 border border-orange-500/20"
+                                            className="absolute inset-0 z-0 rounded-lg bg-copper-600/10 border border-copper-500/20"
                                             transition={springConfig}
                                         />
                                     )}
@@ -102,7 +102,7 @@ export default function Navbar() {
                                 type="button"
                                 className={cn(
                                     "flex items-center gap-1 text-sm font-bold transition-colors hover:text-white uppercase tracking-tight",
-                                    pathname.includes("/stats") ? "text-orange-500" : "text-zinc-500"
+                                    pathname.includes("/stats") ? "text-copper-500" : "text-zinc-500"
                                 )}
                                 aria-expanded={statsOpen}
                                 aria-haspopup="menu"
@@ -127,7 +127,7 @@ export default function Navbar() {
                                                     key={item.name}
                                                     href={`${item.href}/`}
                                                     prefetch={false}
-                                                    className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-xs font-bold text-zinc-400 hover:bg-orange-600/10 hover:text-orange-500 transition-all uppercase tracking-widest"
+                                                    className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-xs font-bold text-zinc-400 hover:bg-copper-600/10 hover:text-copper-500 transition-all uppercase tracking-widest"
                                                 >
                                                     {item.name}
                                                 </Link>
@@ -172,7 +172,7 @@ export default function Navbar() {
                                         prefetch={false}
                                         className={cn(
                                             "flex items-center gap-4 rounded-2xl px-4 py-4 text-xl font-black uppercase italic tracking-tighter transition-all",
-                                            normalizedPathname === item.href ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20" : "text-zinc-500 hover:text-white hover:bg-white/5"
+                                            normalizedPathname === item.href ? "bg-copper-600 text-white shadow-lg shadow-copper-600/20" : "text-zinc-500 hover:text-white hover:bg-white/5"
                                         )}
                                         onClick={() => setIsOpen(false)}
                                     >
@@ -190,7 +190,7 @@ export default function Navbar() {
                                             key={item.name}
                                             href={`${item.href}/`}
                                             prefetch={false}
-                                            className="flex flex-col gap-1 rounded-2xl bg-white/5 p-4 text-sm font-bold text-zinc-400 hover:text-orange-500 transition-all uppercase tracking-tight"
+                                            className="flex flex-col gap-1 rounded-2xl bg-white/5 p-4 text-sm font-bold text-zinc-400 hover:text-copper-500 transition-all uppercase tracking-tight"
                                             onClick={() => setIsOpen(false)}
                                         >
                                             <BarChart3 className="h-4 w-4" />

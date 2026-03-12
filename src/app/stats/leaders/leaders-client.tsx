@@ -32,8 +32,8 @@ const leaderCategories: Array<{
   {
     group: "Scoring & Performance",
     items: [
-      { key: "PPG", label: "Points Per Game", color: "from-orange-500 to-orange-700" },
-      { key: "Points", label: "Total Points", color: "from-orange-600 to-orange-800" },
+      { key: "PPG", label: "Points Per Game", color: "from-copper-500 to-copper-700" },
+      { key: "Points", label: "Total Points", color: "from-copper-600 to-copper-800" },
       { key: "EFF", label: "Efficiency Rating", color: "from-pink-500 to-pink-700" },
     ],
   },
@@ -42,8 +42,8 @@ const leaderCategories: Array<{
     items: [
       { key: "FG%", label: "Field Goal %", color: "from-red-500 to-red-700" },
       { key: "2P%", label: "2-Point %", color: "from-red-600 to-red-800" },
-      { key: "3P%", label: "3-Point %", color: "from-orange-500 to-orange-700" },
-      { key: "FT%", label: "Free Throw %", color: "from-orange-600 to-orange-800" },
+      { key: "3P%", label: "3-Point %", color: "from-copper-500 to-copper-700" },
+      { key: "FT%", label: "Free Throw %", color: "from-copper-600 to-copper-800" },
     ],
   },
   {
@@ -96,7 +96,7 @@ export default function LeadersClient() {
       <div className="mb-16 flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
         <div className="space-y-4">
           <h1 className="text-5xl font-black tracking-tighter text-white md:text-7xl uppercase italic leading-none">
-            League <span className="text-orange-500">Leaders</span>
+            League <span className="text-copper-500">Leaders</span>
           </h1>
           <p className="max-w-[500px] text-zinc-500 font-medium">
             Real-time statistical dominance. The elite performers defining the current CBT generation.
@@ -126,7 +126,7 @@ export default function LeadersClient() {
                   <div key={category.key} className="space-y-6">
                     <div className="flex items-center justify-between border-b border-white/5 pb-4">
                       <h3 className="text-sm font-black text-zinc-600 uppercase tracking-[0.2em]">{category.label}</h3>
-                      <div className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-copper-500" />
                     </div>
 
                     <div className="space-y-2">
@@ -141,7 +141,7 @@ export default function LeadersClient() {
                             className={cn(
                               "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg font-black italic transition-all",
                               i === 0
-                                ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20"
+                                ? "bg-copper-600 text-white shadow-lg shadow-copper-600/20"
                                 : "bg-white/5 text-zinc-700 group-hover:text-zinc-500"
                             )}
                           >
@@ -156,7 +156,7 @@ export default function LeadersClient() {
                           />
 
                           <div className="flex-1 overflow-hidden">
-                            <h3 className="font-bold text-white group-hover:text-orange-500 transition-colors uppercase tracking-tight text-sm truncate">
+                            <h3 className="font-bold text-white group-hover:text-copper-500 transition-colors uppercase tracking-tight text-sm truncate">
                               {entry.player.name}
                             </h3>
                             <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest truncate">{entry.teamName}</p>
@@ -166,7 +166,7 @@ export default function LeadersClient() {
                             <span
                               className={cn(
                                 "text-2xl font-black italic tracking-tighter font-mono",
-                                i === 0 ? "text-orange-500" : "text-white"
+                                i === 0 ? "text-copper-500" : "text-white"
                               )}
                             >
                               {entry.aggregated[category.key]}

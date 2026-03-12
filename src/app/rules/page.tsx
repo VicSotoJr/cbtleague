@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const rules = [
     {
-        icon: <AlertTriangle className="h-6 w-6 text-orange-500" />,
+        icon: <AlertTriangle className="h-6 w-6 text-copper-500" />,
         title: "Punctuality",
         desc: "Please arrive to games on time. (mandatory). There will be a 15 min grace period but the games will start approximately at 5:45, 6:45, and 7:45 if we have enough to start the game. The team present gets an automatic win. The refs will leave if you don’t show up on time."
     },
@@ -59,7 +59,7 @@ const rules = [
         desc: "Another reminder, this a no nonsense league. If you continue to be a problem, you will be kicked out of the league without getting your money back. I’m very, very serious. Don’t ruin it for everyone else."
     },
     {
-        icon: <AlertTriangle className="h-6 w-6 text-orange-500" />,
+        icon: <AlertTriangle className="h-6 w-6 text-copper-500" />,
         title: "Forfeits",
         desc: "If you text or call me that your team has to forfeit the game, then that’s an automatic Loss. No turning back."
     },
@@ -108,9 +108,9 @@ export default function RulesPage() {
         <div className="container mx-auto px-4 py-12 md:px-6">
             <div className="mb-12 max-w-3xl">
                 <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl uppercase">
-                    CBT <span className="text-orange-500">Rule Book</span>
+                    CBT <span className="text-copper-500">Rule Book</span>
                 </h1>
-                <p className="mt-6 text-lg text-zinc-400 leading-relaxed border-l-4 border-orange-500 pl-4 bg-orange-500/5 p-4 rounded-r-lg">
+                <p className="mt-6 text-lg text-zinc-400 leading-relaxed border-l-4 border-copper-500 pl-4 bg-copper-500/5 p-4 rounded-r-lg">
                     Hey guys. Welcome to the CBT League. There are a few things I want to
                     go over with each and every team. I will do my best to make sure this
                     league runs smoothly and no issues happen but it’s your responsibility
@@ -129,13 +129,13 @@ export default function RulesPage() {
 
                     <div className="space-y-4">
                         {rules.map((rule, idx) => (
-                            <div key={idx} className="group relative flex gap-6 rounded-2xl border border-white/5 bg-zinc-900/50 p-6 transition-all hover:border-orange-500/30 hover:bg-zinc-900">
-                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/5 group-hover:bg-orange-500/10 transition-colors">
+                            <div key={idx} className="group relative flex gap-6 rounded-2xl border border-white/5 bg-zinc-900/50 p-6 transition-all hover:border-copper-500/30 hover:bg-zinc-900">
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/5 group-hover:bg-copper-500/10 transition-colors">
                                     {rule.icon}
                                 </div>
                                 <div>
                                     <h3 className="mb-1 text-lg font-bold text-white tracking-tight uppercase">
-                                        Rule {idx + 1}: <span className="text-orange-500">{rule.title}</span>
+                                        Rule {idx + 1}: <span className="text-copper-500">{rule.title}</span>
                                     </h3>
                                     <p className="text-sm font-medium leading-relaxed text-zinc-400">
                                         {rule.desc}
@@ -154,12 +154,12 @@ export default function RulesPage() {
                     </div>
 
                     <div className="rounded-3xl border border-white/10 bg-zinc-950 p-8 shadow-2xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/5 rounded-full blur-3xl" />
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-copper-600/5 rounded-full blur-3xl" />
 
                         <ul className="space-y-6 relative z-10">
                             {policies.map((policy, idx) => (
                                 <li key={idx} className="flex items-start gap-4">
-                                    <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)]" />
+                                    <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-copper-500 shadow-[0_0_10px_rgba(184,103,58,0.5)]" />
                                     <p className="text-sm font-medium leading-relaxed text-zinc-300">
                                         {policy}
                                     </p>

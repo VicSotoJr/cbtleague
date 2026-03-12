@@ -17,7 +17,7 @@ function getScoreTone(score: string | number | undefined, opponentScore: string 
     }
 
     if (current > opponent) {
-        return "text-orange-500";
+        return "text-copper-500";
     }
 
     if (current < opponent) {
@@ -44,7 +44,7 @@ function TeamNameDisplay({
         <Link
             href={href}
             prefetch={false}
-            className="line-clamp-1 text-lg font-bold text-white transition-colors hover:text-orange-500"
+            className="line-clamp-1 text-lg font-bold text-white transition-colors hover:text-copper-500"
         >
             {label}
         </Link>
@@ -64,7 +64,7 @@ export default function ScheduleClient() {
             <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
                 <div>
                     <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
-                        Game <span className="text-orange-500">Schedule</span>
+                        Game <span className="text-copper-500">Schedule</span>
                     </h1>
                     <p className="mt-2 text-zinc-400">
                         Chronological list of all matchups, scores, and tournament brackets.
@@ -78,9 +78,9 @@ export default function ScheduleClient() {
                 />
             </div>
 
-            <div className="mb-8 flex items-center justify-between rounded-xl bg-orange-600/10 p-4 border border-orange-500/20">
+            <div className="mb-8 flex items-center justify-between rounded-xl bg-copper-600/10 p-4 border border-copper-500/20">
                 <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-orange-400 uppercase tracking-tighter">Current View:</span>
+                    <span className="text-sm font-bold text-copper-400 uppercase tracking-tighter">Current View:</span>
                     <span className="text-lg font-bold text-white">{seasonLabel}</span>
                 </div>
             </div>
@@ -122,7 +122,7 @@ export default function ScheduleClient() {
                                                 className={cn(
                                                     "relative overflow-hidden rounded-2xl border p-6 transition-all",
                                                     section.id === "playoffs"
-                                                        ? "border-orange-500/30 bg-orange-500/5"
+                                                        ? "border-copper-500/30 bg-copper-500/5"
                                                         : section.id === "special"
                                                           ? "border-sky-500/25 bg-sky-500/5"
                                                           : "border-white/5 bg-zinc-900/50"
@@ -186,7 +186,7 @@ export default function ScheduleClient() {
                                                         </div>
 
                                                         {section.id === "playoffs" && (
-                                                            <div className="absolute top-0 right-0 rounded-bl-lg bg-orange-600 px-2 py-0.5 text-[10px] font-bold text-white">
+                                                            <div className="absolute top-0 right-0 rounded-bl-lg bg-copper-600 px-2 py-0.5 text-[10px] font-bold text-white">
                                                                 PLAYOFFS
                                                             </div>
                                                         )}

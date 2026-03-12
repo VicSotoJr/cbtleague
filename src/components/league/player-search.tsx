@@ -35,7 +35,7 @@ export default function PlayerSearch({ players }: PlayerSearchProps) {
                     placeholder="Search players..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="h-12 border-white/10 bg-zinc-900/50 pl-10 text-white placeholder:text-zinc-600 focus:border-orange-500/50 focus:ring-orange-500/20 rounded-xl"
+                    className="h-12 border-white/10 bg-zinc-900/50 pl-10 text-white placeholder:text-zinc-600 focus:border-copper-500/50 focus:ring-copper-500/20 rounded-xl"
                 />
             </div>
 
@@ -58,7 +58,7 @@ export default function PlayerSearch({ players }: PlayerSearchProps) {
                                         className="rounded-lg shrink-0"
                                     />
                                     <div className="flex-1">
-                                        <p className="font-bold text-white group-hover:text-orange-500 transition-colors uppercase text-sm">
+                                        <p className="font-bold text-white group-hover:text-copper-500 transition-colors uppercase text-sm">
                                             {player.name}
                                         </p>
                                         <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-tight">

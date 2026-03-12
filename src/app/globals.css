@@ -47,6 +47,16 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
+@theme {
+  --color-copper-200: #f6d1b5;
+  --color-copper-300: #e9b78f;
+  --color-copper-400: #d89463;
+  --color-copper-500: #c27845;
+  --color-copper-600: #a86135;
+  --color-copper-700: #874c29;
+  --color-copper-800: #68371d;
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

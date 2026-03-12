@@ -18,7 +18,7 @@ export default function StandingsClient() {
             <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
                 <div>
                     <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
-                        League <span className="text-orange-500">Standings</span>
+                        League <span className="text-copper-500">Standings</span>
                     </h1>
                     <p className="mt-2 text-zinc-400">
                         Real-time rankings and historical records for all CBT seasons.
@@ -32,9 +32,9 @@ export default function StandingsClient() {
                 />
             </div>
 
-            <div className="mb-8 flex items-center justify-between rounded-xl bg-orange-600/10 p-4 border border-orange-500/20">
+            <div className="mb-8 flex items-center justify-between rounded-xl bg-copper-600/10 p-4 border border-copper-500/20">
                 <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-orange-400 uppercase tracking-tighter">Current View:</span>
+                    <span className="text-sm font-bold text-copper-400 uppercase tracking-tighter">Current View:</span>
                     <span className="text-lg font-bold text-white">{seasonLabel}</span>
                 </div>
             </div>

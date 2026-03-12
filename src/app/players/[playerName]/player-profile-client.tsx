@@ -36,7 +36,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
       <div className="container mx-auto px-4 py-24 text-center">
         <h1 className="text-4xl font-bold">Player Not Found</h1>
         <p className="mt-4 text-zinc-400">We couldn&apos;t find any historical records for {playerName}.</p>
-        <Link href="/stats/leaders/" prefetch={false} className="mt-8 inline-flex text-orange-500 hover:underline">
+        <Link href="/stats/leaders/" prefetch={false} className="mt-8 inline-flex text-copper-500 hover:underline">
           View League Leaders
         </Link>
       </div>
@@ -65,7 +65,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
           playerName={playerName}
           playerHead={latestSeason.playerHead}
           size="xl"
-          className="rounded-3xl border-4 border-orange-500/20 shadow-2xl"
+          className="rounded-3xl border-4 border-copper-500/20 shadow-2xl"
         />
         <div className="text-center md:text-left">
           <h1 className="text-5xl font-black tracking-tighter text-white md:text-7xl uppercase">{playerName}</h1>
@@ -80,7 +80,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
             </div>
             <div className="border-l border-white/10 pl-8">
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Avg PPG</p>
-              <p className="text-2xl font-black text-orange-500">{avgPPG}</p>
+              <p className="text-2xl font-black text-copper-500">{avgPPG}</p>
             </div>
             <div className="border-l border-white/10 pl-8">
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Games</p>
@@ -108,7 +108,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <StatCard label="PPG" value={season.stats.PPG} sub="Points per game" icon={<Zap className="h-4 w-4 text-orange-500" />} />
+              <StatCard label="PPG" value={season.stats.PPG} sub="Points per game" icon={<Zap className="h-4 w-4 text-copper-500" />} />
               <StatCard
                 label="RPG"
                 value={season.stats.RPG}
@@ -157,7 +157,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">BLK</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">TOV</TableHead>
                       <TableHead className="text-center whitespace-nowrap font-bold text-zinc-500 uppercase tracking-tighter">PF</TableHead>
-                      <TableHead className="text-right whitespace-nowrap font-bold text-orange-500 uppercase tracking-tighter italic">EFF</TableHead>
+                      <TableHead className="text-right whitespace-nowrap font-bold text-copper-500 uppercase tracking-tighter italic">EFF</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -210,7 +210,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                           <TableCell className="text-center text-zinc-300">{log.Blocks}</TableCell>
                           <TableCell className="text-center text-zinc-300">{log.Turnovers}</TableCell>
                           <TableCell className="text-center text-zinc-300">{log.PersonalFouls}</TableCell>
-                          <TableCell className="text-right font-black text-orange-500 italic">{eff}</TableCell>
+                          <TableCell className="text-right font-black text-copper-500 italic">{eff}</TableCell>
                         </TableRow>
                       );
                     })}

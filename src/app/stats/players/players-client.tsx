@@ -90,7 +90,7 @@ export default function PlayersClient() {
       <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
         <div>
           <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl uppercase italic">
-            Player <span className="text-orange-500">Stats</span>
+            Player <span className="text-copper-500">Stats</span>
           </h1>
           <p className="mt-2 text-zinc-400">Detailed statistical records for every player in the league.</p>
         </div>
@@ -102,7 +102,7 @@ export default function PlayersClient() {
               placeholder="Search players..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-zinc-900/50 px-4 py-2 text-white placeholder:text-zinc-600 focus:border-orange-500/50 focus:outline-none focus:ring-1 focus:ring-orange-500/20"
+              className="w-full rounded-xl border border-white/10 bg-zinc-900/50 px-4 py-2 text-white placeholder:text-zinc-600 focus:border-copper-500/50 focus:outline-none focus:ring-1 focus:ring-copper-500/20"
             />
           </div>
           <SeasonToggle
@@ -113,9 +113,9 @@ export default function PlayersClient() {
         </div>
       </div>
 
-      <div className="mb-8 flex items-center justify-between rounded-xl bg-orange-600/10 p-4 border border-orange-500/20">
+      <div className="mb-8 flex items-center justify-between rounded-xl bg-copper-600/10 p-4 border border-copper-500/20">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-bold text-orange-400 uppercase tracking-tighter">Current View:</span>
+          <span className="text-sm font-bold text-copper-400 uppercase tracking-tighter">Current View:</span>
           <span className="text-lg font-bold text-white">{seasonLabel}</span>
         </div>
       </div>
@@ -134,7 +134,7 @@ export default function PlayersClient() {
                     key={stat}
                     className={cn(
                       "text-center font-bold uppercase tracking-tighter whitespace-nowrap px-4",
-                      stat === "PPG" || stat === "EFF" ? "text-orange-500" : "text-zinc-500"
+                      stat === "PPG" || stat === "EFF" ? "text-copper-500" : "text-zinc-500"
                     )}
                   >
                     {stat}
@@ -151,7 +151,7 @@ export default function PlayersClient() {
                     key={`${player.name}-${teamName}-${page}-${i}`}
                     className="border-white/5 hover:bg-white/5 transition-colors group"
                   >
-                    <TableCell className="font-bold text-white group-hover:text-orange-500">
+                    <TableCell className="font-bold text-white group-hover:text-copper-500">
                       <Link
                         href={`/players/${encodeURIComponent(player.name.trim())}/`}
                         prefetch={false}
@@ -177,7 +177,7 @@ export default function PlayersClient() {
                     </TableCell>
                     <TableCell className="text-center font-medium text-zinc-400">{aggregated.GAMES}</TableCell>
                     <TableCell className="text-center font-black text-white">{aggregated.Points}</TableCell>
-                    <TableCell className="text-center font-black text-orange-500 italic">{aggregated.PPG}</TableCell>
+                    <TableCell className="text-center font-black text-copper-500 italic">{aggregated.PPG}</TableCell>
                     <TableCell className="text-center font-medium text-zinc-400">{aggregated.FieldGoalsMade}</TableCell>
                     <TableCell className="text-center font-medium text-zinc-400">{aggregated.FieldGoalAttempts}</TableCell>
                     <TableCell className="text-center font-mono font-bold text-zinc-500">{aggregated["FG%"]}%</TableCell>
@@ -203,7 +203,7 @@ export default function PlayersClient() {
                     <TableCell className="text-center font-medium text-zinc-300">{aggregated.Turnovers}</TableCell>
                     <TableCell className="text-center font-mono text-zinc-400">{aggregated.TOVPG}</TableCell>
                     <TableCell className="text-center font-medium text-zinc-300">{aggregated.PersonalFouls}</TableCell>
-                    <TableCell className="text-right font-black text-orange-500 italic">{aggregated.EFF}</TableCell>
+                    <TableCell className="text-right font-black text-copper-500 italic">{aggregated.EFF}</TableCell>
                   </TableRow>
                 );
               })}

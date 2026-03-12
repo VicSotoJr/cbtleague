@@ -33,7 +33,7 @@ export default function SeasonToggle({
             className={cn(
               "rounded-xl px-5 py-2 text-xs font-black uppercase tracking-widest transition-all",
               seasonId === season.id
-                ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20"
+                ? "bg-copper-600 text-white shadow-lg shadow-copper-600/20"
                 : "text-zinc-500 hover:bg-white/5 hover:text-white"
             )}
           >

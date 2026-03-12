@@ -25,7 +25,7 @@ export default function TeamStatsClient() {
             <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
                 <div>
                     <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
-                        Team <span className="text-orange-500">Stats</span>
+                        Team <span className="text-copper-500">Stats</span>
                     </h1>
                     <p className="mt-2 text-zinc-400">
                         Comprehensive offensive and defensive breakdown for all teams.
@@ -39,9 +39,9 @@ export default function TeamStatsClient() {
                 />
             </div>
 
-            <div className="mb-8 flex items-center justify-between rounded-xl bg-orange-600/10 p-4 border border-orange-500/20">
+            <div className="mb-8 flex items-center justify-between rounded-xl bg-copper-600/10 p-4 border border-copper-500/20">
                 <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-orange-400 uppercase tracking-tighter">Current View:</span>
+                    <span className="text-sm font-bold text-copper-400 uppercase tracking-tighter">Current View:</span>
                     <span className="text-lg font-bold text-white">{seasonLabel}</span>
                 </div>
             </div>
@@ -53,7 +53,7 @@ export default function TeamStatsClient() {
                             <TableRow className="border-white/5 hover:bg-transparent">
                                 <TableHead className="sticky left-0 bg-zinc-900 z-10 min-w-[150px] font-bold text-white">Team</TableHead>
                                 <TableHead className="text-center font-bold text-zinc-500">GP</TableHead>
-                                <TableHead className="text-center font-bold text-orange-500">PTS</TableHead>
+                                <TableHead className="text-center font-bold text-copper-500">PTS</TableHead>
                                 <TableHead className="text-center font-bold text-zinc-500">FG%</TableHead>
                                 <TableHead className="text-center font-bold text-zinc-500">3PM</TableHead>
                                 <TableHead className="text-center font-bold text-zinc-500">3P%</TableHead>
@@ -71,13 +71,13 @@ export default function TeamStatsClient() {
 
                                 return (
                                     <TableRow key={team.Team} className="border-white/5 hover:bg-white/5 transition-colors group">
-                                        <TableCell className="sticky left-0 bg-zinc-900/90 backdrop-blur-md z-10 font-bold text-white group-hover:text-orange-500">
+                                        <TableCell className="sticky left-0 bg-zinc-900/90 backdrop-blur-md z-10 font-bold text-white group-hover:text-copper-500">
                                             <Link href={`/teams/${encodeURIComponent(team.Team.trim())}/?season=${seasonId}`} prefetch={false}>
                                                 {team.Team}
                                             </Link>
                                         </TableCell>
                                         <TableCell className="text-center font-medium text-zinc-400">{team.gamesPlayed}</TableCell>
-                                        <TableCell className="text-center font-black text-orange-500">{team.aggregated.Points}</TableCell>
+                                        <TableCell className="text-center font-black text-copper-500">{team.aggregated.Points}</TableCell>
                                         <TableCell className="text-center font-mono font-bold text-zinc-300">{fgPercent}%</TableCell>
                                         <TableCell className="text-center font-medium text-zinc-400">{team.aggregated.ThreesMade}</TableCell>
                                         <TableCell className="text-center font-mono font-bold text-zinc-300">{threePercent}%</TableCell>

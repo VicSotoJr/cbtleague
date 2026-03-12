@@ -71,7 +71,7 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
       <div className="container mx-auto px-4 py-24 text-center">
         <h1 className="text-4xl font-bold">Team Not Found</h1>
         <p className="mt-4 text-zinc-400">The team you are looking for does not exist in season {seasonId}.</p>
-        <Link href="/teams/" prefetch={false} className="mt-8 inline-flex text-orange-500 hover:underline">
+        <Link href="/teams/" prefetch={false} className="mt-8 inline-flex text-copper-500 hover:underline">
           Back to Teams
         </Link>
       </div>
@@ -93,7 +93,7 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
         <TeamLogo teamName={team.Team} size={192} className="rounded-3xl shadow-2xl" />
         <div className="text-center md:text-left">
           <div className="flex flex-wrap justify-center gap-2 md:justify-start mb-4">
-            <span className="rounded-full bg-orange-600/10 px-3 py-1 text-xs font-bold text-orange-500 border border-orange-500/20 uppercase tracking-widest">
+            <span className="rounded-full bg-copper-600/10 px-3 py-1 text-xs font-bold text-copper-500 border border-copper-500/20 uppercase tracking-widest">
               Season {seasonId}
             </span>
             {isChampion && (
@@ -112,7 +112,7 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
             </div>
             <div className="text-center md:text-left border-l border-white/10 pl-6">
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Win %</p>
-              <p className="text-2xl font-black text-orange-500">{(team.wins / (team.wins + team.loss) || 0).toFixed(3)}</p>
+              <p className="text-2xl font-black text-copper-500">{(team.wins / (team.wins + team.loss) || 0).toFixed(3)}</p>
             </div>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
                     className="rounded-xl group-hover:scale-110 transition-transform"
                   />
                   <div className="min-w-0 flex-1">
-                    <h3 className="truncate font-bold text-white group-hover:text-orange-500 transition-colors uppercase tracking-tight">
+                    <h3 className="truncate font-bold text-white group-hover:text-copper-500 transition-colors uppercase tracking-tight">
                       {player.name}
                     </h3>
                     <p className="text-sm font-mono text-zinc-500">#{player.number}</p>

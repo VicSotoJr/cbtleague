@@ -176,7 +176,7 @@ export default function AllTimePage() {
     <div className="container mx-auto px-4 py-12 md:px-6">
       <div className="mb-16">
         <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl uppercase italic">
-          All-Time <span className="text-orange-500">Records</span>
+          All-Time <span className="text-copper-500">Records</span>
         </h1>
         <p className="mt-4 text-zinc-400 text-lg max-w-2xl">
           Celebrating the legends and historical milestones achieved since the league&apos;s inception in 2023.
@@ -225,7 +225,7 @@ export default function AllTimePage() {
                       className="rounded-lg shrink-0"
                     />
                     <div className="flex-1">
-                      <h3 className="font-bold text-white group-hover:text-orange-500 transition-colors uppercase tracking-tight">
+                      <h3 className="font-bold text-white group-hover:text-copper-500 transition-colors uppercase tracking-tight">
                         {player.name}
                       </h3>
                       <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest">
@@ -249,7 +249,7 @@ export default function AllTimePage() {
       </div>
 
       <div className="mt-24 rounded-3xl bg-gradient-to-r from-zinc-900 to-black border border-white/5 p-12 text-center">
-        <Trophy className="mx-auto h-12 w-12 text-orange-500 mb-6" />
+        <Trophy className="mx-auto h-12 w-12 text-copper-500 mb-6" />
         <h2 className="text-3xl font-bold text-white mb-4">Want to see more records?</h2>
         <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
           Explore the detailed season-by-season breakdown in our expanded league leaders section.
@@ -257,7 +257,7 @@ export default function AllTimePage() {
         <Link
           href="/stats/leaders/"
           prefetch={false}
-          className="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-8 py-4 font-bold text-white hover:bg-orange-700 transition-all"
+          className="inline-flex items-center gap-2 rounded-xl bg-copper-600 px-8 py-4 font-bold text-white hover:bg-copper-700 transition-all"
         >
           LEAGUE LEADERS <ArrowRight className="h-5 w-5" />
         </Link>

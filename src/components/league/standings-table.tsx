@@ -122,7 +122,7 @@ export default function StandingsTable({ teams, seasonId }: StandingsTableProps)
                                 <TableCell className="text-center">
                                     <span className={cn(
                                         "inline-flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold",
-                                        rank === 1 ? "bg-orange-500/20 text-orange-500" :
+                                        rank === 1 ? "bg-copper-500/20 text-copper-500" :
                                             rank === 2 ? "bg-zinc-500/20 text-zinc-400" :
                                                 rank === 3 ? "bg-amber-700/20 text-amber-700" :
                                                     "text-zinc-600"
@@ -137,7 +137,7 @@ export default function StandingsTable({ teams, seasonId }: StandingsTableProps)
                                             size={40}
                                             className="rounded-lg"
                                         />
-                                        <span className="font-bold text-white group-hover:text-orange-500 transition-colors">
+                                        <span className="font-bold text-white group-hover:text-copper-500 transition-colors">
                                             {team.Team}
                                         </span>
                                     </Link>
@@ -145,7 +145,7 @@ export default function StandingsTable({ teams, seasonId }: StandingsTableProps)
                                 <TableCell className="text-center font-medium text-white">{team.wins}</TableCell>
                                 <TableCell className="text-center font-medium text-white">{team.loss}</TableCell>
                                 <TableCell className="text-center text-zinc-500">{team.wins + team.loss}</TableCell>
-                                <TableCell className="text-right font-mono font-bold text-orange-500">
+                                <TableCell className="text-right font-mono font-bold text-copper-500">
                                     {winPct}
                                 </TableCell>
                             </TableRow>

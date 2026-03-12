@@ -606,7 +606,7 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#060608] text-white selection:bg-orange-500/30">
+    <div className="min-h-screen bg-[#060608] text-white selection:bg-copper-500/30">
       <div className="max-w-5xl mx-auto px-6 py-16">
         <header className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-center">
           <div className="space-y-2">
@@ -617,13 +617,13 @@ export default function AdminPage() {
               <ArrowLeft className="h-3 w-3" /> Back to League
             </Link>
             <h1 className="text-5xl font-black italic uppercase tracking-tighter leading-none">
-              Stat <span className="text-orange-500">Entry</span>
+              Stat <span className="text-copper-500">Entry</span>
             </h1>
             <p className="font-medium text-zinc-500">Season 3 game-by-game box score publishing</p>
           </div>
 
           <div className="flex items-center gap-4 rounded-2xl border border-white/5 bg-zinc-900/50 p-4">
-            <Calendar className="h-5 w-5 text-orange-500" />
+            <Calendar className="h-5 w-5 text-copper-500" />
             <div>
               <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Active Season</p>
               <p className="text-sm font-bold">2026 - Season 3</p>
@@ -641,7 +641,7 @@ export default function AdminPage() {
                   value={apiUrl}
                   onChange={(e) => setApiUrl(e.target.value)}
                   placeholder="https://your-admin-api.vercel.app/api/admin/update-stats"
-                  className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                  className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/50"
                 />
                 <p className="text-xs text-zinc-500">
                   Use your Vercel endpoint here when you’re saving from GitHub Pages or from your phone.
@@ -655,7 +655,7 @@ export default function AdminPage() {
                   value={adminKey}
                   onChange={(e) => setAdminKey(e.target.value)}
                   placeholder="Optional bearer key"
-                  className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                  className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/50"
                 />
                 <p className="text-xs text-zinc-500">
                   Stored only in this browser so you can reuse it on mobile without editing the site.
@@ -673,7 +673,7 @@ export default function AdminPage() {
                 setSelectedTeam("");
                 setSelectedPlayer("");
               }}
-              className="w-full cursor-pointer appearance-none rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+              className="w-full cursor-pointer appearance-none rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-copper-500/50"
             >
               <option value="">Choose Game...</option>
               {games.map((game, index) => (
@@ -692,7 +692,7 @@ export default function AdminPage() {
                 setSelectedTeam(e.target.value);
                 setSelectedPlayer("");
               }}
-              className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+              className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-copper-500/50"
             >
               <option value="">Choose Team...</option>
               {gameTeams.map((teamName) => (
@@ -708,7 +708,7 @@ export default function AdminPage() {
             <select
               value={selectedPlayer}
               onChange={(e) => setSelectedPlayer(e.target.value)}
-              className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+              className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-copper-500/50"
             >
               <option value="">Choose Player...</option>
               {players.map((player) => (
@@ -725,8 +725,8 @@ export default function AdminPage() {
             <div className="rounded-[2.5rem] border border-white/5 bg-zinc-900/30 p-10 backdrop-blur-md">
               <div className="mb-10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-600/20">
-                    <User className="h-5 w-5 text-orange-500" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-copper-600/20">
+                    <User className="h-5 w-5 text-copper-500" />
                   </div>
                   <div>
                     <h2 className="text-2xl font-black italic uppercase tracking-tighter">
@@ -744,7 +744,7 @@ export default function AdminPage() {
               <div className={cn("grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4", !selectedPlayer && "opacity-40")}>
                 {(Object.entries(stats) as Array<[StatKey, number]>).map(([key, value]) => (
                   <div key={key} className="group">
-                    <label className="mb-3 block text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-orange-500">
+                    <label className="mb-3 block text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-copper-500">
                       {key}
                     </label>
                     <input
@@ -762,7 +762,7 @@ export default function AdminPage() {
                         "w-full border-b-2 bg-transparent p-0 pb-2 text-3xl font-black italic tracking-tighter transition-all placeholder:text-zinc-800 focus:outline-none",
                         (key === "FieldGoalsMade" && errors.fg) || (key === "ThreesAttempts" && errors.impossibleThree)
                           ? "border-red-500/50 text-red-500"
-                          : "border-white/10 text-white focus:border-orange-600",
+                          : "border-white/10 text-white focus:border-copper-600",
                         !selectedPlayer && "cursor-not-allowed"
                       )}
                     />
@@ -821,7 +821,7 @@ export default function AdminPage() {
                           }))
                         }
                         placeholder="0"
-                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-2xl font-black italic text-white focus:border-orange-600 focus:outline-none"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-2xl font-black italic text-white focus:border-copper-600 focus:outline-none"
                       />
                     </div>
                     <div className="pb-3 text-sm font-black uppercase tracking-widest text-zinc-600">vs</div>
@@ -840,7 +840,7 @@ export default function AdminPage() {
                           }))
                         }
                         placeholder="0"
-                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-2xl font-black italic text-white focus:border-orange-600 focus:outline-none"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-2xl font-black italic text-white focus:border-copper-600 focus:outline-none"
                       />
                     </div>
                   </div>
@@ -867,7 +867,7 @@ export default function AdminPage() {
                             <p className="font-bold text-white">{entry.playerName}</p>
                             <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{entry.teamName}</p>
                           </div>
-                          <p className="text-sm font-black text-orange-500">{entry.gameLog.Points} PTS</p>
+                          <p className="text-sm font-black text-copper-500">{entry.gameLog.Points} PTS</p>
                         </div>
                       ))
                     )}
@@ -908,7 +908,7 @@ export default function AdminPage() {
                     "mt-3 flex w-full items-center justify-center gap-3 rounded-2xl py-6 text-xl font-black uppercase italic tracking-tighter transition-all",
                     draftedPlayers.length === 0 || isSaving || !hasManualScore
                       ? "cursor-not-allowed bg-zinc-800 text-zinc-600"
-                      : "bg-orange-600 text-white shadow-[0_20px_40px_-15px_rgba(234,88,12,0.4)] hover:bg-orange-700 active:scale-95"
+                      : "bg-copper-600 text-white shadow-[0_20px_40px_-15px_rgba(158,84,44,0.4)] hover:bg-copper-700 active:scale-95"
                   )}
                 >
                   {isSaving ? "Publishing..." : `Publish Game (${draftedPlayers.length})`}
