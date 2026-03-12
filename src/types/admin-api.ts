@@ -7,10 +7,19 @@ export interface AdminPlayerGameUpdate {
   gameLog: BaseStats;
 }
 
+export interface AdminScheduleScoreUpdate {
+  week: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeScore: number;
+  awayScore: number;
+}
+
 export interface AdminStatsUpdatePayload {
   seasonId: string;
   gameNumber: string;
   updates: AdminPlayerGameUpdate[];
+  scheduleUpdate?: AdminScheduleScoreUpdate;
 }
 
 export interface AdminStatsUpdateSuccess {

@@ -57,7 +57,8 @@ function isAdminStatsUpdatePayload(value) {
     isNonEmptyString(value.gameNumber) &&
     Array.isArray(value.updates) &&
     value.updates.length > 0 &&
-    value.updates.every(isAdminPlayerGameUpdate)
+    value.updates.every(isAdminPlayerGameUpdate) &&
+    (value.scheduleUpdate === undefined || isAdminScheduleScoreUpdate(value.scheduleUpdate))
   );
 }
 
@@ -70,6 +71,17 @@ function isLegacyAdminStatsUpdatePayload(value) {
     isNonEmptyString(value.opponent) &&
     isNonEmptyString(value.gameNumber) &&
     isBaseStats(value.gameLog)
+  );
+}
+
+function isAdminScheduleScoreUpdate(value) {
+  if (!isRecord(value)) return false;
+  return (
+    isNonEmptyString(value.week) &&
+    isNonEmptyString(value.homeTeam) &&
+    isNonEmptyString(value.awayTeam) &&
+    isFiniteNumber(value.homeScore) &&
+    isFiniteNumber(value.awayScore)
   );
 }
 
@@ -373,6 +385,29 @@ function applyPlayerUpdate(leagueData, seasonId, gameNumber, update) {
   return { ok: true };
 }
 
+function applyScheduleScoreUpdate(leagueData, seasonId, scheduleUpdate) {
+  const season = leagueData.seasons[seasonId];
+  if (!season) {
+    return { ok: false, status: 404, message: "Season not found" };
+  }
+
+  const scheduleEntry = season.schedule.find(
+    (game) =>
+      game.week === scheduleUpdate.week &&
+      game.homeTeam === scheduleUpdate.homeTeam &&
+      game.awayTeam === scheduleUpdate.awayTeam
+  );
+
+  if (!scheduleEntry) {
+    return { ok: false, status: 404, message: "Schedule game not found" };
+  }
+
+  scheduleEntry.homeScore = String(scheduleUpdate.homeScore);
+  scheduleEntry.awayScore = String(scheduleUpdate.awayScore);
+
+  return { ok: true };
+}
+
 function normalizeAdminStatsPayload(payload) {
   if (isAdminStatsUpdatePayload(payload)) {
     return payload;
@@ -390,6 +425,7 @@ function normalizeAdminStatsPayload(payload) {
           gameLog: payload.gameLog,
         },
       ],
+      scheduleUpdate: undefined,
     };
   }
 
@@ -553,6 +589,23 @@ export default async function handler(req, res) {
         ok: false,
         message: updateResult.message,
         details: updateResult.details,
+      });
+      return;
+    }
+  }
+
+  if (normalizedPayload.scheduleUpdate) {
+    const scheduleUpdateResult = applyScheduleScoreUpdate(
+      leagueData,
+      normalizedPayload.seasonId,
+      normalizedPayload.scheduleUpdate
+    );
+
+    if (!scheduleUpdateResult.ok) {
+      res.status(scheduleUpdateResult.status).json({
+        ok: false,
+        message: scheduleUpdateResult.message,
+        details: scheduleUpdateResult.details,
       });
       return;
     }

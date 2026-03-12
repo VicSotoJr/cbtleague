@@ -5,7 +5,11 @@ import Link from "next/link";
 import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Download, Save, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getSeasonData } from "@/lib/league-data";
-import type { AdminPlayerGameUpdate, AdminStatsUpdatePayload, AdminStatsUpdateResponse } from "@/types/admin-api";
+import type {
+  AdminPlayerGameUpdate,
+  AdminStatsUpdatePayload,
+  AdminStatsUpdateResponse,
+} from "@/types/admin-api";
 import type { BaseStats, Team } from "@/types/league";
 
 const LOCAL_GAME_DRAFTS_KEY = "cbtleague-admin-game-drafts";
@@ -39,6 +43,8 @@ type AdminGameDraft = {
   gameLabel: string;
   homeTeam: string;
   awayTeam: string;
+  homeScore: string;
+  awayScore: string;
   updates: AdminPlayerGameUpdate[];
 };
 
@@ -94,6 +100,19 @@ function toStatsValue(log?: Partial<BaseStats>): BaseStats {
     Turnovers: log?.Turnovers ?? 0,
     PersonalFouls: log?.PersonalFouls ?? 0,
   };
+}
+
+function toScoreValue(value: string | number | undefined): string {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return String(value);
+  }
+
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return /^\d+$/.test(trimmed) ? trimmed : "";
+  }
+
+  return "";
 }
 
 function readGameDrafts(): Record<string, AdminGameDraft> {
@@ -169,8 +188,8 @@ function writeAdminSettings(settings: AdminSettings): void {
   );
 }
 
-function buildDraftKey(seasonId: string, gameNumber: string): string {
-  return `${seasonId}:${gameNumber}`;
+function buildDraftKey(seasonId: string, gameNumber: string, homeTeam?: string, awayTeam?: string): string {
+  return `${seasonId}:${gameNumber}:${homeTeam ?? "home"}:${awayTeam ?? "away"}`;
 }
 
 function buildDraftFromGame(args: {
@@ -179,6 +198,8 @@ function buildDraftFromGame(args: {
   gameLabel: string;
   homeTeam?: string;
   awayTeam?: string;
+  homeScore?: string | number;
+  awayScore?: string | number;
   updates?: AdminPlayerGameUpdate[];
 }): AdminGameDraft {
   return {
@@ -187,6 +208,8 @@ function buildDraftFromGame(args: {
     gameLabel: args.gameLabel,
     homeTeam: args.homeTeam ?? "Home Team",
     awayTeam: args.awayTeam ?? "Away Team",
+    homeScore: toScoreValue(args.homeScore),
+    awayScore: toScoreValue(args.awayScore),
     updates: args.updates ?? [],
   };
 }
@@ -226,6 +249,7 @@ export default function AdminPage() {
   const [apiUrl, setApiUrl] = useState(ADMIN_API_ENDPOINT);
   const [adminKey, setAdminKey] = useState("");
   const [stats, setStats] = useState<BaseStats>(EMPTY_STATS);
+  const [gameScore, setGameScore] = useState({ homeScore: "", awayScore: "" });
 
   useEffect(() => {
     setQueuedCount(readQueuedGames().length);
@@ -249,7 +273,10 @@ export default function AdminPage() {
     () => (selectedGameIdx === "" ? "" : getGameNumberFromWeek(selectedGame?.week, selectedGameIdx)),
     [selectedGame, selectedGameIdx]
   );
-  const selectedGameKey = selectedGameNumber ? buildDraftKey(seasonId, selectedGameNumber) : "";
+  const selectedGameKey =
+    selectedGame && selectedGameNumber
+      ? buildDraftKey(seasonId, selectedGameNumber, selectedGame.homeTeam, selectedGame.awayTeam)
+      : "";
   const selectedGameDraft = useMemo(
     () => (selectedGameKey ? gameDrafts[selectedGameKey] ?? null : null),
     [gameDrafts, selectedGameKey]
@@ -297,6 +324,46 @@ export default function AdminPage() {
   );
 
   useEffect(() => {
+    if (!selectedGame || !selectedGameNumber) {
+      setGameScore({ homeScore: "", awayScore: "" });
+      return;
+    }
+
+    if (selectedGameDraft) {
+      setGameScore({
+        homeScore: selectedGameDraft.homeScore,
+        awayScore: selectedGameDraft.awayScore,
+      });
+      return;
+    }
+
+    setGameScore({
+      homeScore: toScoreValue(selectedGame.homeScore),
+      awayScore: toScoreValue(selectedGame.awayScore),
+    });
+  }, [selectedGame, selectedGameDraft, selectedGameNumber]);
+
+  useEffect(() => {
+    if (!selectedGameDraft || !selectedGameKey) return;
+
+    if (
+      selectedGameDraft.homeScore === gameScore.homeScore &&
+      selectedGameDraft.awayScore === gameScore.awayScore
+    ) {
+      return;
+    }
+
+    setGameDrafts((prev) => ({
+      ...prev,
+      [selectedGameKey]: {
+        ...prev[selectedGameKey],
+        homeScore: gameScore.homeScore,
+        awayScore: gameScore.awayScore,
+      },
+    }));
+  }, [gameScore.awayScore, gameScore.homeScore, selectedGameDraft, selectedGameKey]);
+
+  useEffect(() => {
     if (!selectedTeam || !selectedPlayer || !selectedGame || selectedGameIdx === "" || !selectedGameNumber) {
       setStats(EMPTY_STATS);
       return;
@@ -333,6 +400,7 @@ export default function AdminPage() {
     impossibleThree: stats.ThreesAttempts > stats.FieldGoalAttempts,
   };
   const hasErrors = Object.values(errors).some(Boolean);
+  const hasManualScore = gameScore.homeScore.trim() !== "" && gameScore.awayScore.trim() !== "";
 
   const resetStats = useCallback(() => setStats(EMPTY_STATS), []);
 
@@ -357,6 +425,8 @@ export default function AdminPage() {
           gameLabel: selectedGame.week,
           homeTeam: selectedGame.homeTeam,
           awayTeam: selectedGame.awayTeam,
+          homeScore: gameScore.homeScore,
+          awayScore: gameScore.awayScore,
         });
 
       const nextUpdates = existingDraft.updates.some(
@@ -371,6 +441,8 @@ export default function AdminPage() {
         ...prev,
         [selectedGameKey]: {
           ...existingDraft,
+          homeScore: gameScore.homeScore,
+          awayScore: gameScore.awayScore,
           updates: nextUpdates,
         },
       };
@@ -389,6 +461,8 @@ export default function AdminPage() {
     selectedGame,
     selectedGameKey,
     selectedGameNumber,
+    gameScore.awayScore,
+    gameScore.homeScore,
     selectedOpponent,
     selectedPlayer,
     selectedTeam,
@@ -430,7 +504,7 @@ export default function AdminPage() {
   }, [resetStats, selectedGameKey, selectedPlayer, selectedTeam]);
 
   const handlePublishGame = useCallback(async () => {
-    if (!selectedGameDraft || selectedGameDraft.updates.length === 0 || !selectedGameKey) return;
+    if (!selectedGameDraft || selectedGameDraft.updates.length === 0 || !selectedGameKey || !hasManualScore) return;
 
     setIsSaving(true);
     setStatus({ type: null, message: "" });
@@ -445,6 +519,13 @@ export default function AdminPage() {
         seasonId,
         gameNumber: selectedGameDraft.gameNumber,
         updates: selectedGameDraft.updates,
+        scheduleUpdate: {
+          week: selectedGameDraft.gameLabel,
+          homeTeam: selectedGameDraft.homeTeam,
+          awayTeam: selectedGameDraft.awayTeam,
+          homeScore: Number.parseInt(selectedGameDraft.homeScore, 10),
+          awayScore: Number.parseInt(selectedGameDraft.awayScore, 10),
+        },
       };
 
       const response = await fetch(endpoint, {
@@ -472,7 +553,7 @@ export default function AdminPage() {
       resetStats();
       setStatus({
         type: "success",
-        message: `Published ${result.updatedPlayers} player entries to GitHub (${result.commitSha.slice(0, 7)}).`,
+        message: `Published ${result.updatedPlayers} player entries and manual score to GitHub (${result.commitSha.slice(0, 7)}).`,
       });
     } catch (error) {
       const queuedGame: AdminQueuedGameUpdate = {
@@ -483,7 +564,13 @@ export default function AdminPage() {
       const existing = readQueuedGames();
       const nextQueuedGames = [
         ...existing.filter(
-          (entry) => !(entry.seasonId === queuedGame.seasonId && entry.gameNumber === queuedGame.gameNumber)
+          (entry) =>
+            !(
+              entry.seasonId === queuedGame.seasonId &&
+              entry.gameNumber === queuedGame.gameNumber &&
+              entry.homeTeam === queuedGame.homeTeam &&
+              entry.awayTeam === queuedGame.awayTeam
+            )
         ),
         queuedGame,
       ];
@@ -497,7 +584,7 @@ export default function AdminPage() {
     } finally {
       setIsSaving(false);
     }
-  }, [adminKey, apiUrl, resetStats, seasonId, selectedGameDraft, selectedGameKey]);
+  }, [adminKey, apiUrl, hasManualScore, resetStats, seasonId, selectedGameDraft, selectedGameKey]);
 
   const handleExportUpdates = useCallback(() => {
     const queuedGames = readQueuedGames();
@@ -717,6 +804,52 @@ export default function AdminPage() {
                 )}
 
                 <div className="mb-4 rounded-2xl border border-white/5 bg-white/5 p-4">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Manual Final Score</p>
+                  <div className="mt-4 grid grid-cols-[1fr_auto_1fr] items-end gap-3">
+                    <div>
+                      <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                        {selectedGame.homeTeam}
+                      </label>
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        value={gameScore.homeScore}
+                        onChange={(e) =>
+                          setGameScore((prev) => ({
+                            ...prev,
+                            homeScore: e.target.value.replace(/[^0-9]/g, ""),
+                          }))
+                        }
+                        placeholder="0"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-2xl font-black italic text-white focus:border-orange-600 focus:outline-none"
+                      />
+                    </div>
+                    <div className="pb-3 text-sm font-black uppercase tracking-widest text-zinc-600">vs</div>
+                    <div>
+                      <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                        {selectedGame.awayTeam}
+                      </label>
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        value={gameScore.awayScore}
+                        onChange={(e) =>
+                          setGameScore((prev) => ({
+                            ...prev,
+                            awayScore: e.target.value.replace(/[^0-9]/g, ""),
+                          }))
+                        }
+                        placeholder="0"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-center text-2xl font-black italic text-white focus:border-orange-600 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                  <p className="mt-3 text-xs text-zinc-500">
+                    The schedule score comes from these boxes only. It is not auto-calculated from player totals.
+                  </p>
+                </div>
+
+                <div className="mb-4 rounded-2xl border border-white/5 bg-white/5 p-4">
                   <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Current Draft</p>
                   <p className="mt-2 text-2xl font-black text-white">
                     {draftedPlayers.length} player{draftedPlayers.length === 1 ? "" : "s"}
@@ -770,10 +903,10 @@ export default function AdminPage() {
 
                 <button
                   onClick={handlePublishGame}
-                  disabled={draftedPlayers.length === 0 || isSaving}
+                  disabled={draftedPlayers.length === 0 || isSaving || !hasManualScore}
                   className={cn(
                     "mt-3 flex w-full items-center justify-center gap-3 rounded-2xl py-6 text-xl font-black uppercase italic tracking-tighter transition-all",
-                    draftedPlayers.length === 0 || isSaving
+                    draftedPlayers.length === 0 || isSaving || !hasManualScore
                       ? "cursor-not-allowed bg-zinc-800 text-zinc-600"
                       : "bg-orange-600 text-white shadow-[0_20px_40px_-15px_rgba(234,88,12,0.4)] hover:bg-orange-700 active:scale-95"
                   )}
@@ -791,7 +924,7 @@ export default function AdminPage() {
                 </button>
 
                 <p className="mt-6 text-center text-[10px] font-bold uppercase leading-relaxed text-zinc-700">
-                  Draft each player first, then publish one full matchup to GitHub. <br />
+                  Enter the manual final score, draft each player, then publish one full matchup to GitHub. <br />
                   If API is unavailable, the whole game is queued in your browser for export.
                 </p>
               </div>
