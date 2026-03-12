@@ -5,20 +5,24 @@ export type LeaderStatKey = keyof Pick<
   AggregatedPlayerMetrics,
   | "PPG"
   | "Points"
+  | "ThreesMade"
   | "EFF"
   | "FG%"
   | "2P%"
   | "3P%"
   | "FT%"
   | "RPG"
+  | "Rebounds"
   | "Offrebounds"
   | "Defrebounds"
   | "APG"
   | "Assists"
   | "TOVPG"
+  | "Turnovers"
   | "SPG"
+  | "Steals"
   | "BPG"
-  | "PersonalFouls"
+  | "Blocks"
 >;
 
 type SummaryPlayer = {
