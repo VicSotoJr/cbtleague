@@ -25426,7 +25426,7 @@
                 {
                   "game_number": 5,
                   "opponent": "Dream Chasers",
-                  "Points": 2,
+                  "Points": 3,
                   "FieldGoalsMade": 1,
                   "FieldGoalAttempts": 1,
                   "ThreesMade": 0,
@@ -26432,9 +26432,9 @@
         {
           "week": "Week 5 - April 7, 2026",
           "homeTeam": "Free Agents",
-          "homeScore": "-",
+          "homeScore": "1",
           "awayTeam": "Dream Chasers",
-          "awayScore": "-",
+          "awayScore": "1",
           "date": "April 7, 2026",
           "time": "5:45 PM",
           "isPlayoff": false
