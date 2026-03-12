@@ -73,6 +73,10 @@ function normalizeAdminApiUrl(value: string): string {
   return trimmed;
 }
 
+function isRelativeAdminApiUrl(value: string): boolean {
+  return value.startsWith("/") && !value.startsWith("//");
+}
+
 function getGameNumberFromWeek(weekLabel: string | undefined, fallbackIndex: number): string {
   const match = weekLabel?.match(/^Week\s+(\d+)/i);
   if (match) {
@@ -281,6 +285,13 @@ export default function AdminPage() {
     () => (selectedGameKey ? gameDrafts[selectedGameKey] ?? null : null),
     [gameDrafts, selectedGameKey]
   );
+  const defaultGameScore = useMemo(
+    () => ({
+      homeScore: toScoreValue(selectedGame?.homeScore),
+      awayScore: toScoreValue(selectedGame?.awayScore),
+    }),
+    [selectedGame?.awayScore, selectedGame?.homeScore]
+  );
 
   const gameTeams = useMemo(
     () =>
@@ -338,30 +349,64 @@ export default function AdminPage() {
     }
 
     setGameScore({
-      homeScore: toScoreValue(selectedGame.homeScore),
-      awayScore: toScoreValue(selectedGame.awayScore),
+      homeScore: defaultGameScore.homeScore,
+      awayScore: defaultGameScore.awayScore,
     });
-  }, [selectedGame, selectedGameDraft, selectedGameNumber]);
+  }, [defaultGameScore.awayScore, defaultGameScore.homeScore, selectedGame, selectedGameDraft, selectedGameNumber]);
 
   useEffect(() => {
-    if (!selectedGameDraft || !selectedGameKey) return;
+    if (!selectedGame || !selectedGameKey || !selectedGameNumber) return;
 
-    if (
-      selectedGameDraft.homeScore === gameScore.homeScore &&
-      selectedGameDraft.awayScore === gameScore.awayScore
-    ) {
-      return;
-    }
+    const scoreChanged =
+      gameScore.homeScore !== defaultGameScore.homeScore || gameScore.awayScore !== defaultGameScore.awayScore;
 
-    setGameDrafts((prev) => ({
-      ...prev,
-      [selectedGameKey]: {
-        ...prev[selectedGameKey],
+    setGameDrafts((prev) => {
+      const existingDraft = prev[selectedGameKey];
+      const nextUpdates = existingDraft?.updates ?? [];
+
+      if (!scoreChanged && nextUpdates.length === 0) {
+        if (!existingDraft) return prev;
+
+        const nextDrafts = { ...prev };
+        delete nextDrafts[selectedGameKey];
+        return nextDrafts;
+      }
+
+      const nextDraft = buildDraftFromGame({
+        seasonId,
+        gameNumber: selectedGameNumber,
+        gameLabel: selectedGame.week,
+        homeTeam: selectedGame.homeTeam,
+        awayTeam: selectedGame.awayTeam,
         homeScore: gameScore.homeScore,
         awayScore: gameScore.awayScore,
-      },
-    }));
-  }, [gameScore.awayScore, gameScore.homeScore, selectedGameDraft, selectedGameKey]);
+        updates: nextUpdates,
+      });
+
+      if (
+        existingDraft &&
+        existingDraft.homeScore === nextDraft.homeScore &&
+        existingDraft.awayScore === nextDraft.awayScore &&
+        existingDraft.updates === nextDraft.updates
+      ) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        [selectedGameKey]: nextDraft,
+      };
+    });
+  }, [
+    defaultGameScore.awayScore,
+    defaultGameScore.homeScore,
+    gameScore.awayScore,
+    gameScore.homeScore,
+    selectedGame,
+    selectedGameKey,
+    selectedGameNumber,
+    seasonId,
+  ]);
 
   useEffect(() => {
     if (!selectedTeam || !selectedPlayer || !selectedGame || selectedGameIdx === "" || !selectedGameNumber) {
@@ -401,6 +446,37 @@ export default function AdminPage() {
   };
   const hasErrors = Object.values(errors).some(Boolean);
   const hasManualScore = gameScore.homeScore.trim() !== "" && gameScore.awayScore.trim() !== "";
+  const hasScoreChange =
+    selectedGame !== null &&
+    hasManualScore &&
+    (gameScore.homeScore !== defaultGameScore.homeScore || gameScore.awayScore !== defaultGameScore.awayScore);
+  const normalizedApiUrl = normalizeAdminApiUrl(apiUrl) || normalizeAdminApiUrl(ADMIN_API_ENDPOINT);
+  const requiresHostedApi =
+    typeof window !== "undefined" &&
+    window.location.hostname.endsWith("github.io") &&
+    isRelativeAdminApiUrl(normalizedApiUrl);
+  const canPublishGame = hasManualScore && (draftedPlayers.length > 0 || hasScoreChange) && !isSaving && !requiresHostedApi;
+  const publishDraft = useMemo(() => {
+    if (!selectedGame || !selectedGameNumber) return null;
+
+    return buildDraftFromGame({
+      seasonId,
+      gameNumber: selectedGameNumber,
+      gameLabel: selectedGame.week,
+      homeTeam: selectedGame.homeTeam,
+      awayTeam: selectedGame.awayTeam,
+      homeScore: gameScore.homeScore,
+      awayScore: gameScore.awayScore,
+      updates: selectedGameDraft?.updates ?? [],
+    });
+  }, [
+    gameScore.awayScore,
+    gameScore.homeScore,
+    seasonId,
+    selectedGame,
+    selectedGameDraft?.updates,
+    selectedGameNumber,
+  ]);
 
   const resetStats = useCallback(() => setStats(EMPTY_STATS), []);
 
@@ -480,7 +556,10 @@ export default function AdminPage() {
         (entry) => !(entry.teamName === selectedTeam && entry.playerName === selectedPlayer)
       );
 
-      if (nextUpdates.length === 0) {
+      const shouldKeepScoreDraft =
+        existingDraft.homeScore !== defaultGameScore.homeScore || existingDraft.awayScore !== defaultGameScore.awayScore;
+
+      if (nextUpdates.length === 0 && !shouldKeepScoreDraft) {
         const nextDrafts = { ...prev };
         delete nextDrafts[selectedGameKey];
         return nextDrafts;
@@ -501,34 +580,41 @@ export default function AdminPage() {
     });
     setSelectedPlayer("");
     resetStats();
-  }, [resetStats, selectedGameKey, selectedPlayer, selectedTeam]);
+  }, [defaultGameScore.awayScore, defaultGameScore.homeScore, resetStats, selectedGameKey, selectedPlayer, selectedTeam]);
 
   const handlePublishGame = useCallback(async () => {
-    if (!selectedGameDraft || selectedGameDraft.updates.length === 0 || !selectedGameKey || !hasManualScore) return;
+    if (!publishDraft || !selectedGameKey || !hasManualScore) return;
+    if (requiresHostedApi) {
+      setStatus({
+        type: "error",
+        message: "Enter your Vercel Admin API URL before publishing from GitHub Pages.",
+      });
+      return;
+    }
+    if (publishDraft.updates.length === 0 && !hasScoreChange) return;
 
     setIsSaving(true);
     setStatus({ type: null, message: "" });
 
     try {
-      const endpoint = normalizeAdminApiUrl(apiUrl) || normalizeAdminApiUrl(ADMIN_API_ENDPOINT);
-      if (!endpoint) {
+      if (!normalizedApiUrl) {
         throw new Error("Missing admin API URL");
       }
 
       const payload: AdminStatsUpdatePayload = {
         seasonId,
-        gameNumber: selectedGameDraft.gameNumber,
-        updates: selectedGameDraft.updates,
+        gameNumber: publishDraft.gameNumber,
+        updates: publishDraft.updates,
         scheduleUpdate: {
-          week: selectedGameDraft.gameLabel,
-          homeTeam: selectedGameDraft.homeTeam,
-          awayTeam: selectedGameDraft.awayTeam,
-          homeScore: Number.parseInt(selectedGameDraft.homeScore, 10),
-          awayScore: Number.parseInt(selectedGameDraft.awayScore, 10),
+          week: publishDraft.gameLabel,
+          homeTeam: publishDraft.homeTeam,
+          awayTeam: publishDraft.awayTeam,
+          homeScore: Number.parseInt(publishDraft.homeScore, 10),
+          awayScore: Number.parseInt(publishDraft.awayScore, 10),
         },
       };
 
-      const response = await fetch(endpoint, {
+      const response = await fetch(normalizedApiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -551,13 +637,19 @@ export default function AdminPage() {
       setSelectedTeam("");
       setSelectedPlayer("");
       resetStats();
+
+      const publishedLabels = [
+        result.updatedPlayers > 0 ? `${result.updatedPlayers} player ${result.updatedPlayers === 1 ? "entry" : "entries"}` : null,
+        "manual score",
+      ].filter(Boolean);
+
       setStatus({
         type: "success",
-        message: `Published ${result.updatedPlayers} player entries and manual score to GitHub (${result.commitSha.slice(0, 7)}).`,
+        message: `Published ${publishedLabels.join(" and ")} to GitHub (${result.commitSha.slice(0, 7)}).`,
       });
     } catch (error) {
       const queuedGame: AdminQueuedGameUpdate = {
-        ...selectedGameDraft,
+        ...publishDraft,
         savedAt: new Date().toISOString(),
       };
 
@@ -584,7 +676,17 @@ export default function AdminPage() {
     } finally {
       setIsSaving(false);
     }
-  }, [adminKey, apiUrl, hasManualScore, resetStats, seasonId, selectedGameDraft, selectedGameKey]);
+  }, [
+    adminKey,
+    hasManualScore,
+    hasScoreChange,
+    normalizedApiUrl,
+    publishDraft,
+    requiresHostedApi,
+    resetStats,
+    seasonId,
+    selectedGameKey,
+  ]);
 
   const handleExportUpdates = useCallback(() => {
     const queuedGames = readQueuedGames();
@@ -646,6 +748,11 @@ export default function AdminPage() {
                 <p className="text-xs text-zinc-500">
                   Use your Vercel endpoint here when you’re saving from GitHub Pages or from your phone.
                 </p>
+                {requiresHostedApi && (
+                  <p className="text-xs font-bold text-red-400">
+                    GitHub Pages cannot serve `/api/admin/update-stats`. Paste your Vercel admin API URL here before publishing.
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -903,15 +1010,15 @@ export default function AdminPage() {
 
                 <button
                   onClick={handlePublishGame}
-                  disabled={draftedPlayers.length === 0 || isSaving || !hasManualScore}
+                  disabled={!canPublishGame}
                   className={cn(
                     "mt-3 flex w-full items-center justify-center gap-3 rounded-2xl py-6 text-xl font-black uppercase italic tracking-tighter transition-all",
-                    draftedPlayers.length === 0 || isSaving || !hasManualScore
+                    !canPublishGame
                       ? "cursor-not-allowed bg-zinc-800 text-zinc-600"
                       : "bg-copper-600 text-white shadow-[0_20px_40px_-15px_rgba(158,84,44,0.4)] hover:bg-copper-700 active:scale-95"
                   )}
                 >
-                  {isSaving ? "Publishing..." : `Publish Game (${draftedPlayers.length})`}
+                  {isSaving ? "Publishing..." : draftedPlayers.length > 0 ? `Publish Game (${draftedPlayers.length})` : "Publish Score"}
                   <Save className="h-5 w-5" />
                 </button>
 
@@ -924,7 +1031,7 @@ export default function AdminPage() {
                 </button>
 
                 <p className="mt-6 text-center text-[10px] font-bold uppercase leading-relaxed text-zinc-700">
-                  Enter the manual final score, draft each player, then publish one full matchup to GitHub. <br />
+                  Enter the manual final score and optionally draft players, then publish the matchup to GitHub. <br />
                   If API is unavailable, the whole game is queued in your browser for export.
                 </p>
               </div>

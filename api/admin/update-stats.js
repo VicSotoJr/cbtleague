@@ -52,13 +52,19 @@ function isAdminPlayerGameUpdate(value) {
 
 function isAdminStatsUpdatePayload(value) {
   if (!isRecord(value)) return false;
+
+  const hasValidUpdates =
+    Array.isArray(value.updates) &&
+    value.updates.every(isAdminPlayerGameUpdate);
+  const hasScheduleUpdate =
+    value.scheduleUpdate === undefined || isAdminScheduleScoreUpdate(value.scheduleUpdate);
+
   return (
     isNonEmptyString(value.seasonId) &&
     isNonEmptyString(value.gameNumber) &&
-    Array.isArray(value.updates) &&
-    value.updates.length > 0 &&
-    value.updates.every(isAdminPlayerGameUpdate) &&
-    (value.scheduleUpdate === undefined || isAdminScheduleScoreUpdate(value.scheduleUpdate))
+    hasValidUpdates &&
+    hasScheduleUpdate &&
+    (value.updates.length > 0 || value.scheduleUpdate !== undefined)
   );
 }
 
