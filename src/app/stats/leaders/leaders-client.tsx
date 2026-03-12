@@ -35,6 +35,7 @@ const leaderCategories: Array<{
     items: [
       { key: "PPG", label: "Points Per Game", color: "from-copper-500 to-copper-700" },
       { key: "Points", label: "Total Points", color: "from-copper-600 to-copper-800" },
+      { key: "ThreesMade", label: "3PM", color: "from-orange-500 to-orange-700" },
       { key: "EFF", label: "Efficiency Rating", color: "from-pink-500 to-pink-700" },
     ],
   },
@@ -51,6 +52,7 @@ const leaderCategories: Array<{
     group: "Glass & Rebounding",
     items: [
       { key: "RPG", label: "Rebounds Per Game", color: "from-blue-500 to-blue-700" },
+      { key: "Rebounds", label: "Total Rebounds", color: "from-sky-500 to-sky-700" },
       { key: "Offrebounds", label: "Offensive", color: "from-cyan-500 to-cyan-700" },
       { key: "Defrebounds", label: "Defensive", color: "from-indigo-500 to-indigo-700" },
     ],
@@ -61,14 +63,16 @@ const leaderCategories: Array<{
       { key: "APG", label: "Assists Per Game", color: "from-green-500 to-green-700" },
       { key: "Assists", label: "Total Assists", color: "from-green-600 to-green-800" },
       { key: "TOVPG", label: "Turnovers / G", color: "from-zinc-500 to-zinc-700" },
+      { key: "Turnovers", label: "Total Turnovers", color: "from-stone-500 to-stone-700" },
     ],
   },
   {
     group: "Defense & Hustle",
     items: [
       { key: "SPG", label: "Steals Per Game", color: "from-purple-500 to-purple-700" },
+      { key: "Steals", label: "Total Steals", color: "from-fuchsia-500 to-fuchsia-700" },
       { key: "BPG", label: "Blocks Per Game", color: "from-amber-500 to-amber-700" },
-      { key: "PersonalFouls", label: "Total Fouls", color: "from-red-500 to-red-700" },
+      { key: "Blocks", label: "Total Blocks", color: "from-yellow-500 to-yellow-700" },
     ],
   },
 ];

@@ -1,8 +1,14 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
 import TeamProfileClient, { type TeamProfileSeason } from "./team-profile-client";
-import { aggregatePlayerStats, getLeagueData, getSeasonTeamsWithAggregates } from "@/lib/league-data";
+import {
+    aggregatePlayerStats,
+    getLeagueData,
+    getSeasonPlayersWithAggregates,
+    getSeasonTeamsWithAggregates,
+} from "@/lib/league-data";
 import { getSeasonChampion } from "@/lib/season-honors";
+import { getSeasonPlayerOveralls } from "@/lib/player-overalls";
 
 function normalizeTeamKey(value: string): string {
     return value.replace(/\s+/g, "").trim().toLowerCase();
@@ -16,6 +22,12 @@ function getTeamSeasons(teamName: string): TeamProfileSeason[] {
 
     for (const seasonId of seasonIds) {
         const seasonTeams = getSeasonTeamsWithAggregates(seasonId);
+        const overallsByPlayerName = new Map(
+            getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId), seasonId).map((entry) => [
+                entry.player.name.trim().toLowerCase(),
+                entry.overall,
+            ])
+        );
         const match = seasonTeams.find((team) => normalizeTeamKey(team.Team) === normalizedName);
         if (!match) {
             continue;
@@ -41,6 +53,7 @@ function getTeamSeasons(teamName: string): TeamProfileSeason[] {
                         ppg: aggregatedPlayer.PPG,
                         apg: aggregatedPlayer.APG,
                         rpg: aggregatedPlayer.RPG,
+                        overall: overallsByPlayerName.get(player.name.trim().toLowerCase()) ?? 60,
                     };
                 }),
             },

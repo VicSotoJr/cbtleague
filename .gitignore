@@ -51,3 +51,19 @@ public/images/player-heads/thumbs/
 migration_backup/
 skills-lock.json
 random.txt
+
+# local secure-repo templates/rules (do not commit)
+.env.example
+.clinerules
+.cursorrules
+.windsurfrules
+CLAUDE.md
+.github/copilot-instructions.md
+ACCESSIBILITY.md
+API.md
+AUTH.md
+SECURITY.md
+DATABASE.md
+DEPLOYMENT.md
+ENV_VARIABLES.md
+INCIDENT_RESPONSE.md

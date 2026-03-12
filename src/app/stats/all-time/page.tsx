@@ -31,11 +31,29 @@ const BASE_STATS_TEMPLATE: BaseStats = {
 
 const BASE_STAT_KEYS = Object.keys(BASE_STATS_TEMPLATE) as Array<keyof BaseStats>;
 
-type TotalKey = "Points" | "Rebounds" | "Assists" | "Steals" | "Blocks";
-type AverageKey = TotalKey | "EFF";
+type CareerMetricKey =
+  | "PPG"
+  | "Points"
+  | "ThreesMade"
+  | "EFF"
+  | "FG%"
+  | "2P%"
+  | "3P%"
+  | "FT%"
+  | "RPG"
+  | "Rebounds"
+  | "Offrebounds"
+  | "Defrebounds"
+  | "APG"
+  | "Assists"
+  | "TOVPG"
+  | "Turnovers"
+  | "SPG"
+  | "Steals"
+  | "BPG"
+  | "Blocks";
 
-type Totals = Record<TotalKey, number>;
-type Averages = Record<AverageKey, number>;
+type CareerMetrics = Record<CareerMetricKey, number>;
 
 type CareerAccumulator = {
   stats: BaseStats;
@@ -48,23 +66,16 @@ type CareerRecord = {
   name: string;
   playerHead?: string;
   data: CareerAccumulator;
-  totals: Totals;
-  averages: Averages;
+  metrics: CareerMetrics;
 };
 
-type LeaderCategory =
-  | {
-      key: TotalKey;
-      label: string;
-      icon: typeof Trophy;
-      isAvg: false;
-    }
-  | {
-      key: AverageKey;
-      label: string;
-      icon: typeof Star;
-      isAvg: true;
-    };
+type LeaderCategory = {
+  key: CareerMetricKey;
+  label: string;
+  icon: typeof Trophy | typeof Star;
+  minimumGames?: number;
+  valueType: "total" | "rate";
+};
 
 function createBaseStats(): BaseStats {
   return { ...BASE_STATS_TEMPLATE };
@@ -106,9 +117,11 @@ function getAllTimeStats(): Record<string, CareerAccumulator> {
 function buildCareerRecords(records: Record<string, CareerAccumulator>): CareerRecord[] {
   return Object.entries(records).map(([name, data]) => {
     const stats = data.stats;
-    const gp = data.gp || 1;
+    const gamesPlayed = Math.max(data.gp, 1);
     const missedFG = Math.max(0, stats.FieldGoalAttempts - stats.FieldGoalsMade);
     const missedFT = Math.max(0, stats.FreeThrowsAttempts - stats.FreeThrowsMade);
+    const twoPM = Math.max(0, stats.FieldGoalsMade - stats.ThreesMade);
+    const twoPA = Math.max(0, stats.FieldGoalAttempts - stats.ThreesAttempts);
     const totalEff =
       stats.Points +
       stats.Rebounds +
@@ -123,34 +136,40 @@ function buildCareerRecords(records: Record<string, CareerAccumulator>): CareerR
       name,
       playerHead: data.playerHead,
       data,
-      totals: {
+      metrics: {
+        PPG: stats.Points / gamesPlayed,
         Points: stats.Points,
+        ThreesMade: stats.ThreesMade,
+        EFF: totalEff / gamesPlayed,
+        "FG%": (stats.FieldGoalsMade / Math.max(stats.FieldGoalAttempts, 1)) * 100,
+        "2P%": (twoPM / Math.max(twoPA, 1)) * 100,
+        "3P%": (stats.ThreesMade / Math.max(stats.ThreesAttempts, 1)) * 100,
+        "FT%": (stats.FreeThrowsMade / Math.max(stats.FreeThrowsAttempts, 1)) * 100,
+        RPG: stats.Rebounds / gamesPlayed,
         Rebounds: stats.Rebounds,
+        Offrebounds: stats.Offrebounds,
+        Defrebounds: stats.Defrebounds,
+        APG: stats.Assists / gamesPlayed,
         Assists: stats.Assists,
+        TOVPG: stats.Turnovers / gamesPlayed,
+        Turnovers: stats.Turnovers,
+        SPG: stats.Steals / gamesPlayed,
         Steals: stats.Steals,
+        BPG: stats.Blocks / gamesPlayed,
         Blocks: stats.Blocks,
-      },
-      averages: {
-        Points: stats.Points / gp,
-        Rebounds: stats.Rebounds / gp,
-        Assists: stats.Assists / gp,
-        Steals: stats.Steals / gp,
-        Blocks: stats.Blocks / gp,
-        EFF: totalEff / gp,
       },
     };
   });
 }
 
 function getTop5(records: CareerRecord[], category: LeaderCategory): CareerRecord[] {
-  const filtered = category.isAvg ? records.filter((record) => record.data.gp >= 5) : records;
+  const minimumGames = category.minimumGames;
+  const filtered = minimumGames
+    ? records.filter((record) => record.data.gp >= minimumGames)
+    : records;
 
   return filtered
-    .toSorted((a, b) => {
-      const valA = category.isAvg ? a.averages[category.key] : a.totals[category.key];
-      const valB = category.isAvg ? b.averages[category.key] : b.totals[category.key];
-      return valB - valA;
-    })
+    .toSorted((a, b) => b.metrics[category.key] - a.metrics[category.key])
     .slice(0, 5);
 }
 
@@ -159,17 +178,26 @@ export default function AllTimePage() {
   const validRecords = buildCareerRecords(records);
 
   const categories: LeaderCategory[] = [
-    { key: "Points", label: "Total Points", icon: Trophy, isAvg: false },
-    { key: "Rebounds", label: "Total Rebounds", icon: Trophy, isAvg: false },
-    { key: "Assists", label: "Total Assists", icon: Trophy, isAvg: false },
-    { key: "Steals", label: "Total Steals", icon: Trophy, isAvg: false },
-    { key: "Blocks", label: "Total Blocks", icon: Trophy, isAvg: false },
-    { key: "EFF", label: "Career Efficiency", icon: Star, isAvg: true },
-    { key: "Points", label: "Career PPG (Min. 5 GP)", icon: Star, isAvg: true },
-    { key: "Rebounds", label: "Career RPG (Min. 5 GP)", icon: Star, isAvg: true },
-    { key: "Assists", label: "Career APG (Min. 5 GP)", icon: Star, isAvg: true },
-    { key: "Steals", label: "Career SPG (Min. 5 GP)", icon: Star, isAvg: true },
-    { key: "Blocks", label: "Career BPG (Min. 5 GP)", icon: Star, isAvg: true },
+    { key: "Points", label: "Total Points", icon: Trophy, valueType: "total" },
+    { key: "ThreesMade", label: "3PM", icon: Trophy, valueType: "total" },
+    { key: "Rebounds", label: "Total Rebounds", icon: Trophy, valueType: "total" },
+    { key: "Offrebounds", label: "Offensive Rebounds", icon: Trophy, valueType: "total" },
+    { key: "Defrebounds", label: "Defensive Rebounds", icon: Trophy, valueType: "total" },
+    { key: "Assists", label: "Total Assists", icon: Trophy, valueType: "total" },
+    { key: "Turnovers", label: "Total Turnovers", icon: Trophy, valueType: "total" },
+    { key: "Steals", label: "Total Steals", icon: Trophy, valueType: "total" },
+    { key: "Blocks", label: "Total Blocks", icon: Trophy, valueType: "total" },
+    { key: "PPG", label: "Career PPG (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "EFF", label: "Career Efficiency (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "FG%", label: "Career FG% (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "2P%", label: "Career 2P% (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "3P%", label: "Career 3P% (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "FT%", label: "Career FT% (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "RPG", label: "Career RPG (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "APG", label: "Career APG (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "TOVPG", label: "Career TOVPG (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "SPG", label: "Career SPG (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
+    { key: "BPG", label: "Career BPG (Min. 5 GP)", icon: Star, minimumGames: 5, valueType: "rate" },
   ];
 
   return (
@@ -234,9 +262,9 @@ export default function AllTimePage() {
                     </div>
                     <div className="text-right">
                       <p className="text-2xl font-black italic text-white">
-                        {category.isAvg
-                          ? player.averages[category.key].toFixed(1)
-                          : player.totals[category.key]}
+                        {category.valueType === "rate"
+                          ? player.metrics[category.key].toFixed(1)
+                          : player.metrics[category.key]}
                       </p>
                       <p className="text-[10px] text-zinc-600 font-bold uppercase">{player.data.gp} Games</p>
                     </div>

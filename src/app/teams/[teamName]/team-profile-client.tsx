@@ -17,6 +17,7 @@ type TeamProfileRosterPlayer = {
   ppg: number;
   apg: number;
   rpg: number;
+  overall: number;
 };
 
 type TeamProfileSnapshot = {
@@ -148,7 +149,12 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
                     <h3 className="truncate font-bold text-white group-hover:text-copper-500 transition-colors uppercase tracking-tight">
                       {player.name}
                     </h3>
-                    <p className="text-sm font-mono text-zinc-500">#{player.number}</p>
+                    <div className="mt-1 flex items-center gap-2">
+                      <p className="text-sm font-mono text-zinc-500">#{player.number}</p>
+                      <span className="inline-flex items-center rounded-full border border-copper-500/20 bg-copper-500/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.16em] text-copper-400">
+                        OVR {player.overall}
+                      </span>
+                    </div>
                   </div>
                 </div>
 

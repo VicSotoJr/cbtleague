@@ -17,8 +17,6 @@ const LOCAL_QUEUED_GAMES_KEY = "cbtleague-admin-queued-games";
 const LOCAL_ADMIN_SETTINGS_KEY = "cbtleague-admin-settings";
 const ADMIN_API_ENDPOINT = process.env.NEXT_PUBLIC_ADMIN_API_URL ?? "/api/admin/update-stats";
 
-type StatKey = keyof BaseStats;
-
 const EMPTY_STATS: BaseStats = {
   Points: 0,
   FieldGoalsMade: 0,
@@ -36,6 +34,68 @@ const EMPTY_STATS: BaseStats = {
   Turnovers: 0,
   PersonalFouls: 0,
 };
+
+type AdminStatForm = {
+  TwoPointMade: number;
+  TwoPointAttempts: number;
+  ThreesMade: number;
+  ThreesAttempts: number;
+  FreeThrowsMade: number;
+  FreeThrowsAttempts: number;
+  Offrebounds: number;
+  Defrebounds: number;
+  Assists: number;
+  Blocks: number;
+  Steals: number;
+  Turnovers: number;
+  PersonalFouls: number;
+};
+
+const EMPTY_STAT_FORM: AdminStatForm = {
+  TwoPointMade: 0,
+  TwoPointAttempts: 0,
+  ThreesMade: 0,
+  ThreesAttempts: 0,
+  FreeThrowsMade: 0,
+  FreeThrowsAttempts: 0,
+  Offrebounds: 0,
+  Defrebounds: 0,
+  Assists: 0,
+  Blocks: 0,
+  Steals: 0,
+  Turnovers: 0,
+  PersonalFouls: 0,
+};
+
+const DERIVED_STAT_CARDS: Array<{
+  key: keyof Pick<BaseStats, "Points" | "FieldGoalsMade" | "FieldGoalAttempts" | "Rebounds">;
+  label: string;
+  formula: string;
+}> = [
+  { key: "Points", label: "Points", formula: "(2PM x 2) + (3PM x 3) + FTM" },
+  { key: "FieldGoalsMade", label: "FGM", formula: "2PM + 3PM" },
+  { key: "FieldGoalAttempts", label: "FGA", formula: "2PA + 3PA" },
+  { key: "Rebounds", label: "REB", formula: "OREB + DREB" },
+];
+
+const SHOT_INPUTS: Array<{ key: keyof AdminStatForm; label: string; accent: string }> = [
+  { key: "TwoPointMade", label: "2PM", accent: "text-copper-400" },
+  { key: "TwoPointAttempts", label: "2PA", accent: "text-zinc-300" },
+  { key: "ThreesMade", label: "3PM", accent: "text-sky-400" },
+  { key: "ThreesAttempts", label: "3PA", accent: "text-zinc-300" },
+  { key: "FreeThrowsMade", label: "FTM", accent: "text-emerald-400" },
+  { key: "FreeThrowsAttempts", label: "FTA", accent: "text-zinc-300" },
+];
+
+const DETAIL_INPUTS: Array<{ key: keyof AdminStatForm; label: string }> = [
+  { key: "Offrebounds", label: "O Board" },
+  { key: "Defrebounds", label: "D Board" },
+  { key: "Assists", label: "Assists" },
+  { key: "Blocks", label: "Blocks" },
+  { key: "Steals", label: "Steals" },
+  { key: "Turnovers", label: "Turnovers" },
+  { key: "PersonalFouls", label: "Fouls" },
+];
 
 type AdminGameDraft = {
   seasonId: string;
@@ -103,6 +163,66 @@ function toStatsValue(log?: Partial<BaseStats>): BaseStats {
     Steals: log?.Steals ?? 0,
     Turnovers: log?.Turnovers ?? 0,
     PersonalFouls: log?.PersonalFouls ?? 0,
+  };
+}
+
+function normalizeShotBreakdown(base: BaseStats): { twoPM: number; twoPA: number } {
+  const pointsFromInclusive = (base.FieldGoalsMade - base.ThreesMade) * 2 + base.ThreesMade * 3 + base.FreeThrowsMade;
+  const pointsFromSeparate = base.FieldGoalsMade * 2 + base.ThreesMade * 3 + base.FreeThrowsMade;
+  const isInclusive = Math.abs(pointsFromInclusive - base.Points) <= Math.abs(pointsFromSeparate - base.Points);
+
+  const totalFGM = isInclusive ? base.FieldGoalsMade : base.FieldGoalsMade + base.ThreesMade;
+  const totalFGA = isInclusive ? base.FieldGoalAttempts : base.FieldGoalAttempts + base.ThreesAttempts;
+
+  return {
+    twoPM: Math.max(0, totalFGM - base.ThreesMade),
+    twoPA: Math.max(0, totalFGA - base.ThreesAttempts),
+  };
+}
+
+function toStatFormValue(log?: Partial<BaseStats>): AdminStatForm {
+  const base = toStatsValue(log);
+  const { twoPM, twoPA } = normalizeShotBreakdown(base);
+
+  return {
+    TwoPointMade: twoPM,
+    TwoPointAttempts: twoPA,
+    ThreesMade: base.ThreesMade,
+    ThreesAttempts: base.ThreesAttempts,
+    FreeThrowsMade: base.FreeThrowsMade,
+    FreeThrowsAttempts: base.FreeThrowsAttempts,
+    Offrebounds: base.Offrebounds,
+    Defrebounds: base.Defrebounds,
+    Assists: base.Assists,
+    Blocks: base.Blocks,
+    Steals: base.Steals,
+    Turnovers: base.Turnovers,
+    PersonalFouls: base.PersonalFouls,
+  };
+}
+
+function toCalculatedStats(form: AdminStatForm): BaseStats {
+  const points = form.TwoPointMade * 2 + form.ThreesMade * 3 + form.FreeThrowsMade;
+  const fieldGoalsMade = form.TwoPointMade + form.ThreesMade;
+  const fieldGoalAttempts = form.TwoPointAttempts + form.ThreesAttempts;
+  const rebounds = form.Offrebounds + form.Defrebounds;
+
+  return {
+    Points: points,
+    FieldGoalsMade: fieldGoalsMade,
+    FieldGoalAttempts: fieldGoalAttempts,
+    ThreesMade: form.ThreesMade,
+    ThreesAttempts: form.ThreesAttempts,
+    FreeThrowsMade: form.FreeThrowsMade,
+    FreeThrowsAttempts: form.FreeThrowsAttempts,
+    Rebounds: rebounds,
+    Offrebounds: form.Offrebounds,
+    Defrebounds: form.Defrebounds,
+    Assists: form.Assists,
+    Blocks: form.Blocks,
+    Steals: form.Steals,
+    Turnovers: form.Turnovers,
+    PersonalFouls: form.PersonalFouls,
   };
 }
 
@@ -268,7 +388,7 @@ export default function AdminPage() {
   const [gameDrafts, setGameDrafts] = useState<Record<string, AdminGameDraft>>({});
   const [apiUrl, setApiUrl] = useState(ADMIN_API_ENDPOINT);
   const [adminKey, setAdminKey] = useState("");
-  const [stats, setStats] = useState<BaseStats>(EMPTY_STATS);
+  const [statForm, setStatForm] = useState<AdminStatForm>(EMPTY_STAT_FORM);
   const [gameScore, setGameScore] = useState({ homeScore: "", awayScore: "" });
   const hydratedGameKeyRef = useRef("");
 
@@ -381,12 +501,12 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!selectedTeam || !selectedPlayer || !selectedGame || selectedGameIdx === "" || !selectedGameNumber) {
-      setStats(EMPTY_STATS);
+      setStatForm(EMPTY_STAT_FORM);
       return;
     }
 
     if (selectedDraftEntry) {
-      setStats(toStatsValue(selectedDraftEntry.gameLog));
+      setStatForm(toStatFormValue(selectedDraftEntry.gameLog));
       return;
     }
 
@@ -398,7 +518,7 @@ export default function AdminPage() {
       opponent: selectedOpponent,
     });
 
-    setStats(existingStats ?? EMPTY_STATS);
+    setStatForm(toStatFormValue(existingStats ?? EMPTY_STATS));
   }, [
     season,
     selectedDraftEntry,
@@ -410,12 +530,18 @@ export default function AdminPage() {
     selectedTeam,
   ]);
 
+  const stats = useMemo(() => toCalculatedStats(statForm), [statForm]);
   const errors = {
-    fg: stats.FieldGoalsMade > stats.FieldGoalAttempts,
-    three: stats.ThreesMade > stats.ThreesAttempts,
-    impossibleThree: stats.ThreesAttempts > stats.FieldGoalAttempts,
+    two: statForm.TwoPointMade > statForm.TwoPointAttempts,
+    three: statForm.ThreesMade > statForm.ThreesAttempts,
+    freeThrow: statForm.FreeThrowsMade > statForm.FreeThrowsAttempts,
   };
   const hasErrors = Object.values(errors).some(Boolean);
+  const validationMessages = [
+    errors.two ? "2PM cannot be greater than 2PA." : null,
+    errors.three ? "3PM cannot be greater than 3PA." : null,
+    errors.freeThrow ? "FTM cannot be greater than FTA." : null,
+  ].filter((message): message is string => Boolean(message));
   const hasManualScore = gameScore.homeScore.trim() !== "" && gameScore.awayScore.trim() !== "";
   const hasScoreChange =
     selectedGame !== null &&
@@ -449,7 +575,7 @@ export default function AdminPage() {
     selectedGameNumber,
   ]);
 
-  const resetStats = useCallback(() => setStats(EMPTY_STATS), []);
+  const resetStats = useCallback(() => setStatForm(EMPTY_STAT_FORM), []);
 
   const handleStagePlayer = useCallback(() => {
     if (!selectedPlayer || !selectedGame || !selectedTeam || !selectedGameKey || !selectedGameNumber || hasErrors) {
@@ -816,33 +942,107 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className={cn("grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4", !selectedPlayer && "opacity-40")}>
-                {(Object.entries(stats) as Array<[StatKey, number]>).map(([key, value]) => (
-                  <div key={key} className="group">
-                    <label className="mb-3 block text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-copper-500">
-                      {key}
-                    </label>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      disabled={!selectedPlayer}
-                      value={value === 0 ? "" : value}
-                      onChange={(e) => {
-                        const val = e.target.value.replace(/[^0-9]/g, "");
-                        setStats((prev) => ({ ...prev, [key]: val === "" ? 0 : Number.parseInt(val, 10) }));
-                      }}
-                      onFocus={(e) => e.target.select()}
-                      placeholder="0"
-                      className={cn(
-                        "w-full border-b-2 bg-transparent p-0 pb-2 text-3xl font-black italic tracking-tighter transition-all placeholder:text-zinc-800 focus:outline-none",
-                        (key === "FieldGoalsMade" && errors.fg) || (key === "ThreesAttempts" && errors.impossibleThree)
-                          ? "border-red-500/50 text-red-500"
-                          : "border-white/10 text-white focus:border-copper-600",
-                        !selectedPlayer && "cursor-not-allowed"
-                      )}
-                    />
+              <div className={cn("space-y-8", !selectedPlayer && "opacity-40")}>
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                  {DERIVED_STAT_CARDS.map(({ key, label, formula }) => (
+                    <div key={key} className="rounded-3xl border border-white/5 bg-black/20 p-5">
+                      <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">{label}</p>
+                      <p className="mt-3 text-4xl font-black italic tracking-tighter text-white">
+                        {stats[key]}
+                      </p>
+                      <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-500">
+                        {formula}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="rounded-[2rem] border border-white/5 bg-black/20 p-6">
+                  <div className="mb-6">
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">Shot Math</p>
+                    <p className="mt-2 text-sm font-medium text-zinc-500">
+                      Enter 2-point, 3-point, and free throw totals. Field goals and points calculate automatically.
+                    </p>
                   </div>
-                ))}
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3">
+                    {SHOT_INPUTS.map(({ key, label, accent }) => (
+                      <div key={key} className="group">
+                        <label
+                          className={cn(
+                            "mb-3 block text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-copper-500",
+                            accent
+                          )}
+                        >
+                          {label}
+                        </label>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          disabled={!selectedPlayer}
+                          value={statForm[key] === 0 ? "" : statForm[key]}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/[^0-9]/g, "");
+                            setStatForm((prev) => ({
+                              ...prev,
+                              [key]: val === "" ? 0 : Number.parseInt(val, 10),
+                            }));
+                          }}
+                          onFocus={(e) => e.target.select()}
+                          placeholder="0"
+                          className={cn(
+                            "w-full border-b-2 bg-transparent p-0 pb-2 text-3xl font-black italic tracking-tighter transition-all placeholder:text-zinc-800 focus:outline-none",
+                            (key === "TwoPointMade" && errors.two) ||
+                              (key === "TwoPointAttempts" && errors.two) ||
+                              (key === "ThreesMade" && errors.three) ||
+                              (key === "ThreesAttempts" && errors.three) ||
+                              (key === "FreeThrowsMade" && errors.freeThrow) ||
+                              (key === "FreeThrowsAttempts" && errors.freeThrow)
+                              ? "border-red-500/50 text-red-500"
+                              : "border-white/10 text-white focus:border-copper-600",
+                            !selectedPlayer && "cursor-not-allowed"
+                          )}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-[2rem] border border-white/5 bg-black/20 p-6">
+                  <div className="mb-6">
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">Box Score Details</p>
+                    <p className="mt-2 text-sm font-medium text-zinc-500">
+                      Offensive and defensive boards roll up into total rebounds automatically.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4">
+                    {DETAIL_INPUTS.map(({ key, label }) => (
+                      <div key={key} className="group">
+                        <label className="mb-3 block text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-copper-500">
+                          {label}
+                        </label>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          disabled={!selectedPlayer}
+                          value={statForm[key] === 0 ? "" : statForm[key]}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/[^0-9]/g, "");
+                            setStatForm((prev) => ({
+                              ...prev,
+                              [key]: val === "" ? 0 : Number.parseInt(val, 10),
+                            }));
+                          }}
+                          onFocus={(e) => e.target.select()}
+                          placeholder="0"
+                          className={cn(
+                            "w-full border-b-2 bg-transparent p-0 pb-2 text-3xl font-black italic tracking-tighter text-white transition-all placeholder:text-zinc-800 focus:border-copper-600 focus:outline-none",
+                            !selectedPlayer && "cursor-not-allowed"
+                          )}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -853,9 +1053,11 @@ export default function AdminPage() {
                 {hasErrors ? (
                   <div className="mb-8 flex items-start gap-4 rounded-2xl border border-red-500/20 bg-red-400/5 p-4 text-red-400">
                     <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-                    <p className="text-xs font-bold leading-relaxed">
-                      Math Error: You have more 3P attempts than total Field Goal attempts. Check your data.
-                    </p>
+                    <div className="space-y-1 text-xs font-bold leading-relaxed">
+                      {validationMessages.map((message) => (
+                        <p key={message}>{message}</p>
+                      ))}
+                    </div>
                   </div>
                 ) : (
                   <div className="mb-8 space-y-4">
@@ -924,7 +1126,7 @@ export default function AdminPage() {
                     </div>
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-zinc-500">
-                    The schedule score comes from these boxes only. It is not auto-calculated from player totals.
+                    The schedule score comes from these boxes only. Player box scores are calculated separately from the shot math above.
                   </p>
                 </div>
 
