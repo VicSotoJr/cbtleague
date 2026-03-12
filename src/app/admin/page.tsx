@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Download, Save, User } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -254,6 +254,7 @@ export default function AdminPage() {
   const [adminKey, setAdminKey] = useState("");
   const [stats, setStats] = useState<BaseStats>(EMPTY_STATS);
   const [gameScore, setGameScore] = useState({ homeScore: "", awayScore: "" });
+  const hydratedGameKeyRef = useRef("");
 
   useEffect(() => {
     setQueuedCount(readQueuedGames().length);
@@ -336,76 +337,29 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!selectedGame || !selectedGameNumber) {
+      hydratedGameKeyRef.current = "";
       setGameScore({ homeScore: "", awayScore: "" });
       return;
     }
 
-    if (selectedGameDraft) {
-      setGameScore({
-        homeScore: selectedGameDraft.homeScore,
-        awayScore: selectedGameDraft.awayScore,
-      });
+    if (selectedGameKey && hydratedGameKeyRef.current === selectedGameKey) {
       return;
     }
 
+    hydratedGameKeyRef.current = selectedGameKey;
+
+    // Hydrate the score inputs when the matchup changes, then let local input state drive edits.
     setGameScore({
-      homeScore: defaultGameScore.homeScore,
-      awayScore: defaultGameScore.awayScore,
-    });
-  }, [defaultGameScore.awayScore, defaultGameScore.homeScore, selectedGame, selectedGameDraft, selectedGameNumber]);
-
-  useEffect(() => {
-    if (!selectedGame || !selectedGameKey || !selectedGameNumber) return;
-
-    const scoreChanged =
-      gameScore.homeScore !== defaultGameScore.homeScore || gameScore.awayScore !== defaultGameScore.awayScore;
-
-    setGameDrafts((prev) => {
-      const existingDraft = prev[selectedGameKey];
-      const nextUpdates = existingDraft?.updates ?? [];
-
-      if (!scoreChanged && nextUpdates.length === 0) {
-        if (!existingDraft) return prev;
-
-        const nextDrafts = { ...prev };
-        delete nextDrafts[selectedGameKey];
-        return nextDrafts;
-      }
-
-      const nextDraft = buildDraftFromGame({
-        seasonId,
-        gameNumber: selectedGameNumber,
-        gameLabel: selectedGame.week,
-        homeTeam: selectedGame.homeTeam,
-        awayTeam: selectedGame.awayTeam,
-        homeScore: gameScore.homeScore,
-        awayScore: gameScore.awayScore,
-        updates: nextUpdates,
-      });
-
-      if (
-        existingDraft &&
-        existingDraft.homeScore === nextDraft.homeScore &&
-        existingDraft.awayScore === nextDraft.awayScore &&
-        existingDraft.updates === nextDraft.updates
-      ) {
-        return prev;
-      }
-
-      return {
-        ...prev,
-        [selectedGameKey]: nextDraft,
-      };
+      homeScore: selectedGameDraft?.homeScore ?? defaultGameScore.homeScore,
+      awayScore: selectedGameDraft?.awayScore ?? defaultGameScore.awayScore,
     });
   }, [
     defaultGameScore.awayScore,
     defaultGameScore.homeScore,
-    gameScore.awayScore,
-    gameScore.homeScore,
     selectedGame,
+    selectedGameDraft,
     selectedGameKey,
     selectedGameNumber,
-    seasonId,
   ]);
 
   useEffect(() => {
@@ -556,10 +510,7 @@ export default function AdminPage() {
         (entry) => !(entry.teamName === selectedTeam && entry.playerName === selectedPlayer)
       );
 
-      const shouldKeepScoreDraft =
-        existingDraft.homeScore !== defaultGameScore.homeScore || existingDraft.awayScore !== defaultGameScore.awayScore;
-
-      if (nextUpdates.length === 0 && !shouldKeepScoreDraft) {
+      if (nextUpdates.length === 0) {
         const nextDrafts = { ...prev };
         delete nextDrafts[selectedGameKey];
         return nextDrafts;
@@ -580,7 +531,7 @@ export default function AdminPage() {
     });
     setSelectedPlayer("");
     resetStats();
-  }, [defaultGameScore.awayScore, defaultGameScore.homeScore, resetStats, selectedGameKey, selectedPlayer, selectedTeam]);
+  }, [resetStats, selectedGameKey, selectedPlayer, selectedTeam]);
 
   const handlePublishGame = useCallback(async () => {
     if (!publishDraft || !selectedGameKey || !hasManualScore) return;
