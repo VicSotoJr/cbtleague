@@ -141,34 +141,44 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
                     teamName: team.Team,
                   })}
                   prefetch={false}
-                  className="group rounded-2xl border border-white/5 bg-zinc-900/50 p-4 transition-all hover:bg-zinc-900 hover:scale-[1.02] active:scale-[0.98]"
+                  className="group relative overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/50 p-4 transition-all hover:bg-zinc-900 hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(194,120,69,0.12),transparent_34%)] opacity-70 transition-opacity group-hover:opacity-100" />
+
+                  <div className="relative flex items-start gap-4">
                     <PlayerHead
                       playerName={player.name}
                       playerHead={player.PlayerHead}
                       size={64}
                       className="rounded-xl group-hover:scale-110 transition-transform"
                     />
-                    <div className="min-w-0 flex-1">
+                    <div className="min-w-0 flex-1 pr-2">
                       <h3 className="truncate font-bold text-white group-hover:text-copper-500 transition-colors uppercase tracking-tight">
                         {player.name}
                       </h3>
-                      <div className="mt-1 flex items-center gap-2">
+                      <div className="mt-2 flex items-center gap-2">
                         <p className="text-sm font-mono text-zinc-500">#{player.number}</p>
-                        <span
-                          className={cn(
-                            "inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.16em]",
-                            overallClasses.badge
-                          )}
-                        >
-                          OVR {player.overall}
-                        </span>
+                      </div>
+                    </div>
+                    <div className="relative shrink-0">
+                      <div className={cn("absolute inset-1 rounded-full blur-md", overallClasses.glow)} />
+                      <div
+                        className={cn(
+                          "relative grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br p-[2px] shadow-[0_14px_30px_rgba(0,0,0,0.4)]",
+                          overallClasses.ring
+                        )}
+                      >
+                        <div className="flex h-full w-full flex-col items-center justify-center rounded-full border border-black/40 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.08),rgba(24,24,27,0.98)_48%,rgba(8,8,10,1)_100%)] text-center">
+                          <span className="text-[8px] font-black uppercase tracking-[0.22em] text-white/70">OVR</span>
+                          <span className={cn("mt-0.5 text-2xl font-black italic leading-none", overallClasses.text)}>
+                            {player.overall}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-4 grid grid-cols-4 gap-2 border-t border-white/5 pt-3">
+                  <div className="relative mt-4 grid grid-cols-4 gap-2 border-t border-white/5 pt-3">
                     <RosterStat label="GP" value={String(player.gp)} />
                     <RosterStat label="PPG" value={player.ppg.toFixed(1)} />
                     <RosterStat label="APG" value={player.apg.toFixed(1)} />
