@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import TeamLogo from "@/components/league/team-logo";
 import PlayerHead from "@/components/league/player-head";
 import { ArrowLeft } from "lucide-react";
 import type { AggregatedBaseStats } from "@/types/league";
-import { buildPlayerProfileHref } from "@/lib/player-links";
+import { buildCurrentReturnTo, buildPlayerProfileHref, getSafeReturnTo } from "@/lib/player-links";
 import { cn } from "@/lib/utils";
 import { getOverallTierClasses } from "@/lib/player-overall-tier";
 
@@ -19,7 +19,7 @@ type TeamProfileRosterPlayer = {
   ppg: number;
   apg: number;
   rpg: number;
-  overall: number;
+  overall: number | null;
 };
 
 type TeamProfileSnapshot = {
@@ -51,8 +51,10 @@ function RosterStat({ label, value }: { label: string; value: string }) {
 }
 
 export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const requestedSeason = searchParams.get("season");
+  const explicitReturnTo = getSafeReturnTo(searchParams.get("returnTo"));
 
   const seasonId = React.useMemo(() => {
     if (requestedSeason && seasons.some((season) => season.seasonId === requestedSeason)) {
@@ -69,6 +71,7 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
   const team = selectedSeason?.team ?? null;
   const championTeam = selectedSeason?.championTeam ?? null;
   const isChampion = championTeam === team?.Team;
+  const currentReturnTo = React.useMemo(() => buildCurrentReturnTo(pathname, searchParams), [pathname, searchParams]);
 
   if (!team) {
     return (
@@ -83,14 +86,14 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 md:px-6">
+    <div className="container mx-auto overflow-x-hidden px-4 py-12 md:px-6">
       <Link
-        href={`/teams/?season=${seasonId}`}
+        href={explicitReturnTo ?? `/teams/?season=${seasonId}`}
         prefetch={false}
         className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-zinc-500 hover:text-white transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
-        BACK TO TEAMS
+        {explicitReturnTo ? "BACK" : "BACK TO TEAMS"}
       </Link>
 
       <div className="relative mb-12 flex flex-col items-center gap-8 md:flex-row md:items-end">
@@ -106,7 +109,7 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
               </span>
             )}
           </div>
-          <h1 className="text-5xl font-black tracking-tighter text-white md:text-7xl uppercase">{team.Team}</h1>
+          <h1 className="text-4xl font-black tracking-tighter text-white sm:text-5xl md:text-7xl uppercase">{team.Team}</h1>
           <div className="mt-4 flex flex-wrap justify-center gap-6 md:justify-start">
             <div className="text-center md:text-left">
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Record</p>
@@ -139,6 +142,7 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
                   href={buildPlayerProfileHref(player.name, {
                     seasonId,
                     teamName: team.Team,
+                    returnTo: currentReturnTo,
                   })}
                   prefetch={false}
                   className="group relative overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/50 p-4 transition-all hover:bg-zinc-900 hover:scale-[1.02] active:scale-[0.98]"
@@ -171,7 +175,7 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
                         <div className="flex h-full w-full flex-col items-center justify-center rounded-full border border-black/40 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.08),rgba(24,24,27,0.98)_48%,rgba(8,8,10,1)_100%)] text-center">
                           <span className="text-[8px] font-black uppercase tracking-[0.22em] text-white/70">OVR</span>
                           <span className={cn("mt-0.5 text-2xl font-black italic leading-none", overallClasses.text)}>
-                            {player.overall}
+                            {player.overall ?? "—"}
                           </span>
                         </div>
                       </div>

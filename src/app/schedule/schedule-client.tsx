@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
 import SeasonToggle from "@/components/league/season-toggle";
+import { buildCurrentReturnTo, buildTeamProfileHref } from "@/lib/player-links";
 import {
     getScheduleSections,
     getSeasonId,
@@ -118,6 +119,7 @@ export default function ScheduleClient() {
         [scheduleSections, selectedTeam]
     );
     const seasonLabel = getSeasonLabel(seasonId);
+    const returnTo = React.useMemo(() => buildCurrentReturnTo(pathname, searchParams), [pathname, searchParams]);
 
     function buildScheduleHref(nextSeasonId: string) {
         const params = new URLSearchParams({ season: nextSeasonId });
@@ -145,13 +147,13 @@ export default function ScheduleClient() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-12 md:px-6">
+        <div className="container mx-auto overflow-x-hidden px-4 py-12 md:px-6">
             <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-                <div>
-                    <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+                <div className="min-w-0">
+                    <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
                         Game <span className="text-copper-500">Schedule</span>
                     </h1>
-                    <p className="mt-2 text-zinc-400">
+                    <p className="mt-2 max-w-xl text-sm leading-relaxed text-zinc-400 sm:text-base">
                         Chronological list of all matchups, scores, and tournament brackets.
                     </p>
                 </div>
@@ -163,8 +165,8 @@ export default function ScheduleClient() {
                 />
             </div>
 
-            <div className="mb-8 flex items-center justify-between rounded-xl border border-copper-500/20 bg-copper-600/10 p-4">
-                <div className="flex items-center gap-2">
+            <div className="mb-8 flex flex-col gap-2 rounded-xl border border-copper-500/20 bg-copper-600/10 p-4 md:flex-row md:items-center md:justify-between">
+                <div className="flex min-w-0 items-center gap-2">
                     <span className="text-sm font-bold uppercase tracking-tighter text-copper-400">Current View:</span>
                     <span className="text-lg font-bold text-white">{seasonLabel}</span>
                 </div>
@@ -183,7 +185,7 @@ export default function ScheduleClient() {
                                         <h2 className="text-3xl font-black text-white">{section.title}</h2>
                                     </div>
 
-                                    <div className="flex flex-col gap-3 lg:items-end">
+                                    <div className="flex min-w-0 flex-col gap-3 lg:items-end">
                                         <Select value={selectedTeam ?? ALL_TEAMS_VALUE} onValueChange={handleTeamChange}>
                                             <SelectTrigger
                                                 className={cn(
@@ -203,7 +205,7 @@ export default function ScheduleClient() {
                                             </SelectContent>
                                         </Select>
 
-                                        <p className="max-w-2xl text-sm text-zinc-400 lg:text-right">{section.description}</p>
+                                        <p className="max-w-2xl text-sm leading-relaxed text-zinc-400 lg:text-right">{section.description}</p>
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +261,7 @@ export default function ScheduleClient() {
                                                                     <div className="flex-1 space-y-1">
                                                                         <p className="text-sm font-medium text-zinc-500">Home</p>
                                                                         <TeamNameDisplay
-                                                                            href={`/teams/${encodeURIComponent(game.homeTeam || "")}/?season=${seasonId}`}
+                                                                            href={buildTeamProfileHref(game.homeTeam || "", { seasonId, returnTo })}
                                                                             label={game.homeTeam}
                                                                             isLink={shouldLinkTeams}
                                                                         />
@@ -281,7 +283,7 @@ export default function ScheduleClient() {
                                                                     <div className="flex-1 space-y-1">
                                                                         <p className="text-sm font-medium text-zinc-500">Away</p>
                                                                         <TeamNameDisplay
-                                                                            href={`/teams/${encodeURIComponent(game.awayTeam || "")}/?season=${seasonId}`}
+                                                                            href={buildTeamProfileHref(game.awayTeam || "", { seasonId, returnTo })}
                                                                             label={game.awayTeam}
                                                                             isLink={shouldLinkTeams}
                                                                         />

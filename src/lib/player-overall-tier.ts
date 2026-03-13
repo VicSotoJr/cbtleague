@@ -1,4 +1,16 @@
-export function getOverallTierClasses(overall: number) {
+export function getOverallTierClasses(overall: number | null | undefined) {
+  if (overall == null) {
+    return {
+      badge: "border-white/10 bg-white/5 text-zinc-300",
+      text: "text-zinc-200",
+      icon: "text-zinc-200",
+      iconSurface: "bg-white/5 border border-white/10",
+      ring: "from-[#d4d4d8] via-[#71717a] to-[#18181b]",
+      glow: "bg-zinc-300/20",
+      tierLabel: "UNRATED",
+    };
+  }
+
   if (overall >= 90) {
     return {
       badge: "border-amber-300/35 bg-amber-300/10 text-amber-200",

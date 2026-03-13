@@ -37,7 +37,7 @@ export default function HomeClient() {
 
                 <motion.div
                     variants={containerVariants}
-                    initial="hidden"
+                    initial={false}
                     animate="visible"
                     className="container relative z-10 flex flex-col items-center text-center px-0"
                 >
@@ -51,17 +51,20 @@ export default function HomeClient() {
 
                     <motion.h1
                         variants={itemVariants}
-                        className="max-w-5xl text-6xl font-black leading-none tracking-tighter text-white sm:text-8xl md:text-9xl uppercase italic"
+                        className="max-w-5xl text-5xl font-black leading-none tracking-tighter text-white sm:text-7xl md:text-9xl uppercase italic"
                     >
                         CBT <span className="text-transparent bg-clip-text bg-gradient-to-r from-copper-300 via-copper-400 to-copper-600">League</span>
                     </motion.h1>
 
                     <motion.p
                         variants={itemVariants}
-                        className="mt-8 max-w-[700px] text-lg font-medium leading-relaxed text-zinc-500 md:text-xl"
+                        className="mt-8 max-w-[320px] text-sm font-medium leading-relaxed text-zinc-500 md:max-w-[700px] md:text-xl"
                     >
-                        Experience the most competitive adult men&apos;s basketball league. <br className="hidden md:block" />
-                        Professional atmosphere, elite competition, and historical tracking.
+                        <span className="md:hidden">Competitive adult men&apos;s basketball with schedules, standings, and history.</span>
+                        <span className="hidden md:inline">
+                            Experience the most competitive adult men&apos;s basketball league. <br className="hidden md:block" />
+                            Professional atmosphere, elite competition, and historical tracking.
+                        </span>
                     </motion.p>
 
                     <motion.div
@@ -89,7 +92,7 @@ export default function HomeClient() {
             </section>
 
             {/* Featured Bento Grid */}
-            <section className="container mx-auto px-4 py-32 md:px-6">
+            <section className="container mx-auto px-4 py-24 md:px-6 md:py-32">
                 <div className="mb-16 space-y-4">
                     <h2 className="text-xs font-black uppercase tracking-[0.4em] text-zinc-600 flex items-center gap-3">
                         <div className="h-px w-8 bg-copper-500/50" />
@@ -103,14 +106,14 @@ export default function HomeClient() {
                     <Link
                         href="/stats/leaders/"
                         prefetch={false}
-                        className="group relative md:col-span-8 md:row-span-2 overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/50 p-12 transition-all hover:bg-zinc-900 hover:scale-[1.01] flex flex-col justify-between"
+                        className="group relative flex flex-col justify-between overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/50 p-6 transition-all hover:bg-zinc-900 hover:scale-[1.01] sm:p-8 md:col-span-8 md:row-span-2 md:p-12"
                     >
                         <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform">
-                            <BarChart3 className="h-64 w-64 text-white" />
+                            <BarChart3 className="h-40 w-40 text-white sm:h-52 sm:w-52 md:h-64 md:w-64" />
                         </div>
                         <div className="relative z-10">
-                            <h4 className="text-3xl md:text-5xl font-black text-white uppercase italic leading-none tracking-tighter">League <br /> Leaders</h4>
-                            <p className="mt-6 max-w-sm text-lg text-zinc-500 leading-relaxed font-medium">Top performers in Points, Rebounds, and Assists.</p>
+                            <h4 className="text-2xl font-black text-white uppercase italic leading-none tracking-tighter sm:text-3xl md:text-5xl">League <br /> Leaders</h4>
+                            <p className="mt-6 max-w-sm text-base text-zinc-500 leading-relaxed font-medium md:text-lg">Top performers in Points, Rebounds, and Assists.</p>
                         </div>
                         <div className="mt-8 flex items-center gap-3 text-sm font-black text-copper-500 uppercase tracking-widest group-hover:gap-5 transition-all">
                             EXPLORE <ArrowRight className="h-4 w-4" />
@@ -121,7 +124,7 @@ export default function HomeClient() {
                     <Link
                         href="/teams/"
                         prefetch={false}
-                        className="group relative md:col-span-4 overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/50 p-10 transition-all hover:bg-zinc-900 hover:scale-[1.01] flex flex-col justify-between"
+                        className="group relative flex flex-col justify-between overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/50 p-6 transition-all hover:bg-zinc-900 hover:scale-[1.01] sm:p-8 md:col-span-4 md:p-10"
                     >
                         <Users className="h-10 w-10 text-copper-500 mb-6" />
                         <div>
@@ -136,7 +139,7 @@ export default function HomeClient() {
                     <Link
                         href="/stats/all-time/"
                         prefetch={false}
-                        className="group relative md:col-span-4 overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/50 p-10 transition-all hover:bg-zinc-900 hover:scale-[1.01] flex flex-col justify-between"
+                        className="group relative flex flex-col justify-between overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/50 p-6 transition-all hover:bg-zinc-900 hover:scale-[1.01] sm:p-8 md:col-span-4 md:p-10"
                     >
                         <Trophy className="h-10 w-10 text-copper-500 mb-6" />
                         <div>
@@ -164,7 +167,7 @@ export default function HomeClient() {
             </section>
 
             {/* Social Signal */}
-            <section className="w-full bg-[#09090b] py-32 border-t border-white/5">
+            <section className="w-full bg-[#09090b] py-24 border-t border-white/5 md:py-32">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-12">
                         <div className="max-w-xl">
@@ -172,12 +175,12 @@ export default function HomeClient() {
                             <p className="mt-4 text-zinc-500 font-medium">Join our community on social media to catch live streams, highlights, and league updates.</p>
                         </div>
 
-                        <div className="flex gap-4">
+                        <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
                             <a
                                 href="https://www.instagram.com/_cbtleague/"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="flex items-center gap-4 rounded-3xl border border-white/10 bg-white/5 px-8 py-6 hover:bg-white/10 transition-all group"
+                                className="group flex w-full items-center gap-4 rounded-3xl border border-white/10 bg-white/5 px-6 py-5 hover:bg-white/10 transition-all sm:w-auto sm:px-8 sm:py-6"
                             >
                                 <Instagram className="h-8 w-8 text-copper-500" />
                                 <div className="text-left leading-none">
@@ -189,7 +192,7 @@ export default function HomeClient() {
                                 href="https://www.youtube.com/@coachbyrd7973/streams"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="flex items-center gap-4 rounded-3xl border border-white/10 bg-white/5 px-8 py-6 hover:bg-white/10 transition-all group"
+                                className="group flex w-full items-center gap-4 rounded-3xl border border-white/10 bg-white/5 px-6 py-5 hover:bg-white/10 transition-all sm:w-auto sm:px-8 sm:py-6"
                             >
                                 <Youtube className="h-8 w-8 text-red-500" />
                                 <div className="text-left leading-none">

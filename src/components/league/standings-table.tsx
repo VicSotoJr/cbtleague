@@ -14,10 +14,12 @@ import {
 import type { SummaryTeam } from "@/lib/league-summary";
 import { cn } from "@/lib/utils";
 import { ArrowUpDown } from "lucide-react";
+import { buildTeamProfileHref } from "@/lib/player-links";
 
 interface StandingsTableProps {
     teams: SummaryTeam[];
     seasonId: string;
+    returnTo?: string;
 }
 
 type SortConfig = {
@@ -34,7 +36,7 @@ function getSortValue(team: SummaryTeam, key: SortConfig["key"]): SortableValue 
     return team[key];
 }
 
-export default function StandingsTable({ teams, seasonId }: StandingsTableProps) {
+export default function StandingsTable({ teams, seasonId, returnTo }: StandingsTableProps) {
     const [sortConfig, setSortConfig] = useState<SortConfig>({
         key: "winPct",
         direction: "desc"
@@ -131,7 +133,11 @@ export default function StandingsTable({ teams, seasonId }: StandingsTableProps)
                                     </span>
                                 </TableCell>
                                 <TableCell>
-                                    <Link href={`/teams/${encodeURIComponent(team.Team)}/?season=${seasonId}`} prefetch={false} className="flex items-center gap-3">
+                                    <Link
+                                        href={buildTeamProfileHref(team.Team, { seasonId, returnTo })}
+                                        prefetch={false}
+                                        className="flex items-center gap-3"
+                                    >
                                         <TeamLogo
                                             teamName={team.Team}
                                             size={40}

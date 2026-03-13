@@ -1,12 +1,20 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import TeamLogo from "@/components/league/team-logo";
 import SeasonToggle from "@/components/league/season-toggle";
-import { getSeasonId, getSeasonLabel, getSeasonTeams, SEASON_OPTIONS } from "@/lib/league-summary";
+import {
+    getSeasonId,
+    getSeasonLabel,
+    getSeasonPlayersWithAggregates,
+    getSeasonTeams,
+    SEASON_OPTIONS,
+} from "@/lib/league-summary";
 import { getSeasonChampion } from "@/lib/season-honors";
+import { buildCurrentReturnTo, buildTeamProfileHref } from "@/lib/player-links";
+import { filterDisplayableSeasonPlayers } from "@/lib/player-visibility";
 
 import { motion } from "framer-motion";
 
@@ -29,20 +37,38 @@ const itemVariants = {
 };
 
 export default function TeamsClient() {
+    const pathname = usePathname();
     const searchParams = useSearchParams();
     const seasonId = getSeasonId(searchParams.get("season"));
     const seasonLabel = getSeasonLabel(seasonId);
     const teams = React.useMemo(() => getSeasonTeams(seasonId), [seasonId]);
+    const visiblePlayers = React.useMemo(
+        () => filterDisplayableSeasonPlayers(getSeasonPlayersWithAggregates(seasonId), seasonId, (entry) => entry.player.name),
+        [seasonId]
+    );
+    const visiblePlayerCountByTeam = React.useMemo(() => {
+        const counts = new Map<string, number>();
+
+        for (const entry of visiblePlayers) {
+            counts.set(entry.teamName, (counts.get(entry.teamName) ?? 0) + 1);
+        }
+
+        return counts;
+    }, [visiblePlayers]);
     const champion = React.useMemo(() => getSeasonChampion(seasonId), [seasonId]);
+    const returnTo = React.useMemo(() => buildCurrentReturnTo(pathname, searchParams), [pathname, searchParams]);
 
     return (
-        <div className="container mx-auto px-4 py-24 md:px-6">
+        <div className="container mx-auto overflow-x-hidden px-4 py-24 md:px-6">
             <div className="mb-12 flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-                <div>
-                    <h1 className="text-4xl font-black tracking-tighter text-white md:text-6xl uppercase italic leading-none">
+                <div className="min-w-0">
+                    <h1 className="text-3xl font-black tracking-tighter text-white sm:text-4xl md:text-6xl uppercase italic leading-none">
                         League <span className="text-copper-500">Teams</span>
                     </h1>
-                    <p className="mt-4 text-zinc-500 font-medium max-w-lg">
+                    <p className="mt-4 max-w-lg text-sm font-medium leading-relaxed text-zinc-500 md:hidden">
+                        Explore every roster and season result in one place.
+                    </p>
+                    <p className="mt-4 hidden max-w-lg text-sm font-medium leading-relaxed text-zinc-500 md:block sm:text-base">
                         Explore the rosters and achievements of every team across the CBT history.
                     </p>
                 </div>
@@ -55,11 +81,14 @@ export default function TeamsClient() {
             </div>
 
             <div className="mb-12 flex flex-col gap-3 rounded-xl border border-copper-500/20 bg-copper-600/10 p-4 md:flex-row md:items-center md:justify-between">
-                <div className="flex items-center gap-2">
+                <div className="flex min-w-0 items-center gap-2">
                     <span className="text-sm font-bold uppercase tracking-tighter text-copper-400">Current View:</span>
                     <span className="text-lg font-bold text-white">{seasonLabel}</span>
                 </div>
-                <p className="max-w-2xl text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
+                <p className="w-full break-words text-[10px] font-medium uppercase leading-relaxed tracking-[0.1em] text-zinc-400 md:hidden">
+                    Season-specific teams and champion tags.
+                </p>
+                <p className="hidden max-w-2xl text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-zinc-400 md:block">
                     Team cards, rosters, and champion status on this page all reflect the selected CBT season.
                 </p>
             </div>
@@ -73,7 +102,7 @@ export default function TeamsClient() {
                 {teams.map((team) => (
                     <motion.div key={team.Team} variants={itemVariants}>
                         <Link
-                            href={`/teams/${encodeURIComponent(team.Team.trim())}/?season=${seasonId}`}
+                            href={buildTeamProfileHref(team.Team, { seasonId, returnTo })}
                             prefetch={false}
                             className="group relative flex flex-col items-center overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-950 p-8 text-center transition-all hover:border-copper-500/30 hover:bg-zinc-900 active:scale-95"
                         >
@@ -97,7 +126,9 @@ export default function TeamsClient() {
                             <div className="mt-4 grid grid-cols-2 w-full gap-4 pt-6 border-t border-white/5">
                                 <div className="text-left">
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-1">Players</p>
-                                    <p className="text-lg font-bold text-white leading-none">{team.playerCount}</p>
+                                    <p className="text-lg font-bold text-white leading-none">
+                                        {visiblePlayerCountByTeam.get(team.Team) ?? team.playerCount}
+                                    </p>
                                 </div>
                                 <div className="text-right">
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-1">Record</p>

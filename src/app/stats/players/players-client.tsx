@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   Table,
   TableBody,
@@ -15,38 +15,47 @@ import { cn } from "@/lib/utils";
 import SeasonToggle from "@/components/league/season-toggle";
 import PlayerHead from "@/components/league/player-head";
 import { getSeasonId, getSeasonLabel, getSeasonPlayersWithAggregates, SEASON_OPTIONS } from "@/lib/league-summary";
-import { buildPlayerProfileHref } from "@/lib/player-links";
+import { buildCurrentReturnTo, buildPlayerProfileHref, buildTeamProfileHref } from "@/lib/player-links";
 import { getSeasonPlayerOveralls } from "@/lib/player-overalls";
 import { getOverallTierClasses } from "@/lib/player-overall-tier";
+import { filterDisplayableSeasonPlayers } from "@/lib/player-visibility";
 import { STAT_TABLE_COLUMNS } from "@/lib/stat-columns";
 
 export default function PlayersClient() {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const seasonId = getSeasonId(searchParams.get("season"));
+  const returnTo = React.useMemo(() => buildCurrentReturnTo(pathname, searchParams), [pathname, searchParams]);
 
   const players = React.useMemo(
-    () => getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId)),
+    () => getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId), seasonId),
     [seasonId]
+  );
+  const visiblePlayers = React.useMemo(
+    () => filterDisplayableSeasonPlayers(players, seasonId, (entry) => entry.player.name),
+    [players, seasonId]
   );
 
   const [searchQuery, setSearchQuery] = React.useState("");
   const deferredSearchQuery = React.useDeferredValue(searchQuery);
   const searchValue = deferredSearchQuery.trim().toLowerCase();
   const filteredPlayers = React.useMemo(
-    () => players.filter((entry) => entry.player.name.toLowerCase().includes(searchValue)),
-    [players, searchValue]
+    () => visiblePlayers.filter((entry) => entry.player.name.toLowerCase().includes(searchValue)),
+    [visiblePlayers, searchValue]
   );
 
   const seasonLabel = getSeasonLabel(seasonId);
 
   return (
-    <div className="container mx-auto px-4 py-12 md:px-6">
+    <div className="container mx-auto overflow-x-hidden px-4 py-12 md:px-6">
       <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-        <div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl uppercase italic">
+        <div className="min-w-0">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl uppercase italic">
             Player <span className="text-copper-500">Stats</span>
           </h1>
-          <p className="mt-2 text-zinc-400">Detailed statistical records for every player in the league.</p>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-zinc-400 sm:text-base">
+            Detailed statistical records for every player in the league.
+          </p>
         </div>
 
         <div className="flex w-full flex-col gap-4 md:w-auto md:flex-row md:items-center">
@@ -68,12 +77,15 @@ export default function PlayersClient() {
       </div>
 
       <div className="mb-8 flex flex-col gap-3 rounded-xl border border-copper-500/20 bg-copper-600/10 p-4 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
           <span className="text-sm font-bold text-copper-400 uppercase tracking-tighter">Current View:</span>
           <span className="text-lg font-bold text-white">{seasonLabel}</span>
         </div>
-        <p className="max-w-2xl text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
-          Season-only 2k-style model v3 using inferred stat archetypes and weighted outside scoring, inside scoring,
+        <p className="w-full break-words text-[10px] font-medium uppercase leading-relaxed tracking-[0.1em] text-zinc-400 md:hidden">
+          Season-specific ratings and player stats.
+        </p>
+        <p className="hidden max-w-2xl text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-zinc-400 md:block">
+          Season-only 2k-style model v4 using inferred stat archetypes and weighted outside scoring, inside scoring,
           playmaking, athleticism, defense, rebounding, and intangible modifiers.
         </p>
       </div>
@@ -118,6 +130,7 @@ export default function PlayersClient() {
                         href={buildPlayerProfileHref(player.name, {
                           seasonId,
                           teamName,
+                          returnTo,
                         })}
                         prefetch={false}
                         className="flex items-center gap-3 whitespace-nowrap"
@@ -133,7 +146,7 @@ export default function PlayersClient() {
                     </TableCell>
                     <TableCell className="text-zinc-500 font-bold text-sm uppercase tracking-tight whitespace-nowrap">
                       <Link
-                        href={`/teams/${encodeURIComponent(teamName.trim())}/?season=${seasonId}`}
+                        href={buildTeamProfileHref(teamName, { seasonId, returnTo })}
                         prefetch={false}
                         className="hover:text-white transition-colors"
                       >
@@ -147,7 +160,7 @@ export default function PlayersClient() {
                           overallClasses.badge
                         )}
                       >
-                        {entry.overall}
+                        {entry.overall ?? "—"}
                       </span>
                     </TableCell>
                     <TableCell className="text-center font-medium text-zinc-400">{aggregated.GAMES}</TableCell>

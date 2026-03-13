@@ -3,7 +3,7 @@
 import React from "react";
 import { PlayerStat } from "@/types/league";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Activity, Zap, Target, TrendingUp, ArrowLeft, Trophy } from "lucide-react";
 import PlayerHead from "@/components/league/player-head";
 import {
@@ -17,6 +17,7 @@ import {
 import type { AggregatedPlayerMetrics } from "@/types/league";
 import { cn } from "@/lib/utils";
 import { getOverallTierClasses } from "@/lib/player-overall-tier";
+import { buildCurrentReturnTo, buildTeamProfileHref, getSafeReturnTo } from "@/lib/player-links";
 
 export interface SeasonStats {
   seasonId: string;
@@ -25,7 +26,7 @@ export interface SeasonStats {
   playerHead?: string;
   stats: AggregatedPlayerMetrics;
   gameLogs: PlayerStat[];
-  overall: number;
+  overall: number | null;
 }
 
 interface PlayerProfileClientProps {
@@ -34,7 +35,9 @@ interface PlayerProfileClientProps {
 }
 
 export default function PlayerProfileClient({ playerName, seasonData }: PlayerProfileClientProps) {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const currentReturnTo = React.useMemo(() => buildCurrentReturnTo(pathname, searchParams), [pathname, searchParams]);
 
   if (seasonData.length === 0) {
     return (
@@ -55,24 +58,28 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
   const seasonsDescending = seasonData.toReversed();
   const requestedSeasonId = searchParams.get("season");
   const requestedTeamName = searchParams.get("team")?.trim();
+  const explicitReturnTo = getSafeReturnTo(searchParams.get("returnTo"));
   const returnSeason =
     seasonData.find((season) => {
       const matchesSeason = requestedSeasonId ? season.seasonId === requestedSeasonId : true;
       const matchesTeam = requestedTeamName ? season.teamName === requestedTeamName : true;
       return matchesSeason && matchesTeam;
     }) ?? latestSeason;
-  const backHref = `/teams/${encodeURIComponent(returnSeason.teamName)}/?season=${returnSeason.seasonId}`;
+  const backHref =
+    explicitReturnTo ?? buildTeamProfileHref(returnSeason.teamName, { seasonId: returnSeason.seasonId });
+  const backLabel = explicitReturnTo ? "BACK" : `BACK TO ${returnSeason.teamName.toUpperCase()}`;
   const latestOverallClasses = getOverallTierClasses(latestSeason.overall);
+  const latestOverallDisplay = latestSeason.overall ?? "—";
 
   return (
-    <div className="container mx-auto px-4 py-12 md:px-6">
+    <div className="container mx-auto overflow-x-hidden px-4 py-12 md:px-6">
       <Link
         href={backHref}
         prefetch={false}
         className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-zinc-500 hover:text-white transition-colors uppercase"
       >
         <ArrowLeft className="h-4 w-4" />
-        BACK TO {returnSeason.teamName}
+        {backLabel}
       </Link>
 
       <div className="relative mb-16 flex flex-col items-center gap-10 md:flex-row md:items-end">
@@ -101,7 +108,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                     OVR
                   </span>
                   <span className={cn("mt-0.5 text-4xl font-black italic leading-none md:text-[2.7rem]", latestOverallClasses.text)}>
-                    {latestSeason.overall}
+                    {latestOverallDisplay}
                   </span>
                 </div>
               </div>
@@ -109,7 +116,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
           </div>
         </div>
         <div className="text-center md:text-left">
-          <h1 className="text-5xl font-black tracking-tighter text-white md:text-7xl uppercase">{playerName}</h1>
+          <h1 className="text-4xl font-black tracking-tighter text-white sm:text-5xl md:text-7xl uppercase">{playerName}</h1>
           <div className="mt-6 flex flex-wrap justify-center gap-8 md:justify-start">
             <div>
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Latest Team</p>
@@ -141,7 +148,10 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                 <div className="flex items-center gap-4">
                   <h2 className="text-3xl font-black text-white uppercase tracking-tight">{season.seasonName}</h2>
                   <Link
-                    href={`/teams/${encodeURIComponent(season.teamName)}/?season=${season.seasonId}`}
+                    href={buildTeamProfileHref(season.teamName, {
+                      seasonId: season.seasonId,
+                      returnTo: currentReturnTo,
+                    })}
                     prefetch={false}
                     className="rounded-full bg-white/5 px-4 py-1 text-xs font-bold text-zinc-400 border border-white/10 hover:bg-white/10 transition-colors"
                   >
@@ -154,8 +164,8 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
                 <StatCard
                   label="OVR"
-                  value={season.overall}
-                  sub="Season overall"
+                  value={season.overall ?? "—"}
+                  sub={season.overall == null ? "Awaiting rating" : "Season overall"}
                   icon={<Trophy className={cn("h-4 w-4", overallClasses.icon)} />}
                   valueClassName={overallClasses.text}
                   iconContainerClassName={overallClasses.iconSurface}

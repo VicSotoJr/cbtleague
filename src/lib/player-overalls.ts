@@ -1,4 +1,4 @@
-import type { SummaryPlayerWithTeamStats } from "@/lib/league-summary";
+import { getSeasonPlayersWithAggregates, type SummaryPlayerWithTeamStats } from "@/lib/league-summary";
 import type { AggregatedPlayerMetrics } from "@/types/league";
 
 export type PlayerArchetype =
@@ -27,7 +27,7 @@ export type PlayerOverallBreakdown = {
 
 export type SummaryPlayerWithOverall = SummaryPlayerWithTeamStats & {
   archetype: PlayerArchetype;
-  overall: number;
+  overall: number | null;
   rawOverall: number;
   overallBreakdown: PlayerOverallBreakdown;
 };
@@ -42,8 +42,14 @@ type ArchetypeWeightSet = CoreCategoryScores & {
 };
 
 type CurvePoint = readonly [value: number, rating: number];
+type RatedSeasonPlayer = Omit<SummaryPlayerWithOverall, "overall"> & {
+  overall: number;
+};
 
-const overallsCache = new WeakMap<SummaryPlayerWithTeamStats[], SummaryPlayerWithOverall[]>();
+const MIN_GAMES_FOR_CURRENT_OVERALL = 1;
+const ACTIVE_PLAYER_MIN_OVERALL = 67;
+const UNPROVEN_PLAYER_OVERALL = 60;
+const seasonOverallsCache = new Map<string, SummaryPlayerWithOverall[]>();
 
 const ARCHETYPE_WEIGHTS: Record<PlayerArchetype, ArchetypeWeightSet> = {
   shooting_creator_guard: {
@@ -773,15 +779,15 @@ function getOverallFromArchetype(
     Math.max(0, modifiers.offensiveConsistency - 92) * 0.1 +
     scorerLift;
 
-  return Math.round(clamp(composite + starLift, 60, 99));
+  return clamp(composite + starLift, 58, 99);
 }
 
 function translateLeagueOverall(rawOverall: number, rawOverallValues: number[]): number {
   const percentile = percentileRank(rawOverallValues, rawOverall);
   const leagueCurve = curve(percentile, [
-    [0, 62],
-    [10, 68],
-    [25, 74],
+    [0, 63],
+    [10, 69],
+    [25, 75],
     [40, 79],
     [55, 84],
     [70, 88],
@@ -791,12 +797,102 @@ function translateLeagueOverall(rawOverall: number, rawOverallValues: number[]):
     [100, 99],
   ]);
   const topEndBoost = Math.max(0, percentile - 92) * 0.18;
+  const blendedOverall = rawOverall * 0.38 + leagueCurve * 0.62 + topEndBoost;
 
-  return Math.round(clamp(rawOverall * 0.38 + leagueCurve * 0.62 + topEndBoost, 60, 99));
+  if (rawOverall < 67) {
+    const lowBandCurve = curve(rawOverall, [
+      [58, 67],
+      [59, 68],
+      [60, 69],
+      [61, 70],
+      [62, 71],
+      [63, 72],
+      [64, 73],
+      [65, 74],
+      [66, 75],
+      [67, 76],
+    ]);
+
+    return Math.round(clamp(lowBandCurve * 0.72 + blendedOverall * 0.28, ACTIVE_PLAYER_MIN_OVERALL, 99));
+  }
+
+  return Math.round(clamp(blendedOverall, ACTIVE_PLAYER_MIN_OVERALL, 99));
 }
 
-export function getSeasonPlayerOveralls(players: SummaryPlayerWithTeamStats[]): SummaryPlayerWithOverall[] {
-  const cached = overallsCache.get(players);
+function normalizePlayerName(value: string): string {
+  return value.trim().toLowerCase();
+}
+
+type HistoricalPlayerContext = {
+  careerGamesBeforeSeason: number;
+  latestOverall: number | null;
+};
+
+function buildHistoricalContextByPlayer(seasonId: string): Map<string, HistoricalPlayerContext> {
+  const context = new Map<string, HistoricalPlayerContext>();
+
+  for (let previousSeasonNumber = Number(seasonId) - 1; previousSeasonNumber >= 1; previousSeasonNumber -= 1) {
+    const previousSeasonId = String(previousSeasonNumber);
+    const previousSeasonOveralls = getSeasonPlayerOveralls(
+      getSeasonPlayersWithAggregates(previousSeasonId),
+      previousSeasonId
+    );
+
+    for (const entry of previousSeasonOveralls) {
+      const key = normalizePlayerName(entry.player.name);
+      const existing = context.get(key) ?? {
+        careerGamesBeforeSeason: 0,
+        latestOverall: null,
+      };
+
+      existing.careerGamesBeforeSeason += entry.aggregated.GAMES;
+      if (existing.latestOverall === null && entry.aggregated.GAMES > 0 && entry.overall !== null) {
+        existing.latestOverall = entry.overall;
+      }
+
+      context.set(key, existing);
+    }
+  }
+
+  return context;
+}
+
+function applyOverallAvailabilityRules(
+  seasonId: string,
+  players: RatedSeasonPlayer[]
+): SummaryPlayerWithOverall[] {
+  const historicalContextByPlayer = buildHistoricalContextByPlayer(seasonId);
+
+  return players.map((entry) => {
+    const historicalContext = historicalContextByPlayer.get(normalizePlayerName(entry.player.name));
+    const careerGames = entry.aggregated.GAMES + (historicalContext?.careerGamesBeforeSeason ?? 0);
+
+    if (entry.aggregated.GAMES >= MIN_GAMES_FOR_CURRENT_OVERALL) {
+      return {
+        ...entry,
+        overall: Math.max(entry.overall, ACTIVE_PLAYER_MIN_OVERALL),
+      };
+    }
+
+    if (historicalContext?.latestOverall != null) {
+      return {
+        ...entry,
+        overall: historicalContext.latestOverall,
+      };
+    }
+
+    return {
+      ...entry,
+      overall: careerGames === 0 ? UNPROVEN_PLAYER_OVERALL : ACTIVE_PLAYER_MIN_OVERALL,
+    };
+  });
+}
+
+export function getSeasonPlayerOveralls(
+  players: SummaryPlayerWithTeamStats[],
+  seasonId: string
+): SummaryPlayerWithOverall[] {
+  const cached = seasonOverallsCache.get(seasonId);
   if (cached) {
     return cached;
   }
@@ -850,10 +946,14 @@ export function getSeasonPlayerOveralls(players: SummaryPlayerWithTeamStats[]): 
     ...entry,
     overall: translateLeagueOverall(entry.rawOverall, rawOverallValues),
   }));
+  const availabilityAdjusted = applyOverallAvailabilityRules(seasonId, enriched);
 
-  const ranked = enriched.toSorted((a, b) => {
-    if (b.overall !== a.overall) {
-      return b.overall - a.overall;
+  const ranked = availabilityAdjusted.toSorted((a, b) => {
+    const aOverall = a.overall ?? -1;
+    const bOverall = b.overall ?? -1;
+
+    if (bOverall !== aOverall) {
+      return bOverall - aOverall;
     }
 
     if (b.rawOverall !== a.rawOverall) {
@@ -867,6 +967,6 @@ export function getSeasonPlayerOveralls(players: SummaryPlayerWithTeamStats[]): 
     return b.aggregated.Points - a.aggregated.Points;
   });
 
-  overallsCache.set(players, ranked);
+  seasonOverallsCache.set(seasonId, ranked);
   return ranked;
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import SeasonToggle from "@/components/league/season-toggle";
@@ -15,7 +15,8 @@ import {
   SEASON_OPTIONS,
 } from "@/lib/league-summary";
 import { motion } from "framer-motion";
-import { buildPlayerProfileHref } from "@/lib/player-links";
+import { buildCurrentReturnTo, buildPlayerProfileHref } from "@/lib/player-links";
+import { filterDisplayableSeasonPlayers } from "@/lib/player-visibility";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -79,11 +80,16 @@ const leaderCategories: Array<{
 ];
 
 export default function LeadersClient() {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const seasonId = getSeasonId(searchParams.get("season"));
   const seasonLabel = getSeasonLabel(seasonId);
+  const returnTo = React.useMemo(() => buildCurrentReturnTo(pathname, searchParams), [pathname, searchParams]);
 
-  const players = React.useMemo(() => getSeasonPlayersWithAggregates(seasonId), [seasonId]);
+  const players = React.useMemo(
+    () => filterDisplayableSeasonPlayers(getSeasonPlayersWithAggregates(seasonId), seasonId, (entry) => entry.player.name),
+    [seasonId]
+  );
   const topPlayersByCategory = React.useMemo(() => {
     const categoryMap = new Map<LeaderStatKey, ReturnType<typeof getTopPlayersByStat>>();
 
@@ -99,13 +105,16 @@ export default function LeadersClient() {
   }, [players]);
 
   return (
-    <div className="container mx-auto px-4 py-24 md:px-6">
+    <div className="container mx-auto overflow-x-hidden px-4 py-24 md:px-6">
       <div className="mb-16 flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
-        <div className="space-y-4">
-          <h1 className="text-5xl font-black tracking-tighter text-white md:text-7xl uppercase italic leading-none">
+        <div className="min-w-0 space-y-4">
+          <h1 className="text-3xl font-black tracking-tighter text-white sm:text-5xl md:text-7xl uppercase italic leading-none">
             League <span className="text-copper-500">Leaders</span>
           </h1>
-          <p className="max-w-[500px] text-zinc-500 font-medium">
+          <p className="max-w-[500px] text-sm font-medium leading-relaxed text-zinc-500 sm:text-base md:hidden">
+            Season-specific leaderboards for the top CBT performers.
+          </p>
+          <p className="hidden max-w-[500px] text-sm font-medium leading-relaxed text-zinc-500 md:block sm:text-base">
             Real-time statistical dominance. The elite performers defining the current CBT generation.
           </p>
         </div>
@@ -118,11 +127,14 @@ export default function LeadersClient() {
       </div>
 
       <div className="mb-12 flex flex-col gap-3 rounded-xl border border-copper-500/20 bg-copper-600/10 p-4 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
           <span className="text-sm font-bold uppercase tracking-tighter text-copper-400">Current View:</span>
           <span className="text-lg font-bold text-white">{seasonLabel}</span>
         </div>
-        <p className="max-w-2xl text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
+        <p className="w-full break-words text-[10px] font-medium uppercase leading-relaxed tracking-[0.1em] text-zinc-400 md:hidden">
+          Season-specific leaderboards.
+        </p>
+        <p className="hidden max-w-2xl text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-zinc-400 md:block">
           Leaderboards refresh by season, so every ranking on this page reflects the selected CBT campaign.
         </p>
       </div>
@@ -130,10 +142,10 @@ export default function LeadersClient() {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-32">
         {leaderCategories.map((group) => (
           <motion.div key={group.group} variants={itemVariants} className="space-y-12">
-            <div className="flex items-center gap-6">
-              <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter leading-none">{group.group}</h2>
-              <div className="h-[2px] flex-1 bg-gradient-to-r from-white/10 to-transparent" />
-            </div>
+              <div className="flex items-center gap-4 sm:gap-6">
+                <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter leading-none sm:text-3xl">{group.group}</h2>
+                <div className="h-[2px] flex-1 bg-gradient-to-r from-white/10 to-transparent" />
+              </div>
 
             <div className="grid gap-12 lg:grid-cols-2 xl:grid-cols-3">
               {group.items.map((category) => {
@@ -153,6 +165,7 @@ export default function LeadersClient() {
                           href={buildPlayerProfileHref(entry.player.name, {
                             seasonId,
                             teamName: entry.teamName,
+                            returnTo,
                           })}
                           prefetch={false}
                           className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-white/5 bg-zinc-950 p-4 transition-all hover:bg-zinc-900 active:scale-[0.98] shadow-sm hover:shadow-xl hover:border-white/10"

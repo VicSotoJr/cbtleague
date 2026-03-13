@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   Table,
@@ -15,6 +15,7 @@ import SeasonToggle from "@/components/league/season-toggle";
 import { cn } from "@/lib/utils";
 import { getSeasonId, getSeasonLabel, getSeasonTeamsWithAggregates, SEASON_OPTIONS } from "@/lib/league-summary";
 import { STAT_TABLE_COLUMNS, type StatTableColumn } from "@/lib/stat-columns";
+import { buildCurrentReturnTo, buildTeamProfileHref } from "@/lib/player-links";
 
 const rateFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 1,
@@ -122,8 +123,10 @@ function formatTeamStatValue(team: ReturnType<typeof getSeasonTeamsWithAggregate
 }
 
 export default function TeamStatsClient() {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const seasonId = getSeasonId(searchParams.get("season"));
+  const returnTo = React.useMemo(() => buildCurrentReturnTo(pathname, searchParams), [pathname, searchParams]);
   const teams = React.useMemo(
     () =>
       getSeasonTeamsWithAggregates(seasonId).toSorted(
@@ -134,13 +137,15 @@ export default function TeamStatsClient() {
   const seasonLabel = getSeasonLabel(seasonId);
 
   return (
-    <div className="container mx-auto px-4 py-12 md:px-6">
+    <div className="container mx-auto overflow-x-hidden px-4 py-12 md:px-6">
       <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-        <div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl uppercase italic">
+        <div className="min-w-0">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl uppercase italic">
             Team <span className="text-copper-500">Stats</span>
           </h1>
-          <p className="mt-2 text-zinc-400">Full team box score totals and rates using the same stat categories as player stats.</p>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-zinc-400 sm:text-base">
+            Full team box score totals and rates using the same stat categories as player stats.
+          </p>
         </div>
 
         <SeasonToggle
@@ -151,11 +156,14 @@ export default function TeamStatsClient() {
       </div>
 
       <div className="mb-8 flex flex-col gap-3 rounded-xl border border-copper-500/20 bg-copper-600/10 p-4 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
           <span className="text-sm font-bold uppercase tracking-tighter text-copper-400">Current View:</span>
           <span className="text-lg font-bold text-white">{seasonLabel}</span>
         </div>
-        <p className="max-w-2xl text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
+        <p className="w-full break-words text-[10px] font-medium uppercase leading-relaxed tracking-[0.1em] text-zinc-400 md:hidden">
+          Season-specific team totals and rate stats.
+        </p>
+        <p className="hidden max-w-2xl text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-zinc-400 md:block">
           Team totals are aggregated from player stat lines, and rate columns are normalized per team game played.
         </p>
       </div>
@@ -186,7 +194,7 @@ export default function TeamStatsClient() {
                 <TableRow key={team.Team} className="group border-white/5 transition-colors hover:bg-white/5">
                   <TableCell className="sticky left-0 z-10 bg-zinc-900/90 font-bold text-white backdrop-blur-md group-hover:text-copper-500">
                     <Link
-                      href={`/teams/${encodeURIComponent(team.Team.trim())}/?season=${seasonId}`}
+                      href={buildTeamProfileHref(team.Team, { seasonId, returnTo })}
                       prefetch={false}
                       className="whitespace-nowrap uppercase tracking-tight"
                     >

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Trophy, Star, ArrowRight } from "lucide-react";
 import PlayerHead from "@/components/league/player-head";
 import { aggregatePlayerStats, getLeagueData } from "@/lib/league-data";
+import { buildPlayerProfileHref } from "@/lib/player-links";
+import { shouldHideSeasonPlayerFromDisplay } from "@/lib/player-visibility";
 import type { BaseStats } from "@/types/league";
 
 export const metadata: Metadata = {
@@ -85,9 +87,13 @@ function getAllTimeStats(): Record<string, CareerAccumulator> {
   const leagueData = getLeagueData();
   const playerCareer = new Map<string, CareerAccumulator>();
 
-  for (const seasonData of Object.values(leagueData.seasons)) {
+  for (const [seasonId, seasonData] of Object.entries(leagueData.seasons)) {
     for (const team of seasonData.teams) {
       for (const player of team.roster) {
+        if (shouldHideSeasonPlayerFromDisplay(player.name, seasonId)) {
+          continue;
+        }
+
         const existing = playerCareer.get(player.name) ?? {
           stats: createBaseStats(),
           gp: 0,
@@ -228,7 +234,7 @@ export default function AllTimePage() {
                 {top5.map((player, i) => (
                   <Link
                     key={player.name}
-                    href={`/players/${encodeURIComponent(player.name)}/`}
+                    href={buildPlayerProfileHref(player.name, { returnTo: "/stats/all-time/" })}
                     prefetch={false}
                     className="group flex items-center gap-4 rounded-2xl border border-white/5 bg-zinc-900/40 p-4 transition-all hover:bg-zinc-900"
                   >

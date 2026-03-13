@@ -9,6 +9,7 @@ import {
 } from "@/lib/league-data";
 import { getSeasonChampion } from "@/lib/season-honors";
 import { getSeasonPlayerOveralls } from "@/lib/player-overalls";
+import { shouldHideSeasonPlayerFromDisplay } from "@/lib/player-visibility";
 
 function normalizeTeamKey(value: string): string {
     return value.replace(/\s+/g, "").trim().toLowerCase();
@@ -23,7 +24,7 @@ function getTeamSeasons(teamName: string): TeamProfileSeason[] {
     for (const seasonId of seasonIds) {
         const seasonTeams = getSeasonTeamsWithAggregates(seasonId);
         const overallsByPlayerName = new Map(
-            getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId)).map((entry) => [
+            getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId), seasonId).map((entry) => [
                 entry.player.name.trim().toLowerCase(),
                 entry.overall,
             ])
@@ -42,7 +43,9 @@ function getTeamSeasons(teamName: string): TeamProfileSeason[] {
                 loss: match.loss,
                 gamesPlayed: match.gamesPlayed,
                 aggregated: match.aggregated,
-                roster: match.roster.map((player) => {
+                roster: match.roster
+                  .filter((player) => !shouldHideSeasonPlayerFromDisplay(player.name, seasonId))
+                  .map((player) => {
                     const aggregatedPlayer = aggregatePlayerStats(player);
 
                     return {
@@ -53,7 +56,7 @@ function getTeamSeasons(teamName: string): TeamProfileSeason[] {
                         ppg: aggregatedPlayer.PPG,
                         apg: aggregatedPlayer.APG,
                         rpg: aggregatedPlayer.RPG,
-                        overall: overallsByPlayerName.get(player.name.trim().toLowerCase()) ?? 60,
+                        overall: overallsByPlayerName.get(player.name.trim().toLowerCase()) ?? null,
                     };
                 }),
             },
