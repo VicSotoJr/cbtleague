@@ -819,6 +819,28 @@ function translateLeagueOverall(rawOverall: number, rawOverallValues: number[]):
   return Math.round(clamp(blendedOverall, ACTIVE_PLAYER_MIN_OVERALL, 99));
 }
 
+function getSingleGameLowEndOverall(aggregated: AggregatedPlayerMetrics): number {
+  const debutImpactScore =
+    aggregated.EFF +
+    aggregated.Points * 0.1 +
+    aggregated.Assists * 0.35 +
+    aggregated.Rebounds * 0.15 +
+    aggregated.Steals * 0.8 +
+    aggregated.Blocks * 0.8 -
+    aggregated.Turnovers * 0.3;
+
+  return curve(debutImpactScore, [
+    [-7, 67],
+    [-1, 68],
+    [3, 68.5],
+    [6, 69],
+    [9, 70],
+    [12, 71],
+    [15, 72],
+    [19, 73],
+  ]);
+}
+
 function normalizePlayerName(value: string): string {
   return value.trim().toLowerCase();
 }
@@ -868,6 +890,15 @@ function applyOverallAvailabilityRules(
     const careerGames = entry.aggregated.GAMES + (historicalContext?.careerGamesBeforeSeason ?? 0);
 
     if (entry.aggregated.GAMES >= MIN_GAMES_FOR_CURRENT_OVERALL) {
+      if (entry.aggregated.GAMES === 1 && entry.rawOverall < 67) {
+        const singleGameOverall = getSingleGameLowEndOverall(entry.aggregated);
+
+        return {
+          ...entry,
+          overall: Math.round(clamp(entry.overall * 0.35 + singleGameOverall * 0.65, ACTIVE_PLAYER_MIN_OVERALL, 99)),
+        };
+      }
+
       return {
         ...entry,
         overall: Math.max(entry.overall, ACTIVE_PLAYER_MIN_OVERALL),

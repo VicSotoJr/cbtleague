@@ -85,7 +85,7 @@ export default function PlayersClient() {
           Season-specific ratings and player stats.
         </p>
         <p className="hidden max-w-2xl text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-zinc-400 md:block">
-          Season-only 2k-style model v4 using inferred stat archetypes and weighted outside scoring, inside scoring,
+          Season-only 2k-style model v5 using inferred stat archetypes and weighted outside scoring, inside scoring,
           playmaking, athleticism, defense, rebounding, and intangible modifiers.
         </p>
       </div>
