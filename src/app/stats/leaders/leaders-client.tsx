@@ -135,7 +135,7 @@ export default function LeadersClient() {
           Season-specific leaderboards.
         </p>
         <p className="hidden max-w-2xl text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-zinc-400 md:block">
-          Leaderboards refresh by season, so every ranking on this page reflects the selected CBT campaign.
+          Season-specific leaderboards.
         </p>
       </div>
 

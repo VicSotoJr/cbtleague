@@ -96,9 +96,9 @@ export default function HomeClient() {
                 <div className="mb-16 space-y-4">
                     <h2 className="text-xs font-black uppercase tracking-[0.4em] text-zinc-600 flex items-center gap-3">
                         <div className="h-px w-8 bg-copper-500/50" />
-                        Infrastructure
+                        Explore
                     </h2>
-                    <h3 className="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter">League <span className="text-copper-500">Core</span></h3>
+                    <h3 className="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter">League <span className="text-copper-500">Hub</span></h3>
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-12 md:grid-rows-2 h-auto md:h-[700px]">
@@ -128,8 +128,8 @@ export default function HomeClient() {
                     >
                         <Users className="h-10 w-10 text-copper-500 mb-6" />
                         <div>
-                            <h4 className="text-2xl font-black text-white uppercase italic tracking-tighter">Team Centers</h4>
-                            <p className="mt-2 text-sm text-zinc-500 leading-relaxed font-medium">Full roster management and team historical profiles.</p>
+                            <h4 className="text-2xl font-black text-white uppercase italic tracking-tighter">Teams</h4>
+                            <p className="mt-2 text-sm text-zinc-500 leading-relaxed font-medium">Rosters, records, and team pages for every season.</p>
                         </div>
                         <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-copper-500 uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-all group-hover:gap-3">
                             EXPLORE <ArrowRight className="h-3 w-3" />
@@ -144,7 +144,7 @@ export default function HomeClient() {
                         <Trophy className="h-10 w-10 text-copper-500 mb-6" />
                         <div>
                             <h4 className="text-2xl font-black text-white uppercase italic tracking-tighter">All-Time Records</h4>
-                            <p className="mt-2 text-sm text-zinc-500 leading-relaxed font-medium">Legacy data from three full seasons of action.</p>
+                            <p className="mt-2 text-sm text-zinc-500 leading-relaxed font-medium">Career leaders and league history across every season.</p>
                         </div>
                         <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-copper-500 uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-all group-hover:gap-3">
                             EXPLORE <ArrowRight className="h-3 w-3" />

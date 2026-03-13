@@ -48,7 +48,7 @@ export default function PlayersClient() {
   const seasonModelCopy =
     seasonId === "3"
       ? "SEASON-SPECIFIC RATINGS AND PLAYER STATS."
-      : "Season-only 2k-style model v7 using inferred stat archetypes with tuned middle-tier weighting and a lighter scorer-vs-connector balancing pass.";
+      : "Season-only 2K-style ratings based on each player’s scoring, playmaking, defense, rebounding, and role.";
 
   return (
     <div className="container mx-auto overflow-x-hidden px-4 py-12 md:px-6">

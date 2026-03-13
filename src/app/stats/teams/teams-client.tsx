@@ -164,7 +164,7 @@ export default function TeamStatsClient() {
           Season-specific team totals and rate stats.
         </p>
         <p className="hidden max-w-2xl text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-zinc-400 md:block">
-          Team totals are aggregated from player stat lines, and rate columns are normalized per team game played.
+          Season-specific team totals and rate stats.
         </p>
       </div>
 

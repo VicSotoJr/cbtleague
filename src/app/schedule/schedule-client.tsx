@@ -189,23 +189,31 @@ export default function ScheduleClient() {
                                         <Select value={selectedTeam ?? ALL_TEAMS_VALUE} onValueChange={handleTeamChange}>
                                             <SelectTrigger
                                                 className={cn(
-                                                    "h-11 w-full min-w-[220px] rounded-xl border-white/10 bg-white/5 px-4 text-left text-white shadow-none hover:bg-white/10 lg:w-[240px]",
+                                                    "h-11 w-full min-w-[220px] rounded-xl border-white/10 bg-white/5 px-4 text-left text-sm font-black uppercase tracking-[0.16em] text-white shadow-none hover:bg-white/10 lg:w-[240px]",
                                                     isPending && "opacity-70"
                                                 )}
                                             >
                                                 <SelectValue placeholder="All teams" />
                                             </SelectTrigger>
                                             <SelectContent className="border-white/10 bg-zinc-950 text-white">
-                                                <SelectItem value={ALL_TEAMS_VALUE}>All teams</SelectItem>
+                                                <SelectItem value={ALL_TEAMS_VALUE} className="text-sm font-black uppercase tracking-[0.16em]">
+                                                    All teams
+                                                </SelectItem>
                                                 {teamNames.map((teamName) => (
-                                                    <SelectItem key={teamName} value={teamName}>
+                                                    <SelectItem
+                                                        key={teamName}
+                                                        value={teamName}
+                                                        className="text-sm font-black uppercase tracking-[0.16em]"
+                                                    >
                                                         {teamName}
                                                     </SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>
 
-                                        <p className="max-w-2xl text-sm leading-relaxed text-zinc-400 lg:text-right">{section.description}</p>
+                                        <p className="max-w-2xl text-xs font-black uppercase leading-relaxed tracking-[0.16em] text-zinc-400 lg:text-right">
+                                            {section.description}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
