@@ -169,7 +169,7 @@ function toStatsValue(log?: Partial<BaseStats>): BaseStats {
 function normalizeShotBreakdown(base: BaseStats): { twoPM: number; twoPA: number } {
   const pointsFromInclusive = (base.FieldGoalsMade - base.ThreesMade) * 2 + base.ThreesMade * 3 + base.FreeThrowsMade;
   const pointsFromSeparate = base.FieldGoalsMade * 2 + base.ThreesMade * 3 + base.FreeThrowsMade;
-  const isInclusive = Math.abs(pointsFromInclusive - base.Points) <= Math.abs(pointsFromSeparate - base.Points);
+  const isInclusive = Math.abs(pointsFromInclusive - base.Points) < Math.abs(pointsFromSeparate - base.Points);
 
   const totalFGM = isInclusive ? base.FieldGoalsMade : base.FieldGoalsMade + base.ThreesMade;
   const totalFGA = isInclusive ? base.FieldGoalAttempts : base.FieldGoalAttempts + base.ThreesAttempts;

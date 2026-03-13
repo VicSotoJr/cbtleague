@@ -216,7 +216,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
                       {season.gameLogs.map((log, idx) => {
                         const pointsFromInclusive = (log.FieldGoalsMade - log.ThreesMade) * 2 + log.ThreesMade * 3;
                         const pointsFromSeparate = log.FieldGoalsMade * 2 + log.ThreesMade * 3;
-                        const isInclusive = Math.abs(pointsFromInclusive - log.Points) <= Math.abs(pointsFromSeparate - log.Points);
+                        const isInclusive = Math.abs(pointsFromInclusive - log.Points) < Math.abs(pointsFromSeparate - log.Points);
 
                         const totalFGM = isInclusive ? log.FieldGoalsMade : log.FieldGoalsMade + log.ThreesMade;
                         const totalFGA = isInclusive ? log.FieldGoalAttempts : log.FieldGoalAttempts + log.ThreesAttempts;

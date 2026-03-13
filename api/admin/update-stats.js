@@ -164,7 +164,7 @@ function toSafeNumber(value) {
 function normalizeShotTotals(base) {
   const pointsFromInclusive = (base.FieldGoalsMade - base.ThreesMade) * 2 + base.ThreesMade * 3;
   const pointsFromSeparate = base.FieldGoalsMade * 2 + base.ThreesMade * 3;
-  const isInclusive = Math.abs(pointsFromInclusive - base.Points) <= Math.abs(pointsFromSeparate - base.Points);
+  const isInclusive = Math.abs(pointsFromInclusive - base.Points) < Math.abs(pointsFromSeparate - base.Points);
 
   const totalFGM = isInclusive ? base.FieldGoalsMade : base.FieldGoalsMade + base.ThreesMade;
   const totalFGA = isInclusive ? base.FieldGoalAttempts : base.FieldGoalAttempts + base.ThreesAttempts;
