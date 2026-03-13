@@ -92,7 +92,7 @@ export default function AllTimeRecordsClient({
           const Icon = getSectionIcon(section.icon);
 
           return (
-            <div key={section.key} className="space-y-8">
+            <div key={section.key} className="min-w-0 space-y-8">
               <div className="flex items-center gap-4">
                 <Icon className="h-6 w-6 text-zinc-400" />
                 <h3 className="text-2xl font-black uppercase tracking-tight text-white">{section.label}</h3>
@@ -105,7 +105,7 @@ export default function AllTimeRecordsClient({
                     key={`${section.key}-${player.name}-${index}`}
                     href={player.href}
                     prefetch={false}
-                    className="group flex items-center gap-4 rounded-2xl border border-white/5 bg-zinc-900/40 p-4 transition-all hover:border-white/10 hover:bg-zinc-900"
+                    className="group flex min-w-0 items-center gap-4 rounded-2xl border border-white/5 bg-zinc-900/40 p-4 transition-all hover:border-white/10 hover:bg-zinc-900"
                   >
                     <div
                       className={cn(
