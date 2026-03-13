@@ -48,7 +48,7 @@ export default function PlayersClient() {
   const seasonModelCopy =
     seasonId === "3"
       ? "Season 3 uses commissioner-set manual overalls. Seasons 1 and 2 still use the live 2k-style model."
-      : "Season-only 2k-style model v5 using inferred stat archetypes and weighted outside scoring, inside scoring, playmaking, athleticism, defense, rebounding, and intangible modifiers.";
+      : "Season-only 2k-style model v7 using inferred stat archetypes with tuned middle-tier weighting and a lighter scorer-vs-connector balancing pass.";
 
   return (
     <div className="container mx-auto overflow-x-hidden px-4 py-12 md:px-6">

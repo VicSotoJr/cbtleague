@@ -228,6 +228,14 @@ function getPersonalFoulsPerGame(aggregated: AggregatedPlayerMetrics): number {
   return aggregated.PersonalFouls / aggregated.GAMES;
 }
 
+function getPerGameValue(total: number, aggregated: AggregatedPlayerMetrics): number {
+  if (aggregated.GAMES <= 0) {
+    return 0;
+  }
+
+  return total / aggregated.GAMES;
+}
+
 function getAssistTurnoverRatio(aggregated: AggregatedPlayerMetrics): number {
   return aggregated.Assists / Math.max(aggregated.Turnovers, 0.5);
 }
@@ -659,9 +667,10 @@ function inferPlayerArchetype(
 ): PlayerArchetype {
   const threeShare = safeRatio(aggregated.ThreesAttempts, aggregated.FieldGoalAttempts);
   const freeThrowRate = safeRatio(aggregated.FreeThrowsAttempts, aggregated.FieldGoalAttempts);
+  const offensiveReboundsPerGame = getPerGameValue(aggregated.Offrebounds, aggregated);
   const bigAnchor =
     aggregated.BPG >= 0.9 ||
-    (aggregated.Offrebounds >= 1.8 && threeShare <= 0.3) ||
+    (offensiveReboundsPerGame >= 1.8 && threeShare <= 0.3) ||
     (aggregated.RPG >= 9 && aggregated.APG < 4.5);
   const guardSignal =
     coreScores.playmaking * 0.32 +
@@ -698,7 +707,7 @@ function inferPlayerArchetype(
     coreScores.rebounding * 0.24 +
     coreScores.defense * 0.2 +
     coreScores.insideScoring * 0.2 +
-    curve(aggregated.Offrebounds, [
+    curve(offensiveReboundsPerGame, [
       [0, 35],
       [0.5, 48],
       [1, 60],
@@ -733,9 +742,26 @@ function inferPlayerArchetype(
       aggregated.RPG >= 5 &&
       aggregated.APG >= 5.5 &&
       (aggregated.PPG >= 12 || offensiveConsistency >= 80 || coreScores.insideScoring >= 90);
+    const qualifiesAsTwoWayWingInitiator =
+      aggregated.APG >= 4.8 &&
+      aggregated.RPG >= 4.5 &&
+      threeShare <= 0.22 &&
+      coreScores.defense >= 76;
+    const qualifiesAsScoringWingCreator =
+      aggregated.RPG >= 5.5 &&
+      coreScores.playmaking >= 74 &&
+      (coreScores.outsideScoring >= 80 || coreScores.insideScoring >= 78);
 
     if (qualifiesAsPointForward) {
       return "point_forward";
+    }
+
+    if (qualifiesAsTwoWayWingInitiator) {
+      return "two_way_wing";
+    }
+
+    if (qualifiesAsScoringWingCreator) {
+      return "scoring_wing";
     }
 
     if (coreScores.outsideScoring >= 82 && threeShare >= 0.32 && aggregated.APG < 6.5) {
@@ -758,6 +784,7 @@ function inferPlayerArchetype(
 
 function getOverallFromArchetype(
   archetype: PlayerArchetype,
+  aggregated: AggregatedPlayerMetrics,
   coreScores: CoreCategoryScores,
   modifiers: Pick<PlayerOverallBreakdown, "shotIQ" | "offensiveConsistency" | "intangibles">
 ): number {
@@ -779,8 +806,33 @@ function getOverallFromArchetype(
     eliteTraitCount * 0.75 +
     Math.max(0, modifiers.offensiveConsistency - 92) * 0.1 +
     scorerLift;
+  const scoringArchetypeBoost =
+    archetype === "shooting_creator_guard" ||
+    archetype === "scoring_wing" ||
+    archetype === "scoring_big";
+  const scorerBiasLift =
+    Math.max(0, aggregated.PPG - 14) * (scoringArchetypeBoost ? 0.18 : 0.1) +
+    Math.max(0, aggregated.PPG - 20) * 0.08;
+  const connectorArchetypePenaltyWeight =
+    archetype === "point_forward" ||
+    archetype === "playmaking_big" ||
+    archetype === "rim_runner_defensive_big" ||
+    archetype === "two_way_wing"
+      ? 0.34
+      : archetype === "lead_guard"
+        ? 0.16
+        : 0;
+  const connectorPenalty =
+    connectorArchetypePenaltyWeight === 0
+      ? 0
+      : Math.min(
+          2.6,
+          Math.max(0, 10 - aggregated.PPG) * connectorArchetypePenaltyWeight -
+            Math.max(0, aggregated.APG - 7.5) * 0.08 -
+            Math.max(0, aggregated.RPG - 10) * 0.05
+        );
 
-  return clamp(composite + starLift, 58, 99);
+  return clamp(composite + starLift + scorerBiasLift - connectorPenalty, 58, 99);
 }
 
 function translateLeagueOverall(rawOverall: number, rawOverallValues: number[]): number {
@@ -832,13 +884,34 @@ function getSingleGameLowEndOverall(aggregated: AggregatedPlayerMetrics): number
 
   return curve(debutImpactScore, [
     [-7, 67],
-    [-1, 68],
-    [3, 68.5],
-    [6, 69],
-    [9, 70],
-    [12, 71],
-    [15, 72],
-    [19, 73],
+    [1.5, 67],
+    [4, 68],
+    [7, 69],
+    [10, 70],
+    [13, 71],
+    [16, 72],
+    [20, 73],
+  ]);
+}
+
+function getMultiGameLowEndOverall(aggregated: AggregatedPlayerMetrics): number {
+  const seasonImpactScore =
+    aggregated.EFF +
+    aggregated.Points * 0.03 +
+    aggregated.Rebounds * 0.08 +
+    aggregated.Assists * 0.12 +
+    aggregated.Steals * 0.35 +
+    aggregated.Blocks * 0.35 -
+    aggregated.Turnovers * 0.08;
+
+  return curve(seasonImpactScore, [
+    [-2, 67],
+    [2, 67],
+    [5, 67.5],
+    [8, 68],
+    [11, 68.5],
+    [14, 69],
+    [18, 70],
   ]);
 }
 
@@ -900,6 +973,15 @@ function applyOverallAvailabilityRules(
         };
       }
 
+      if (entry.aggregated.GAMES >= 2 && entry.rawOverall < 67) {
+        const multiGameOverall = getMultiGameLowEndOverall(entry.aggregated);
+
+        return {
+          ...entry,
+          overall: Math.round(clamp(entry.overall * 0.55 + multiGameOverall * 0.45, ACTIVE_PLAYER_MIN_OVERALL, 99)),
+        };
+      }
+
       return {
         ...entry,
         overall: Math.max(entry.overall, ACTIVE_PLAYER_MIN_OVERALL),
@@ -949,7 +1031,7 @@ export function getSeasonPlayerOveralls(
       rebounding,
     };
     const archetype = inferPlayerArchetype(aggregated, coreScores, shotIQ, offensiveConsistency);
-    const rawOverall = getOverallFromArchetype(archetype, coreScores, {
+    const rawOverall = getOverallFromArchetype(archetype, aggregated, coreScores, {
       shotIQ,
       offensiveConsistency,
       intangibles,
