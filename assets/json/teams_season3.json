@@ -8,6 +8,7 @@
                 "number": 13,
                 "GamesPlayed": 0,
                 "PlayerHead": "mattperez.jpg",
+                "overall": 83,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -34,6 +35,7 @@
                 "number": 5,
                 "GamesPlayed": 0,
                 "PlayerHead": "rodneycook.jpg",
+                "overall": 82,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -58,8 +60,9 @@
             {
                 "name": "Teron Griffin",
                 "number": 12,
-                "GamesPlayed": 0,
+                "GamesPlayed": 75,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 0,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -86,6 +89,7 @@
                 "number": 0,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -112,6 +116,7 @@
                 "number": 6,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -138,6 +143,7 @@
                 "number": 3,
                 "GamesPlayed": 0,
                 "PlayerHead": "marcellrobinson.jpg",
+                "overall": 82,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -164,6 +170,7 @@
                 "number": 1,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -190,6 +197,7 @@
                 "number": 25,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -216,6 +224,7 @@
                 "number": "00",
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -242,6 +251,7 @@
                 "number": 23,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -275,6 +285,7 @@
                 "number": 1,
                 "GamesPlayed": 1,
                 "PlayerHead": "tjgreen3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "ISP",
@@ -301,6 +312,7 @@
                 "number": 8,
                 "GamesPlayed": 1,
                 "PlayerHead": "cammenefee3.jpg",
+                "overall": 87,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "ISP",
@@ -327,6 +339,7 @@
                 "number": 2,
                 "GamesPlayed": 1,
                 "PlayerHead": "jaylencrawford3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "ISP",
@@ -353,6 +366,7 @@
                 "number": 11,
                 "GamesPlayed": 1,
                 "PlayerHead": "kylefederici3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "ISP",
@@ -379,6 +393,7 @@
                 "number": 5,
                 "GamesPlayed": 1,
                 "PlayerHead": "jermainefoster3.jpg",
+                "overall": 82,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "ISP",
@@ -405,6 +420,7 @@
                 "number": 3,
                 "GamesPlayed": 1,
                 "PlayerHead": "nazvereen3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "ISP",
@@ -431,6 +447,7 @@
                 "number": 4,
                 "GamesPlayed": 1,
                 "PlayerHead": "javonwilson3.jpg",
+                "overall": 82,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "ISP",
@@ -457,6 +474,7 @@
                 "number": 10,
                 "GamesPlayed": 1,
                 "PlayerHead": "jamielogan3.jpg",
+                "overall": 79,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "ISP",
@@ -483,6 +501,7 @@
                 "number": 7,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -509,6 +528,7 @@
                 "number": 17,
                 "GamesPlayed": 1,
                 "PlayerHead": "dliermohammed3.jpg",
+                "overall": 85,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "ISP",
@@ -542,6 +562,7 @@
                 "number": 1,
                 "GamesPlayed": 1,
                 "PlayerHead": "anthonymiller3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Dream Chasers",
@@ -568,6 +589,7 @@
                 "number": 7,
                 "GamesPlayed": 1,
                 "PlayerHead": "kevinmagliochetti3.jpg",
+                "overall": 81,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Dream Chasers",
@@ -594,6 +616,7 @@
                 "number": 15,
                 "GamesPlayed": 1,
                 "PlayerHead": "dashonsmith3.jpg",
+                "overall": 89,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Dream Chasers",
@@ -620,6 +643,7 @@
                 "number": 11,
                 "GamesPlayed": 1,
                 "PlayerHead": "darricmeyers3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Dream Chasers",
@@ -646,6 +670,7 @@
                 "number": 20,
                 "GamesPlayed": 1,
                 "PlayerHead": "mattevarts3.jpg",
+                "overall": 80,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Dream Chasers",
@@ -672,6 +697,7 @@
                 "number": 21,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 79,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -698,6 +724,7 @@
                 "number": 22,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -724,6 +751,7 @@
                 "number": 23,
                 "GamesPlayed": 0,
                 "PlayerHead": "kuranIverson.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -750,6 +778,7 @@
                 "number": 5,
                 "GamesPlayed": 1,
                 "PlayerHead": "colbywinchester3.jpg",
+                "overall": 79,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Dream Chasers",
@@ -776,6 +805,7 @@
                 "number": 0,
                 "GamesPlayed": 1,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 80,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Dream Chasers",
@@ -809,6 +839,7 @@
                 "number": 16,
                 "GamesPlayed": 1,
                 "PlayerHead": "howiemiller3.jpg",
+                "overall": 84,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "The Mob",
@@ -835,6 +866,7 @@
                 "number": 1,
                 "GamesPlayed": 1,
                 "PlayerHead": "jaylindavis3.jpg",
+                "overall": 78,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "The Mob",
@@ -861,6 +893,7 @@
                 "number": 2,
                 "GamesPlayed": 1,
                 "PlayerHead": "chrisestwan3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "The Mob",
@@ -887,6 +920,7 @@
                 "number": 12,
                 "GamesPlayed": 1,
                 "PlayerHead": "martindominguez3.jpg",
+                "overall": 82,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "The Mob",
@@ -913,6 +947,7 @@
                 "number": 19,
                 "GamesPlayed": 1,
                 "PlayerHead": "lukeyoder3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "The Mob",
@@ -939,6 +974,7 @@
                 "number": 0,
                 "GamesPlayed": 1,
                 "PlayerHead": "ericcommings3.jpg",
+                "overall": 82,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "The Mob",
@@ -965,6 +1001,7 @@
                 "number": 22,
                 "GamesPlayed": 1,
                 "PlayerHead": "demetriusgordon3.jpg",
+                "overall": 75,
                 "stats": [{
                             "game_number": "1",
     "opponent": "The Mob",
@@ -991,6 +1028,7 @@
                 "number": 21,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1024,6 +1062,7 @@
                 "number": 2,
                 "GamesPlayed": 1,
                 "PlayerHead": "robmoriarty3.jpg",
+                "overall": 85,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Free Agents  ",
@@ -1050,6 +1089,7 @@
                 "number": 4,
                 "GamesPlayed": 1,
                 "PlayerHead": "tjpettway3.jpg",
+                "overall": 81,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Free Agents  ",
@@ -1076,6 +1116,7 @@
                 "number": 7,
                 "GamesPlayed": 1,
                 "PlayerHead": "gavingreene3.jpg",
+                "overall": 85,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Free Agents  ",
@@ -1102,6 +1143,7 @@
                 "number": 99,
                 "GamesPlayed": 1,
                 "PlayerHead": "jahwancody3.jpg",
+                "overall": 84,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Free Agents  ",
@@ -1128,6 +1170,7 @@
                 "number": 13,
                 "GamesPlayed": 0,
                 "PlayerHead": "davidcrenshaw.jpg",
+                "overall": 90,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1154,6 +1197,7 @@
                 "number": 13,
                 "GamesPlayed": 0,
                 "PlayerHead": "killianokech3.jpg",
+                "overall": 81,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Free Agents  ",
@@ -1180,6 +1224,7 @@
                 "number": 10,
                 "GamesPlayed": 1,
                 "PlayerHead": "brandonholland3.jpg",
+                "overall": 82,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Free Agents  ",
@@ -1206,6 +1251,7 @@
                 "number": 7,
                 "GamesPlayed": 0,
                 "PlayerHead": "jamaulwynter.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1232,6 +1278,7 @@
                 "number": 0,
                 "GamesPlayed": 1,
                 "PlayerHead": "justinsheffield3.jpg",
+                "overall": 82,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Free Agents  ",
@@ -1265,6 +1312,7 @@
                 "number": 13,
                 "GamesPlayed": 1,
                 "PlayerHead": "pasqualevillano3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Venom",
@@ -1291,6 +1339,7 @@
                 "number": 24,
                 "GamesPlayed": 1,
                 "PlayerHead": "tamarwilliams3.jpg",
+                "overall": 89,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Venom",
@@ -1317,6 +1366,7 @@
                 "number": 5,
                 "GamesPlayed": 1,
                 "PlayerHead": "ronniesmith3.jpg",
+                "overall": 84,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Venom",
@@ -1343,6 +1393,7 @@
                 "number": 1,
                 "GamesPlayed": 1,
                 "PlayerHead": "jacobmorales3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Venom",
@@ -1369,6 +1420,7 @@
                 "number": 15,
                 "GamesPlayed": 0,
                 "PlayerHead": "javontaylor.jpg",
+                "overall": 90,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1395,6 +1447,7 @@
                 "number": 22,
                 "GamesPlayed": 1,
                 "PlayerHead": "alexhopkins3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Venom",
@@ -1421,6 +1474,7 @@
                 "number": 0,
                 "GamesPlayed": 1,
                 "PlayerHead": "taricethompson3.jpg",
+                "overall": 81,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Venom",
@@ -1447,6 +1501,7 @@
                 "number": 23,
                 "GamesPlayed": 1,
                 "PlayerHead": "siahtate3.jpg",
+                "overall": 84,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Venom",
@@ -1473,6 +1528,7 @@
                 "number": 2,
                 "GamesPlayed": 1,
                 "PlayerHead": "codydileonardo3.jpg",
+                "overall": 79,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "Venom",
@@ -1506,6 +1562,7 @@
                 "number": 11,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 81,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "",
@@ -1532,6 +1589,7 @@
                 "number": 13,
                 "GamesPlayed": 0,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 75,
                 "stats": [{
                         "game_number": "1",
                         "opponent": "",
@@ -1558,6 +1616,7 @@
                 "number": 0,
                 "GamesPlayed": 1,
                 "PlayerHead": "jayturner3.jpg",
+                "overall": 89,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "MTBM",
@@ -1584,6 +1643,7 @@
                 "number": 14,
                 "GamesPlayed": 1,
                 "PlayerHead": "willbarton3.jpg",
+                "overall": 90,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "MTBM",
@@ -1610,6 +1670,7 @@
                 "number": 3,
                 "GamesPlayed": 1,
                 "PlayerHead": "anthonyireland3.jpg",
+                "overall": 92,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "MTBM",
@@ -1636,6 +1697,7 @@
                 "number": 1,
                 "GamesPlayed": 1,
                 "PlayerHead": "lateefbilewu3.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "MTBM",
@@ -1662,6 +1724,7 @@
                 "number": 20,
                 "GamesPlayed": 1,
                 "PlayerHead": "cbt-logo1.jpg",
+                "overall": 83,
                 "stats": [{
                             "game_number": "1",
                             "opponent": "MTBM",
