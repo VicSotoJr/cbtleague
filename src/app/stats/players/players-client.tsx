@@ -73,8 +73,8 @@ export default function PlayersClient() {
           <span className="text-lg font-bold text-white">{seasonLabel}</span>
         </div>
         <p className="max-w-2xl text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
-          Season-only overall prototype based on league-relative scoring, shooting, playmaking, rebounding, defense,
-          and efficiency, with no games-played penalty baked into the rating.
+          Season-only 2k-style prototype using inferred stat archetypes and weighted outside scoring, inside scoring,
+          playmaking, athleticism, defense, rebounding, and intangible modifiers.
         </p>
       </div>
 
