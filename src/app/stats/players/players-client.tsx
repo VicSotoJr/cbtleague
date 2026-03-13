@@ -45,6 +45,10 @@ export default function PlayersClient() {
   );
 
   const seasonLabel = getSeasonLabel(seasonId);
+  const seasonModelCopy =
+    seasonId === "3"
+      ? "Season 3 uses commissioner-set manual overalls. Seasons 1 and 2 still use the live 2k-style model."
+      : "Season-only 2k-style model v5 using inferred stat archetypes and weighted outside scoring, inside scoring, playmaking, athleticism, defense, rebounding, and intangible modifiers.";
 
   return (
     <div className="container mx-auto overflow-x-hidden px-4 py-12 md:px-6">
@@ -85,8 +89,7 @@ export default function PlayersClient() {
           Season-specific ratings and player stats.
         </p>
         <p className="hidden max-w-2xl text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-zinc-400 md:block">
-          Season-only 2k-style model v5 using inferred stat archetypes and weighted outside scoring, inside scoring,
-          playmaking, athleticism, defense, rebounding, and intangible modifiers.
+          {seasonModelCopy}
         </p>
       </div>
 

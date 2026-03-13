@@ -1,4 +1,5 @@
 import { getSeasonPlayersWithAggregates, type SummaryPlayerWithTeamStats } from "@/lib/league-summary";
+import { getManualSeasonOverall } from "@/lib/manual-player-overalls";
 import type { AggregatedPlayerMetrics } from "@/types/league";
 
 export type PlayerArchetype =
@@ -978,8 +979,19 @@ export function getSeasonPlayerOveralls(
     overall: translateLeagueOverall(entry.rawOverall, rawOverallValues),
   }));
   const availabilityAdjusted = applyOverallAvailabilityRules(seasonId, enriched);
+  const manualAdjusted = availabilityAdjusted.map((entry) => {
+    const manualOverall = getManualSeasonOverall(seasonId, entry.player.name);
+    if (manualOverall == null) {
+      return entry;
+    }
 
-  const ranked = availabilityAdjusted.toSorted((a, b) => {
+    return {
+      ...entry,
+      overall: manualOverall,
+    };
+  });
+
+  const ranked = manualAdjusted.toSorted((a, b) => {
     const aOverall = a.overall ?? -1;
     const bOverall = b.overall ?? -1;
 
