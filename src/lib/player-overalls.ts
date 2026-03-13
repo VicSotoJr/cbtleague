@@ -722,7 +722,12 @@ function inferPlayerArchetype(
   }
 
   if (aggregated.APG >= 4.8 || coreScores.playmaking >= 76) {
-    if (aggregated.RPG >= 5 && (aggregated.APG >= 4.5 || coreScores.insideScoring >= 72)) {
+    const qualifiesAsPointForward =
+      aggregated.RPG >= 5 &&
+      aggregated.APG >= 5.5 &&
+      (aggregated.PPG >= 12 || offensiveConsistency >= 80 || coreScores.insideScoring >= 90);
+
+    if (qualifiesAsPointForward) {
       return "point_forward";
     }
 
@@ -761,10 +766,12 @@ function getOverallFromArchetype(
     coreScores.rebounding * weights.rebounding +
     modifierBlend * weights.modifiers;
   const eliteTraitCount = Object.values(coreScores).filter((score) => score >= 88).length;
+  const scorerLift = Math.max(0, modifiers.offensiveConsistency - 80) * 0.08;
   const starLift =
     Math.max(0, composite - 84) * 0.45 +
     eliteTraitCount * 0.75 +
-    Math.max(0, modifiers.offensiveConsistency - 92) * 0.1;
+    Math.max(0, modifiers.offensiveConsistency - 92) * 0.1 +
+    scorerLift;
 
   return Math.round(clamp(composite + starLift, 60, 99));
 }
