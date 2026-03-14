@@ -12,8 +12,7 @@ interface TeamLogoProps {
 
 export default function TeamLogo({ teamName, className, size = 100 }: TeamLogoProps) {
     const [error, setError] = useState(false);
-    const isProd = process.env.NODE_ENV === "production";
-    const basePath = isProd ? "/cbtleague" : "";
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
     // Format team name for file matching: lowercase, hyphens, trimmed
     const formattedName = teamName.trim().toLowerCase().replace(/\s+/g, "-");

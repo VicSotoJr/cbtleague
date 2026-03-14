@@ -194,8 +194,7 @@ export default function PlayerHead({
     size = "md",
     presentation = "default",
 }: PlayerHeadProps) {
-    const isProd = process.env.NODE_ENV === "production";
-    const basePath = isProd ? "/cbtleague" : "";
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
     const sizeMap = {
         sm: 32,
