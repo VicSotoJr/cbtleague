@@ -141,6 +141,7 @@ export default function PlayersClient() {
                         <PlayerHead
                           playerName={player.name}
                           playerHead={player.PlayerHead}
+                          seasonId={seasonId}
                           size={32}
                           className="rounded-md shrink-0"
                         />

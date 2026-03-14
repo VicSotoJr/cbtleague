@@ -89,6 +89,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
             <PlayerHead
               playerName={playerName}
               playerHead={latestSeason.playerHead}
+              seasonId={latestSeason.seasonId}
               size="xl"
               presentation="backdrop"
               className="relative rounded-[1.5rem] border-4 border-white/5 shadow-2xl"

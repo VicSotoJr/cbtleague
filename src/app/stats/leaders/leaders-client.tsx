@@ -184,6 +184,7 @@ export default function LeadersClient() {
                           <PlayerHead
                             playerName={entry.player.name}
                             playerHead={entry.player.PlayerHead}
+                            seasonId={seasonId}
                             size={40}
                             className="rounded-lg shrink-0"
                           />

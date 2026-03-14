@@ -153,6 +153,7 @@ export default function TeamProfileClient({ seasons }: TeamProfileClientProps) {
                     <PlayerHead
                       playerName={player.name}
                       playerHead={player.PlayerHead}
+                      seasonId={seasonId}
                       size={64}
                       className="rounded-xl group-hover:scale-110 transition-transform"
                     />

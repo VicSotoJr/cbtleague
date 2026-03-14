@@ -2,11 +2,17 @@
 
 import React, { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
-import { MISSING_PLAYER_HEADSHOT_KEYS, PLAYER_HEADSHOT_ALIASES } from "@/lib/player-headshot-map";
+import {
+    getSeasonAwarePlayerProfileBackdropOverride,
+    MISSING_PLAYER_HEADSHOT_KEYS,
+    PLAYER_HEADSHOT_ALIASES,
+    normalizePlayerHeadshotKey,
+} from "@/lib/player-headshot-map";
 
 interface PlayerHeadProps {
     playerName: string;
     playerHead?: string;
+    seasonId?: string | null;
     className?: string;
     size?: "sm" | "md" | "lg" | "xl" | number;
     presentation?: "default" | "backdrop";
@@ -25,15 +31,6 @@ function sanitizeCandidate(value: string): string {
         .trim()
         .replace(/^.*[\\/]/, "")
         .replace(/[?#].*$/, "");
-}
-
-function normalizePlayerName(value: string): string {
-    return value
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, "")
-        .replace(/['’`]/g, "")
-        .replace(/[^a-z0-9._-]/g, "");
 }
 
 function isKnownMissingHeadshot(fileName: string): boolean {
@@ -73,7 +70,7 @@ function buildHeadshotCandidates(playerName: string, playerHead?: string): strin
         pushCandidate(playerHead);
     }
 
-    const normalizedFromName = normalizePlayerName(playerName);
+    const normalizedFromName = normalizePlayerHeadshotKey(playerName);
     if (normalizedFromName) {
         pushCandidate(normalizedFromName);
     }
@@ -88,6 +85,7 @@ function PlayerHeadImage({
     priority,
     canZoom,
     presentation,
+    backdropStyle,
 }: {
     playerName: string;
     dimension: number;
@@ -95,6 +93,12 @@ function PlayerHeadImage({
     priority: boolean;
     canZoom: boolean;
     presentation: "default" | "backdrop";
+    backdropStyle: {
+        objectPosition: string;
+        scale: number;
+        brightness: number;
+        saturation: number;
+    };
 }) {
     const [sourceIndex, setSourceIndex] = useState(0);
     const [hasError, setHasError] = useState(sources.length === 0);
@@ -140,12 +144,23 @@ function PlayerHeadImage({
                     width={dimension}
                     height={dimension}
                     className={cn(
-                        "h-full w-full object-cover transition-all duration-500",
+                        "h-full w-full transition-all duration-500",
                         presentation === "backdrop"
-                            ? "object-[center_12%] scale-[2.25] saturate-75 brightness-75"
-                            : "object-top opacity-100 scale-100",
+                            ? "object-cover"
+                            : "object-cover object-top opacity-100 scale-100",
                         canZoom && presentation === "default" ? "group-hover:scale-110" : "transition-opacity duration-200"
                     )}
+                    style={
+                        presentation === "backdrop"
+                            ? {
+                                objectPosition: backdropStyle.objectPosition,
+                                transformOrigin: backdropStyle.objectPosition,
+                                filter: `saturate(${backdropStyle.saturation}) brightness(${backdropStyle.brightness})`,
+                            }
+                            : {
+                                objectPosition: backdropStyle.objectPosition,
+                            }
+                    }
                     onError={handleImageError}
                     loading={priority ? "eager" : "lazy"}
                     decoding="async"
@@ -160,6 +175,7 @@ function PlayerHeadImage({
 export default function PlayerHead({
     playerName,
     playerHead,
+    seasonId,
     className,
     size = "md",
     presentation = "default",
@@ -175,6 +191,15 @@ export default function PlayerHead({
     };
 
     const dimension = typeof size === "number" ? size : sizeMap[size];
+    const backdropOverride = getSeasonAwarePlayerProfileBackdropOverride(playerName, seasonId);
+    const backdropStyle = backdropOverride
+        ? {
+            objectPosition: backdropOverride.objectPosition,
+            scale: backdropOverride.scale,
+            brightness: backdropOverride.brightness ?? 0.86,
+            saturation: backdropOverride.saturation ?? 0.9,
+        }
+        : null;
 
     const sources = useMemo(() => {
         const fileCandidates = buildHeadshotCandidates(playerName, playerHead);
@@ -212,6 +237,12 @@ export default function PlayerHead({
                 priority={size === "xl" || size === "lg"}
                 canZoom={dimension >= 64}
                 presentation={presentation}
+                backdropStyle={backdropStyle ?? {
+                    objectPosition: "center 10%",
+                    scale: 1.08,
+                    brightness: 0.9,
+                    saturation: 0.92,
+                }}
             />
         </div>
     );

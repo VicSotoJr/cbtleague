@@ -1,0 +1,782 @@
+{
+  "aarongarcia" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "alexanderlyons" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "alexhopkins" : {
+    "brightness" : 0.9,
+    "objectPosition" : "41.0% 32.3%",
+    "saturation" : 0.92,
+    "scale" : 1.33
+  },
+  "alijefferson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "anthonyireland" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 23.2%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "anthonymiller" : {
+    "brightness" : 0.9,
+    "objectPosition" : "43.4% 54.1%",
+    "saturation" : 0.92,
+    "scale" : 1.36
+  },
+  "antionewaller" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 66.2%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "brandonholland" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 14.4%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "bryantwashington" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "cammenefee" : {
+    "brightness" : 0.9,
+    "objectPosition" : "18.8% 47.0%",
+    "saturation" : 0.92,
+    "scale" : 1.08
+  },
+  "cerronebell" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "chrisestwan" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 40.5%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "chrisrudzinski" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 47.8%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "christophergarcon" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 48.3%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "codydileonardo" : {
+    "brightness" : 0.9,
+    "objectPosition" : "92.8% 31.2%",
+    "saturation" : 0.92,
+    "scale" : 1.25
+  },
+  "colbywinchester" : {
+    "brightness" : 0.9,
+    "objectPosition" : "48.8% 35.7%",
+    "saturation" : 0.92,
+    "scale" : 1.34
+  },
+  "colechudoba" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 35.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "craigbehun" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 21.5%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "dajuanjones" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 49.3%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "damianpantoja" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.7%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "danmartin" : {
+    "brightness" : 0.9,
+    "objectPosition" : "100.0% 16.4%",
+    "saturation" : 0.92,
+    "scale" : 1.01
+  },
+  "dariushamlette" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "darrenpayen" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "dashonsmith" : {
+    "brightness" : 0.9,
+    "objectPosition" : "47.4% 38.3%",
+    "saturation" : 0.92,
+    "scale" : 1.31
+  },
+  "davearmstrong" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 40.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "davidcrenshaw" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 3.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "davonpratt" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 29.7%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "davonrobinson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 32.5%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "dayvonrussell" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 27.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "demetriusgordon" : {
+    "brightness" : 0.9,
+    "objectPosition" : "58.2% 40.4%",
+    "saturation" : 0.92,
+    "scale" : 1.42
+  },
+  "dliermohammed" : {
+    "brightness" : 0.9,
+    "objectPosition" : "47.0% 17.9%",
+    "saturation" : 0.92,
+    "scale" : 1.08
+  },
+  "drewroberts" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "gavingreene" : {
+    "brightness" : 0.9,
+    "objectPosition" : "48.8% 18.1%",
+    "saturation" : 0.92,
+    "scale" : 1.02
+  },
+  "howiemiller" : {
+    "brightness" : 0.9,
+    "objectPosition" : "26.1% 28.2%",
+    "saturation" : 0.92,
+    "scale" : 1.21
+  },
+  "isiahlewis" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jacobmorales" : {
+    "brightness" : 0.9,
+    "objectPosition" : "31.0% 40.4%",
+    "saturation" : 0.92,
+    "scale" : 1.42
+  },
+  "jahkhiwashington" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jahwancody" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 51.8%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jamaulwynter" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 26.2%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jamielogan" : {
+    "brightness" : 0.9,
+    "objectPosition" : "42.2% 44.7%",
+    "saturation" : 0.92,
+    "scale" : 1.09
+  },
+  "jasonbaxter" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 34.2%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jasonhernandez" : {
+    "brightness" : 0.9,
+    "objectPosition" : "61.1% 61.9%",
+    "saturation" : 0.92,
+    "scale" : 1.15
+  },
+  "jasontortuga" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 1.2%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "javihernandez" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "javontaylor" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "javonwilson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "6.3% 17.3%",
+    "saturation" : 0.92,
+    "scale" : 1.17
+  },
+  "jaylencrawford" : {
+    "brightness" : 0.9,
+    "objectPosition" : "0.0% 16.1%",
+    "saturation" : 0.92,
+    "scale" : 1.07
+  },
+  "jaylindavis" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 15.9%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jayramos" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 5.9%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jayronvines" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 26.4%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jaysonvelez" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 46.2%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jaytrueheart" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 26.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jayturner" : {
+    "brightness" : 0.9,
+    "objectPosition" : "26.1% 13.7%",
+    "saturation" : 0.92,
+    "scale" : 1.16
+  },
+  "jelanijoseph" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 11.2%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jermainefoster" : {
+    "brightness" : 0.9,
+    "objectPosition" : "0.0% 16.5%",
+    "saturation" : 0.92,
+    "scale" : 1.07
+  },
+  "jimmylouis" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "joetartaglia" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 24.5%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "johnfernandes" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 29.4%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "johnjohnson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.4%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jonathancruz" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 20.3%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "jonathanrobles" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.7%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "joshsalgado" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 49.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "joshuaarroyo" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "julienbryan" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "justinsheffield" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 49.9%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "kamrenbelin" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "kevincabanlorenzo" : {
+    "brightness" : 0.9,
+    "objectPosition" : "33.7% 41.9%",
+    "saturation" : 0.92,
+    "scale" : 1.11
+  },
+  "kevinmagliochetti" : {
+    "brightness" : 0.9,
+    "objectPosition" : "18.4% 24.6%",
+    "saturation" : 0.92,
+    "scale" : 1.35
+  },
+  "kevinrivera" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "killianokech" : {
+    "brightness" : 0.9,
+    "objectPosition" : "34.5% 16.0%",
+    "saturation" : 0.92,
+    "scale" : 1.2
+  },
+  "kyledavis" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "kylefederici" : {
+    "brightness" : 0.9,
+    "objectPosition" : "13.2% 22.7%",
+    "saturation" : 0.92,
+    "scale" : 1.06
+  },
+  "lameikblack" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 81.9%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "lashawnsmith" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 35.8%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "lateefbilewu" : {
+    "brightness" : 0.9,
+    "objectPosition" : "64.1% 24.5%",
+    "saturation" : 0.92,
+    "scale" : 1.03
+  },
+  "lukeyoder" : {
+    "brightness" : 0.9,
+    "objectPosition" : "45.2% 16.0%",
+    "saturation" : 0.92,
+    "scale" : 1.3
+  },
+  "malikjackson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "marcellrobinson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 8.8%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "marquanwatson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "52.7% 33.3%",
+    "saturation" : 0.92,
+    "scale" : 1.11
+  },
+  "martindominguez" : {
+    "brightness" : 0.9,
+    "objectPosition" : "4.9% 58.9%",
+    "saturation" : 0.92,
+    "scale" : 1.13
+  },
+  "mattdickens" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 11.3%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "mattevarts" : {
+    "brightness" : 0.9,
+    "objectPosition" : "45.3% 27.0%",
+    "saturation" : 0.92,
+    "scale" : 1.17
+  },
+  "mattperez" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "mattwilson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 40.7%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "mekhimcneil" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 45.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "mellyjones" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 43.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "michaelrapuanojr" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 22.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "mikeurbina" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 44.4%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "mikeypettway" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 42.9%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "mitchamelio" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "nassedwards" : {
+    "brightness" : 0.9,
+    "objectPosition" : "56.5% 34.5%",
+    "saturation" : 0.92,
+    "scale" : 1.2
+  },
+  "natephetis" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 26.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "nateshields" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "naziermedina" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "nazvereen" : {
+    "brightness" : 0.9,
+    "objectPosition" : "100.0% 32.4%",
+    "saturation" : 0.92,
+    "scale" : 1.2
+  },
+  "ojinthapanhya" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "ozzypriar" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 10.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "pasqualevillano" : {
+    "brightness" : 0.9,
+    "objectPosition" : "57.5% 42.3%",
+    "saturation" : 0.92,
+    "scale" : 1.14
+  },
+  "prestonwilliams" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "quadireason" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 19.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "raheemsolomon" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "rashardrodriguez" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 34.2%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "rayanthony" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "robmoriarty" : {
+    "brightness" : 0.9,
+    "objectPosition" : "14.3% 15.1%",
+    "saturation" : 0.92,
+    "scale" : 1.19
+  },
+  "rodneycook" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.3%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "ronniesmith" : {
+    "brightness" : 0.9,
+    "objectPosition" : "37.7% 21.5%",
+    "saturation" : 0.92,
+    "scale" : 1.33
+  },
+  "rynegriesenauer" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "shaneburwell" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 21.5%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "shaquanjackson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 2.6%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "shawnallen" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 5.7%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "sheatracy" : {
+    "brightness" : 0.9,
+    "objectPosition" : "30.4% 40.5%",
+    "saturation" : 0.92,
+    "scale" : 1.15
+  },
+  "sherradprezzie-blue" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 34.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "siahtait" : {
+    "brightness" : 0.9,
+    "objectPosition" : "69.2% 36.2%",
+    "saturation" : 0.92,
+    "scale" : 1.37
+  },
+  "stuvargas" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 21.7%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "tamaronhargett" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 3.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "tamarsherman" : {
+    "brightness" : 0.9,
+    "objectPosition" : "56.3% 39.8%",
+    "saturation" : 0.92,
+    "scale" : 1.13
+  },
+  "tamarwilliams" : {
+    "brightness" : 0.9,
+    "objectPosition" : "38.6% 48.2%",
+    "saturation" : 0.92,
+    "scale" : 1.34
+  },
+  "tamirsherman" : {
+    "brightness" : 0.9,
+    "objectPosition" : "45.9% 5.1%",
+    "saturation" : 0.92,
+    "scale" : 1.22
+  },
+  "tarellvargas" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "taricethompson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "62.4% 50.1%",
+    "saturation" : 0.92,
+    "scale" : 1.3
+  },
+  "terrellshermanjr." : {
+    "brightness" : 0.9,
+    "objectPosition" : "52.9% 37.8%",
+    "saturation" : 0.92,
+    "scale" : 1.11
+  },
+  "timadanti" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "tjgreen" : {
+    "brightness" : 0.9,
+    "objectPosition" : "100.0% 43.6%",
+    "saturation" : 0.92,
+    "scale" : 1.06
+  },
+  "tjkillings" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 34.1%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "tjpettway" : {
+    "brightness" : 0.9,
+    "objectPosition" : "44.6% 40.3%",
+    "saturation" : 0.92,
+    "scale" : 1.17
+  },
+  "tylerancrum" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 29.8%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "tylerspears" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 0.0%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "tysands" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 35.3%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "tyshawnwilliamson" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 34.5%",
+    "saturation" : 0.92,
+    "scale" : 1
+  },
+  "willbarton" : {
+    "brightness" : 0.9,
+    "objectPosition" : "50.0% 7.2%",
+    "saturation" : 0.92,
+    "scale" : 1
+  }
+}
