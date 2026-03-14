@@ -28,8 +28,7 @@ export default function Navbar() {
     const [statsOpen, setStatsOpen] = useState(false);
     const pathname = usePathname();
     const normalizedPathname = pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
-    const isProd = process.env.NODE_ENV === "production";
-    const basePath = isProd ? "/cbtleague" : "";
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
