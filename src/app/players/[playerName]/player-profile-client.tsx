@@ -90,6 +90,7 @@ export default function PlayerProfileClient({ playerName, seasonData }: PlayerPr
               playerName={playerName}
               playerHead={latestSeason.playerHead}
               size="xl"
+              presentation="backdrop"
               className="relative rounded-[1.5rem] border-4 border-white/5 shadow-2xl"
             />
           </div>

@@ -9,6 +9,7 @@ interface PlayerHeadProps {
     playerHead?: string;
     className?: string;
     size?: "sm" | "md" | "lg" | "xl" | number;
+    presentation?: "default" | "backdrop";
 }
 
 function stripFileExtension(value: string): string {
@@ -86,12 +87,14 @@ function PlayerHeadImage({
     sources,
     priority,
     canZoom,
+    presentation,
 }: {
     playerName: string;
     dimension: number;
     sources: string[];
     priority: boolean;
     canZoom: boolean;
+    presentation: "default" | "backdrop";
 }) {
     const [sourceIndex, setSourceIndex] = useState(0);
     const [hasError, setHasError] = useState(sources.length === 0);
@@ -137,10 +140,11 @@ function PlayerHeadImage({
                     width={dimension}
                     height={dimension}
                     className={cn(
-                        "h-full w-full object-cover object-top",
-                        canZoom ? "transition-all duration-500" : "transition-opacity duration-200",
-                        "opacity-100 scale-100",
-                        canZoom && "group-hover:scale-110"
+                        "h-full w-full object-cover transition-all duration-500",
+                        presentation === "backdrop"
+                            ? "object-[center_12%] scale-[2.25] saturate-75 brightness-75"
+                            : "object-top opacity-100 scale-100",
+                        canZoom && presentation === "default" ? "group-hover:scale-110" : "transition-opacity duration-200"
                     )}
                     onError={handleImageError}
                     loading={priority ? "eager" : "lazy"}
@@ -153,7 +157,13 @@ function PlayerHeadImage({
     );
 }
 
-export default function PlayerHead({ playerName, playerHead, className, size = "md" }: PlayerHeadProps) {
+export default function PlayerHead({
+    playerName,
+    playerHead,
+    className,
+    size = "md",
+    presentation = "default",
+}: PlayerHeadProps) {
     const isProd = process.env.NODE_ENV === "production";
     const basePath = isProd ? "/cbtleague" : "";
 
@@ -201,6 +211,7 @@ export default function PlayerHead({ playerName, playerHead, className, size = "
                 sources={sources}
                 priority={size === "xl" || size === "lg"}
                 canZoom={dimension >= 64}
+                presentation={presentation}
             />
         </div>
     );
