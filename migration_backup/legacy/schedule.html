@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<script>
+function filterTableRows() {
+    var select = document.getElementById("filterSelect");
+    var name = select.value.toLowerCase();
+
+    // Determine the currently visible table
+    var seasonDropdown = document.getElementById("seasonDropdown");
+    var selectedSeason = seasonDropdown.value; // Either "scheduleTable" or "scheduleTableSeason2"
+    
+    var table = document.getElementById(selectedSeason); // Dynamically get the correct table
+    if (!table) return; // Safety check in case table is not found
+
+    var rows = table.getElementsByTagName("tr");
+
+    for (var i = 1; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName("td");
+        var nameFound = false;
+
+        for (var j = 0; j < cells.length; j++) {
+            if (cells[j].textContent.toLowerCase().includes(name)) {
+                nameFound = true;
+                break;
+            }
+        }
+
+        rows[i].style.display = nameFound || name === "" ? "" : "none";
+    }
+}
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const seasonDropdown = document.getElementById("seasonDropdown");
+    const season1Table = document.getElementById("scheduleTable");
+    const season2Table = document.getElementById("scheduleTableSeason2");
+    const season3Table = document.getElementById("scheduleTableSeason3");
+    const filterSelect = document.getElementById("filterSelect");
+
+    const teamsBySeason = {
+        "scheduleTable": [  // Season 1 - 2023
+            "Coulda Been", "Hidden Rain", "Integral Construction", 
+            "Tune Squad", "Free Agents", "YAGGA", "OTF"
+        ],
+        "scheduleTableSeason2": [  // Season 2 - 2025
+            "Hidden Rain", "Free Agents", "BTA", 
+            "1FAM", "OTF", "Venom", "Get Buck$"
+        ],
+        "scheduleTableSeason3": [  // Season 3 - 2026
+            "MTBM", "Free Agents", "The Mob", 
+            "1FAM", "Dream Chasers", "Venom", "ISP"
+        ]
+    };
+
+    function toggleSeason() {
+        const selectedSeason = seasonDropdown.value;
+
+        if (selectedSeason === "scheduleTable") {
+            season1Table.style.display = "";
+            season2Table.style.display = "none";
+            season3Table.style.display = "none";
+        }else if (selectedSeason === "scheduleTableSeason2") {
+            season1Table.style.display = "none";
+            season2Table.style.display = "";
+            season3Table.style.display = "none";
+        }  else {
+            season1Table.style.display = "none";
+            season2Table.style.display = "none";
+            season3Table.style.display = "";
+        }
+
+        updateTeamDropdown(selectedSeason);
+    }
+
+    function updateTeamDropdown(season) {
+        filterSelect.innerHTML = ''; // Clear existing options
+
+        // Add "Show All" option
+        const showAllOption = document.createElement("option");
+        showAllOption.value = "";
+        showAllOption.textContent = "Show All";
+        filterSelect.appendChild(showAllOption);
+
+        // Add teams for the selected season
+        teamsBySeason[season].forEach(team => {
+            const option = document.createElement("option");
+            option.value = team;
+            option.textContent = team;
+            filterSelect.appendChild(option);
+        });
+    }
+
+    // Initial setup
+    toggleSeason();
+
+    // Event listeners
+    seasonDropdown.addEventListener("change", toggleSeason);
+});
+
+
+</script>
+
+<body>
+
+
+    <nav class="navbar " role="navigation" aria-label="main navigation">
+
+        <div class="navbar-brand">
+            <div class="container ">
+
+                <a href="index.html"><img class="logoContainer" src="assets/img/cbt-logo1.jpg" alt="" width="100px"></a>
+
+            </div>
+
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+
+            <a href="index.html" class="navbar-item">
+                Home
+            </a>
+
+            <a href="schedule.html" class="navbar-item">
+                Schedule
+            </a>
+            <a href="standings.html" class="navbar-item">
+                Standings
+            </a>
+            <a href="teams.html" class="navbar-item">
+                Teams
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a href="stats_s3.html" class="navbar-link">
+                    Stats
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a href="stats_s3.html" class="navbar-item">
+                        Team Stats
+                    </a>
+                    <a href="playerstats_s3.html" class="navbar-item">
+                        Player Stats
+                    </a>
+                    <a href="leagueleaders_s3.html" class="navbar-item">
+                        League Leaders
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </nav>
+    <hr>
+
+    <section class="section">
+        <h1 class="title is-3">Schedule</h1>
+    </section>
+
+    <div class="container is-max-desktop">
+        <div class="container">
+            <h3 style="color: white;">Season:</h3>
+            <div class="select is-small is-centered">
+                <select id="seasonDropdown">
+                    <option value="scheduleTableSeason3" selected>Season 3 - 2026</option> <!-- Added 'selected' to make this default -->
+                    <option value="scheduleTableSeason2">Season 2 - 2025</option>
+                    <option value="scheduleTable">Season 1 - 2023</option>
+                </select>
+            </div>
+            
+            <h3 style="color: white;">Team Selection:</h3>
+            <div class="select is-small is-centered">
+                <select id="filterSelect" onchange="filterTableRows()">
+                    <option value="">Show All</option>
+                    <option value="Coulda Been">Coulda Been</option>
+                    <option value="Hidden Rain">Hidden Rain</option>
+                    <option value="Integral Construction">Integral Construction</option>
+                    <option value="Tune Squad">Tune Squad</option>
+                    <option value="Free Agents">Free Agents</option>
+                    <option value="YAGGA">YAGGA</option>
+                    <option value="OTF">OTF</option>
+                </select>
+            </div>
+            
+        </div>
+        <br>
+        <table id="scheduleTable" class="table is-striped is-bordered is-max-desktop">
+            <thead>
+                <tr>
+                    <th>Home Team</th>
+                    <th>Score</th>
+                    <th>Away Team</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 1 - March 7, 2023</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>Hidden Rain</u></strong></td>
+                    <td>77</td>
+                    <td>Free Agents</td>
+                    <td>67</td>
+                    <td>March 7, 2023</td>
+                    <td>6:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Coulda Been</u></strong></td>
+                    <td>92</td>
+                    <td>Integral Construction</td>
+                    <td>59</td>
+                    <td>March 7, 2023</td>
+                    <td>7:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>YAGGA</u></strong></td>
+                    <td>67</td>
+                    <td>Tune Squad</td>
+                    <td>57</td>
+                    <td>March 7, 2023</td>
+                    <td>8:15 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">OTF - Bye</td>
+                    <td>March 7, 2023</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color:grey;"><strong>Week 2 - March 14, 2023</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>55</td>
+                    <td><strong><u>OTF</u></strong></td>
+                    <td>68</td>
+                    <td>March 14, 2023</td>
+                    <td>6:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Hidden Rain</u></strong></td>
+                    <td>101</td>
+                    <td>Integral Construction</td>
+                    <td>66</td>
+                    <td>March 14, 2023</td>
+                    <td>7:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>YAGGA</u></strong></td>
+                    <td>77</td>
+                    <td>Coulda Been</td>
+                    <td>70</td>
+                    <td>March 14, 2023</td>
+                    <td>8:15 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Tune Squad - Bye</td>
+                    <td>March 14, 2023</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 3 - March 21, 2023</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>Free Agents</u></strong></td>
+                    <td>72</td>
+                    <td>Integral Construction</td>
+                    <td>62</td>
+                    <td>March 21, 2023</td>
+                    <td>6:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Hidden Rain</u></strong></td>
+                    <td>91</td>
+                    <td>OTF</td>
+                    <td>69</td>
+                    <td>March 21, 2023</td>
+                    <td>7:15 PM</td>
+                </tr>
+                <tr>
+                    <td>Coulda Been</td>
+                    <td>75</td>
+                    <td><strong><u>Tune Squad</u></strong></td>
+                    <td>91</td>
+                    <td>March 21, 2023</td>
+                    <td>8:15 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">YAGGA - Bye</td>
+                    <td>March 21, 2023</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 4 - March 28, 2023</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>YAGGA</u></strong></td>
+                    <td>117</td>
+                    <td>Free Agent</td>
+                    <td>86</td>
+                    <td>March 28, 2023</td>
+                    <td>6:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Coulda Been</u></strong></td>
+                    <td>79</td>
+                    <td>OTF</td>
+                    <td>73</td>
+                    <td>March 28, 2023</td>
+                    <td>7:15 PM</td>
+                </tr>
+                <tr>
+                    <td>Integral Construction</td>
+                    <td>72</td>
+                    <td><strong><u>Tune Squad</u></strong></td>
+                    <td>129</td>
+                    <td>March 28, 2023</td>
+                    <td>8:15 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Hidden Rain - Bye</td>
+                    <td>March 28, 2023</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 5 - April 4, 2023</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>68</td>
+                    <td><strong><u>Coulda Been</u></strong></td>
+                    <td>73</td>
+                    <td>April 4, 2023</td>
+                    <td>6:15 PM</td>
+                </tr>
+                <tr>
+                    <td>Hidden Rain</td>
+                    <td>68</td>
+                    <td><strong><u>Tune Squad</u></strong></td>
+                    <td>74</td>
+                    <td>April 4, 2023</td>
+                    <td>7:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>YAGGA</u></strong></td>
+                    <td>85</td>
+                    <td>OTF</td>
+                    <td>71</td>
+                    <td>April 4, 2023</td>
+                    <td>8:15 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Integral Construction - Bye</td>
+                    <td>April 4, 2023</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 6 - April 18, 2023</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>Integral Construction</u></strong></td>
+                    <td>76</td>
+                    <td>OTF</td>
+                    <td>72</td>
+                    <td>April 18, 2023</td>
+                    <td>6:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Tune Squad</u></strong></td>
+                    <td>112</td>
+                    <td>Free Agents</td>
+                    <td>69</td>
+                    <td>April 18, 2023</td>
+                    <td>7:15 PM</td>
+                </tr>
+                <tr>
+                    <td>Hidden Rain</td>
+                    <td>87</td>
+                    <td><strong><u>YAGGA</u></strong></td>
+                    <td>72</td>
+                    <td>April 18, 2023</td>
+                    <td>8:15 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Coulda Been - Bye</td>
+                    <td>April 18, 2023</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 7 - April 25, 2023</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>Tune Squad</u></strong></td>
+                    <td>143</td>
+                    <td>OTF</td>
+                    <td>110</td>
+                    <td>April 25, 2023</td>
+                    <td>6:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Coulda Been</u></strong></td>
+                    <td>92</td>
+                    <td>Hidden Rain</td>
+                    <td>90</td>
+                    <td>April 25, 2023</td>
+                    <td>7:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>YAGGA</u></td>
+                    <td>91</td>
+                    <td>Integral Construction</td>
+                    <td>84</td>
+                    <td>April 25, 2023</td>
+                    <td>8:15 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Free Agents - Bye</td>
+                    <td>April 25, 2023</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 8 - May 2, 2023</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>Free Agents</u></strong></td>
+                    <td>71</td>
+                    <td>Integral Construction</td>
+                    <td>61</td>
+                    <td>May 2, 2023</td>
+                    <td>6:15 PM</td>
+                </tr>
+                <tr>
+                    <td>Coulda Been</td>
+                    <td>Forfeit</td>
+                    <td><strong><u>OTF</u></strong></td>
+                    <td>-</td>
+                    <td>May 2, 2023</td>
+                    <td>7:15 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>YAGGA</u></strong></td>
+                    <td>-</td>
+                    <td>OTF</td>
+                    <td>-</td>
+                    <td>May 2, 2023</td>
+                    <td>Scrimmage</td>
+                </tr>
+                <tr>
+                    <td>Hidden Rain</td>
+                    <td>88</td>
+                    <td><strong><u>Tune Squad</u></strong></td>
+                    <td>92</td>
+                    <td>May 2, 2023</td>
+                    <td>8:15 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">YAGGA - Automatic Win for Best Record</td>
+                    <td>May 2, 2023</td>
+                </tr>
+                <td colspan="7" style="text-align: center;background-color: Yellow; border: 2px solid black;"><strong>PLAYOFFS</strong></td>
+                <tr>                <td colspan="7" style="text-align: center;background-color: grey;"><strong>Round 1 - May 9, 2023</strong></td>
+</tr>
+
+            </tr>
+            <tr>
+                <td><strong><u>Hidden Rain</u></strong></td>
+                <td>92</td>
+                <td>OTF</td>
+                <td>67</td>
+                <td>May 9, 2023</td>
+                <td>6:15 PM</td>
+            </tr>
+            <tr>
+                <td><strong><u>Coulda Been</u></strong></td>
+                <td>72</td>
+                <td>Free Agents</td>
+                <td>70</td>
+                <td>May 9, 2023</td>
+                <td>7:15 PM</td>
+            </tr>
+            <tr>
+                <td><strong><u>Tune Squad</u></strong></td>
+                <td>111</td>
+                <td>Integral Construction</td>
+                <td>97</td>
+                <td>May 9, 2023</td>
+                <td>8:15 PM</td>
+            </tr>
+            <tr>                <td colspan="7" style="text-align: center;background-color: grey;"><strong>Round 2 - May 12, 2023</strong></td>
+            </tr>
+            
+                        </tr>
+                        
+                        <tr>
+                            <td><strong><u>Tune Squad</u></strong></td>
+                            <td>-</td>
+                            <td>Coulda Been</td>
+                            <td>Forfeit</td>
+                            <td>May 12, 2023</td>
+                            <td>6:30 PM</td>
+                        </tr>
+                        <tr>
+                            <td>YAGGA</td>
+                            <td>83</td>
+                            <td><strong><u>Hidden Rain</u></strong></td>
+                            <td>90</td>
+                            <td>May 12, 2023</td>
+                            <td>7:30 PM</td>
+                        </tr>
+                        <tr>                <td colspan="7" style="text-align: center;background-color: grey;"><strong>Championship - May 16, 2023</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Tune Squad</td>
+                            <td>66</td>
+                            <td><strong><u>Hidden Rain</u></strong></td>
+                            <td>77</td>
+                            <td>May 16, 2023</td>
+                            <td>7:30 PM</td>
+                        </tr>
+                        <tr>                <td colspan="7" style="text-align: center;background-color: Red;border: 2px solid black;"><strong style="color: white;">AllStar Weekend - May 19, 2023</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Skills Challenge</td>
+                            <td>-</td>
+                            <td>Winner - Chris Estwan</td>
+                            <td>-</td>
+                            <td>May 19, 2023</td>
+                            <td>5:30 PM</td>
+                        </tr>
+                        <tr>
+                            <td>3 Point Contest</td>
+                            <td>-</td>
+                            <td>Winner - Malique Simmons</td>
+                            <td>-</td>
+                            <td>May 19, 2023</td>
+                            <td>6:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td>1 on 1 Tournament</td>
+                            <td>-</td>
+                            <td>Winner - Kyle Davis</td>
+                            <td>-</td>
+                            <td>May 19, 2023</td>
+                            <td>6:30 PM</td>
+                        </tr>
+                        <tr>
+                            <td>Dunk Contest</td>
+                            <td>-</td>
+                            <td>Winner - Jacob Morales</td>
+                            <td>-</td>
+                            <td>May 19, 2023</td>
+                            <td>7:35 PM</td>
+                        </tr>
+                        <tr>
+                            <td><strong><u>Team Mikey</u></strong></td>
+                            <td>166</td>
+                            <td>Team DC</td>
+                            <td>165</td>
+                            <td>May 19, 2023</td>
+                            <td>8:15 PM</td>
+                        </tr>
+            </tbody>
+        </table>
+
+        <table id="scheduleTableSeason2" class="table is-striped is-bordered is-max-desktop">
+            <thead>
+                <tr>
+                    <th>Home Team</th>
+                    <th>Score</th>
+                    <th>Away Team</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 1 - February 25, 2025</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>BTA</u></strong></td>
+                    <td>77</td>
+                    <td>Venom</td>
+                    <td>70</td>
+                    <td>February 25, 2025</td>
+                    <td>6:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>1Fam</u></strong></td>
+                    <td>75</td>
+                    <td>Get Buck$</td>
+                    <td>56</td>
+                    <td>February 25, 2025</td>
+                    <td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <td>OTF</td>
+                    <td>89</td>
+                    <td><strong><u>Hidden Rain</u></strong></td>
+                    <td>106</td>
+                    <td>February 25, 2025</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Free Agents - Bye</td>
+                    <td>February 25, 2025</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color:grey;"><strong>Week 2 - March 4, 2025</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>64</td>
+                    <td><strong><u>1Fam</u></strong></td>
+                    <td>92</td>
+                    <td>March 4, 2025</td>
+                    <td>6:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Hidden Rain</u></strong></td>
+                    <td>81</td>
+                    <td>Venom</td>
+                    <td>72</td>
+                    <td>March 4, 2025</td>
+                    <td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>BTA</u></strong></td>
+                    <td>66</td>
+                    <td>Get Buck$</td>
+                    <td>60</td>
+                    <td>March 4, 2025</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">OTF - Bye</td>
+                    <td>March 4, 2025</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 3 - March 11, 2025</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>Free Agents</u></strong></td>
+                    <td>58</td>
+                    <td>Get Buck$</td>
+                    <td>57</td>
+                    <td>March 11, 2025</td>
+                    <td>6:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Hidden Rain</u></strong></td>
+                    <td>63</td>
+                    <td>1Fam</td>
+                    <td>50</td>
+                    <td>March 11, 2025</td>
+                    <td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>OTF</u></strong></td>
+                    <td>105</td>
+                    <td>Venom</td>
+                    <td>74</td>
+                    <td>March 11, 2025</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">BTA - Bye</td>
+                    <td>March 11, 2025</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 4 - March 25, 2025</strong></td>
+                </tr>
+                <tr>
+                    <td>Venom</td>
+                    <td>74</td>
+                    <td><strong><u>Get Buck$</u></strong></td>
+                    <td>80</td>
+                    <td>March 25, 2025</td>
+                    <td>6:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Hidden Rain</u><strong</td>
+                    <td>102</td>
+                    <td>Free Agents</td>
+                    <td>68</td>
+                    <td>March 25, 2025</td>
+                    <td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <td>OTF</td>
+                    <td>76</td>
+                    <td><strong><u>BTA</u></strong></td>
+                    <td>78</td>
+                    <td>March 25, 2025</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">1Fam - Bye</td>
+                    <td>March 25, 2025</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 5 - April 1, 2025</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>Free Agents</u></strong></td>
+                    <td>69</td>
+                    <td>Venom</td>
+                    <td>67</td>
+                    <td>April 1, 2025</td>
+                    <td>6:00 PM</td>
+                </tr>
+                <tr>
+                    <td>OTF</td>
+                    <td>80</td>
+                    <td><strong><u>1Fam</u></strong></td>
+                    <td>120</td>
+                    <td>April 1, 2025</td>
+                    <td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Hidden Rain</u></strong></td>
+                    <td>78</td>
+                    <td>BTA</td>
+                    <td>65</td>
+                    <td>April 1, 2025</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Get Buck$ - Bye</td>
+                    <td>April 1, 2025</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 6 - April 8, 2025</strong></td>
+                </tr>
+                <tr>
+                    <td>OTF</td>
+                    <td>68</td>
+                    <td><strong><u>Free Agents</u></strong></td>
+                    <td>75</td>
+                    <td>April 8, 2025</td>
+                    <td>6:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>1Fam</u></strong></td>
+                    <td>61</td>
+                    <td>BTA</td>
+                    <td>57</td>
+                    <td>April 8, 2025</td>
+                    <td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Hidden Rain</u></strong></td>
+                    <td>76</td>
+                    <td>Get Buck$</td>
+                    <td>68</td>
+                    <td>April 8, 2025</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Venom - Bye</td>
+                    <td>April 8, 2025</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 7 - April 22, 2025</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>58</td>
+                    <td><strong><u>BTA</u></strong></td>
+                    <td>81</td>
+                    <td>April 22, 2025</td>
+                    <td>6:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Venom</td>
+                    <td>67</td>
+                    <td><strong><u>1Fam</u></strong></td>
+                    <td>77</td>
+                    <td>April 22, 2025</td>
+                    <td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>OTF</u></strong></td>
+                    <td>104</td>
+                    <td>Get Buck$</td>
+                    <td>98</td>
+                    <td>April 22, 2025</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Hidden Rain - Bye</td>
+                    <td>April 22, 2025</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 8 - April 29, 2025</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>71</td>
+                    <td><strong><u>1Fam</u></strong></td>
+                    <td>90</td>
+                    <td>April 29, 2025</td>
+                    <td>6:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Venom</td>
+                    <td>87</td>
+                    <td><strong><u>OTF</u></strong></td>
+                    <td>89</td>
+                    <td>April 29, 2025</td>
+                    <td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>BTA</u></strong></td>
+                    <td>90</td>
+                    <td>Get Buck$</td>
+                    <td>59</td>
+                    <td>April 29, 2025</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Hidden Rain - Bye</td>
+                    <td>April 29, 2025</td>
+                </tr>
+                <td colspan="7" style="text-align: center;background-color: Yellow; border: 2px solid black;"><strong>PLAYOFFS</strong></td>
+                <tr>                <td colspan="7" style="text-align: center;background-color: grey;"><strong>Round 1 - May 6, 2025</strong></td>
+</tr>
+
+            </tr>
+            <tr>
+                <td>Venom</td>
+                <td>82</td>
+                <td><strong><u>1Fam</u></strong></td>
+                <td>96</td>
+                <td>May 6, 2025</td>
+                <td>6:00 PM</td>
+            </tr>
+            <tr>
+                <td><strong><u>OTF</u></strong></td>
+                <td>102</td>
+                <td>Free Agents</td>
+                <td>75</td>
+                <td>May 6, 2025</td>
+                <td>7:00 PM</td>
+            </tr>
+            <tr>
+                <td><strong><u>BTA</u></strong></td>
+                <td>73</td>
+                <td>Get Buck$</td>
+                <td>50</td>
+                <td>May 6, 2025</td>
+                <td>8:00 PM</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align: center;">Hidden Rain - 1st Round Bye</td>
+                <td>May 6, 2025</td>
+            </tr>
+
+            <tr>                <td colspan="7" style="text-align: center;background-color: grey;"><strong>Round 2 - May 13, 2025</strong></td>
+            </tr>
+            <tr>
+                <td><strong><u>1Fam</u></strong></td>
+                <td>62</td>
+                <td>BTA</td>
+                <td>58</td>
+                <td>May 13, 2025</td>
+                <td>6:15 PM</td>
+            </tr>
+            <tr>
+                <td><strong><u>Hidden Rain</u></strong></td>
+                <td>87</td>
+                <td>OTF</td>
+                <td>65</td>
+                <td>May 13, 2025</td>
+                <td>7:15 PM</td>
+            </tr>
+            <tr>                <td colspan="7" style="text-align: center;background-color: grey;"><strong>Championship - May 20, 2025</strong></td>
+            </tr>
+            <tr>
+                <td><strong><u>Hidden Rain</u></strong></td>
+                <td>54</td>
+                <td>1Fam</td>
+                <td>52</td>
+                <td>May 20, 2025</td>
+                <td>6:45 PM</td>
+            </tr>
+         <tr>                <td colspan="7" style="text-align: center;background-color: Red;border: 2px solid black;"><strong style="color: white;">AllStar Weekend - May 19, 2023</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Skills Challenge</td>
+                            <td>-</td>
+                            <td>Winner - Justin Sheffield & Rob Moriarty</td>
+                            <td>-</td>
+                            <td>May 27, 2025</td>
+                            <td>5:30 PM</td>
+                        </tr>
+                        <tr>
+                            <td>3 Point Contest</td>
+                            <td>-</td>
+                            <td>Winner - Tamar Williams</td>
+                            <td>-</td>
+                            <td>May 27, 2025</td>
+                            <td>6:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td>1 on 1 Tournament</td>
+                            <td>-</td>
+                            <td>Winner - Rodney Cook</td>
+                            <td>-</td>
+                            <td>May 27, 2025</td>
+                            <td>6:30 PM</td>
+                        </tr>
+                        <tr>
+                            <td><strong><u>Team Javon</u></strong></td>
+                            <td>133</td>
+                            <td>Team Mar</td>
+                            <td>111</td>
+                            <td>May 27, 2025</td>
+                            <td>8:15 PM</td>
+                        </tr>
+            </tbody>
+
+        </table>
+
+        <table id="scheduleTableSeason3" class="table is-striped is-bordered is-max-desktop">
+            <thead>
+                <tr>
+                    <th>Home Team</th>
+                    <th>Score</th>
+                    <th>Away Team</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 1 -  March 10, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td><strong><u>The Mob</u></strong></td>
+                    <td>69</td>
+                    <td>Free Agents</td>
+                    <td>67</td>
+                    <td>March 10, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td><strong><u>Dream Chasers</u></strong></td>
+                    <td>75</td>
+                    <td>Venom</td>
+                    <td>65</td>
+                    <td>March 10, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>MTBM</td>
+                    <td>71</td>
+                    <td><strong><u>ISP</u></strong></td>
+                    <td>83</td>
+                    <td>March 10, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                
+                <tr>
+                    <td colspan="4" style="text-align: center;">1Fam - Bye</td>
+                    <td>March 10, 2026</td>
+                </tr>
+                
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color:grey;"><strong>Week 2 - March 17, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>March 17, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>March 17, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>March 17, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">MTBM - Bye</td>
+                    <td>March 17, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 3 - March 24, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>March 24, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>March 24, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>March 24, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Free Agents - Bye</td>
+                    <td>March 24, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: grey;"><strong>Week 4 - March 31, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>March 31, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>March 31, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>March 31, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">The Mob - Bye</td>
+                    <td>March 31, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 5 - April 7, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>April 7, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>Vemon</td>
+                    <td>-</td>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>April 7, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>April 7, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">ISP - Bye</td>
+                    <td>April 7, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 6 - April 14, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>April 14, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>Venom</td>
+                    <td>-</td>
+                    <td>April 14, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>April 14, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                
+                <tr>
+                    <td colspan="4" style="text-align: center;">Dream Chasers - Bye</td>
+                    <td>April 14, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 7 - April 21, 2026</strong></td>
+                </tr>
+                <tr>
+                    <td>Free Agents</td>
+                    <td>-</td>
+                    <td>1Fam</td>
+                    <td>-</td>
+                    <td>April 21, 2026</td>
+                    <td>5:45 PM</td>
+                </tr>
+                <tr>
+                    <td>MTBM</td>
+                    <td>-</td>
+                    <td>Dream Chasers</td>
+                    <td>-</td>
+                    <td>April 21, 2026</td>
+                    <td>6:45 PM</td>
+                </tr>
+                
+                <tr>
+                    <td>ISP</td>
+                    <td>-</td>
+                    <td>The Mob</td>
+                    <td>-</td>
+                    <td>April 21, 2026</td>
+                    <td>7:45 PM</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Venom - Bye</td>
+                    <td>April 21, 2026</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;background-color: grey;"><strong>Week 8 - April 28, 2026 - TBA (Based on Seeding) </strong></td>
+                </tr>
+                
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+  </body>
+  </html>
