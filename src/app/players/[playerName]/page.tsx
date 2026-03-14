@@ -1,0 +1,108 @@
+import React, { Suspense } from "react";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import PlayerProfileClient, { type SeasonStats } from "./player-profile-client";
+import { aggregatePlayerStats, getLeagueData, getSeasonPlayersWithAggregates } from "@/lib/league-data";
+import { getSeasonPlayerOveralls } from "@/lib/player-overalls";
+import { shouldHideSeasonPlayerFromDisplay } from "@/lib/player-visibility";
+
+function normalizePlayerKey(value: string): string {
+    return value.trim().toLowerCase();
+}
+
+function getPlayerSeasonStats(playerName: string): SeasonStats[] {
+    const leagueData = getLeagueData();
+    const normalizedPlayerName = normalizePlayerKey(playerName);
+    const seasonIds = Object.keys(leagueData.seasons).toSorted((a, b) => Number(a) - Number(b));
+    const results: SeasonStats[] = [];
+
+    for (const seasonId of seasonIds) {
+        const seasonData = leagueData.seasons[seasonId];
+        const overallsByPlayerName = new Map(
+            getSeasonPlayerOveralls(getSeasonPlayersWithAggregates(seasonId), seasonId).map((entry) => [
+                normalizePlayerKey(entry.player.name),
+                entry.overall,
+            ])
+        );
+
+        for (const team of seasonData.teams) {
+            const player = team.roster.find((entry) => normalizePlayerKey(entry.name) === normalizedPlayerName);
+            if (!player) {
+                continue;
+            }
+            if (shouldHideSeasonPlayerFromDisplay(player.name, seasonId)) {
+                continue;
+            }
+
+            results.push({
+                seasonId,
+                seasonName: seasonData.name,
+                teamName: team.Team,
+                stats: aggregatePlayerStats(player),
+                playerHead: player.PlayerHead,
+                gameLogs: player.stats ?? [],
+                overall: overallsByPlayerName.get(normalizedPlayerName) ?? null,
+            });
+        }
+    }
+
+    return results;
+}
+
+export async function generateMetadata(props: {
+    params: Promise<{ playerName: string }>;
+}): Promise<Metadata> {
+    const params = await props.params;
+    const playerName = decodeURIComponent(params.playerName).trim();
+    return {
+        title: `${playerName} | Player Profile | CBT League`,
+        description: `Career statistics and game logs for ${playerName} in the CBT League.`,
+    };
+}
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+    const playerNames = new Set<string>();
+    const leagueData = getLeagueData();
+
+    Object.entries(leagueData.seasons).forEach(([seasonId, season]) => {
+        season.teams.forEach((team) => {
+            team.roster.forEach((player) => {
+                if (player.name && !shouldHideSeasonPlayerFromDisplay(player.name, seasonId)) {
+                    playerNames.add(player.name.trim());
+                }
+            });
+        });
+    });
+
+    const paths: { playerName: string }[] = [];
+    playerNames.forEach(name => {
+        paths.push({ playerName: name });
+        if (name.includes(" ") || name.includes("$")) {
+            paths.push({ playerName: encodeURIComponent(name) });
+        }
+    });
+
+    return Array.from(new Set(paths.map(p => p.playerName))).map(name => ({
+        playerName: name,
+    }));
+}
+
+export default async function PlayerProfilePage(props: {
+    params: Promise<{ playerName: string }>;
+}) {
+    const params = await props.params;
+    const playerName = decodeURIComponent(params.playerName).trim();
+    const seasonData = getPlayerSeasonStats(playerName);
+
+    if (seasonData.length === 0) {
+        notFound();
+    }
+
+    return (
+        <Suspense fallback={<div className="container mx-auto px-4 py-12 text-center text-white">Loading...</div>}>
+            <PlayerProfileClient playerName={playerName} seasonData={seasonData} />
+        </Suspense>
+    );
+}
