@@ -1,0 +1,1030 @@
+{
+  "1": [
+    {
+      "week": "Week 1 - March 7, 2023",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "77",
+      "awayTeam": "Free Agents",
+      "awayScore": "67",
+      "date": "March 7, 2023",
+      "time": "6:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 1 - March 7, 2023",
+      "homeTeam": "Coulda Been",
+      "homeScore": "92",
+      "awayTeam": "Integral Construction",
+      "awayScore": "59",
+      "date": "March 7, 2023",
+      "time": "7:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 1 - March 7, 2023",
+      "homeTeam": "YAGGA",
+      "homeScore": "67",
+      "awayTeam": "Tune Squad",
+      "awayScore": "57",
+      "date": "March 7, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 1 - March 7, 2023",
+      "byeTeam": "OTF",
+      "isBye": true,
+      "date": "March 7, 2023",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 14, 2023",
+      "homeTeam": "Free Agents",
+      "homeScore": "55",
+      "awayTeam": "OTF",
+      "awayScore": "68",
+      "date": "March 14, 2023",
+      "time": "6:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 14, 2023",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "101",
+      "awayTeam": "Integral Construction",
+      "awayScore": "66",
+      "date": "March 14, 2023",
+      "time": "7:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 14, 2023",
+      "homeTeam": "YAGGA",
+      "homeScore": "77",
+      "awayTeam": "Coulda Been",
+      "awayScore": "70",
+      "date": "March 14, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 14, 2023",
+      "byeTeam": "Tune Squad",
+      "isBye": true,
+      "date": "March 14, 2023",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 21, 2023",
+      "homeTeam": "Free Agents",
+      "homeScore": "72",
+      "awayTeam": "Integral Construction",
+      "awayScore": "62",
+      "date": "March 21, 2023",
+      "time": "6:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 21, 2023",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "91",
+      "awayTeam": "OTF",
+      "awayScore": "69",
+      "date": "March 21, 2023",
+      "time": "7:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 21, 2023",
+      "homeTeam": "Coulda Been",
+      "homeScore": "75",
+      "awayTeam": "Tune Squad",
+      "awayScore": "91",
+      "date": "March 21, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 21, 2023",
+      "byeTeam": "YAGGA",
+      "isBye": true,
+      "date": "March 21, 2023",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 28, 2023",
+      "homeTeam": "YAGGA",
+      "homeScore": "117",
+      "awayTeam": "Free Agents",
+      "awayScore": "86",
+      "date": "March 28, 2023",
+      "time": "6:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 28, 2023",
+      "homeTeam": "Coulda Been",
+      "homeScore": "79",
+      "awayTeam": "OTF",
+      "awayScore": "73",
+      "date": "March 28, 2023",
+      "time": "7:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 28, 2023",
+      "homeTeam": "Integral Construction",
+      "homeScore": "72",
+      "awayTeam": "Tune Squad",
+      "awayScore": "129",
+      "date": "March 28, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 28, 2023",
+      "byeTeam": "Hidden Rain",
+      "isBye": true,
+      "date": "March 28, 2023",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 4, 2023",
+      "homeTeam": "Free Agents",
+      "homeScore": "68",
+      "awayTeam": "Coulda Been",
+      "awayScore": "73",
+      "date": "April 4, 2023",
+      "time": "6:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 4, 2023",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "68",
+      "awayTeam": "Tune Squad",
+      "awayScore": "74",
+      "date": "April 4, 2023",
+      "time": "7:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 4, 2023",
+      "homeTeam": "YAGGA",
+      "homeScore": "85",
+      "awayTeam": "OTF",
+      "awayScore": "71",
+      "date": "April 4, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 4, 2023",
+      "byeTeam": "Integral Construction",
+      "isBye": true,
+      "date": "April 4, 2023",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 18, 2023",
+      "homeTeam": "Integral Construction",
+      "homeScore": "76",
+      "awayTeam": "OTF",
+      "awayScore": "72",
+      "date": "April 18, 2023",
+      "time": "6:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 18, 2023",
+      "homeTeam": "Tune Squad",
+      "homeScore": "112",
+      "awayTeam": "Free Agents",
+      "awayScore": "69",
+      "date": "April 18, 2023",
+      "time": "7:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 18, 2023",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "87",
+      "awayTeam": "YAGGA",
+      "awayScore": "72",
+      "date": "April 18, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 18, 2023",
+      "byeTeam": "Coulda Been",
+      "isBye": true,
+      "date": "April 18, 2023",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 25, 2023",
+      "homeTeam": "Tune Squad",
+      "homeScore": "143",
+      "awayTeam": "OTF",
+      "awayScore": "110",
+      "date": "April 25, 2023",
+      "time": "6:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 25, 2023",
+      "homeTeam": "Coulda Been",
+      "homeScore": "92",
+      "awayTeam": "Hidden Rain",
+      "awayScore": "90",
+      "date": "April 25, 2023",
+      "time": "7:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 25, 2023",
+      "homeTeam": "YAGGA",
+      "homeScore": "91",
+      "awayTeam": "Integral Construction",
+      "awayScore": "84",
+      "date": "April 25, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 25, 2023",
+      "byeTeam": "Free Agents",
+      "isBye": true,
+      "date": "April 25, 2023",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 8 - May 2, 2023",
+      "homeTeam": "Free Agents",
+      "homeScore": "71",
+      "awayTeam": "Integral Construction",
+      "awayScore": "61",
+      "date": "May 2, 2023",
+      "time": "6:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 8 - May 2, 2023",
+      "homeTeam": "Coulda Been",
+      "homeScore": "Forfeit",
+      "awayTeam": "OTF",
+      "awayScore": "-",
+      "date": "May 2, 2023",
+      "time": "7:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 8 - May 2, 2023",
+      "homeTeam": "YAGGA",
+      "homeScore": "-",
+      "awayTeam": "OTF",
+      "awayScore": "-",
+      "date": "May 2, 2023",
+      "time": "Scrimmage",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 8 - May 2, 2023",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "88",
+      "awayTeam": "Tune Squad",
+      "awayScore": "92",
+      "date": "May 2, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Playoffs - May 9, 2023",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "92",
+      "awayTeam": "OTF",
+      "awayScore": "67",
+      "date": "May 9, 2023",
+      "time": "6:15 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Playoffs - May 9, 2023",
+      "homeTeam": "Coulda Been",
+      "homeScore": "72",
+      "awayTeam": "Free Agents",
+      "awayScore": "70",
+      "date": "May 9, 2023",
+      "time": "7:15 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Playoffs - May 9, 2023",
+      "homeTeam": "Tune Squad",
+      "homeScore": "111",
+      "awayTeam": "Integral Construction",
+      "awayScore": "97",
+      "date": "May 9, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Playoffs - May 12, 2023",
+      "homeTeam": "Tune Squad",
+      "homeScore": "-",
+      "awayTeam": "Coulda Been",
+      "awayScore": "Forfeit",
+      "date": "May 12, 2023",
+      "time": "6:30 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Playoffs - May 12, 2023",
+      "homeTeam": "YAGGA",
+      "homeScore": "83",
+      "awayTeam": "Hidden Rain",
+      "awayScore": "90",
+      "date": "May 12, 2023",
+      "time": "7:30 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Championship - May 16, 2023",
+      "homeTeam": "Tune Squad",
+      "homeScore": "66",
+      "awayTeam": "Hidden Rain",
+      "awayScore": "77",
+      "date": "May 16, 2023",
+      "time": "7:30 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "AllStar Weekend - May 19, 2023",
+      "homeTeam": "Skills Challenge",
+      "homeScore": "-",
+      "awayTeam": "Winner - Chris Estwan",
+      "awayScore": "-",
+      "date": "May 19, 2023",
+      "time": "5:30 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "AllStar Weekend - May 19, 2023",
+      "homeTeam": "3 Point Contest",
+      "homeScore": "-",
+      "awayTeam": "Winner - Malique Simmons",
+      "awayScore": "-",
+      "date": "May 19, 2023",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "AllStar Weekend - May 19, 2023",
+      "homeTeam": "1 on 1 Tournament",
+      "homeScore": "-",
+      "awayTeam": "Winner - Kyle Davis",
+      "awayScore": "-",
+      "date": "May 19, 2023",
+      "time": "6:30 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "AllStar Weekend - May 19, 2023",
+      "homeTeam": "Dunk Contest",
+      "homeScore": "-",
+      "awayTeam": "Winner - Jacob Morales",
+      "awayScore": "-",
+      "date": "May 19, 2023",
+      "time": "7:35 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "AllStar Weekend - May 19, 2023",
+      "homeTeam": "Team Mikey",
+      "homeScore": "166",
+      "awayTeam": "Team DC",
+      "awayScore": "165",
+      "date": "May 19, 2023",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    }
+  ],
+  "2": [
+    {
+      "week": "Week 1 - February 25, 2025",
+      "homeTeam": "BTA",
+      "homeScore": "77",
+      "awayTeam": "Venom",
+      "awayScore": "70",
+      "date": "February 25, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 1 - February 25, 2025",
+      "homeTeam": "1Fam",
+      "homeScore": "75",
+      "awayTeam": "GetBuck$",
+      "awayScore": "56",
+      "date": "February 25, 2025",
+      "time": "7:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 1 - February 25, 2025",
+      "homeTeam": "OTF",
+      "homeScore": "89",
+      "awayTeam": "Hidden Rain",
+      "awayScore": "106",
+      "date": "February 25, 2025",
+      "time": "8:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 1 - February 25, 2025",
+      "byeTeam": "Free Agents",
+      "isBye": true,
+      "date": "February 25, 2025",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 4, 2025",
+      "homeTeam": "Free Agents",
+      "homeScore": "64",
+      "awayTeam": "1Fam",
+      "awayScore": "92",
+      "date": "March 4, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 4, 2025",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "81",
+      "awayTeam": "Venom",
+      "awayScore": "72",
+      "date": "March 4, 2025",
+      "time": "7:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 4, 2025",
+      "homeTeam": "BTA",
+      "homeScore": "66",
+      "awayTeam": "GetBuck$",
+      "awayScore": "60",
+      "date": "March 4, 2025",
+      "time": "8:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 4, 2025",
+      "byeTeam": "OTF",
+      "isBye": true,
+      "date": "March 4, 2025",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 11, 2025",
+      "homeTeam": "Free Agents",
+      "homeScore": "58",
+      "awayTeam": "GetBuck$",
+      "awayScore": "57",
+      "date": "March 11, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 11, 2025",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "63",
+      "awayTeam": "1Fam",
+      "awayScore": "50",
+      "date": "March 11, 2025",
+      "time": "7:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 11, 2025",
+      "homeTeam": "OTF",
+      "homeScore": "105",
+      "awayTeam": "Venom",
+      "awayScore": "74",
+      "date": "March 11, 2025",
+      "time": "8:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 11, 2025",
+      "byeTeam": "BTA",
+      "isBye": true,
+      "date": "March 11, 2025",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 25, 2025",
+      "homeTeam": "Venom",
+      "homeScore": "74",
+      "awayTeam": "GetBuck$",
+      "awayScore": "80",
+      "date": "March 25, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 25, 2025",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "102",
+      "awayTeam": "Free Agents",
+      "awayScore": "68",
+      "date": "March 25, 2025",
+      "time": "7:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 25, 2025",
+      "homeTeam": "OTF",
+      "homeScore": "76",
+      "awayTeam": "BTA",
+      "awayScore": "78",
+      "date": "March 25, 2025",
+      "time": "8:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 25, 2025",
+      "byeTeam": "1Fam",
+      "isBye": true,
+      "date": "March 25, 2025",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 1, 2025",
+      "homeTeam": "Free Agents",
+      "homeScore": "69",
+      "awayTeam": "Venom",
+      "awayScore": "67",
+      "date": "April 1, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 1, 2025",
+      "homeTeam": "OTF",
+      "homeScore": "80",
+      "awayTeam": "1Fam",
+      "awayScore": "120",
+      "date": "April 1, 2025",
+      "time": "7:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 1, 2025",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "78",
+      "awayTeam": "BTA",
+      "awayScore": "65",
+      "date": "April 1, 2025",
+      "time": "8:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 1, 2025",
+      "byeTeam": "GetBuck$",
+      "isBye": true,
+      "date": "April 1, 2025",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 8, 2025",
+      "homeTeam": "OTF",
+      "homeScore": "68",
+      "awayTeam": "Free Agents",
+      "awayScore": "75",
+      "date": "April 8, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 8, 2025",
+      "homeTeam": "1Fam",
+      "homeScore": "61",
+      "awayTeam": "BTA",
+      "awayScore": "57",
+      "date": "April 8, 2025",
+      "time": "7:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 8, 2025",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "76",
+      "awayTeam": "GetBuck$",
+      "awayScore": "68",
+      "date": "April 8, 2025",
+      "time": "8:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 8, 2025",
+      "byeTeam": "Venom",
+      "isBye": true,
+      "date": "April 8, 2025",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 22, 2025",
+      "homeTeam": "Free Agents",
+      "homeScore": "58",
+      "awayTeam": "BTA",
+      "awayScore": "81",
+      "date": "April 22, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 22, 2025",
+      "homeTeam": "Venom",
+      "homeScore": "67",
+      "awayTeam": "1Fam",
+      "awayScore": "77",
+      "date": "April 22, 2025",
+      "time": "7:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 22, 2025",
+      "homeTeam": "OTF",
+      "homeScore": "104",
+      "awayTeam": "GetBuck$",
+      "awayScore": "98",
+      "date": "April 22, 2025",
+      "time": "8:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 22, 2025",
+      "byeTeam": "Hidden Rain",
+      "isBye": true,
+      "date": "April 22, 2025",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 8 - April 29, 2025",
+      "homeTeam": "Free Agents",
+      "homeScore": "71",
+      "awayTeam": "1Fam",
+      "awayScore": "90",
+      "date": "April 29, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 8 - April 29, 2025",
+      "homeTeam": "Venom",
+      "homeScore": "87",
+      "awayTeam": "OTF",
+      "awayScore": "89",
+      "date": "April 29, 2025",
+      "time": "7:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 8 - April 29, 2025",
+      "homeTeam": "BTA",
+      "homeScore": "90",
+      "awayTeam": "GetBuck$",
+      "awayScore": "59",
+      "date": "April 29, 2025",
+      "time": "8:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 8 - April 29, 2025",
+      "byeTeam": "Hidden Rain",
+      "isBye": true,
+      "date": "April 29, 2025",
+      "isPlayoff": false
+    },
+    {
+      "week": "Rd 1 Playoffs - May 6, 2025",
+      "homeTeam": "Venom",
+      "homeScore": "82",
+      "awayTeam": "1Fam",
+      "awayScore": "96",
+      "date": "May 6, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Rd 1 Playoffs - May 6, 2025",
+      "homeTeam": "OTF",
+      "homeScore": "102",
+      "awayTeam": "Free Agents",
+      "awayScore": "75",
+      "date": "May 6, 2025",
+      "time": "7:00 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Rd 1 Playoffs - May 6, 2025",
+      "homeTeam": "BTA",
+      "homeScore": "73",
+      "awayTeam": "GetBuck$",
+      "awayScore": "50",
+      "date": "May 6, 2025",
+      "time": "8:00 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Rd 1 Playoffs - May 6, 2025",
+      "byeTeam": "Hidden Rain",
+      "isBye": true,
+      "date": "May 6, 2025",
+      "isPlayoff": true
+    },
+    {
+      "week": "Rd 2 Playoffs - May 13, 2025",
+      "homeTeam": "1Fam",
+      "homeScore": "62",
+      "awayTeam": "BTA",
+      "awayScore": "58",
+      "date": "May 13, 2025",
+      "time": "6:15 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Rd 2 Playoffs - May 13, 2025",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "87",
+      "awayTeam": "OTF",
+      "awayScore": "65",
+      "date": "May 13, 2025",
+      "time": "7:15 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "Championship - May 20, 2025",
+      "homeTeam": "Hidden Rain",
+      "homeScore": "54",
+      "awayTeam": "1Fam",
+      "awayScore": "52",
+      "date": "May 20, 2025",
+      "time": "6:45 PM",
+      "isPlayoff": true
+    },
+    {
+      "week": "All-Star Weekend - May 27, 2025",
+      "homeTeam": "Skills Challenge",
+      "homeScore": "-",
+      "awayTeam": "Winner - Justin Sheffield & Rob Moriarty",
+      "awayScore": "-",
+      "date": "May 27, 2025",
+      "time": "5:30 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "All-Star Weekend - May 27, 2025",
+      "homeTeam": "3 Point Contest",
+      "homeScore": "-",
+      "awayTeam": "Winner - Tamar Williams",
+      "awayScore": "-",
+      "date": "May 27, 2025",
+      "time": "6:00 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "All-Star Weekend - May 27, 2025",
+      "homeTeam": "1 on 1 Tournament",
+      "homeScore": "-",
+      "awayTeam": "Winner - Rodney Cook",
+      "awayScore": "-",
+      "date": "May 27, 2025",
+      "time": "6:30 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "All-Star Weekend - May 27, 2025",
+      "homeTeam": "Team Javon",
+      "homeScore": "133",
+      "awayTeam": "Team Mar",
+      "awayScore": "111",
+      "date": "May 27, 2025",
+      "time": "8:15 PM",
+      "isPlayoff": false
+    }
+  ],
+  "3": [
+    {
+      "week": "Week 1 - March 10, 2026",
+      "homeTeam": "The Mob",
+      "homeScore": "70",
+      "awayTeam": "Free Agents",
+      "awayScore": "67",
+      "date": "March 10, 2026",
+      "time": "5:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 1 - March 10, 2026",
+      "homeTeam": "Dream Chasers",
+      "homeScore": "78",
+      "awayTeam": "Venom",
+      "awayScore": "66",
+      "date": "March 10, 2026",
+      "time": "6:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 1 - March 10, 2026",
+      "homeTeam": "MTBM",
+      "homeScore": "73",
+      "awayTeam": "ISP",
+      "awayScore": "83",
+      "date": "March 10, 2026",
+      "time": "7:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 17, 2026",
+      "homeTeam": "Free Agents",
+      "homeScore": "-",
+      "awayTeam": "1Fam",
+      "awayScore": "-",
+      "date": "March 17, 2026",
+      "time": "5:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 17, 2026",
+      "homeTeam": "The Mob",
+      "homeScore": "-",
+      "awayTeam": "Dream Chasers",
+      "awayScore": "-",
+      "date": "March 17, 2026",
+      "time": "6:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 2 - March 17, 2026",
+      "homeTeam": "ISP",
+      "homeScore": "-",
+      "awayTeam": "Venom",
+      "awayScore": "-",
+      "date": "March 17, 2026",
+      "time": "7:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 24, 2026",
+      "homeTeam": "Venom",
+      "homeScore": "-",
+      "awayTeam": "MTBM",
+      "awayScore": "-",
+      "date": "March 24, 2026",
+      "time": "5:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 24, 2026",
+      "homeTeam": "1Fam",
+      "homeScore": "-",
+      "awayTeam": "Dream Chasers",
+      "awayScore": "-",
+      "date": "March 24, 2026",
+      "time": "6:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 3 - March 24, 2026",
+      "homeTeam": "ISP",
+      "homeScore": "-",
+      "awayTeam": "The Mob",
+      "awayScore": "-",
+      "date": "March 24, 2026",
+      "time": "7:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 31, 2026",
+      "homeTeam": "Venom",
+      "homeScore": "-",
+      "awayTeam": "Free Agents",
+      "awayScore": "-",
+      "date": "March 31, 2026",
+      "time": "5:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 31, 2026",
+      "homeTeam": "MTBM",
+      "homeScore": "-",
+      "awayTeam": "1Fam",
+      "awayScore": "-",
+      "date": "March 31, 2026",
+      "time": "6:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 4 - March 31, 2026",
+      "homeTeam": "Dream Chasers",
+      "homeScore": "-",
+      "awayTeam": "ISP",
+      "awayScore": "-",
+      "date": "March 31, 2026",
+      "time": "7:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 7, 2026",
+      "homeTeam": "Free Agents",
+      "homeScore": "-",
+      "awayTeam": "Dream Chasers",
+      "awayScore": "-",
+      "date": "April 7, 2026",
+      "time": "5:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 7, 2026",
+      "homeTeam": "Venom",
+      "homeScore": "-",
+      "awayTeam": "1Fam",
+      "awayScore": "-",
+      "date": "April 7, 2026",
+      "time": "6:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 5 - April 7, 2026",
+      "homeTeam": "The Mob",
+      "homeScore": "-",
+      "awayTeam": "MTBM",
+      "awayScore": "-",
+      "date": "April 7, 2026",
+      "time": "7:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 14, 2026",
+      "homeTeam": "1Fam",
+      "homeScore": "-",
+      "awayTeam": "ISP",
+      "awayScore": "-",
+      "date": "April 14, 2026",
+      "time": "5:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 14, 2026",
+      "homeTeam": "The Mob",
+      "homeScore": "-",
+      "awayTeam": "Venom",
+      "awayScore": "-",
+      "date": "April 14, 2026",
+      "time": "6:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 6 - April 14, 2026",
+      "homeTeam": "Free Agents",
+      "homeScore": "-",
+      "awayTeam": "MTBM",
+      "awayScore": "-",
+      "date": "April 14, 2026",
+      "time": "7:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 21, 2026",
+      "homeTeam": "Free Agents",
+      "homeScore": "-",
+      "awayTeam": "ISP",
+      "awayScore": "-",
+      "date": "April 21, 2026",
+      "time": "5:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 21, 2026",
+      "homeTeam": "MTBM",
+      "homeScore": "-",
+      "awayTeam": "Dream Chasers",
+      "awayScore": "-",
+      "date": "April 21, 2026",
+      "time": "6:45 PM",
+      "isPlayoff": false
+    },
+    {
+      "week": "Week 7 - April 21, 2026",
+      "homeTeam": "1Fam",
+      "homeScore": "-",
+      "awayTeam": "The Mob",
+      "awayScore": "-",
+      "date": "April 21, 2026",
+      "time": "7:45 PM",
+      "isPlayoff": false
+    }
+  ]
+}
