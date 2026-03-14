@@ -15,11 +15,17 @@ export interface AdminScheduleScoreUpdate {
   awayScore: number;
 }
 
+export interface AdminManualOverallUpdate {
+  playerName: string;
+  overall: number;
+}
+
 export interface AdminStatsUpdatePayload {
   seasonId: string;
-  gameNumber: string;
+  gameNumber?: string;
   updates: AdminPlayerGameUpdate[];
   scheduleUpdate?: AdminScheduleScoreUpdate;
+  manualOverallUpdates?: AdminManualOverallUpdate[];
 }
 
 export interface AdminStatsUpdateSuccess {
@@ -28,6 +34,7 @@ export interface AdminStatsUpdateSuccess {
   commitSha: string;
   path: string;
   updatedPlayers: number;
+  updatedManualOveralls: number;
 }
 
 export interface AdminStatsUpdateError {

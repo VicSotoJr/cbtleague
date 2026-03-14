@@ -4,6 +4,7 @@ const DEFAULT_BRANCH = "main";
 const DEFAULT_STATS_PATH = "data/stats.json";
 const FALLBACK_STATS_PATH = "src/data/data.json";
 const SUMMARY_PATH = "src/data/league-summary.json";
+const MANUAL_OVERALLS_PATH = "src/lib/manual-player-overalls.ts";
 const BASE_STATS_TEMPLATE = {
   Points: 0,
   FieldGoalsMade: 0,
@@ -58,13 +59,17 @@ function isAdminStatsUpdatePayload(value) {
     value.updates.every(isAdminPlayerGameUpdate);
   const hasScheduleUpdate =
     value.scheduleUpdate === undefined || isAdminScheduleScoreUpdate(value.scheduleUpdate);
+  const hasManualOverallUpdates =
+    value.manualOverallUpdates === undefined ||
+    (Array.isArray(value.manualOverallUpdates) && value.manualOverallUpdates.every(isAdminManualOverallUpdate));
 
   return (
     isNonEmptyString(value.seasonId) &&
-    isNonEmptyString(value.gameNumber) &&
     hasValidUpdates &&
     hasScheduleUpdate &&
-    (value.updates.length > 0 || value.scheduleUpdate !== undefined)
+    hasManualOverallUpdates &&
+    ((value.updates.length === 0 && value.gameNumber === undefined) || isNonEmptyString(value.gameNumber)) &&
+    (value.updates.length > 0 || value.scheduleUpdate !== undefined || (value.manualOverallUpdates?.length ?? 0) > 0)
   );
 }
 
@@ -88,6 +93,16 @@ function isAdminScheduleScoreUpdate(value) {
     isNonEmptyString(value.awayTeam) &&
     isFiniteNumber(value.homeScore) &&
     isFiniteNumber(value.awayScore)
+  );
+}
+
+function isAdminManualOverallUpdate(value) {
+  if (!isRecord(value)) return false;
+  return (
+    isNonEmptyString(value.playerName) &&
+    isFiniteNumber(value.overall) &&
+    value.overall >= 60 &&
+    value.overall <= 99
   );
 }
 
@@ -151,6 +166,10 @@ function getErrorMessage(error) {
   }
 
   return "Unknown error";
+}
+
+function normalizePlayerKey(value) {
+  return value.trim().toLowerCase();
 }
 
 function createBaseStats() {
@@ -432,6 +451,7 @@ function normalizeAdminStatsPayload(payload) {
         },
       ],
       scheduleUpdate: undefined,
+      manualOverallUpdates: undefined,
     };
   }
 
@@ -475,6 +495,85 @@ async function createGitHubBlob(headers, repository, content) {
   }
 
   return payload.sha;
+}
+
+async function fetchGitHubContent(headers, repository, path) {
+  const encodedPath = encodeGitHubPath(path);
+  const contentUrl = `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(
+    repository.repo
+  )}/contents/${encodedPath}?ref=${encodeURIComponent(repository.branch)}`;
+
+  const response = await fetch(contentUrl, { method: "GET", headers });
+  const payload = await readJsonResponse(response);
+
+  if (!response.ok || !isGitHubContentResponse(payload) || payload.encoding.toLowerCase() !== "base64") {
+    return {
+      ok: false,
+      status: response.status,
+      message: getGitHubErrorMessage(payload),
+    };
+  }
+
+  return {
+    ok: true,
+    payload,
+    decoded: Buffer.from(payload.content.replace(/\n/g, ""), "base64").toString("utf8"),
+  };
+}
+
+function parseManualSeasonOverallsSource(source, seasonId) {
+  if (seasonId !== "3") {
+    throw new Error(`Manual overalls are only supported for Season ${seasonId}.`);
+  }
+
+  const match = source.match(
+    /const SEASON_3_MANUAL_OVERALLS = \{([\s\S]*?)\} as const satisfies Record<string, number>;/m
+  );
+
+  if (!match) {
+    throw new Error("Failed to locate Season 3 manual overalls map.");
+  }
+
+  const entries = {};
+  const entryPattern = /^\s*"([^"]+)":\s*(\d+),?\s*$/gm;
+
+  for (const entry of match[1].matchAll(entryPattern)) {
+    entries[entry[1]] = Number.parseInt(entry[2], 10);
+  }
+
+  return { entries, match: match[0] };
+}
+
+function updateManualSeasonOverallsSource(source, seasonId, manualOverallUpdates) {
+  const { entries, match } = parseManualSeasonOverallsSource(source, seasonId);
+
+  for (const update of manualOverallUpdates) {
+    entries[normalizePlayerKey(update.playerName)] = update.overall;
+  }
+
+  const formattedEntries = Object.entries(entries)
+    .toSorted(([leftName], [rightName]) => leftName.localeCompare(rightName))
+    .map(([playerName, overall]) => `  ${JSON.stringify(playerName)}: ${overall},`)
+    .join("\n");
+
+  const replacement = `const SEASON_3_MANUAL_OVERALLS = {\n${formattedEntries}\n} as const satisfies Record<string, number>;`;
+
+  return source.replace(match, replacement);
+}
+
+function buildCommitMessage(payload) {
+  const hasStatsUpdates = payload.updates.length > 0 || payload.scheduleUpdate !== undefined;
+  const hasManualOveralls = (payload.manualOverallUpdates?.length ?? 0) > 0;
+
+  if (hasStatsUpdates && hasManualOveralls) {
+    return `${COMMIT_MESSAGE} (${payload.seasonId} / Game ${payload.gameNumber ?? "manual"}) + manual overalls`;
+  }
+
+  if (hasManualOveralls) {
+    return `Update manual overalls via admin panel (${payload.seasonId})`;
+  }
+
+  return `${COMMIT_MESSAGE} (${payload.seasonId} / Game ${payload.gameNumber})`;
 }
 
 export default async function handler(req, res) {
@@ -535,92 +634,175 @@ export default async function handler(req, res) {
     "X-GitHub-Api-Version": GITHUB_API_VERSION,
     "User-Agent": "cbtleague-admin",
   };
-
+  const hasStatsUpdates =
+    normalizedPayload.updates.length > 0 || normalizedPayload.scheduleUpdate !== undefined;
+  const hasManualOverallUpdates = (normalizedPayload.manualOverallUpdates?.length ?? 0) > 0;
+  const treeEntries = [];
+  const updatedPaths = [];
   let selectedStatsPath = "";
-  let filePayload = null;
-  let fileErrorStatus = 500;
-  const fileErrorMessage = "Failed to fetch stats file from GitHub.";
-  let fileErrorDetails = "Unknown GitHub API error";
 
-  for (const candidatePath of repository.statsPathCandidates) {
-    const encodedPath = encodeGitHubPath(candidatePath);
-    const contentUrl = `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(
-      repository.repo
-    )}/contents/${encodedPath}?ref=${encodeURIComponent(repository.branch)}`;
+  if (hasStatsUpdates) {
+    let statsFilePayload = null;
+    let fileErrorStatus = 500;
+    const fileErrorMessage = "Failed to fetch stats file from GitHub.";
+    let fileErrorDetails = "Unknown GitHub API error";
 
-    const response = await fetch(contentUrl, { method: "GET", headers });
-    const payloadFromGitHub = await readJsonResponse(response);
+    for (const candidatePath of repository.statsPathCandidates) {
+      const contentResult = await fetchGitHubContent(headers, repository, candidatePath);
 
-    if (response.ok && isGitHubContentResponse(payloadFromGitHub) && payloadFromGitHub.encoding.toLowerCase() === "base64") {
-      selectedStatsPath = candidatePath;
-      filePayload = payloadFromGitHub;
-      break;
+      if (contentResult.ok) {
+        selectedStatsPath = candidatePath;
+        statsFilePayload = contentResult;
+        break;
+      }
+
+      fileErrorStatus = contentResult.status;
+      fileErrorDetails = contentResult.message;
+      if (contentResult.status !== 404) {
+        break;
+      }
     }
 
-    fileErrorStatus = response.status;
-    fileErrorDetails = getGitHubErrorMessage(payloadFromGitHub);
-    if (response.status !== 404) {
-      break;
+    if (!statsFilePayload) {
+      res.status(fileErrorStatus).json({
+        ok: false,
+        message: fileErrorMessage,
+        details: fileErrorDetails,
+      });
+      return;
     }
+
+    let leagueData;
+    try {
+      leagueData = JSON.parse(statsFilePayload.decoded);
+    } catch {
+      res.status(500).json({ ok: false, message: "Failed to decode or parse stats JSON content." });
+      return;
+    }
+
+    for (const update of normalizedPayload.updates) {
+      const updateResult = applyPlayerUpdate(
+        leagueData,
+        normalizedPayload.seasonId,
+        normalizedPayload.gameNumber,
+        update
+      );
+
+      if (!updateResult.ok) {
+        res.status(updateResult.status).json({
+          ok: false,
+          message: updateResult.message,
+          details: updateResult.details,
+        });
+        return;
+      }
+    }
+
+    if (normalizedPayload.scheduleUpdate) {
+      const scheduleUpdateResult = applyScheduleScoreUpdate(
+        leagueData,
+        normalizedPayload.seasonId,
+        normalizedPayload.scheduleUpdate
+      );
+
+      if (!scheduleUpdateResult.ok) {
+        res.status(scheduleUpdateResult.status).json({
+          ok: false,
+          message: scheduleUpdateResult.message,
+          details: scheduleUpdateResult.details,
+        });
+        return;
+      }
+    }
+
+    const dataContent = `${JSON.stringify(leagueData, null, 2)}\n`;
+    const summary = buildLeagueSummary(leagueData);
+    const summaryContent = `${JSON.stringify(summary)}\n`;
+
+    let dataBlobSha = "";
+    let summaryBlobSha = "";
+    try {
+      dataBlobSha = await createGitHubBlob(headers, repository, dataContent);
+      summaryBlobSha = await createGitHubBlob(headers, repository, summaryContent);
+    } catch (error) {
+      res.status(500).json({
+        ok: false,
+        message: "Failed to create GitHub blobs for updated data.",
+        details: getErrorMessage(error),
+      });
+      return;
+    }
+
+    treeEntries.push(
+      {
+        path: selectedStatsPath,
+        mode: "100644",
+        type: "blob",
+        sha: dataBlobSha,
+      },
+      {
+        path: SUMMARY_PATH,
+        mode: "100644",
+        type: "blob",
+        sha: summaryBlobSha,
+      }
+    );
+    updatedPaths.push(selectedStatsPath, SUMMARY_PATH);
   }
 
-  if (!filePayload) {
-    res.status(fileErrorStatus).json({
-      ok: false,
-      message: fileErrorMessage,
-      details: fileErrorDetails,
+  if (hasManualOverallUpdates) {
+    const manualContentResult = await fetchGitHubContent(headers, repository, MANUAL_OVERALLS_PATH);
+
+    if (!manualContentResult.ok) {
+      res.status(manualContentResult.status).json({
+        ok: false,
+        message: "Failed to fetch manual overalls file from GitHub.",
+        details: manualContentResult.message,
+      });
+      return;
+    }
+
+    let manualSource;
+    try {
+      manualSource = updateManualSeasonOverallsSource(
+        manualContentResult.decoded,
+        normalizedPayload.seasonId,
+        normalizedPayload.manualOverallUpdates ?? []
+      );
+    } catch (error) {
+      res.status(400).json({
+        ok: false,
+        message: "Failed to update manual overalls source.",
+        details: getErrorMessage(error),
+      });
+      return;
+    }
+
+    let manualBlobSha = "";
+    try {
+      manualBlobSha = await createGitHubBlob(headers, repository, manualSource.endsWith("\n") ? manualSource : `${manualSource}\n`);
+    } catch (error) {
+      res.status(500).json({
+        ok: false,
+        message: "Failed to create GitHub blob for manual overalls.",
+        details: getErrorMessage(error),
+      });
+      return;
+    }
+
+    treeEntries.push({
+      path: MANUAL_OVERALLS_PATH,
+      mode: "100644",
+      type: "blob",
+      sha: manualBlobSha,
     });
+    updatedPaths.push(MANUAL_OVERALLS_PATH);
+  }
+
+  if (treeEntries.length === 0) {
+    res.status(400).json({ ok: false, message: "No admin changes to publish." });
     return;
   }
-
-  let leagueData;
-  try {
-    const decoded = Buffer.from(filePayload.content.replace(/\n/g, ""), "base64").toString("utf8");
-    leagueData = JSON.parse(decoded);
-  } catch {
-    res.status(500).json({ ok: false, message: "Failed to decode or parse stats JSON content." });
-    return;
-  }
-
-  for (const update of normalizedPayload.updates) {
-    const updateResult = applyPlayerUpdate(
-      leagueData,
-      normalizedPayload.seasonId,
-      normalizedPayload.gameNumber,
-      update
-    );
-
-    if (!updateResult.ok) {
-      res.status(updateResult.status).json({
-        ok: false,
-        message: updateResult.message,
-        details: updateResult.details,
-      });
-      return;
-    }
-  }
-
-  if (normalizedPayload.scheduleUpdate) {
-    const scheduleUpdateResult = applyScheduleScoreUpdate(
-      leagueData,
-      normalizedPayload.seasonId,
-      normalizedPayload.scheduleUpdate
-    );
-
-    if (!scheduleUpdateResult.ok) {
-      res.status(scheduleUpdateResult.status).json({
-        ok: false,
-        message: scheduleUpdateResult.message,
-        details: scheduleUpdateResult.details,
-      });
-      return;
-    }
-  }
-
-  const encodedContent = Buffer.from(`${JSON.stringify(leagueData, null, 2)}\n`, "utf8").toString("base64");
-  const summary = buildLeagueSummary(leagueData);
-  const summaryContent = `${JSON.stringify(summary)}\n`;
-  const dataContent = Buffer.from(encodedContent, "base64").toString("utf8");
 
   const refResponse = await fetch(
     `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(
@@ -658,20 +840,6 @@ export default async function handler(req, res) {
 
   const baseTreeSha = commitLookupPayload.tree.sha;
 
-  let dataBlobSha = "";
-  let summaryBlobSha = "";
-  try {
-    dataBlobSha = await createGitHubBlob(headers, repository, dataContent);
-    summaryBlobSha = await createGitHubBlob(headers, repository, summaryContent);
-  } catch (error) {
-    res.status(500).json({
-      ok: false,
-      message: "Failed to create GitHub blobs for updated data.",
-      details: getErrorMessage(error),
-    });
-    return;
-  }
-
   const treeResponse = await fetch(
     `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(repository.repo)}/git/trees`,
     {
@@ -682,20 +850,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         base_tree: baseTreeSha,
-        tree: [
-          {
-            path: selectedStatsPath,
-            mode: "100644",
-            type: "blob",
-            sha: dataBlobSha,
-          },
-          {
-            path: SUMMARY_PATH,
-            mode: "100644",
-            type: "blob",
-            sha: summaryBlobSha,
-          },
-        ],
+        tree: treeEntries,
       }),
     }
   );
@@ -718,7 +873,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: `${COMMIT_MESSAGE} (${normalizedPayload.seasonId} / Game ${normalizedPayload.gameNumber})`,
+        message: buildCommitMessage(normalizedPayload),
         tree: treePayload.sha,
         parents: [latestCommitSha],
       }),
@@ -763,7 +918,8 @@ export default async function handler(req, res) {
     ok: true,
     message: "Stats updated and committed to GitHub.",
     commitSha: createCommitPayload.sha,
-    path: selectedStatsPath,
+    path: updatedPaths.join(", "),
     updatedPlayers: normalizedPayload.updates.length,
+    updatedManualOveralls: normalizedPayload.manualOverallUpdates?.length ?? 0,
   });
 }

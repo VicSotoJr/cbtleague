@@ -68,6 +68,15 @@ const MANUAL_SEASON_OVERALLS = {
   "3": SEASON_3_MANUAL_OVERALLS,
 } as const satisfies Record<string, Record<string, number>>;
 
+export function getManualSeasonOveralls(seasonId: string): Record<string, number> {
+  const seasonOveralls = MANUAL_SEASON_OVERALLS[seasonId as keyof typeof MANUAL_SEASON_OVERALLS];
+  if (!seasonOveralls) {
+    return {};
+  }
+
+  return { ...seasonOveralls };
+}
+
 export function getManualSeasonOverall(seasonId: string, playerName: string): number | null {
   const seasonOveralls = MANUAL_SEASON_OVERALLS[seasonId as keyof typeof MANUAL_SEASON_OVERALLS];
   if (!seasonOveralls) {

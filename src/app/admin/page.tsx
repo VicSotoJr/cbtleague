@@ -5,7 +5,9 @@ import Link from "next/link";
 import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Download, Save, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getSeasonData } from "@/lib/league-data";
+import { getManualSeasonOveralls } from "@/lib/manual-player-overalls";
 import type {
+  AdminManualOverallUpdate,
   AdminPlayerGameUpdate,
   AdminStatsUpdatePayload,
   AdminStatsUpdateResponse,
@@ -15,6 +17,7 @@ import type { BaseStats, Team } from "@/types/league";
 const LOCAL_GAME_DRAFTS_KEY = "cbtleague-admin-game-drafts";
 const LOCAL_QUEUED_GAMES_KEY = "cbtleague-admin-queued-games";
 const LOCAL_ADMIN_SETTINGS_KEY = "cbtleague-admin-settings";
+const LOCAL_MANUAL_OVERALL_DRAFTS_KEY = "cbtleague-admin-manual-overall-drafts";
 const ADMIN_API_ENDPOINT = process.env.NEXT_PUBLIC_ADMIN_API_URL ?? "/api/admin/update-stats";
 
 const EMPTY_STATS: BaseStats = {
@@ -111,6 +114,8 @@ type AdminGameDraft = {
 type AdminQueuedGameUpdate = AdminGameDraft & {
   savedAt: string;
 };
+
+type ManualOverallDraft = AdminManualOverallUpdate;
 
 type AdminSettings = {
   apiUrl: string;
@@ -293,6 +298,25 @@ function writeQueuedGames(games: AdminQueuedGameUpdate[]): void {
   window.localStorage.setItem(LOCAL_QUEUED_GAMES_KEY, JSON.stringify(games, null, 2));
 }
 
+function readManualOverallDrafts(): ManualOverallDraft[] {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const raw = window.localStorage.getItem(LOCAL_MANUAL_OVERALL_DRAFTS_KEY);
+    if (!raw) return [];
+
+    const parsed = JSON.parse(raw) as ManualOverallDraft[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeManualOverallDrafts(drafts: ManualOverallDraft[]): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(LOCAL_MANUAL_OVERALL_DRAFTS_KEY, JSON.stringify(drafts, null, 2));
+}
+
 function readAdminSettings(): AdminSettings {
   if (typeof window === "undefined") {
     return { apiUrl: ADMIN_API_ENDPOINT, adminKey: "" };
@@ -354,6 +378,22 @@ function buildDraftFromGame(args: {
   };
 }
 
+function normalizePlayerKey(value: string): string {
+  return value.trim().toLowerCase();
+}
+
+function buildManualOverallLookup(season: ReturnType<typeof getSeasonData> | null | undefined, seasonId: string) {
+  const initialManualOveralls = getManualSeasonOveralls(seasonId);
+  const rosterNames = new Set(
+    (season?.teams ?? [])
+      .flatMap((team: Team) => team.roster.map((player) => normalizePlayerKey(player.name)))
+  );
+
+  return Object.fromEntries(
+    Object.entries(initialManualOveralls).filter(([playerName]) => rosterNames.has(playerName))
+  );
+}
+
 function findExistingGameLog(args: {
   season: ReturnType<typeof getSeasonData> | null | undefined;
   selectedTeam: string;
@@ -383,9 +423,18 @@ export default function AdminPage() {
     type: null,
     message: "",
   });
+  const [manualStatus, setManualStatus] = useState<{ type: "success" | "error" | null; message: string }>({
+    type: null,
+    message: "",
+  });
   const [isSaving, setIsSaving] = useState(false);
   const [queuedCount, setQueuedCount] = useState(0);
   const [gameDrafts, setGameDrafts] = useState<Record<string, AdminGameDraft>>({});
+  const [manualOverallDrafts, setManualOverallDrafts] = useState<ManualOverallDraft[]>([]);
+  const [manualOverallLookup, setManualOverallLookup] = useState<Record<string, number>>({});
+  const [selectedManualTeam, setSelectedManualTeam] = useState("");
+  const [selectedManualPlayer, setSelectedManualPlayer] = useState("");
+  const [manualOverallValue, setManualOverallValue] = useState("");
   const [apiUrl, setApiUrl] = useState(ADMIN_API_ENDPOINT);
   const [adminKey, setAdminKey] = useState("");
   const [statForm, setStatForm] = useState<AdminStatForm>(EMPTY_STAT_FORM);
@@ -397,10 +446,12 @@ export default function AdminPage() {
     const sanitizedDrafts = sanitizeGameDrafts(readGameDrafts());
     setGameDrafts(sanitizedDrafts);
     writeGameDrafts(sanitizedDrafts);
+    setManualOverallDrafts(readManualOverallDrafts());
+    setManualOverallLookup(buildManualOverallLookup(season, seasonId));
     const settings = readAdminSettings();
     setApiUrl(settings.apiUrl);
     setAdminKey(settings.adminKey);
-  }, []);
+  }, [season, seasonId]);
 
   useEffect(() => {
     writeAdminSettings({ apiUrl, adminKey });
@@ -409,6 +460,10 @@ export default function AdminPage() {
   useEffect(() => {
     writeGameDrafts(gameDrafts);
   }, [gameDrafts]);
+
+  useEffect(() => {
+    writeManualOverallDrafts(manualOverallDrafts);
+  }, [manualOverallDrafts]);
 
   const games = useMemo(() => (season?.schedule ?? []).filter((game) => !game.isBye), [season]);
   const selectedGame = selectedGameIdx !== "" ? games[selectedGameIdx] : null;
@@ -472,6 +527,24 @@ export default function AdminPage() {
       ) ?? null,
     [selectedGameDraft, selectedPlayer, selectedTeam]
   );
+  const manualTeams = useMemo(() => season?.teams ?? [], [season]);
+  const manualPlayers = useMemo(
+    () =>
+      selectedManualTeam
+        ? (manualTeams.find((team: Team) => team.Team === selectedManualTeam)?.roster ?? [])
+        : [],
+    [manualTeams, selectedManualTeam]
+  );
+  const selectedManualDraft = useMemo(
+    () =>
+      manualOverallDrafts.find(
+        (entry) => normalizePlayerKey(entry.playerName) === normalizePlayerKey(selectedManualPlayer)
+      ) ?? null,
+    [manualOverallDrafts, selectedManualPlayer]
+  );
+  const currentManualOverall = selectedManualPlayer
+    ? manualOverallLookup[normalizePlayerKey(selectedManualPlayer)] ?? null
+    : null;
 
   useEffect(() => {
     if (!selectedGame || !selectedGameNumber) {
@@ -530,6 +603,20 @@ export default function AdminPage() {
     selectedTeam,
   ]);
 
+  useEffect(() => {
+    if (!selectedManualPlayer) {
+      setManualOverallValue("");
+      return;
+    }
+
+    if (selectedManualDraft) {
+      setManualOverallValue(String(selectedManualDraft.overall));
+      return;
+    }
+
+    setManualOverallValue(currentManualOverall === null ? "" : String(currentManualOverall));
+  }, [currentManualOverall, selectedManualDraft, selectedManualPlayer]);
+
   const stats = useMemo(() => toCalculatedStats(statForm), [statForm]);
   const errors = {
     two: statForm.TwoPointMade > statForm.TwoPointAttempts,
@@ -552,7 +639,12 @@ export default function AdminPage() {
     typeof window !== "undefined" &&
     window.location.hostname.endsWith("github.io") &&
     isRelativeAdminApiUrl(normalizedApiUrl);
+  const parsedManualOverall = Number.parseInt(manualOverallValue, 10);
+  const manualOverallIsValid =
+    Number.isInteger(parsedManualOverall) && parsedManualOverall >= 60 && parsedManualOverall <= 99;
   const canPublishGame = hasManualScore && (draftedPlayers.length > 0 || hasScoreChange) && !isSaving && !requiresHostedApi;
+  const canPublishManualOveralls =
+    manualOverallDrafts.length > 0 && !isSaving && !requiresHostedApi;
   const publishDraft = useMemo(() => {
     if (!selectedGame || !selectedGameNumber) return null;
 
@@ -801,6 +893,114 @@ export default function AdminPage() {
     setStatus({ type: "success", message: "Exported queued games as JSON." });
   }, []);
 
+  const handleStageManualOverall = useCallback(() => {
+    if (!selectedManualPlayer || !manualOverallIsValid) {
+      return;
+    }
+
+    const nextDraft: ManualOverallDraft = {
+      playerName: selectedManualPlayer,
+      overall: parsedManualOverall,
+    };
+
+    setManualOverallDrafts((prev) =>
+      prev.some((entry) => normalizePlayerKey(entry.playerName) === normalizePlayerKey(nextDraft.playerName))
+        ? prev.map((entry) =>
+            normalizePlayerKey(entry.playerName) === normalizePlayerKey(nextDraft.playerName) ? nextDraft : entry
+          )
+        : [...prev, nextDraft].toSorted((left, right) => left.playerName.localeCompare(right.playerName))
+    );
+
+    setManualStatus({
+      type: "success",
+      message: `Drafted ${selectedManualPlayer} at ${parsedManualOverall} OVR.`,
+    });
+    setSelectedManualPlayer("");
+    setManualOverallValue("");
+  }, [manualOverallIsValid, parsedManualOverall, selectedManualPlayer]);
+
+  const handleRemoveManualOverallDraft = useCallback(() => {
+    if (!selectedManualPlayer) return;
+
+    setManualOverallDrafts((prev) =>
+      prev.filter((entry) => normalizePlayerKey(entry.playerName) !== normalizePlayerKey(selectedManualPlayer))
+    );
+    setManualStatus({
+      type: "success",
+      message: `Removed ${selectedManualPlayer} from the manual overall draft.`,
+    });
+    setSelectedManualPlayer("");
+    setManualOverallValue("");
+  }, [selectedManualPlayer]);
+
+  const handlePublishManualOveralls = useCallback(async () => {
+    if (!canPublishManualOveralls) return;
+    if (requiresHostedApi) {
+      setManualStatus({
+        type: "error",
+        message: "Enter your Vercel Admin API URL before publishing from GitHub Pages.",
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    setManualStatus({ type: null, message: "" });
+
+    try {
+      if (!normalizedApiUrl) {
+        throw new Error("Missing admin API URL");
+      }
+
+      const payload: AdminStatsUpdatePayload = {
+        seasonId,
+        updates: [],
+        manualOverallUpdates: manualOverallDrafts,
+      };
+
+      const response = await fetch(normalizedApiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(adminKey.trim() ? { Authorization: `Bearer ${adminKey.trim()}` } : {}),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = (await response.json()) as AdminStatsUpdateResponse;
+      if (!response.ok || !result.ok) {
+        throw new Error(result.message || "Failed to publish manual overalls");
+      }
+
+      setManualOverallLookup((prev) => ({
+        ...prev,
+        ...Object.fromEntries(
+          manualOverallDrafts.map((entry) => [normalizePlayerKey(entry.playerName), entry.overall])
+        ),
+      }));
+      setManualOverallDrafts([]);
+      setSelectedManualPlayer("");
+      setManualOverallValue("");
+      setManualStatus({
+        type: "success",
+        message: `Published ${result.updatedManualOveralls} manual overall${result.updatedManualOveralls === 1 ? "" : "s"} to GitHub (${result.commitSha.slice(0, 7)}).`,
+      });
+    } catch (error) {
+      setManualStatus({
+        type: "error",
+        message: getErrorMessage(error),
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  }, [
+    adminKey,
+    canPublishManualOveralls,
+    manualOverallDrafts,
+    normalizedApiUrl,
+    requiresHostedApi,
+    seasonId,
+  ]);
+
   return (
     <div className="min-h-screen bg-[#060608] text-white selection:bg-copper-500/30">
       <div className="max-w-5xl mx-auto px-6 py-16">
@@ -815,7 +1015,7 @@ export default function AdminPage() {
             <h1 className="text-5xl font-black italic uppercase tracking-tighter leading-none">
               Stat <span className="text-copper-500">Entry</span>
             </h1>
-            <p className="font-medium text-zinc-500">Season 3 game-by-game box score publishing</p>
+            <p className="font-medium text-zinc-500">Season 3 box score publishing and manual overall controls</p>
           </div>
 
           <div className="flex items-center gap-4 rounded-2xl border border-white/5 bg-zinc-900/50 p-4">
@@ -1212,6 +1412,182 @@ export default function AdminPage() {
             </div>
           </div>
         )}
+
+        <section className="mt-12 rounded-[2.5rem] border border-white/5 bg-zinc-900/30 p-8 backdrop-blur-md md:p-10">
+          <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">Season 3 Manual Overalls</p>
+              <h2 className="mt-2 text-3xl font-black italic uppercase tracking-tighter text-white">
+                Commissioner Ratings
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm font-medium text-zinc-500">
+                Edit the Season 3 manual overall file from admin without touching code. Draft changes here, then publish them to GitHub in one shot.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-right">
+              <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Draft Queue</p>
+              <p className="mt-1 text-2xl font-black italic text-copper-500">{manualOverallDrafts.length}</p>
+            </div>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+            <div className="space-y-6">
+              <div className="grid gap-6 md:grid-cols-3">
+                <div className="space-y-3">
+                  <label className="ml-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Team</label>
+                  <select
+                    value={selectedManualTeam}
+                    onChange={(e) => {
+                      setSelectedManualTeam(e.target.value);
+                      setSelectedManualPlayer("");
+                      setManualStatus({ type: null, message: "" });
+                    }}
+                    className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-copper-500/50"
+                  >
+                    <option value="">Choose Team...</option>
+                    {manualTeams.map((team) => (
+                      <option key={team.Team} value={team.Team}>
+                        {team.Team}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className={cn("space-y-3 transition-opacity", !selectedManualTeam && "pointer-events-none opacity-30")}>
+                  <label className="ml-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Player</label>
+                  <select
+                    value={selectedManualPlayer}
+                    onChange={(e) => {
+                      setSelectedManualPlayer(e.target.value);
+                      setManualStatus({ type: null, message: "" });
+                    }}
+                    className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-copper-500/50"
+                  >
+                    <option value="">Choose Player...</option>
+                    {manualPlayers.map((player) => (
+                      <option key={player.name} value={player.name}>
+                        {player.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className={cn("space-y-3 transition-opacity", !selectedManualPlayer && "pointer-events-none opacity-30")}>
+                  <label className="ml-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Overall</label>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    value={manualOverallValue}
+                    onChange={(e) => setManualOverallValue(e.target.value.replace(/[^0-9]/g, ""))}
+                    placeholder="60-99"
+                    className="w-full rounded-2xl border border-white/5 bg-zinc-900/80 px-5 py-4 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/50"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="rounded-2xl border border-white/5 bg-black/20 p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Current Overall</p>
+                  <p className="mt-3 text-4xl font-black italic tracking-tighter text-white">
+                    {currentManualOverall ?? "—"}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/5 bg-black/20 p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Drafted Value</p>
+                  <p className="mt-3 text-4xl font-black italic tracking-tighter text-copper-500">
+                    {selectedManualDraft?.overall ?? "—"}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/5 bg-black/20 p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Validation</p>
+                  <p className={cn("mt-3 text-sm font-black uppercase tracking-widest", manualOverallValue.length === 0 || manualOverallIsValid ? "text-green-400" : "text-red-400")}>
+                    {manualOverallValue.length === 0 ? "Waiting" : manualOverallIsValid ? "Ready To Draft" : "Use 60 To 99"}
+                  </p>
+                </div>
+              </div>
+
+              {manualStatus.type && (
+                <div
+                  className={cn(
+                    "rounded-2xl p-4 text-xs font-black uppercase tracking-widest animate-in zoom-in-95",
+                    manualStatus.type === "success" ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
+                  )}
+                >
+                  {manualStatus.message}
+                </div>
+              )}
+            </div>
+
+            <div className="rounded-3xl border border-white/5 bg-zinc-950/50 p-6">
+              <h3 className="text-xs font-black uppercase tracking-widest text-zinc-500">Manual Overall Drafts</h3>
+              <div className="mt-5 space-y-2">
+                {manualOverallDrafts.length === 0 ? (
+                  <p className="rounded-2xl border border-white/5 bg-black/20 px-4 py-5 text-sm text-zinc-500">
+                    No manual overall edits drafted yet.
+                  </p>
+                ) : (
+                  manualOverallDrafts.map((entry) => (
+                    <div
+                      key={entry.playerName}
+                      className="flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-black/20 px-4 py-3"
+                    >
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-bold text-white">{entry.playerName}</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Season 3 Manual</p>
+                      </div>
+                      <p className="text-lg font-black italic text-copper-500">{entry.overall}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <button
+                onClick={handleStageManualOverall}
+                disabled={!selectedManualPlayer || !manualOverallIsValid || isSaving}
+                className={cn(
+                  "mt-6 flex w-full items-center justify-center gap-3 rounded-2xl py-4 text-sm font-black uppercase tracking-widest transition-all",
+                  !selectedManualPlayer || !manualOverallIsValid || isSaving
+                    ? "cursor-not-allowed bg-zinc-800 text-zinc-600"
+                    : "bg-white/10 text-white hover:bg-white/15 active:scale-95"
+                )}
+              >
+                {selectedManualDraft ? "Update Manual Overall" : "Add Manual Overall"}
+                <Save className="h-4 w-4" />
+              </button>
+
+              <button
+                onClick={handleRemoveManualOverallDraft}
+                disabled={!selectedManualDraft || isSaving}
+                className={cn(
+                  "mt-3 w-full rounded-2xl border py-3 text-xs font-black uppercase tracking-widest transition-all",
+                  !selectedManualDraft || isSaving
+                    ? "cursor-not-allowed border-white/5 bg-zinc-900 text-zinc-600"
+                    : "border-white/10 bg-transparent text-zinc-300 hover:bg-white/5"
+                )}
+              >
+                Remove Selected Manual Edit
+              </button>
+
+              <button
+                onClick={handlePublishManualOveralls}
+                disabled={!canPublishManualOveralls}
+                className={cn(
+                  "mt-3 flex w-full items-center justify-center gap-3 rounded-2xl py-5 text-lg font-black uppercase italic tracking-tighter transition-all",
+                  !canPublishManualOveralls
+                    ? "cursor-not-allowed bg-zinc-800 text-zinc-600"
+                    : "bg-copper-600 text-white shadow-[0_20px_40px_-15px_rgba(158,84,44,0.4)] hover:bg-copper-700 active:scale-95"
+                )}
+              >
+                {isSaving ? "Publishing..." : `Publish Manual Overalls (${manualOverallDrafts.length})`}
+                <Save className="h-5 w-5" />
+              </button>
+
+              <p className="mt-6 text-center text-[10px] font-bold uppercase leading-relaxed text-zinc-700">
+                Manual overall edits save to the Season 3 commissioner ratings file.
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
