@@ -18,6 +18,8 @@ interface PlayerHeadProps {
     presentation?: "default" | "backdrop";
 }
 
+const COMPACT_HEADSHOT_Y_MAX = 22;
+
 function stripFileExtension(value: string): string {
     return value.replace(/\.[a-z0-9]+$/i, "");
 }
@@ -76,6 +78,17 @@ function buildHeadshotCandidates(playerName: string, playerHead?: string): strin
     }
 
     return candidates;
+}
+
+function getCompactHeadshotObjectPosition(position: string): string {
+    const [horizontal = "50%", vertical = "8%"] = position.trim().split(/\s+/, 2);
+    const parsedVertical = Number.parseFloat(vertical);
+
+    if (!Number.isFinite(parsedVertical)) {
+        return position;
+    }
+
+    return `${horizontal} ${Math.min(parsedVertical, COMPACT_HEADSHOT_Y_MAX)}%`;
 }
 
 function PlayerHeadImage({
@@ -155,6 +168,7 @@ function PlayerHeadImage({
                             ? {
                                 objectPosition: backdropStyle.objectPosition,
                                 transformOrigin: backdropStyle.objectPosition,
+                                transform: `scale(${backdropStyle.scale})`,
                                 filter: `saturate(${backdropStyle.saturation}) brightness(${backdropStyle.brightness})`,
                             }
                             : {
@@ -195,11 +209,21 @@ export default function PlayerHead({
     const backdropStyle = backdropOverride
         ? {
             objectPosition: backdropOverride.objectPosition,
-            scale: backdropOverride.scale,
+            scale: seasonId === "3" && presentation === "backdrop" ? 1.08 : backdropOverride.scale,
             brightness: backdropOverride.brightness ?? 0.86,
             saturation: backdropOverride.saturation ?? 0.9,
         }
         : null;
+    const compactObjectPosition =
+        presentation === "default" && dimension <= 48
+            ? getCompactHeadshotObjectPosition(backdropStyle?.objectPosition ?? "center 10%")
+            : backdropStyle?.objectPosition ?? "center 10%";
+    const resolvedBackdropStyle = {
+        objectPosition: compactObjectPosition,
+        scale: backdropStyle?.scale ?? 1.08,
+        brightness: backdropStyle?.brightness ?? 0.9,
+        saturation: backdropStyle?.saturation ?? 0.92,
+    };
 
     const sources = useMemo(() => {
         const fileCandidates = buildHeadshotCandidates(playerName, playerHead);
@@ -237,12 +261,7 @@ export default function PlayerHead({
                 priority={size === "xl" || size === "lg"}
                 canZoom={dimension >= 64}
                 presentation={presentation}
-                backdropStyle={backdropStyle ?? {
-                    objectPosition: "center 10%",
-                    scale: 1.08,
-                    brightness: 0.9,
-                    saturation: 0.92,
-                }}
+                backdropStyle={resolvedBackdropStyle}
             />
         </div>
     );
