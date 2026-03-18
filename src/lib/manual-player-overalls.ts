@@ -4,7 +4,7 @@ const SEASON_3_MANUAL_OVERALLS = {
   "alex hopkins": 84,
   "anthony ireland": 94,
   "anthony miller": 84,
-  "anthony miller jr.": 81,
+  "anthony miller jr.": 84,
   "arkell lamar": 82,
   "brandon holland": 82,
   "cam menefee": 87,
