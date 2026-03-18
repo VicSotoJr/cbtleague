@@ -5,6 +5,7 @@ const DEFAULT_STATS_PATH = "data/stats.json";
 const FALLBACK_STATS_PATH = "src/data/data.json";
 const SUMMARY_PATH = "src/data/league-summary.json";
 const MANUAL_OVERALLS_PATH = "src/lib/manual-player-overalls.ts";
+const HEADSHOTS_DIR = "public/images/player-heads";
 const BASE_STATS_TEMPLATE = {
   Points: 0,
   FieldGoalsMade: 0,
@@ -62,14 +63,28 @@ function isAdminStatsUpdatePayload(value) {
   const hasManualOverallUpdates =
     value.manualOverallUpdates === undefined ||
     (Array.isArray(value.manualOverallUpdates) && value.manualOverallUpdates.every(isAdminManualOverallUpdate));
+  const hasPlayerProfileUpdates =
+    value.playerProfileUpdates === undefined ||
+    (Array.isArray(value.playerProfileUpdates) &&
+      value.playerProfileUpdates.every(isAdminPlayerProfileUpdate));
+  const hasHeadshotUploads =
+    value.headshotUploads === undefined ||
+    (Array.isArray(value.headshotUploads) &&
+      value.headshotUploads.every(isAdminHeadshotUpload));
 
   return (
     isNonEmptyString(value.seasonId) &&
     hasValidUpdates &&
     hasScheduleUpdate &&
     hasManualOverallUpdates &&
+    hasPlayerProfileUpdates &&
+    hasHeadshotUploads &&
     ((value.updates.length === 0 && value.gameNumber === undefined) || isNonEmptyString(value.gameNumber)) &&
-    (value.updates.length > 0 || value.scheduleUpdate !== undefined || (value.manualOverallUpdates?.length ?? 0) > 0)
+    (value.updates.length > 0 ||
+      value.scheduleUpdate !== undefined ||
+      (value.manualOverallUpdates?.length ?? 0) > 0 ||
+      (value.playerProfileUpdates?.length ?? 0) > 0 ||
+      (value.headshotUploads?.length ?? 0) > 0)
   );
 }
 
@@ -103,6 +118,28 @@ function isAdminManualOverallUpdate(value) {
     isFiniteNumber(value.overall) &&
     value.overall >= 60 &&
     value.overall <= 99
+  );
+}
+
+function isAdminPlayerProfileUpdate(value) {
+  if (!isRecord(value)) return false;
+  const hasValidNumber =
+    typeof value.number === "string" || typeof value.number === "number";
+
+  return (
+    isNonEmptyString(value.teamName) &&
+    isNonEmptyString(value.playerName) &&
+    hasValidNumber &&
+    typeof value.playerHead === "string"
+  );
+}
+
+function isAdminHeadshotUpload(value) {
+  if (!isRecord(value)) return false;
+  return (
+    isNonEmptyString(value.playerName) &&
+    isNonEmptyString(value.fileName) &&
+    isNonEmptyString(value.contentBase64)
   );
 }
 
@@ -170,6 +207,39 @@ function getErrorMessage(error) {
 
 function normalizePlayerKey(value) {
   return value.trim().toLowerCase();
+}
+
+function sanitizeHeadshotFileName(value, fallbackPlayerName) {
+  const trimmed = String(value ?? "")
+    .trim()
+    .replace(/^.*[\\/]/, "")
+    .replace(/[?#].*$/, "");
+  const extMatch = trimmed.match(/\.([a-z0-9]+)$/i);
+  const ext = extMatch ? `.${extMatch[1].toLowerCase()}` : ".jpg";
+  const baseValue = (extMatch ? trimmed.slice(0, -ext.length) : trimmed) || fallbackPlayerName;
+  const base = String(baseValue)
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return `${base || "player-headshot"}${ext}`;
+}
+
+function normalizePlayerHeadValue(value, playerName) {
+  return String(value ?? "").trim()
+    ? sanitizeHeadshotFileName(value, playerName)
+    : "";
+}
+
+function normalizeRosterNumber(value) {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  const stringValue = String(value ?? "").trim();
+  if (!stringValue) return "";
+  return stringValue;
 }
 
 function createBaseStats() {
@@ -369,6 +439,51 @@ function getCompletedGamesPlayed(stats) {
   return stats.filter((stat) => hasRecordedOpponent(stat) || hasRecordedStats(stat)).length;
 }
 
+function sortRosterByName(roster) {
+  return [...roster].toSorted((left, right) => left.name.localeCompare(right.name));
+}
+
+function applyPlayerProfileUpdate(leagueData, seasonId, update) {
+  const season = leagueData.seasons[seasonId];
+  if (!season) {
+    return { ok: false, status: 404, message: "Season not found" };
+  }
+
+  const team = season.teams.find((candidate) => candidate.Team === update.teamName);
+  if (!team) {
+    return { ok: false, status: 404, message: "Team not found" };
+  }
+
+  const normalizedPlayerName = update.playerName.trim();
+  const normalizedKey = normalizePlayerKey(normalizedPlayerName);
+  const playerHead = normalizePlayerHeadValue(update.playerHead, normalizedPlayerName);
+  const rosterNumber = normalizeRosterNumber(update.number);
+  let player = team.roster.find(
+    (candidate) => normalizePlayerKey(candidate.name) === normalizedKey
+  );
+
+  if (!player) {
+    player = {
+      name: normalizedPlayerName,
+      number: rosterNumber,
+      GamesPlayed: 0,
+      PlayerHead: playerHead,
+      stats: [],
+    };
+    team.roster = sortRosterByName([...(team.roster ?? []), player]);
+    return { ok: true };
+  }
+
+  player.number = rosterNumber;
+  player.PlayerHead = playerHead;
+  if (!Array.isArray(player.stats)) {
+    player.stats = [];
+  }
+  player.GamesPlayed = getCompletedGamesPlayed(player.stats);
+
+  return { ok: true };
+}
+
 function applyPlayerUpdate(leagueData, seasonId, gameNumber, update) {
   const season = leagueData.seasons[seasonId];
   if (!season) {
@@ -380,7 +495,9 @@ function applyPlayerUpdate(leagueData, seasonId, gameNumber, update) {
     return { ok: false, status: 404, message: "Team not found" };
   }
 
-  const player = team.roster.find((candidate) => candidate.name === update.playerName);
+  const player = team.roster.find(
+    (candidate) => normalizePlayerKey(candidate.name) === normalizePlayerKey(update.playerName)
+  );
   if (!player) {
     return { ok: false, status: 404, message: "Player not found" };
   }
@@ -452,6 +569,8 @@ function normalizeAdminStatsPayload(payload) {
       ],
       scheduleUpdate: undefined,
       manualOverallUpdates: undefined,
+      playerProfileUpdates: undefined,
+      headshotUploads: undefined,
     };
   }
 
@@ -473,7 +592,7 @@ function getAdminBearerToken(req) {
   return token.trim();
 }
 
-async function createGitHubBlob(headers, repository, content) {
+async function createGitHubBlob(headers, repository, content, encoding = "utf-8") {
   const response = await fetch(
     `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(repository.repo)}/git/blobs`,
     {
@@ -484,7 +603,7 @@ async function createGitHubBlob(headers, repository, content) {
       },
       body: JSON.stringify({
         content,
-        encoding: "utf-8",
+        encoding,
       }),
     }
   );
@@ -564,13 +683,27 @@ function updateManualSeasonOverallsSource(source, seasonId, manualOverallUpdates
 function buildCommitMessage(payload) {
   const hasStatsUpdates = payload.updates.length > 0 || payload.scheduleUpdate !== undefined;
   const hasManualOveralls = (payload.manualOverallUpdates?.length ?? 0) > 0;
+  const hasProfiles = (payload.playerProfileUpdates?.length ?? 0) > 0;
+  const hasHeadshots = (payload.headshotUploads?.length ?? 0) > 0;
 
-  if (hasStatsUpdates && hasManualOveralls) {
-    return `${COMMIT_MESSAGE} (${payload.seasonId} / Game ${payload.gameNumber ?? "manual"}) + manual overalls`;
+  if (hasStatsUpdates && hasManualOveralls && (hasProfiles || hasHeadshots)) {
+    return `${COMMIT_MESSAGE} (${payload.seasonId} / Game ${payload.gameNumber ?? "manual"}) + roster/media`;
+  }
+
+  if (hasStatsUpdates && (hasProfiles || hasHeadshots)) {
+    return `${COMMIT_MESSAGE} (${payload.seasonId} / Game ${payload.gameNumber ?? "manual"}) + roster updates`;
+  }
+
+  if (hasManualOveralls && (hasProfiles || hasHeadshots)) {
+    return `Update roster and manual overalls via admin panel (${payload.seasonId})`;
   }
 
   if (hasManualOveralls) {
     return `Update manual overalls via admin panel (${payload.seasonId})`;
+  }
+
+  if (hasProfiles || hasHeadshots) {
+    return `Update roster assets via admin panel (${payload.seasonId})`;
   }
 
   return `${COMMIT_MESSAGE} (${payload.seasonId} / Game ${payload.gameNumber})`;
@@ -634,14 +767,17 @@ export default async function handler(req, res) {
     "X-GitHub-Api-Version": GITHUB_API_VERSION,
     "User-Agent": "cbtleague-admin",
   };
-  const hasStatsUpdates =
-    normalizedPayload.updates.length > 0 || normalizedPayload.scheduleUpdate !== undefined;
+  const hasLeagueDataChanges =
+    normalizedPayload.updates.length > 0 ||
+    normalizedPayload.scheduleUpdate !== undefined ||
+    (normalizedPayload.playerProfileUpdates?.length ?? 0) > 0;
   const hasManualOverallUpdates = (normalizedPayload.manualOverallUpdates?.length ?? 0) > 0;
+  const hasHeadshotUploads = (normalizedPayload.headshotUploads?.length ?? 0) > 0;
   const treeEntries = [];
   const updatedPaths = [];
   let selectedStatsPath = "";
 
-  if (hasStatsUpdates) {
+  if (hasLeagueDataChanges) {
     let statsFilePayload = null;
     let fileErrorStatus = 500;
     const fileErrorMessage = "Failed to fetch stats file from GitHub.";
@@ -678,6 +814,23 @@ export default async function handler(req, res) {
     } catch {
       res.status(500).json({ ok: false, message: "Failed to decode or parse stats JSON content." });
       return;
+    }
+
+    for (const profileUpdate of normalizedPayload.playerProfileUpdates ?? []) {
+      const profileResult = applyPlayerProfileUpdate(
+        leagueData,
+        normalizedPayload.seasonId,
+        profileUpdate
+      );
+
+      if (!profileResult.ok) {
+        res.status(profileResult.status).json({
+          ok: false,
+          message: profileResult.message,
+          details: profileResult.details,
+        });
+        return;
+      }
     }
 
     for (const update of normalizedPayload.updates) {
@@ -748,6 +901,38 @@ export default async function handler(req, res) {
       }
     );
     updatedPaths.push(selectedStatsPath, SUMMARY_PATH);
+  }
+
+  if (hasHeadshotUploads) {
+    for (const upload of normalizedPayload.headshotUploads ?? []) {
+      const fileName = sanitizeHeadshotFileName(upload.fileName, upload.playerName);
+      let headshotBlobSha = "";
+
+      try {
+        headshotBlobSha = await createGitHubBlob(
+          headers,
+          repository,
+          upload.contentBase64,
+          "base64"
+        );
+      } catch (error) {
+        res.status(500).json({
+          ok: false,
+          message: "Failed to create GitHub blob for uploaded headshot.",
+          details: getErrorMessage(error),
+        });
+        return;
+      }
+
+      const headshotPath = `${HEADSHOTS_DIR}/${fileName}`;
+      treeEntries.push({
+        path: headshotPath,
+        mode: "100644",
+        type: "blob",
+        sha: headshotBlobSha,
+      });
+      updatedPaths.push(headshotPath);
+    }
   }
 
   if (hasManualOverallUpdates) {
@@ -918,8 +1103,10 @@ export default async function handler(req, res) {
     ok: true,
     message: "Stats updated and committed to GitHub.",
     commitSha: createCommitPayload.sha,
-    path: updatedPaths.join(", "),
+    path: [...new Set(updatedPaths)].join(", "),
     updatedPlayers: normalizedPayload.updates.length,
     updatedManualOveralls: normalizedPayload.manualOverallUpdates?.length ?? 0,
+    updatedProfiles: normalizedPayload.playerProfileUpdates?.length ?? 0,
+    uploadedHeadshots: normalizedPayload.headshotUploads?.length ?? 0,
   });
 }
