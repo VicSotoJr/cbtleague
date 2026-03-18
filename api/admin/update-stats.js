@@ -550,6 +550,77 @@ function applyScheduleScoreUpdate(leagueData, seasonId, scheduleUpdate) {
   return { ok: true };
 }
 
+function parseCompletedScore(value) {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  const trimmed = String(value ?? "").trim();
+  if (!/^\d+$/.test(trimmed)) {
+    return null;
+  }
+
+  const parsed = Number.parseInt(trimmed, 10);
+  return Number.isInteger(parsed) ? parsed : null;
+}
+
+function recalculateSeasonTeamRecords(leagueData, seasonId) {
+  const season = leagueData.seasons[seasonId];
+  if (!season) {
+    return { ok: false, status: 404, message: "Season not found" };
+  }
+
+  const teams = Array.isArray(season.teams) ? season.teams : [];
+  const teamNameSet = new Set(
+    teams
+      .map((team) => team?.Team)
+      .filter((name) => typeof name === "string" && name.trim().length > 0)
+  );
+  const recordMap = new Map(
+    teams.map((team) => [
+      team.Team,
+      { wins: 0, loss: 0, gamesPlayed: 0 },
+    ])
+  );
+
+  for (const game of season.schedule ?? []) {
+    const homeTeam = typeof game.homeTeam === "string" ? game.homeTeam.trim() : "";
+    const awayTeam = typeof game.awayTeam === "string" ? game.awayTeam.trim() : "";
+    if (!homeTeam || !awayTeam) continue;
+    if (!teamNameSet.has(homeTeam) || !teamNameSet.has(awayTeam)) continue;
+    if (game.isPlayoff) continue;
+
+    const homeScore = parseCompletedScore(game.homeScore);
+    const awayScore = parseCompletedScore(game.awayScore);
+    if (homeScore === null || awayScore === null) continue;
+
+    const homeRecord = recordMap.get(homeTeam);
+    const awayRecord = recordMap.get(awayTeam);
+    if (!homeRecord || !awayRecord) continue;
+
+    homeRecord.gamesPlayed += 1;
+    awayRecord.gamesPlayed += 1;
+
+    if (homeScore > awayScore) {
+      homeRecord.wins += 1;
+      awayRecord.loss += 1;
+    } else if (awayScore > homeScore) {
+      awayRecord.wins += 1;
+      homeRecord.loss += 1;
+    }
+  }
+
+  for (const team of teams) {
+    const nextRecord = recordMap.get(team.Team);
+    if (!nextRecord) continue;
+    team.wins = nextRecord.wins;
+    team.loss = nextRecord.loss;
+    team.gamesPlayed = nextRecord.gamesPlayed;
+  }
+
+  return { ok: true };
+}
+
 function normalizeAdminStatsPayload(payload) {
   if (isAdminStatsUpdatePayload(payload)) {
     return payload;
@@ -866,6 +937,20 @@ export default async function handler(req, res) {
         });
         return;
       }
+    }
+
+    const recordUpdateResult = recalculateSeasonTeamRecords(
+      leagueData,
+      normalizedPayload.seasonId
+    );
+
+    if (!recordUpdateResult.ok) {
+      res.status(recordUpdateResult.status).json({
+        ok: false,
+        message: recordUpdateResult.message,
+        details: recordUpdateResult.details,
+      });
+      return;
     }
 
     const dataContent = `${JSON.stringify(leagueData, null, 2)}\n`;
