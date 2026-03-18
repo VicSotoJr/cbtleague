@@ -20,12 +20,27 @@ export interface AdminManualOverallUpdate {
   overall: number;
 }
 
+export interface AdminPlayerProfileUpdate {
+  teamName: string;
+  playerName: string;
+  number: number | string;
+  playerHead: string;
+}
+
+export interface AdminHeadshotUpload {
+  playerName: string;
+  fileName: string;
+  contentBase64: string;
+}
+
 export interface AdminStatsUpdatePayload {
   seasonId: string;
   gameNumber?: string;
   updates: AdminPlayerGameUpdate[];
   scheduleUpdate?: AdminScheduleScoreUpdate;
   manualOverallUpdates?: AdminManualOverallUpdate[];
+  playerProfileUpdates?: AdminPlayerProfileUpdate[];
+  headshotUploads?: AdminHeadshotUpload[];
 }
 
 export interface AdminStatsUpdateSuccess {
@@ -35,6 +50,8 @@ export interface AdminStatsUpdateSuccess {
   path: string;
   updatedPlayers: number;
   updatedManualOveralls: number;
+  updatedProfiles: number;
+  uploadedHeadshots: number;
 }
 
 export interface AdminStatsUpdateError {
