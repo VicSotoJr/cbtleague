@@ -50,7 +50,7 @@ const SEASON_3_MANUAL_OVERALLS = {
   "nick bottone": 79,
   "pasquale villano": 87,
   "perm jackson": 75,
-  "rob moriarty": 87,
+  "rob moriarty": 88,
   "rodney cook": 81,
   "roger hamelet": 79,
   "ronnie smith": 87,
