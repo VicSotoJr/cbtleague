@@ -35,7 +35,7 @@ const SEASON_3_MANUAL_OVERALLS = {
   "kevin magliochetti": 80,
   "khalid moreland": 83,
   "killian okech": 81,
-  "kuron iverson": 89,
+  "kuran iverson": 89,
   "kyle cookson": 83,
   "kyle federici": 83,
   "lateef bilewu": 84,
