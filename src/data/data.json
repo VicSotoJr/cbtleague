@@ -25361,13 +25361,13 @@
         {
           "Team": "1Fam",
           "wins": 1,
-          "loss": 0,
-          "gamesPlayed": 1,
+          "loss": 1,
+          "gamesPlayed": 2,
           "roster": [
             {
               "name": "Matt Perez",
               "number": "13",
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "mattperez3.jpg",
               "stats": [
                 {
@@ -25407,13 +25407,32 @@
                   "Steals": 1,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "Dream Chasers",
+                  "Points": 5,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 3,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 1,
+                  "Offrebounds": 0,
+                  "Defrebounds": 1,
+                  "Assists": 0,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Rodney Cook",
               "number": "5",
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "rodneycook3.jpg",
               "stats": [
                 {
@@ -25453,13 +25472,32 @@
                   "Steals": 0,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "Dream Chasers",
+                  "Points": 6,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 10,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 7,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 1,
+                  "Offrebounds": 0,
+                  "Defrebounds": 1,
+                  "Assists": 3,
+                  "Blocks": 0,
+                  "Steals": 2,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Teron Griffin",
               "number": "12",
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "terrongriffin3.jpg",
               "stats": [
                 {
@@ -25498,6 +25536,25 @@
                   "Blocks": 0,
                   "Steals": 2,
                   "Turnovers": 1,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "Dream Chasers",
+                  "Points": 14,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 13,
+                  "ThreesMade": 3,
+                  "ThreesAttempts": 6,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 5,
+                  "Offrebounds": 1,
+                  "Defrebounds": 4,
+                  "Assists": 6,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 3,
                   "PersonalFouls": 0
                 }
               ]
@@ -25551,7 +25608,7 @@
             {
               "name": "Ryan Boehm",
               "number": "6",
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "ryanboehm3.jpg",
               "stats": [
                 {
@@ -25591,13 +25648,32 @@
                   "Steals": 3,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "Dream Chasers",
+                  "Points": 6,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 7,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 7,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 2,
+                  "Offrebounds": 1,
+                  "Defrebounds": 1,
+                  "Assists": 1,
+                  "Blocks": 0,
+                  "Steals": 3,
+                  "Turnovers": 3,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Marcell Robinson",
               "number": "3",
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "marcellrobinson3.jpg",
               "stats": [
                 {
@@ -25637,13 +25713,32 @@
                   "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "Dream Chasers",
+                  "Points": 16,
+                  "FieldGoalsMade": 6,
+                  "FieldGoalAttempts": 9,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 3,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 6,
+                  "Offrebounds": 2,
+                  "Defrebounds": 4,
+                  "Assists": 1,
+                  "Blocks": 2,
+                  "Steals": 1,
+                  "Turnovers": 3,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Mikey Fuller",
               "number": "1",
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "mikeyfuller3.jpg",
               "stats": [
                 {
@@ -25682,6 +25777,25 @@
                   "Blocks": 0,
                   "Steals": 4,
                   "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "Dream Chasers",
+                  "Points": 2,
+                  "FieldGoalsMade": 1,
+                  "FieldGoalAttempts": 6,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 5,
+                  "Offrebounds": 0,
+                  "Defrebounds": 5,
+                  "Assists": 4,
+                  "Blocks": 0,
+                  "Steals": 2,
+                  "Turnovers": 1,
                   "PersonalFouls": 0
                 }
               ]
@@ -25781,7 +25895,7 @@
             {
               "name": "Aland Beliard",
               "number": 23,
-              "GamesPlayed": 0,
+              "GamesPlayed": 1,
               "PlayerHead": "alexbeliard.jpg",
               "stats": [
                 {
@@ -25801,6 +25915,25 @@
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "Dream Chasers",
+                  "Points": 1,
+                  "FieldGoalsMade": 0,
+                  "FieldGoalAttempts": 1,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 0,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 1,
+                  "Offrebounds": 0,
+                  "Defrebounds": 1,
+                  "Assists": 0,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 2,
                   "PersonalFouls": 0
                 }
               ]
@@ -27605,14 +27738,14 @@
         },
         {
           "Team": "Dream Chasers",
-          "wins": 2,
+          "wins": 3,
           "loss": 0,
-          "gamesPlayed": 2,
+          "gamesPlayed": 3,
           "roster": [
             {
               "name": "Pasquale Villano",
               "number": 13,
-              "GamesPlayed": 2,
+              "GamesPlayed": 3,
               "PlayerHead": "pasqualevillano3.jpg",
               "stats": [
                 {
@@ -27648,6 +27781,25 @@
                   "Offrebounds": 6,
                   "Defrebounds": 15,
                   "Assists": 1,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "1Fam",
+                  "Points": 10,
+                  "FieldGoalsMade": 4,
+                  "FieldGoalAttempts": 12,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 4,
+                  "FreeThrowsMade": 2,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 2,
+                  "Offrebounds": 1,
+                  "Defrebounds": 1,
+                  "Assists": 3,
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 1,
@@ -27750,7 +27902,7 @@
             {
               "name": "Jacob Morales",
               "number": 1,
-              "GamesPlayed": 2,
+              "GamesPlayed": 3,
               "PlayerHead": "jacobmorales3.jpg",
               "stats": [
                 {
@@ -27790,13 +27942,32 @@
                   "Steals": 1,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "1Fam",
+                  "Points": 13,
+                  "FieldGoalsMade": 4,
+                  "FieldGoalAttempts": 7,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 1,
+                  "FreeThrowsMade": 5,
+                  "FreeThrowsAttempts": 5,
+                  "Rebounds": 4,
+                  "Offrebounds": 0,
+                  "Defrebounds": 4,
+                  "Assists": 3,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Javon Taylor",
               "number": 15,
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "javontaylor.jpg",
               "stats": [
                 {
@@ -27836,13 +28007,32 @@
                   "Steals": 0,
                   "Turnovers": 4,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "1Fam",
+                  "Points": 15,
+                  "FieldGoalsMade": 6,
+                  "FieldGoalAttempts": 11,
+                  "ThreesMade": 3,
+                  "ThreesAttempts": 6,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 5,
+                  "Offrebounds": 1,
+                  "Defrebounds": 4,
+                  "Assists": 8,
+                  "Blocks": 1,
+                  "Steals": 2,
+                  "Turnovers": 3,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Alex Hopkins",
               "number": 22,
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "alexhopkins3.jpg",
               "stats": [
                 {
@@ -27863,13 +28053,32 @@
                   "Steals": 0,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "1Fam",
+                  "Points": 8,
+                  "FieldGoalsMade": 4,
+                  "FieldGoalAttempts": 5,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 0,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 1,
+                  "Rebounds": 12,
+                  "Offrebounds": 4,
+                  "Defrebounds": 8,
+                  "Assists": 0,
+                  "Blocks": 1,
+                  "Steals": 2,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Tarice Thompson",
               "number": 0,
-              "GamesPlayed": 2,
+              "GamesPlayed": 3,
               "PlayerHead": "taricethompson3.jpg",
               "stats": [
                 {
@@ -27909,13 +28118,32 @@
                   "Steals": 0,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "1Fam",
+                  "Points": 6,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 3,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 1,
+                  "Offrebounds": 0,
+                  "Defrebounds": 1,
+                  "Assists": 0,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Siah Tait",
               "number": 23,
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "siahtait3.jpg",
               "stats": [
                 {
@@ -27936,13 +28164,32 @@
                   "Steals": 1,
                   "Turnovers": 3,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "1Fam",
+                  "Points": 24,
+                  "FieldGoalsMade": 8,
+                  "FieldGoalAttempts": 15,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 5,
+                  "FreeThrowsMade": 6,
+                  "FreeThrowsAttempts": 7,
+                  "Rebounds": 3,
+                  "Offrebounds": 2,
+                  "Defrebounds": 1,
+                  "Assists": 3,
+                  "Blocks": 0,
+                  "Steals": 3,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Cody Dileonardo",
               "number": 2,
-              "GamesPlayed": 2,
+              "GamesPlayed": 3,
               "PlayerHead": "codydileonardo3.jpg",
               "stats": [
                 {
@@ -27981,6 +28228,25 @@
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 3,
+                  "opponent": "1Fam",
+                  "Points": 0,
+                  "FieldGoalsMade": 0,
+                  "FieldGoalAttempts": 3,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 1,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 3,
+                  "Offrebounds": 2,
+                  "Defrebounds": 1,
+                  "Assists": 0,
+                  "Blocks": 0,
+                  "Steals": 2,
+                  "Turnovers": 2,
                   "PersonalFouls": 0
                 }
               ]
@@ -28362,9 +28628,9 @@
         {
           "week": "Week 3 - March 24, 2026",
           "homeTeam": "1Fam",
-          "homeScore": "-",
+          "homeScore": "53",
           "awayTeam": "Dream Chasers",
-          "awayScore": "-",
+          "awayScore": "71",
           "date": "March 24, 2026",
           "time": "6:45 PM",
           "isPlayoff": false
