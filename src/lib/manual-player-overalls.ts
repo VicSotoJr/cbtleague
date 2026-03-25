@@ -1,6 +1,6 @@
 const SEASON_3_MANUAL_OVERALLS = {
   "adden goffe": 89,
-  "aden goffe": 89,
+  "aden goffe": 93,
   "aland beliard": 75,
   "alex hopkins": 84,
   "anthony ireland": 94,
@@ -31,7 +31,7 @@ const SEASON_3_MANUAL_OVERALLS = {
   "jaylen crawford": 89,
   "jaylin davis": 78,
   "jermaine foster": 82,
-  "jonathan edwards": 90,
+  "jonathan edwards": 88,
   "justin sheffield": 82,
   "kevin magliochetti": 83,
   "khalid moreland": 83,
