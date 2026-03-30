@@ -47,7 +47,6 @@ const SEASON_3_MANUAL_OVERALLS = {
   "matt perez": 83,
   "mikey fuller": 84,
   "naz vereen": 83,
-  "nick bottone": 79,
   "pasquale villano": 86,
   "perm jackson": 75,
   "quincy mcknight": 93,
