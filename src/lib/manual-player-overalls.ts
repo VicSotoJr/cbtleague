@@ -22,7 +22,6 @@ const SEASON_3_MANUAL_OVERALLS = {
   "howie miller": 84,
   "jacob morales": 83,
   "jahwan cody": 84,
-  "jamaul wynter": 75,
   "james jackson": 81,
   "jamie logan": 82,
   "javon taylor": 89,

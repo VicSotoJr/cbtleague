@@ -27562,33 +27562,6 @@
               ]
             },
             {
-              "name": "Jamaul Wynter",
-              "number": 7,
-              "GamesPlayed": 0,
-              "PlayerHead": "jamaulwynter.jpg",
-              "stats": [
-                {
-                  "game_number": "1",
-                  "opponent": "",
-                  "Points": 0,
-                  "FieldGoalsMade": 0,
-                  "FieldGoalAttempts": 0,
-                  "ThreesMade": 0,
-                  "ThreesAttempts": 0,
-                  "FreeThrowsMade": 0,
-                  "FreeThrowsAttempts": 0,
-                  "Rebounds": 0,
-                  "Offrebounds": 0,
-                  "Defrebounds": 0,
-                  "Assists": 0,
-                  "Blocks": 0,
-                  "Steals": 0,
-                  "Turnovers": 0,
-                  "PersonalFouls": 0
-                }
-              ]
-            },
-            {
               "name": "Jonathan Edwards",
               "number": "11",
               "GamesPlayed": 1,
