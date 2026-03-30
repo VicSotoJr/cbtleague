@@ -48,7 +48,6 @@ const SEASON_3_MANUAL_OVERALLS = {
   "mikey fuller": 84,
   "naz vereen": 83,
   "pasquale villano": 86,
-  "perm jackson": 75,
   "quincy mcknight": 93,
   "rob moriarty": 88,
   "rodney cook": 81,
