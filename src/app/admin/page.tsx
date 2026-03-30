@@ -73,8 +73,14 @@ type ScheduleDraftEntry = {
   isPlayoff: boolean;
   isBye: boolean;
   byeTeam: string;
+  originalWeek: string;
+  originalHomeTeam: string;
+  originalAwayTeam: string;
   originalDate: string;
   originalTime: string;
+  originalByeTeam: string;
+  originalIsPlayoff: boolean;
+  originalIsBye: boolean;
   originalIndex: number;
 };
 
@@ -223,8 +229,14 @@ function buildInitialScheduleEntries(
     isPlayoff: entry.isPlayoff === true,
     isBye: entry.isBye === true,
     byeTeam: entry.byeTeam ?? "",
+    originalWeek: entry.week,
+    originalHomeTeam: entry.homeTeam ?? "",
+    originalAwayTeam: entry.awayTeam ?? "",
     originalDate: entry.date ?? "",
     originalTime: entry.time ?? "",
+    originalByeTeam: entry.byeTeam ?? "",
+    originalIsPlayoff: entry.isPlayoff === true,
+    originalIsBye: entry.isBye === true,
     originalIndex: index,
   }));
 }
@@ -232,8 +244,14 @@ function buildInitialScheduleEntries(
 function countScheduleChanges(entries: ScheduleDraftEntry[]): number {
   return entries.reduce((count, entry, index) => {
     if (
+      entry.week !== entry.originalWeek ||
+      entry.homeTeam !== entry.originalHomeTeam ||
+      entry.awayTeam !== entry.originalAwayTeam ||
       entry.date !== entry.originalDate ||
       entry.time !== entry.originalTime ||
+      entry.byeTeam !== entry.originalByeTeam ||
+      entry.isPlayoff !== entry.originalIsPlayoff ||
+      entry.isBye !== entry.originalIsBye ||
       index !== entry.originalIndex
     ) {
       return count + 1;
@@ -254,15 +272,66 @@ function buildSchedulePayload(
       week: entry.week,
       date: entry.date.trim(),
       time: entry.time.trim(),
-      homeTeam: entry.homeTeam,
+      homeTeam: entry.isBye ? undefined : entry.homeTeam,
       homeScore: entry.homeScore,
-      awayTeam: entry.awayTeam,
+      awayTeam: entry.isBye ? undefined : entry.awayTeam,
       awayScore: entry.awayScore,
       isPlayoff: entry.isPlayoff,
       isBye: entry.isBye,
-      byeTeam: entry.byeTeam,
+      byeTeam: entry.isBye ? entry.byeTeam : undefined,
     })),
   };
+}
+
+function createEmptyScheduleEntry(index: number): ScheduleDraftEntry {
+  const idSuffix = Math.random().toString(36).slice(2, 8);
+  return {
+    id: `new-slot:${index}:${idSuffix}`,
+    week: "Week TBD",
+    homeTeam: "",
+    awayTeam: "",
+    date: "",
+    time: "",
+    homeScore: "",
+    awayScore: "",
+    isPlayoff: false,
+    isBye: false,
+    byeTeam: "",
+    originalWeek: "",
+    originalHomeTeam: "",
+    originalAwayTeam: "",
+    originalDate: "",
+    originalTime: "",
+    originalByeTeam: "",
+    originalIsPlayoff: false,
+    originalIsBye: false,
+    originalIndex: -1,
+  };
+}
+
+function getScheduleValidationMessage(entries: ScheduleDraftEntry[]): string | null {
+  for (const entry of entries) {
+    if (!entry.week.trim()) {
+      return "Every schedule slot needs a week label before publish.";
+    }
+
+    if (!entry.date.trim()) {
+      return "Every schedule slot needs a date before publish.";
+    }
+
+    if (entry.isBye) {
+      if (!entry.byeTeam.trim()) {
+        return "Bye slots need a bye team before publish.";
+      }
+      continue;
+    }
+
+    if (!entry.homeTeam.trim() || !entry.awayTeam.trim()) {
+      return "Every matchup slot needs both home and away teams before publish.";
+    }
+  }
+
+  return null;
 }
 
 function MatchupTeamTable({
@@ -912,7 +981,7 @@ export default function AdminPage() {
 
   function handleScheduleFieldChange(
     index: number,
-    field: "date" | "time",
+    field: "week" | "date" | "time" | "homeTeam" | "awayTeam" | "byeTeam",
     value: string,
   ) {
     setScheduleEntries((previous) =>
@@ -947,6 +1016,61 @@ export default function AdminPage() {
         return previous + 1;
       }
 
+      return previous;
+    });
+  }
+
+  function handleToggleScheduleFlag(
+    index: number,
+    field: "isPlayoff" | "isBye",
+    checked: boolean,
+  ) {
+    setScheduleEntries((previous) =>
+      previous.map((entry, entryIndex) => {
+        if (entryIndex !== index) return entry;
+
+        if (field === "isBye") {
+          return {
+            ...entry,
+            isBye: checked,
+            byeTeam: checked ? entry.byeTeam || entry.homeTeam || entry.awayTeam : entry.byeTeam,
+          };
+        }
+
+        return {
+          ...entry,
+          [field]: checked,
+        };
+      }),
+    );
+  }
+
+  function handleAddScheduleEntry() {
+    setScheduleEntries((previous) => [...previous, createEmptyScheduleEntry(previous.length)]);
+    setStatus({
+      type: "success",
+      message: "Added a new schedule slot. Fill in the week, teams, and date before publishing.",
+    });
+  }
+
+  function handleRemoveScheduleEntry(index: number) {
+    const target = scheduleEntries[index];
+    if (!target) return;
+
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        `Delete this schedule slot for ${target.isBye ? target.byeTeam || "bye week" : `${target.homeTeam || "Home"} vs ${target.awayTeam || "Away"}`}?`,
+      )
+    ) {
+      return;
+    }
+
+    setScheduleEntries((previous) => previous.filter((_, entryIndex) => entryIndex !== index));
+    setSelectedGameIdx((previous) => {
+      if (previous === "") return previous;
+      if (previous === index) return "";
+      if (previous > index) return previous - 1;
       return previous;
     });
   }
@@ -1209,6 +1333,15 @@ export default function AdminPage() {
       return;
     }
 
+    const scheduleValidationMessage = getScheduleValidationMessage(scheduleEntries);
+    if (scheduleValidationMessage) {
+      setStatus({
+        type: "error",
+        message: scheduleValidationMessage,
+      });
+      return;
+    }
+
     const payload = buildSchedulePayload(seasonId, scheduleEntries);
 
     setIsSaving(true);
@@ -1234,8 +1367,14 @@ export default function AdminPage() {
       setScheduleEntries((previous) =>
         previous.map((entry, index) => ({
           ...entry,
+          originalWeek: entry.week,
+          originalHomeTeam: entry.homeTeam,
+          originalAwayTeam: entry.awayTeam,
           originalDate: entry.date,
           originalTime: entry.time,
+          originalByeTeam: entry.byeTeam,
+          originalIsPlayoff: entry.isPlayoff,
+          originalIsBye: entry.isBye,
           originalIndex: index,
         })),
       );
@@ -1476,12 +1615,12 @@ export default function AdminPage() {
                   Edit dates, tip times, and game order
                 </h2>
                 <p className="mt-2 max-w-3xl text-sm text-zinc-500">
-                  Move games up or down to reorder the slate, then update the date or tip time for any slot. Publishing here keeps the same matchups and scores while rewriting the schedule layout cleanly.
+                  Move games up or down to reorder the slate, update the date or tip time, and flag bye weeks or playoffs. Publishing here keeps the saved scores while rewriting the schedule layout cleanly.
                 </p>
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-3">
               <div className="rounded-[1.5rem] border border-white/10 bg-black/20 px-4 py-4">
                 <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
                   Scheduled Games
@@ -1498,6 +1637,14 @@ export default function AdminPage() {
                   {scheduleChangeCount}
                 </p>
               </div>
+              <button
+                type="button"
+                onClick={handleAddScheduleEntry}
+                className="inline-flex min-h-[112px] items-center justify-center gap-2 rounded-[1.5rem] border border-sky-500/20 bg-sky-500/10 px-4 py-4 text-sm font-bold text-sky-100 transition-colors hover:border-sky-400/40 hover:bg-sky-500/15"
+              >
+                <Plus className="h-4 w-4" />
+                Add Slot
+              </button>
             </div>
           </div>
 
@@ -1512,9 +1659,25 @@ export default function AdminPage() {
                     Slot {index + 1}
                   </p>
                   <h3 className="text-lg font-black uppercase tracking-tight text-white">
-                    {entry.homeTeam} vs {entry.awayTeam}
+                    {entry.isBye
+                      ? `${entry.byeTeam || "Bye Team"} Bye Week`
+                      : `${entry.homeTeam || "Home Team"} vs ${entry.awayTeam || "Away Team"}`}
                   </h3>
-                  <p className="text-sm text-zinc-500">{entry.week}</p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-300">
+                      {entry.week || "Week TBD"}
+                    </span>
+                    {entry.isPlayoff ? (
+                      <span className="rounded-full border border-copper-500/20 bg-copper-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-copper-100">
+                        Playoff
+                      </span>
+                    ) : null}
+                    {entry.isBye ? (
+                      <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-100">
+                        Bye
+                      </span>
+                    ) : null}
+                  </div>
                   {entry.homeScore || entry.awayScore ? (
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
                       Saved score: {entry.homeScore || "0"} - {entry.awayScore || "0"}
@@ -1522,69 +1685,168 @@ export default function AdminPage() {
                   ) : null}
                 </div>
 
-                <div className="space-y-2">
-                  <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
-                    Date
-                  </label>
-                  <div className="relative">
-                    <Calendar className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-copper-400" />
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                      Week Label
+                    </label>
                     <input
                       type="text"
-                      value={entry.date}
+                      value={entry.week}
                       onChange={(event) =>
-                        handleScheduleFieldChange(index, "date", event.target.value)
+                        handleScheduleFieldChange(index, "week", event.target.value)
                       }
-                      className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-11 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                      className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
                     />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                      Date
+                    </label>
+                    <div className="relative">
+                      <Calendar className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-copper-400" />
+                      <input
+                        type="text"
+                        value={entry.date}
+                        onChange={(event) =>
+                          handleScheduleFieldChange(index, "date", event.target.value)
+                        }
+                        className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-11 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
-                    Tip Time
-                  </label>
-                  <div className="relative">
-                    <Clock3 className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-sky-400" />
-                    <input
-                      type="text"
-                      value={entry.time}
-                      onChange={(event) =>
-                        handleScheduleFieldChange(index, "time", event.target.value)
-                      }
-                      className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-11 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
-                    />
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                      Tip Time
+                    </label>
+                    <div className="relative">
+                      <Clock3 className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-sky-400" />
+                      <input
+                        type="text"
+                        value={entry.time}
+                        onChange={(event) =>
+                          handleScheduleFieldChange(index, "time", event.target.value)
+                        }
+                        className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-11 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <label className="flex items-center gap-3 rounded-[1.25rem] border border-white/10 bg-zinc-900/70 px-4 py-3 text-sm font-semibold text-white">
+                      <input
+                        type="checkbox"
+                        checked={entry.isPlayoff}
+                        onChange={(event) =>
+                          handleToggleScheduleFlag(index, "isPlayoff", event.target.checked)
+                        }
+                        className="h-4 w-4 accent-[#ffb650]"
+                      />
+                      Playoff
+                    </label>
+                    <label className="flex items-center gap-3 rounded-[1.25rem] border border-white/10 bg-zinc-900/70 px-4 py-3 text-sm font-semibold text-white">
+                      <input
+                        type="checkbox"
+                        checked={entry.isBye}
+                        onChange={(event) =>
+                          handleToggleScheduleFlag(index, "isBye", event.target.checked)
+                        }
+                        className="h-4 w-4 accent-[#5ae2a8]"
+                      />
+                      Bye Week
+                    </label>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 lg:justify-end">
+                <div className="space-y-3 lg:col-span-4">
+                  {entry.isBye ? (
+                    <div className="space-y-2">
+                      <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                        Bye Team
+                      </label>
+                      <input
+                        type="text"
+                        value={entry.byeTeam}
+                        onChange={(event) =>
+                          handleScheduleFieldChange(index, "byeTeam", event.target.value)
+                        }
+                        className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                      />
+                    </div>
+                  ) : (
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                          Home Team
+                        </label>
+                        <input
+                          type="text"
+                          value={entry.homeTeam}
+                          onChange={(event) =>
+                            handleScheduleFieldChange(index, "homeTeam", event.target.value)
+                          }
+                          className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                          Away Team
+                        </label>
+                        <input
+                          type="text"
+                          value={entry.awayTeam}
+                          onChange={(event) =>
+                            handleScheduleFieldChange(index, "awayTeam", event.target.value)
+                          }
+                          className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2 lg:col-span-4 lg:justify-between">
                   <button
                     type="button"
-                    onClick={() => handleMoveScheduleEntry(index, -1)}
-                    disabled={index === 0}
-                    className={cn(
-                      "inline-flex items-center justify-center rounded-full border px-3 py-3 transition-colors",
-                      index === 0
-                        ? "cursor-not-allowed border-white/5 bg-zinc-900/50 text-zinc-700"
-                        : "border-white/10 bg-white/5 text-white hover:border-white/20 hover:bg-white/10",
-                    )}
-                    aria-label={`Move ${entry.homeTeam} vs ${entry.awayTeam} earlier`}
+                    onClick={() => handleRemoveScheduleEntry(index)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm font-bold text-red-100 transition-colors hover:border-red-400/40 hover:bg-red-500/20"
                   >
-                    <ChevronUp className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4" />
+                    Delete Slot
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => handleMoveScheduleEntry(index, 1)}
-                    disabled={index === scheduleEntries.length - 1}
-                    className={cn(
-                      "inline-flex items-center justify-center rounded-full border px-3 py-3 transition-colors",
-                      index === scheduleEntries.length - 1
-                        ? "cursor-not-allowed border-white/5 bg-zinc-900/50 text-zinc-700"
-                        : "border-white/10 bg-white/5 text-white hover:border-white/20 hover:bg-white/10",
-                    )}
-                    aria-label={`Move ${entry.homeTeam} vs ${entry.awayTeam} later`}
-                  >
-                    <ChevronDown className="h-4 w-4" />
-                  </button>
+
+                  <div className="flex items-center gap-2 lg:justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleMoveScheduleEntry(index, -1)}
+                      disabled={index === 0}
+                      className={cn(
+                        "inline-flex items-center justify-center rounded-full border px-3 py-3 transition-colors",
+                        index === 0
+                          ? "cursor-not-allowed border-white/5 bg-zinc-900/50 text-zinc-700"
+                          : "border-white/10 bg-white/5 text-white hover:border-white/20 hover:bg-white/10",
+                      )}
+                      aria-label={`Move ${entry.homeTeam} vs ${entry.awayTeam} earlier`}
+                    >
+                      <ChevronUp className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleMoveScheduleEntry(index, 1)}
+                      disabled={index === scheduleEntries.length - 1}
+                      className={cn(
+                        "inline-flex items-center justify-center rounded-full border px-3 py-3 transition-colors",
+                        index === scheduleEntries.length - 1
+                          ? "cursor-not-allowed border-white/5 bg-zinc-900/50 text-zinc-700"
+                          : "border-white/10 bg-white/5 text-white hover:border-white/20 hover:bg-white/10",
+                      )}
+                      aria-label={`Move ${entry.homeTeam} vs ${entry.awayTeam} later`}
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
