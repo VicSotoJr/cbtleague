@@ -1,6 +1,7 @@
 "use client";
 
 import type {
+  AdminDeletedPlayer,
   AdminHeadshotUpload,
   AdminPlayerProfileUpdate,
   AdminStatsUpdatePayload,
@@ -123,6 +124,7 @@ export type MatchupDraft = {
   originalHomeScore: string;
   originalAwayScore: string;
   players: MatchupPlayerDraft[];
+  deletedPlayers: AdminDeletedPlayer[];
 };
 
 export type AdminQueuedPublish = {
@@ -328,6 +330,9 @@ export function readMatchupDrafts(): Record<string, MatchupDraft> {
         key,
         {
           ...draft,
+          deletedPlayers: Array.isArray(draft.deletedPlayers)
+            ? draft.deletedPlayers
+            : [],
           originalHomeScore:
             typeof draft.originalHomeScore === "string"
               ? draft.originalHomeScore
@@ -461,6 +466,7 @@ export function buildInitialMatchupDraft({
     originalHomeScore: toScoreValue(game.homeScore),
     originalAwayScore: toScoreValue(game.awayScore),
     players: [...homePlayers, ...awayPlayers],
+    deletedPlayers: [],
   };
 }
 
@@ -473,6 +479,7 @@ export function cloneMatchupDraft(draft: MatchupDraft): MatchupDraft {
       originalStats: { ...row.originalStats },
       upload: row.upload ? { ...row.upload } : null,
     })),
+    deletedPlayers: draft.deletedPlayers.map((player) => ({ ...player })),
   };
 }
 
@@ -661,5 +668,7 @@ export function buildPublishPayload(
     playerProfileUpdates:
       playerProfileUpdates.length > 0 ? playerProfileUpdates : undefined,
     headshotUploads: headshotUploads.length > 0 ? headshotUploads : undefined,
+    deletedPlayers:
+      draft.deletedPlayers.length > 0 ? draft.deletedPlayers : undefined,
   };
 }

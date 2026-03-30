@@ -15,6 +15,19 @@ export interface AdminScheduleScoreUpdate {
   awayScore: number;
 }
 
+export interface AdminScheduleEntryUpdate {
+  week: string;
+  date: string;
+  time?: string;
+  homeTeam?: string;
+  homeScore?: string | number;
+  awayTeam?: string;
+  awayScore?: string | number;
+  isPlayoff?: boolean;
+  isBye?: boolean;
+  byeTeam?: string;
+}
+
 export interface AdminManualOverallUpdate {
   playerName: string;
   overall: number;
@@ -33,14 +46,21 @@ export interface AdminHeadshotUpload {
   contentBase64: string;
 }
 
+export interface AdminDeletedPlayer {
+  teamName: string;
+  playerName: string;
+}
+
 export interface AdminStatsUpdatePayload {
   seasonId: string;
   gameNumber?: string;
   updates: AdminPlayerGameUpdate[];
   scheduleUpdate?: AdminScheduleScoreUpdate;
+  scheduleEntries?: AdminScheduleEntryUpdate[];
   manualOverallUpdates?: AdminManualOverallUpdate[];
   playerProfileUpdates?: AdminPlayerProfileUpdate[];
   headshotUploads?: AdminHeadshotUpload[];
+  deletedPlayers?: AdminDeletedPlayer[];
 }
 
 export interface AdminStatsUpdateSuccess {
@@ -52,6 +72,8 @@ export interface AdminStatsUpdateSuccess {
   updatedManualOveralls: number;
   updatedProfiles: number;
   uploadedHeadshots: number;
+  updatedScheduleEntries: number;
+  deletedPlayers: number;
 }
 
 export interface AdminStatsUpdateError {
