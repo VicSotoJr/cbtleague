@@ -52,6 +52,36 @@ function isAdminPlayerGameUpdate(value) {
   );
 }
 
+function isAdminScheduleEntryUpdate(value) {
+  if (!isRecord(value)) return false;
+
+  const hasOptionalString = (candidate) =>
+    candidate === undefined || typeof candidate === "string";
+
+  return (
+    isNonEmptyString(value.week) &&
+    isNonEmptyString(value.date) &&
+    hasOptionalString(value.time) &&
+    hasOptionalString(value.homeTeam) &&
+    hasOptionalString(value.awayTeam) &&
+    (value.homeScore === undefined ||
+      typeof value.homeScore === "string" ||
+      isFiniteNumber(value.homeScore)) &&
+    (value.awayScore === undefined ||
+      typeof value.awayScore === "string" ||
+      isFiniteNumber(value.awayScore)) &&
+    (value.isPlayoff === undefined || typeof value.isPlayoff === "boolean") &&
+    (value.isBye === undefined || typeof value.isBye === "boolean") &&
+    hasOptionalString(value.byeTeam) &&
+    (!value.isBye || isNonEmptyString(value.byeTeam) || hasOptionalString(value.byeTeam))
+  );
+}
+
+function isAdminDeletedPlayer(value) {
+  if (!isRecord(value)) return false;
+  return isNonEmptyString(value.teamName) && isNonEmptyString(value.playerName);
+}
+
 function isAdminStatsUpdatePayload(value) {
   if (!isRecord(value)) return false;
 
@@ -63,6 +93,10 @@ function isAdminStatsUpdatePayload(value) {
   const hasManualOverallUpdates =
     value.manualOverallUpdates === undefined ||
     (Array.isArray(value.manualOverallUpdates) && value.manualOverallUpdates.every(isAdminManualOverallUpdate));
+  const hasScheduleEntries =
+    value.scheduleEntries === undefined ||
+    (Array.isArray(value.scheduleEntries) &&
+      value.scheduleEntries.every(isAdminScheduleEntryUpdate));
   const hasPlayerProfileUpdates =
     value.playerProfileUpdates === undefined ||
     (Array.isArray(value.playerProfileUpdates) &&
@@ -71,20 +105,28 @@ function isAdminStatsUpdatePayload(value) {
     value.headshotUploads === undefined ||
     (Array.isArray(value.headshotUploads) &&
       value.headshotUploads.every(isAdminHeadshotUpload));
+  const hasDeletedPlayers =
+    value.deletedPlayers === undefined ||
+    (Array.isArray(value.deletedPlayers) &&
+      value.deletedPlayers.every(isAdminDeletedPlayer));
 
   return (
     isNonEmptyString(value.seasonId) &&
     hasValidUpdates &&
     hasScheduleUpdate &&
     hasManualOverallUpdates &&
+    hasScheduleEntries &&
     hasPlayerProfileUpdates &&
     hasHeadshotUploads &&
+    hasDeletedPlayers &&
     ((value.updates.length === 0 && value.gameNumber === undefined) || isNonEmptyString(value.gameNumber)) &&
     (value.updates.length > 0 ||
       value.scheduleUpdate !== undefined ||
+      (value.scheduleEntries?.length ?? 0) > 0 ||
       (value.manualOverallUpdates?.length ?? 0) > 0 ||
       (value.playerProfileUpdates?.length ?? 0) > 0 ||
-      (value.headshotUploads?.length ?? 0) > 0)
+      (value.headshotUploads?.length ?? 0) > 0 ||
+      (value.deletedPlayers?.length ?? 0) > 0)
   );
 }
 
@@ -550,6 +592,78 @@ function applyScheduleScoreUpdate(leagueData, seasonId, scheduleUpdate) {
   return { ok: true };
 }
 
+function normalizeScheduleScoreValue(value) {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return String(value);
+  }
+
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return /^\d+$/.test(trimmed) ? trimmed : "";
+  }
+
+  return "";
+}
+
+function applyScheduleEntriesUpdate(leagueData, seasonId, scheduleEntries) {
+  const season = leagueData.seasons[seasonId];
+  if (!season) {
+    return { ok: false, status: 404, message: "Season not found" };
+  }
+
+  season.schedule = scheduleEntries.map((entry) => ({
+    week: entry.week.trim(),
+    date: entry.date.trim(),
+    ...(typeof entry.time === "string" && entry.time.trim()
+      ? { time: entry.time.trim() }
+      : {}),
+    ...(typeof entry.homeTeam === "string" && entry.homeTeam.trim()
+      ? { homeTeam: entry.homeTeam.trim() }
+      : {}),
+    ...(typeof entry.awayTeam === "string" && entry.awayTeam.trim()
+      ? { awayTeam: entry.awayTeam.trim() }
+      : {}),
+    ...(typeof entry.byeTeam === "string" && entry.byeTeam.trim()
+      ? { byeTeam: entry.byeTeam.trim() }
+      : {}),
+    ...(normalizeScheduleScoreValue(entry.homeScore)
+      ? { homeScore: normalizeScheduleScoreValue(entry.homeScore) }
+      : {}),
+    ...(normalizeScheduleScoreValue(entry.awayScore)
+      ? { awayScore: normalizeScheduleScoreValue(entry.awayScore) }
+      : {}),
+    ...(entry.isPlayoff ? { isPlayoff: true } : {}),
+    ...(entry.isBye ? { isBye: true } : {}),
+  }));
+
+  return { ok: true };
+}
+
+function applyDeletedPlayers(leagueData, seasonId, deletedPlayers) {
+  const season = leagueData.seasons[seasonId];
+  if (!season) {
+    return { ok: false, status: 404, message: "Season not found" };
+  }
+
+  for (const deletedPlayer of deletedPlayers) {
+    const team = season.teams.find((candidate) => candidate.Team === deletedPlayer.teamName);
+    if (!team) {
+      return {
+        ok: false,
+        status: 404,
+        message: `Team not found for deleted player ${deletedPlayer.playerName}.`,
+      };
+    }
+
+    const targetKey = normalizePlayerKey(deletedPlayer.playerName);
+    team.roster = (team.roster ?? []).filter(
+      (candidate) => normalizePlayerKey(candidate.name) !== targetKey
+    );
+  }
+
+  return { ok: true };
+}
+
 function parseCompletedScore(value) {
   if (typeof value === "number" && Number.isFinite(value)) {
     return value;
@@ -639,9 +753,11 @@ function normalizeAdminStatsPayload(payload) {
         },
       ],
       scheduleUpdate: undefined,
+      scheduleEntries: undefined,
       manualOverallUpdates: undefined,
       playerProfileUpdates: undefined,
       headshotUploads: undefined,
+      deletedPlayers: undefined,
     };
   }
 
@@ -734,8 +850,17 @@ function parseManualSeasonOverallsSource(source, seasonId) {
   return { entries, match: match[0] };
 }
 
-function updateManualSeasonOverallsSource(source, seasonId, manualOverallUpdates) {
+function updateManualSeasonOverallsSource(
+  source,
+  seasonId,
+  manualOverallUpdates,
+  deletedPlayers = []
+) {
   const { entries, match } = parseManualSeasonOverallsSource(source, seasonId);
+
+  for (const deletedPlayer of deletedPlayers) {
+    delete entries[normalizePlayerKey(deletedPlayer.playerName)];
+  }
 
   for (const update of manualOverallUpdates) {
     entries[normalizePlayerKey(update.playerName)] = update.overall;
@@ -754,8 +879,18 @@ function updateManualSeasonOverallsSource(source, seasonId, manualOverallUpdates
 function buildCommitMessage(payload) {
   const hasStatsUpdates = payload.updates.length > 0 || payload.scheduleUpdate !== undefined;
   const hasManualOveralls = (payload.manualOverallUpdates?.length ?? 0) > 0;
+  const hasScheduleEntries = (payload.scheduleEntries?.length ?? 0) > 0;
   const hasProfiles = (payload.playerProfileUpdates?.length ?? 0) > 0;
   const hasHeadshots = (payload.headshotUploads?.length ?? 0) > 0;
+  const hasDeletedPlayers = (payload.deletedPlayers?.length ?? 0) > 0;
+
+  if (hasScheduleEntries && hasDeletedPlayers) {
+    return `Update schedule and roster via admin panel (${payload.seasonId})`;
+  }
+
+  if (hasScheduleEntries) {
+    return `Update schedule via admin panel (${payload.seasonId})`;
+  }
 
   if (hasStatsUpdates && hasManualOveralls && (hasProfiles || hasHeadshots)) {
     return `${COMMIT_MESSAGE} (${payload.seasonId} / Game ${payload.gameNumber ?? "manual"}) + roster/media`;
@@ -775,6 +910,10 @@ function buildCommitMessage(payload) {
 
   if (hasProfiles || hasHeadshots) {
     return `Update roster assets via admin panel (${payload.seasonId})`;
+  }
+
+  if (hasDeletedPlayers) {
+    return `Delete roster players via admin panel (${payload.seasonId})`;
   }
 
   return `${COMMIT_MESSAGE} (${payload.seasonId} / Game ${payload.gameNumber})`;
@@ -841,8 +980,12 @@ export default async function handler(req, res) {
   const hasLeagueDataChanges =
     normalizedPayload.updates.length > 0 ||
     normalizedPayload.scheduleUpdate !== undefined ||
-    (normalizedPayload.playerProfileUpdates?.length ?? 0) > 0;
-  const hasManualOverallUpdates = (normalizedPayload.manualOverallUpdates?.length ?? 0) > 0;
+    (normalizedPayload.scheduleEntries?.length ?? 0) > 0 ||
+    (normalizedPayload.playerProfileUpdates?.length ?? 0) > 0 ||
+    (normalizedPayload.deletedPlayers?.length ?? 0) > 0;
+  const hasManualOverallUpdates =
+    (normalizedPayload.manualOverallUpdates?.length ?? 0) > 0 ||
+    (normalizedPayload.deletedPlayers?.length ?? 0) > 0;
   const hasHeadshotUploads = (normalizedPayload.headshotUploads?.length ?? 0) > 0;
   const treeEntries = [];
   const updatedPaths = [];
@@ -922,6 +1065,23 @@ export default async function handler(req, res) {
       }
     }
 
+    if (normalizedPayload.scheduleEntries?.length) {
+      const scheduleEntriesResult = applyScheduleEntriesUpdate(
+        leagueData,
+        normalizedPayload.seasonId,
+        normalizedPayload.scheduleEntries
+      );
+
+      if (!scheduleEntriesResult.ok) {
+        res.status(scheduleEntriesResult.status).json({
+          ok: false,
+          message: scheduleEntriesResult.message,
+          details: scheduleEntriesResult.details,
+        });
+        return;
+      }
+    }
+
     if (normalizedPayload.scheduleUpdate) {
       const scheduleUpdateResult = applyScheduleScoreUpdate(
         leagueData,
@@ -934,6 +1094,23 @@ export default async function handler(req, res) {
           ok: false,
           message: scheduleUpdateResult.message,
           details: scheduleUpdateResult.details,
+        });
+        return;
+      }
+    }
+
+    if (normalizedPayload.deletedPlayers?.length) {
+      const deletedPlayersResult = applyDeletedPlayers(
+        leagueData,
+        normalizedPayload.seasonId,
+        normalizedPayload.deletedPlayers
+      );
+
+      if (!deletedPlayersResult.ok) {
+        res.status(deletedPlayersResult.status).json({
+          ok: false,
+          message: deletedPlayersResult.message,
+          details: deletedPlayersResult.details,
         });
         return;
       }
@@ -1037,7 +1214,8 @@ export default async function handler(req, res) {
       manualSource = updateManualSeasonOverallsSource(
         manualContentResult.decoded,
         normalizedPayload.seasonId,
-        normalizedPayload.manualOverallUpdates ?? []
+        normalizedPayload.manualOverallUpdates ?? [],
+        normalizedPayload.deletedPlayers ?? []
       );
     } catch (error) {
       res.status(400).json({
@@ -1193,5 +1371,7 @@ export default async function handler(req, res) {
     updatedManualOveralls: normalizedPayload.manualOverallUpdates?.length ?? 0,
     updatedProfiles: normalizedPayload.playerProfileUpdates?.length ?? 0,
     uploadedHeadshots: normalizedPayload.headshotUploads?.length ?? 0,
+    updatedScheduleEntries: normalizedPayload.scheduleEntries?.length ?? 0,
+    deletedPlayers: normalizedPayload.deletedPlayers?.length ?? 0,
   });
 }

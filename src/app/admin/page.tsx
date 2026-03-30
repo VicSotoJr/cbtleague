@@ -9,6 +9,9 @@ import {
   ArrowLeft,
   Calendar,
   CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Clock3,
   Download,
   ImagePlus,
   Plus,
@@ -47,11 +50,38 @@ import {
   writeMatchupDrafts,
   writeQueuedPublishes,
 } from "./admin-shared";
-import type { AdminStatsUpdateResponse } from "@/types/admin-api";
+import type {
+  AdminScheduleEntryUpdate,
+  AdminStatsUpdatePayload,
+  AdminStatsUpdateResponse,
+} from "@/types/admin-api";
 
 type StatusState = {
   type: "success" | "error" | null;
   message: string;
+};
+
+type ScheduleDraftEntry = {
+  id: string;
+  week: string;
+  homeTeam: string;
+  awayTeam: string;
+  date: string;
+  time: string;
+  homeScore: string;
+  awayScore: string;
+  isPlayoff: boolean;
+  isBye: boolean;
+  byeTeam: string;
+  originalWeek: string;
+  originalHomeTeam: string;
+  originalAwayTeam: string;
+  originalDate: string;
+  originalTime: string;
+  originalByeTeam: string;
+  originalIsPlayoff: boolean;
+  originalIsBye: boolean;
+  originalIndex: number;
 };
 
 type TeamTableProps = {
@@ -140,6 +170,7 @@ function buildPendingSummary(draft: MatchupDraft | null) {
       overalls: 0,
       profiles: 0,
       headshots: 0,
+      deletedPlayers: 0,
       hasChanges: false,
       payload: null,
     };
@@ -152,6 +183,7 @@ function buildPendingSummary(draft: MatchupDraft | null) {
     overalls: payload.manualOverallUpdates?.length ?? 0,
     profiles: payload.playerProfileUpdates?.length ?? 0,
     headshots: payload.headshotUploads?.length ?? 0,
+    deletedPlayers: payload.deletedPlayers?.length ?? 0,
   };
 
   return {
@@ -161,9 +193,145 @@ function buildPendingSummary(draft: MatchupDraft | null) {
       counts.scores > 0 ||
       counts.overalls > 0 ||
       counts.profiles > 0 ||
-      counts.headshots > 0,
+      counts.headshots > 0 ||
+      counts.deletedPlayers > 0,
     payload,
   };
+}
+
+function buildScheduleEntryId(entry: AdminScheduleEntryUpdate, index: number): string {
+  return [
+    entry.week,
+    entry.homeTeam ?? "bye",
+    entry.awayTeam ?? entry.byeTeam ?? "bye",
+    String(index),
+  ].join(":");
+}
+
+function buildInitialScheduleEntries(
+  schedule: AdminScheduleEntryUpdate[] | undefined,
+): ScheduleDraftEntry[] {
+  return (schedule ?? []).map((entry, index) => ({
+    id: buildScheduleEntryId(entry, index),
+    week: entry.week,
+    homeTeam: entry.homeTeam ?? "",
+    awayTeam: entry.awayTeam ?? "",
+    date: entry.date ?? "",
+    time: entry.time ?? "",
+    homeScore:
+      typeof entry.homeScore === "number"
+        ? String(entry.homeScore)
+        : entry.homeScore?.trim() ?? "",
+    awayScore:
+      typeof entry.awayScore === "number"
+        ? String(entry.awayScore)
+        : entry.awayScore?.trim() ?? "",
+    isPlayoff: entry.isPlayoff === true,
+    isBye: entry.isBye === true,
+    byeTeam: entry.byeTeam ?? "",
+    originalWeek: entry.week,
+    originalHomeTeam: entry.homeTeam ?? "",
+    originalAwayTeam: entry.awayTeam ?? "",
+    originalDate: entry.date ?? "",
+    originalTime: entry.time ?? "",
+    originalByeTeam: entry.byeTeam ?? "",
+    originalIsPlayoff: entry.isPlayoff === true,
+    originalIsBye: entry.isBye === true,
+    originalIndex: index,
+  }));
+}
+
+function countScheduleChanges(entries: ScheduleDraftEntry[]): number {
+  return entries.reduce((count, entry, index) => {
+    if (
+      entry.week !== entry.originalWeek ||
+      entry.homeTeam !== entry.originalHomeTeam ||
+      entry.awayTeam !== entry.originalAwayTeam ||
+      entry.date !== entry.originalDate ||
+      entry.time !== entry.originalTime ||
+      entry.byeTeam !== entry.originalByeTeam ||
+      entry.isPlayoff !== entry.originalIsPlayoff ||
+      entry.isBye !== entry.originalIsBye ||
+      index !== entry.originalIndex
+    ) {
+      return count + 1;
+    }
+
+    return count;
+  }, 0);
+}
+
+function buildSchedulePayload(
+  seasonId: string,
+  entries: ScheduleDraftEntry[],
+): AdminStatsUpdatePayload {
+  return {
+    seasonId,
+    updates: [],
+    scheduleEntries: entries.map((entry) => ({
+      week: entry.week,
+      date: entry.date.trim(),
+      time: entry.time.trim(),
+      homeTeam: entry.isBye ? undefined : entry.homeTeam,
+      homeScore: entry.homeScore,
+      awayTeam: entry.isBye ? undefined : entry.awayTeam,
+      awayScore: entry.awayScore,
+      isPlayoff: entry.isPlayoff,
+      isBye: entry.isBye,
+      byeTeam: entry.isBye ? entry.byeTeam : undefined,
+    })),
+  };
+}
+
+function createEmptyScheduleEntry(index: number): ScheduleDraftEntry {
+  const idSuffix = Math.random().toString(36).slice(2, 8);
+  return {
+    id: `new-slot:${index}:${idSuffix}`,
+    week: "Week TBD",
+    homeTeam: "",
+    awayTeam: "",
+    date: "",
+    time: "",
+    homeScore: "",
+    awayScore: "",
+    isPlayoff: false,
+    isBye: false,
+    byeTeam: "",
+    originalWeek: "",
+    originalHomeTeam: "",
+    originalAwayTeam: "",
+    originalDate: "",
+    originalTime: "",
+    originalByeTeam: "",
+    originalIsPlayoff: false,
+    originalIsBye: false,
+    originalIndex: -1,
+  };
+}
+
+function getScheduleValidationMessage(entries: ScheduleDraftEntry[]): string | null {
+  for (const entry of entries) {
+    if (!entry.week.trim()) {
+      return "Every schedule slot needs a week label before publish.";
+    }
+
+    if (!entry.date.trim()) {
+      return "Every schedule slot needs a date before publish.";
+    }
+
+    if (entry.isBye) {
+      if (!entry.byeTeam.trim()) {
+        return "Bye slots need a bye team before publish.";
+      }
+      continue;
+    }
+
+    if (!entry.homeTeam.trim() || !entry.awayTeam.trim()) {
+      return "Every matchup slot needs both home and away teams before publish.";
+    }
+  }
+
+  return null;
 }
 
 function MatchupTeamTable({
@@ -424,16 +592,14 @@ function MatchupTeamTable({
                         <RefreshCcw className="h-4 w-4" />
                         Reset
                       </button>
-                      {row.isNewPlayer ? (
-                        <button
-                          type="button"
-                          onClick={() => onRemoveRow(row.id)}
-                          className="inline-flex items-center justify-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs font-bold text-red-200 transition-colors hover:border-red-400/40 hover:bg-red-500/20"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          Remove
-                        </button>
-                      ) : null}
+                      <button
+                        type="button"
+                        onClick={() => onRemoveRow(row.id)}
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs font-bold text-red-200 transition-colors hover:border-red-400/40 hover:bg-red-500/20"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        {row.isNewPlayer ? "Remove" : "Delete Player"}
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -452,6 +618,7 @@ export default function AdminPage() {
 
   const [selectedGameIdx, setSelectedGameIdx] = useState<number | "">("");
   const [matchupDrafts, setMatchupDrafts] = useState<Record<string, MatchupDraft>>({});
+  const [scheduleEntries, setScheduleEntries] = useState<ScheduleDraftEntry[]>([]);
   const [manualOverallLookup, setManualOverallLookup] = useState<Record<string, number>>({});
   const [apiUrl, setApiUrl] = useState(ADMIN_API_ENDPOINT);
   const [adminKey, setAdminKey] = useState("");
@@ -464,9 +631,10 @@ export default function AdminPage() {
     setApiUrl(settings.apiUrl);
     setAdminKey(settings.adminKey);
     setMatchupDrafts(readMatchupDrafts());
+    setScheduleEntries(buildInitialScheduleEntries(season?.schedule));
     setQueuedCount(readQueuedPublishes().length);
     setManualOverallLookup(buildManualOverallLookup(seasonId));
-  }, [seasonId]);
+  }, [season, seasonId]);
 
   useEffect(() => {
     writeAdminSettings({ apiUrl, adminKey });
@@ -477,8 +645,8 @@ export default function AdminPage() {
   }, [matchupDrafts]);
 
   const games = useMemo(
-    () => (season?.schedule ?? []).filter((game) => !game.isBye),
-    [season],
+    () => scheduleEntries.filter((game) => !game.isBye),
+    [scheduleEntries],
   );
   const selectedGame = selectedGameIdx === "" ? null : games[selectedGameIdx] ?? null;
   const selectedGameNumber = useMemo(
@@ -772,10 +940,139 @@ export default function AdminPage() {
   }
 
   function handleRemoveRow(rowId: string) {
-    updateSelectedDraft((draft) => ({
-      ...draft,
-      players: draft.players.filter((row) => row.id !== rowId),
-    }));
+    updateSelectedDraft((draft) => {
+      const row = draft.players.find((candidate) => candidate.id === rowId);
+      if (!row) {
+        return draft;
+      }
+
+      if (
+        !row.isNewPlayer &&
+        typeof window !== "undefined" &&
+        !window.confirm(
+          `Delete ${row.playerName} from ${row.teamName}? This removes the player profile and game history for this season when you publish.`,
+        )
+      ) {
+        return draft;
+      }
+
+      return {
+        ...draft,
+        players: draft.players.filter((candidate) => candidate.id !== rowId),
+        deletedPlayers: row.isNewPlayer
+          ? draft.deletedPlayers
+          : [
+              ...draft.deletedPlayers.filter(
+                (candidate) =>
+                  !(
+                    candidate.teamName === row.teamName &&
+                    normalizePlayerKey(candidate.playerName) ===
+                      normalizePlayerKey(row.playerName)
+                  ),
+              ),
+              {
+                teamName: row.teamName,
+                playerName: row.playerName,
+              },
+            ],
+      };
+    });
+  }
+
+  function handleScheduleFieldChange(
+    index: number,
+    field: "week" | "date" | "time" | "homeTeam" | "awayTeam" | "byeTeam",
+    value: string,
+  ) {
+    setScheduleEntries((previous) =>
+      previous.map((entry, entryIndex) =>
+        entryIndex === index ? { ...entry, [field]: value } : entry,
+      ),
+    );
+  }
+
+  function handleMoveScheduleEntry(index: number, direction: -1 | 1) {
+    setScheduleEntries((previous) => {
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= previous.length) {
+        return previous;
+      }
+
+      const next = [...previous];
+      const [entry] = next.splice(index, 1);
+      next.splice(targetIndex, 0, entry);
+      return next;
+    });
+
+    setSelectedGameIdx((previous) => {
+      if (previous === "") return previous;
+
+      const targetIndex = index + direction;
+      if (previous === index) return targetIndex;
+      if (direction === 1 && previous > index && previous <= targetIndex) {
+        return previous - 1;
+      }
+      if (direction === -1 && previous >= targetIndex && previous < index) {
+        return previous + 1;
+      }
+
+      return previous;
+    });
+  }
+
+  function handleToggleScheduleFlag(
+    index: number,
+    field: "isPlayoff" | "isBye",
+    checked: boolean,
+  ) {
+    setScheduleEntries((previous) =>
+      previous.map((entry, entryIndex) => {
+        if (entryIndex !== index) return entry;
+
+        if (field === "isBye") {
+          return {
+            ...entry,
+            isBye: checked,
+            byeTeam: checked ? entry.byeTeam || entry.homeTeam || entry.awayTeam : entry.byeTeam,
+          };
+        }
+
+        return {
+          ...entry,
+          [field]: checked,
+        };
+      }),
+    );
+  }
+
+  function handleAddScheduleEntry() {
+    setScheduleEntries((previous) => [...previous, createEmptyScheduleEntry(previous.length)]);
+    setStatus({
+      type: "success",
+      message: "Added a new schedule slot. Fill in the week, teams, and date before publishing.",
+    });
+  }
+
+  function handleRemoveScheduleEntry(index: number) {
+    const target = scheduleEntries[index];
+    if (!target) return;
+
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        `Delete this schedule slot for ${target.isBye ? target.byeTeam || "bye week" : `${target.homeTeam || "Home"} vs ${target.awayTeam || "Away"}`}?`,
+      )
+    ) {
+      return;
+    }
+
+    setScheduleEntries((previous) => previous.filter((_, entryIndex) => entryIndex !== index));
+    setSelectedGameIdx((previous) => {
+      if (previous === "") return previous;
+      if (previous === index) return "";
+      if (previous > index) return previous - 1;
+      return previous;
+    });
   }
 
   function handleResetMatchup() {
@@ -794,6 +1091,14 @@ export default function AdminPage() {
     setStatus({
       type: "success",
       message: "Reset the matchup draft back to the published roster and box score.",
+    });
+  }
+
+  function handleResetSchedule() {
+    setScheduleEntries(buildInitialScheduleEntries(season?.schedule));
+    setStatus({
+      type: "success",
+      message: "Reset the schedule editor back to the published order, dates, and tip times.",
     });
   }
 
@@ -874,58 +1179,101 @@ export default function AdminPage() {
         throw new Error(result.message || "Failed to publish matchup");
       }
 
-      setManualOverallLookup((previous) => ({
-        ...previous,
-        ...Object.fromEntries(
-          (pendingSummary.payload.manualOverallUpdates ?? []).map((entry) => [
-            normalizePlayerKey(entry.playerName),
-            entry.overall,
-          ]),
-        ),
-      }));
+      setManualOverallLookup((previous) => {
+        const nextLookup = { ...previous };
+
+        for (const deletedPlayer of pendingSummary.payload.deletedPlayers ?? []) {
+          delete nextLookup[normalizePlayerKey(deletedPlayer.playerName)];
+        }
+
+        for (const entry of pendingSummary.payload.manualOverallUpdates ?? []) {
+          nextLookup[normalizePlayerKey(entry.playerName)] = entry.overall;
+        }
+
+        return nextLookup;
+      });
 
       setMatchupDrafts((previous) => {
+        const deletedKeys = new Set(
+          (pendingSummary.payload.deletedPlayers ?? []).map(
+            (entry) =>
+              `${normalizePlayerKey(entry.teamName)}:${normalizePlayerKey(entry.playerName)}`,
+          ),
+        );
         const existing = previous[selectedGameKey];
-        if (!existing) return previous;
+        const nextDrafts = Object.fromEntries(
+          Object.entries(previous).map(([draftKey, draft]) => {
+            const nextDraft = cloneMatchupDraft(draft);
+            nextDraft.players = nextDraft.players.filter(
+              (row) =>
+                !deletedKeys.has(
+                  `${normalizePlayerKey(row.teamName)}:${normalizePlayerKey(row.playerName)}`,
+                ),
+            );
+            nextDraft.deletedPlayers = nextDraft.deletedPlayers.filter(
+              (entry) =>
+                !deletedKeys.has(
+                  `${normalizePlayerKey(entry.teamName)}:${normalizePlayerKey(entry.playerName)}`,
+                ),
+            );
 
-        const nextDraft = cloneMatchupDraft(existing);
-        nextDraft.originalHomeScore = nextDraft.homeScore;
-        nextDraft.originalAwayScore = nextDraft.awayScore;
-        nextDraft.players = nextDraft.players.map((row) => {
-          const parsedOverall = Number.parseInt(row.overall, 10);
-          const normalizedHeadshot = row.playerHead.trim()
-            ? sanitizeHeadshotFileName(row.playerHead, row.playerName || "player")
-            : "";
+            if (draftKey === selectedGameKey) {
+              nextDraft.originalHomeScore = nextDraft.homeScore;
+              nextDraft.originalAwayScore = nextDraft.awayScore;
+              nextDraft.deletedPlayers = [];
+              nextDraft.players = nextDraft.players.map((row) => {
+                const parsedOverall = Number.parseInt(row.overall, 10);
+                const normalizedHeadshot = row.playerHead.trim()
+                  ? sanitizeHeadshotFileName(row.playerHead, row.playerName || "player")
+                  : "";
 
-          return {
-            ...row,
-            playerName: row.playerName.trim(),
-            originalPlayerName: row.playerName.trim(),
-            number: row.number.trim(),
-            originalNumber: row.number.trim(),
-            playerHead: normalizedHeadshot,
-            originalPlayerHead: normalizedHeadshot,
-            originalStats: toCalculatedStats(row.statsForm),
-            originalOverall:
-              Number.isInteger(parsedOverall) &&
-              parsedOverall >= 60 &&
-              parsedOverall <= 99
-                ? parsedOverall
-                : null,
-            isNewPlayer: false,
-            upload: null,
-          };
-        });
+                return {
+                  ...row,
+                  playerName: row.playerName.trim(),
+                  originalPlayerName: row.playerName.trim(),
+                  number: row.number.trim(),
+                  originalNumber: row.number.trim(),
+                  playerHead: normalizedHeadshot,
+                  originalPlayerHead: normalizedHeadshot,
+                  originalStats: toCalculatedStats(row.statsForm),
+                  originalOverall:
+                    Number.isInteger(parsedOverall) &&
+                    parsedOverall >= 60 &&
+                    parsedOverall <= 99
+                      ? parsedOverall
+                      : null,
+                  isNewPlayer: false,
+                  upload: null,
+                };
+              });
+            }
 
-        return {
-          ...previous,
-          [selectedGameKey]: nextDraft,
-        };
+            return [draftKey, nextDraft];
+          }),
+        );
+
+        return existing ? nextDrafts : previous;
       });
+
+      if (pendingSummary.payload.scheduleUpdate) {
+        setScheduleEntries((previous) =>
+          previous.map((entry) =>
+            entry.week === pendingSummary.payload.scheduleUpdate?.week &&
+            entry.homeTeam === pendingSummary.payload.scheduleUpdate?.homeTeam &&
+            entry.awayTeam === pendingSummary.payload.scheduleUpdate?.awayTeam
+              ? {
+                  ...entry,
+                  homeScore: String(pendingSummary.payload.scheduleUpdate.homeScore),
+                  awayScore: String(pendingSummary.payload.scheduleUpdate.awayScore),
+                }
+              : entry,
+          ),
+        );
+      }
 
       setStatus({
         type: "success",
-        message: `Published the matchup to GitHub (${result.commitSha.slice(0, 7)}). ${result.updatedPlayers} stat row${result.updatedPlayers === 1 ? "" : "s"}, ${result.updatedProfiles} profile update${result.updatedProfiles === 1 ? "" : "s"}, ${result.uploadedHeadshots} headshot${result.uploadedHeadshots === 1 ? "" : "s"}, ${result.updatedManualOveralls} rating${result.updatedManualOveralls === 1 ? "" : "s"}.`,
+        message: `Published the matchup to GitHub (${result.commitSha.slice(0, 7)}). ${result.updatedPlayers} stat row${result.updatedPlayers === 1 ? "" : "s"}, ${result.updatedProfiles} profile update${result.updatedProfiles === 1 ? "" : "s"}, ${result.deletedPlayers} deleted player${result.deletedPlayers === 1 ? "" : "s"}, ${result.uploadedHeadshots} headshot${result.uploadedHeadshots === 1 ? "" : "s"}, ${result.updatedManualOveralls} rating${result.updatedManualOveralls === 1 ? "" : "s"}.`,
       });
     } catch (error) {
       const queue = readQueuedPublishes();
@@ -936,6 +1284,110 @@ export default function AdminPage() {
         savedAt: new Date().toISOString(),
         label,
         payload: pendingSummary.payload,
+      };
+      const nextQueue = [
+        ...queue.filter((entry) => entry.label !== queuedPublish.label),
+        queuedPublish,
+      ];
+
+      writeQueuedPublishes(nextQueue);
+      setQueuedCount(nextQueue.length);
+      setStatus({
+        type: "error",
+        message: `${getErrorMessage(error)}. The payload was queued locally for export.`,
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  const scheduleChangeCount = useMemo(
+    () => countScheduleChanges(scheduleEntries),
+    [scheduleEntries],
+  );
+  const canPublishSchedule =
+    scheduleChangeCount > 0 && !isSaving && !requiresHostedApi;
+
+  async function handlePublishSchedule() {
+    if (requiresHostedApi) {
+      setStatus({
+        type: "error",
+        message: "Enter the Vercel admin API URL before publishing from the live site.",
+      });
+      return;
+    }
+
+    if (!normalizedApiUrl) {
+      setStatus({
+        type: "error",
+        message: "Missing admin API URL.",
+      });
+      return;
+    }
+
+    if (scheduleChangeCount === 0) {
+      setStatus({
+        type: "error",
+        message: "There are no schedule changes ready to publish.",
+      });
+      return;
+    }
+
+    const scheduleValidationMessage = getScheduleValidationMessage(scheduleEntries);
+    if (scheduleValidationMessage) {
+      setStatus({
+        type: "error",
+        message: scheduleValidationMessage,
+      });
+      return;
+    }
+
+    const payload = buildSchedulePayload(seasonId, scheduleEntries);
+
+    setIsSaving(true);
+    setStatus({ type: null, message: "" });
+
+    try {
+      const response = await fetch(normalizedApiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(adminKey.trim()
+            ? { Authorization: `Bearer ${adminKey.trim()}` }
+            : {}),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = (await response.json()) as AdminStatsUpdateResponse;
+      if (!response.ok || !result.ok) {
+        throw new Error(result.message || "Failed to publish schedule");
+      }
+
+      setScheduleEntries((previous) =>
+        previous.map((entry, index) => ({
+          ...entry,
+          originalWeek: entry.week,
+          originalHomeTeam: entry.homeTeam,
+          originalAwayTeam: entry.awayTeam,
+          originalDate: entry.date,
+          originalTime: entry.time,
+          originalByeTeam: entry.byeTeam,
+          originalIsPlayoff: entry.isPlayoff,
+          originalIsBye: entry.isBye,
+          originalIndex: index,
+        })),
+      );
+      setStatus({
+        type: "success",
+        message: `Published the schedule update to GitHub (${result.commitSha.slice(0, 7)}). ${scheduleChangeCount} game slot${scheduleChangeCount === 1 ? "" : "s"} changed.`,
+      });
+    } catch (error) {
+      const queue = readQueuedPublishes();
+      const queuedPublish: AdminQueuedPublish = {
+        savedAt: new Date().toISOString(),
+        label: "Season 3 schedule editor",
+        payload,
       };
       const nextQueue = [
         ...queue.filter((entry) => entry.label !== queuedPublish.label),
@@ -971,10 +1423,10 @@ export default function AdminPage() {
                 Season 3 Admin
               </div>
               <h1 className="max-w-3xl text-4xl font-black uppercase tracking-tight text-white sm:text-5xl">
-                Matchup-by-matchup box scores, ratings, and player profile edits
+                Matchup box scores, roster edits, and schedule control
               </h1>
               <p className="max-w-3xl text-sm leading-6 text-zinc-400 sm:text-base">
-                Pick one game, fill out the full matchup board, and publish that entire game in one commit. This board also handles new players, jersey numbers, and headshot uploads.
+                Run the season from one admin page. You can publish a full matchup, delete players, update tip times, and reorder games without touching the repo.
               </p>
             </div>
           </div>
@@ -1151,6 +1603,281 @@ export default function AdminPage() {
           </section>
         </div>
 
+        <section className="mt-6 rounded-[2rem] border border-white/6 bg-zinc-950/70 p-6 shadow-[0_28px_80px_-56px_rgba(0,0,0,0.95)]">
+          <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/20 bg-sky-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-sky-100">
+                <Calendar className="h-3.5 w-3.5" />
+                Schedule Control
+              </div>
+              <div>
+                <h2 className="text-3xl font-black uppercase tracking-tight text-white">
+                  Edit dates, tip times, and game order
+                </h2>
+                <p className="mt-2 max-w-3xl text-sm text-zinc-500">
+                  Move games up or down to reorder the slate, update the date or tip time, and flag bye weeks or playoffs. Publishing here keeps the saved scores while rewriting the schedule layout cleanly.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="rounded-[1.5rem] border border-white/10 bg-black/20 px-4 py-4">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                  Scheduled Games
+                </p>
+                <p className="mt-3 text-3xl font-black tracking-tight text-white">
+                  {scheduleEntries.length}
+                </p>
+              </div>
+              <div className="rounded-[1.5rem] border border-white/10 bg-black/20 px-4 py-4">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                  Pending Changes
+                </p>
+                <p className="mt-3 text-3xl font-black tracking-tight text-sky-200">
+                  {scheduleChangeCount}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleAddScheduleEntry}
+                className="inline-flex min-h-[112px] items-center justify-center gap-2 rounded-[1.5rem] border border-sky-500/20 bg-sky-500/10 px-4 py-4 text-sm font-bold text-sky-100 transition-colors hover:border-sky-400/40 hover:bg-sky-500/15"
+              >
+                <Plus className="h-4 w-4" />
+                Add Slot
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-4">
+            {scheduleEntries.map((entry, index) => (
+              <div
+                key={entry.id}
+                className="grid gap-4 rounded-[1.5rem] border border-white/10 bg-black/20 p-4 lg:grid-cols-[1.25fr_1fr_1fr_auto]"
+              >
+                <div className="space-y-2">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                    Slot {index + 1}
+                  </p>
+                  <h3 className="text-lg font-black uppercase tracking-tight text-white">
+                    {entry.isBye
+                      ? `${entry.byeTeam || "Bye Team"} Bye Week`
+                      : `${entry.homeTeam || "Home Team"} vs ${entry.awayTeam || "Away Team"}`}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-300">
+                      {entry.week || "Week TBD"}
+                    </span>
+                    {entry.isPlayoff ? (
+                      <span className="rounded-full border border-copper-500/20 bg-copper-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-copper-100">
+                        Playoff
+                      </span>
+                    ) : null}
+                    {entry.isBye ? (
+                      <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-100">
+                        Bye
+                      </span>
+                    ) : null}
+                  </div>
+                  {entry.homeScore || entry.awayScore ? (
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                      Saved score: {entry.homeScore || "0"} - {entry.awayScore || "0"}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                      Week Label
+                    </label>
+                    <input
+                      type="text"
+                      value={entry.week}
+                      onChange={(event) =>
+                        handleScheduleFieldChange(index, "week", event.target.value)
+                      }
+                      className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                      Date
+                    </label>
+                    <div className="relative">
+                      <Calendar className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-copper-400" />
+                      <input
+                        type="text"
+                        value={entry.date}
+                        onChange={(event) =>
+                          handleScheduleFieldChange(index, "date", event.target.value)
+                        }
+                        className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-11 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                      Tip Time
+                    </label>
+                    <div className="relative">
+                      <Clock3 className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-sky-400" />
+                      <input
+                        type="text"
+                        value={entry.time}
+                        onChange={(event) =>
+                          handleScheduleFieldChange(index, "time", event.target.value)
+                        }
+                        className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-11 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <label className="flex items-center gap-3 rounded-[1.25rem] border border-white/10 bg-zinc-900/70 px-4 py-3 text-sm font-semibold text-white">
+                      <input
+                        type="checkbox"
+                        checked={entry.isPlayoff}
+                        onChange={(event) =>
+                          handleToggleScheduleFlag(index, "isPlayoff", event.target.checked)
+                        }
+                        className="h-4 w-4 accent-[#ffb650]"
+                      />
+                      Playoff
+                    </label>
+                    <label className="flex items-center gap-3 rounded-[1.25rem] border border-white/10 bg-zinc-900/70 px-4 py-3 text-sm font-semibold text-white">
+                      <input
+                        type="checkbox"
+                        checked={entry.isBye}
+                        onChange={(event) =>
+                          handleToggleScheduleFlag(index, "isBye", event.target.checked)
+                        }
+                        className="h-4 w-4 accent-[#5ae2a8]"
+                      />
+                      Bye Week
+                    </label>
+                  </div>
+                </div>
+
+                <div className="space-y-3 lg:col-span-4">
+                  {entry.isBye ? (
+                    <div className="space-y-2">
+                      <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                        Bye Team
+                      </label>
+                      <input
+                        type="text"
+                        value={entry.byeTeam}
+                        onChange={(event) =>
+                          handleScheduleFieldChange(index, "byeTeam", event.target.value)
+                        }
+                        className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                      />
+                    </div>
+                  ) : (
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                          Home Team
+                        </label>
+                        <input
+                          type="text"
+                          value={entry.homeTeam}
+                          onChange={(event) =>
+                            handleScheduleFieldChange(index, "homeTeam", event.target.value)
+                          }
+                          className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-zinc-600">
+                          Away Team
+                        </label>
+                        <input
+                          type="text"
+                          value={entry.awayTeam}
+                          onChange={(event) =>
+                            handleScheduleFieldChange(index, "awayTeam", event.target.value)
+                          }
+                          className="w-full rounded-[1.25rem] border border-white/10 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-copper-500/40"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2 lg:col-span-4 lg:justify-between">
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveScheduleEntry(index)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm font-bold text-red-100 transition-colors hover:border-red-400/40 hover:bg-red-500/20"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Delete Slot
+                  </button>
+
+                  <div className="flex items-center gap-2 lg:justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleMoveScheduleEntry(index, -1)}
+                      disabled={index === 0}
+                      className={cn(
+                        "inline-flex items-center justify-center rounded-full border px-3 py-3 transition-colors",
+                        index === 0
+                          ? "cursor-not-allowed border-white/5 bg-zinc-900/50 text-zinc-700"
+                          : "border-white/10 bg-white/5 text-white hover:border-white/20 hover:bg-white/10",
+                      )}
+                      aria-label={`Move ${entry.homeTeam} vs ${entry.awayTeam} earlier`}
+                    >
+                      <ChevronUp className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleMoveScheduleEntry(index, 1)}
+                      disabled={index === scheduleEntries.length - 1}
+                      className={cn(
+                        "inline-flex items-center justify-center rounded-full border px-3 py-3 transition-colors",
+                        index === scheduleEntries.length - 1
+                          ? "cursor-not-allowed border-white/5 bg-zinc-900/50 text-zinc-700"
+                          : "border-white/10 bg-white/5 text-white hover:border-white/20 hover:bg-white/10",
+                      )}
+                      aria-label={`Move ${entry.homeTeam} vs ${entry.awayTeam} later`}
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={handleResetSchedule}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-white transition-colors hover:border-white/20 hover:bg-white/10"
+            >
+              <RefreshCcw className="h-4 w-4" />
+              Reset Schedule
+            </button>
+            <button
+              type="button"
+              onClick={handlePublishSchedule}
+              disabled={!canPublishSchedule}
+              className={cn(
+                "inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition-colors",
+                canPublishSchedule
+                  ? "bg-sky-400 text-black hover:bg-sky-300"
+                  : "cursor-not-allowed bg-zinc-800 text-zinc-500",
+              )}
+            >
+              <Save className="h-4 w-4" />
+              {isSaving ? "Publishing..." : "Publish Schedule"}
+            </button>
+          </div>
+        </section>
+
         {status.type ? (
           <div
             className={cn(
@@ -1191,7 +1918,7 @@ export default function AdminPage() {
                       {currentDraft.homeTeam} vs {currentDraft.awayTeam}
                     </h2>
                     <p className="mt-2 text-sm text-zinc-500">
-                      Publish the full matchup in one commit, including player stat lines, ratings, score, jersey numbers, and profile photos.
+                      Publish the full matchup in one commit, including player stat lines, ratings, score, jersey numbers, profile photos, and any player deletions from this game board.
                     </p>
                   </div>
                 </div>
@@ -1231,12 +1958,13 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
                 {[
                   { label: "Stat rows", value: pendingSummary.stats, tone: "text-white" },
                   { label: "Score updates", value: pendingSummary.scores, tone: "text-copper-200" },
                   { label: "Profile edits", value: pendingSummary.profiles, tone: "text-sky-200" },
                   { label: "Headshots", value: pendingSummary.headshots, tone: "text-emerald-200" },
+                  { label: "Deletes", value: pendingSummary.deletedPlayers, tone: "text-red-200" },
                   { label: "Ratings", value: pendingSummary.overalls, tone: "text-white" },
                 ].map((item) => (
                   <div
