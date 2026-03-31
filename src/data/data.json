@@ -28674,213 +28674,168 @@
       "schedule": [
         {
           "week": "Week 1 - March 10, 2026",
+          "date": "March 10, 2026",
+          "time": "5:45 PM",
           "homeTeam": "The Mob",
+          "awayTeam": "Free Agents",
           "homeScore": "69",
-          "awayTeam": "Free Agents",
-          "awayScore": "67",
-          "date": "March 10, 2026",
-          "time": "5:45 PM",
-          "isPlayoff": false
+          "awayScore": "67"
         },
         {
           "week": "Week 1 - March 10, 2026",
+          "date": "March 10, 2026",
+          "time": "6:45 PM",
           "homeTeam": "Dream Chasers",
+          "awayTeam": "Venom",
           "homeScore": "75",
-          "awayTeam": "Venom",
-          "awayScore": "65",
-          "date": "March 10, 2026",
-          "time": "6:45 PM",
-          "isPlayoff": false
+          "awayScore": "65"
         },
         {
           "week": "Week 1 - March 10, 2026",
-          "homeTeam": "MTBM",
-          "homeScore": "71",
-          "awayTeam": "ISP",
-          "awayScore": "83",
           "date": "March 10, 2026",
           "time": "7:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 2 - March 17, 2026",
-          "homeTeam": "Free Agents",
-          "homeScore": "63",
-          "awayTeam": "1Fam",
-          "awayScore": "82",
-          "date": "March 17, 2026",
-          "time": "5:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 2 - March 17, 2026",
-          "homeTeam": "The Mob",
-          "homeScore": "59",
-          "awayTeam": "Dream Chasers",
-          "awayScore": "69",
-          "date": "March 17, 2026",
-          "time": "6:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 2 - March 17, 2026",
-          "homeTeam": "ISP",
-          "homeScore": "112",
-          "awayTeam": "Venom",
-          "awayScore": "59",
-          "date": "March 17, 2026",
-          "time": "7:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 3 - March 24, 2026",
-          "homeTeam": "Venom",
-          "homeScore": "110",
-          "awayTeam": "MTBM",
-          "awayScore": "129",
-          "date": "March 24, 2026",
-          "time": "5:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 3 - March 24, 2026",
-          "homeTeam": "1Fam",
-          "homeScore": "53",
-          "awayTeam": "Dream Chasers",
-          "awayScore": "71",
-          "date": "March 24, 2026",
-          "time": "6:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 3 - March 24, 2026",
-          "homeTeam": "ISP",
+          "homeTeam": "MTBM",
+          "awayTeam": "ISP",
           "homeScore": "71",
-          "awayTeam": "The Mob",
-          "awayScore": "63",
+          "awayScore": "83"
+        },
+        {
+          "week": "Week 2 - March 17, 2026",
+          "date": "March 17, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Free Agents",
+          "awayTeam": "1Fam",
+          "homeScore": "63",
+          "awayScore": "82"
+        },
+        {
+          "week": "Week 2 - March 17, 2026",
+          "date": "March 17, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "The Mob",
+          "awayTeam": "Dream Chasers",
+          "homeScore": "59",
+          "awayScore": "69"
+        },
+        {
+          "week": "Week 2 - March 17, 2026",
+          "date": "March 17, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "ISP",
+          "awayTeam": "Venom",
+          "homeScore": "112",
+          "awayScore": "59"
+        },
+        {
+          "week": "Week 3 - March 24, 2026",
+          "date": "March 24, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Venom",
+          "awayTeam": "MTBM",
+          "homeScore": "110",
+          "awayScore": "129"
+        },
+        {
+          "week": "Week 3 - March 24, 2026",
+          "date": "March 24, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "1Fam",
+          "awayTeam": "Dream Chasers",
+          "homeScore": "53",
+          "awayScore": "71"
+        },
+        {
+          "week": "Week 3 - March 24, 2026",
           "date": "March 24, 2026",
           "time": "7:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 4 - March 31, 2026",
-          "homeTeam": "Venom",
-          "homeScore": "-",
-          "awayTeam": "Free Agents",
-          "awayScore": "-",
-          "date": "March 31, 2026",
-          "time": "5:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 4 - March 31, 2026",
-          "homeTeam": "MTBM",
-          "homeScore": "-",
-          "awayTeam": "1Fam",
-          "awayScore": "-",
-          "date": "March 31, 2026",
-          "time": "6:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 4 - March 31, 2026",
-          "homeTeam": "Dream Chasers",
-          "homeScore": "-",
-          "awayTeam": "ISP",
-          "awayScore": "-",
-          "date": "March 31, 2026",
-          "time": "7:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 5 - April 14, 2026",
-          "homeTeam": "Free Agents",
-          "homeScore": "-",
-          "awayTeam": "Dream Chasers",
-          "awayScore": "-",
-          "date": "April 14, 2026",
-          "time": "5:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 5 - April 14, 2026",
-          "homeTeam": "Venom",
-          "homeScore": "-",
-          "awayTeam": "1Fam",
-          "awayScore": "-",
-          "date": "April 14, 2026",
-          "time": "6:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 5 - April 14, 2026",
-          "homeTeam": "The Mob",
-          "homeScore": "-",
-          "awayTeam": "MTBM",
-          "awayScore": "-",
-          "date": "April 14, 2026",
-          "time": "7:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 6 - April 21, 2026",
-          "homeTeam": "Free Agents",
-          "homeScore": "-",
-          "awayTeam": "MTBM",
-          "awayScore": "-",
-          "date": "April 21, 2026",
-          "time": "5:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 6 - April 21, 2026",
-          "homeTeam": "The Mob",
-          "homeScore": "-",
-          "awayTeam": "Venom",
-          "awayScore": "-",
-          "date": "April 21, 2026",
-          "time": "6:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 6 - April 21, 2026",
-          "homeTeam": "1Fam",
-          "homeScore": "-",
-          "awayTeam": "ISP",
-          "awayScore": "-",
-          "date": "April 21, 2026",
-          "time": "7:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 7 - April 28, 2026",
-          "homeTeam": "Free Agents",
-          "homeScore": "-",
-          "awayTeam": "ISP",
-          "awayScore": "-",
-          "date": "April 28, 2026",
-          "time": "5:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 7 - April 28, 2026",
-          "homeTeam": "MTBM",
-          "homeScore": "-",
-          "awayTeam": "Dream Chasers",
-          "awayScore": "-",
-          "date": "April 28, 2026",
-          "time": "6:45 PM",
-          "isPlayoff": false
-        },
-        {
-          "week": "Week 7 - April 28, 2026",
-          "homeTeam": "1Fam",
-          "homeScore": "-",
+          "homeTeam": "ISP",
           "awayTeam": "The Mob",
-          "awayScore": "-",
+          "homeScore": "71",
+          "awayScore": "63"
+        },
+        {
+          "week": "Week 4 - March 31, 2026",
+          "date": "March 31, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Venom",
+          "awayTeam": "Free Agents"
+        },
+        {
+          "week": "Week 4 - March 31, 2026",
+          "date": "March 31, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "MTBM",
+          "awayTeam": "1Fam"
+        },
+        {
+          "week": "Week 4 - March 31, 2026",
+          "date": "March 31, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "Dream Chasers",
+          "awayTeam": "ISP"
+        },
+        {
+          "week": "Week 5 - April 14, 2026",
+          "date": "April 14, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Venom",
+          "awayTeam": "1Fam"
+        },
+        {
+          "week": "Week 5 - April 14, 2026",
+          "date": "April 14, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "Free Agents",
+          "awayTeam": "Dream Chasers"
+        },
+        {
+          "week": "Week 5 - April 14, 2026",
+          "date": "April 14, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "The Mob",
+          "awayTeam": "MTBM"
+        },
+        {
+          "week": "Week 6 - April 21, 2026",
+          "date": "April 21, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Free Agents",
+          "awayTeam": "MTBM"
+        },
+        {
+          "week": "Week 6 - April 21, 2026",
+          "date": "April 21, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "The Mob",
+          "awayTeam": "Venom"
+        },
+        {
+          "week": "Week 6 - April 21, 2026",
+          "date": "April 21, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "1Fam",
+          "awayTeam": "ISP"
+        },
+        {
+          "week": "Week 7 - April 28, 2026",
+          "date": "April 28, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Free Agents",
+          "awayTeam": "ISP"
+        },
+        {
+          "week": "Week 7 - April 28, 2026",
+          "date": "April 28, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "MTBM",
+          "awayTeam": "Dream Chasers"
+        },
+        {
+          "week": "Week 7 - April 28, 2026",
           "date": "April 28, 2026",
           "time": "7:45 PM",
-          "isPlayoff": false
+          "homeTeam": "1Fam",
+          "awayTeam": "The Mob"
         }
       ]
     }
