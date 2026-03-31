@@ -52,7 +52,7 @@ const SEASON_3_MANUAL_OVERALLS = {
   "rob moriarty": 88,
   "rodney cook": 81,
   "roger hamelet": 80,
-  "ronnie smith": 87,
+  "ronnie smith": 67,
   "ryan boehm": 80,
   "sheriff bilewu": 87,
   "siah tait": 86,
