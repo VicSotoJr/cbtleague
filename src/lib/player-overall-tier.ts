@@ -35,7 +35,7 @@ export function getOverallTierClasses(overall: number | null | undefined) {
     };
   }
 
-  if (overall >= 70) {
+  if (overall >= 60) {
     return {
       badge: "border-orange-300/35 bg-orange-300/10 text-orange-200",
       text: "text-orange-200",
