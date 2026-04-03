@@ -72,6 +72,10 @@ type CareerRecord = {
   metrics: CareerMetrics;
 };
 
+type MinimumAttempts =
+  | { stat: keyof BaseStats; value: number }
+  | { computed: "totalFGA"; value: number };
+
 type LeaderCategory = {
   key: CareerMetricKey;
   label: string;
@@ -140,15 +144,10 @@ function normalizeShotTotals(base: BaseStats): {
   twoPM: number;
   twoPA: number;
 } {
-  const pointsFromInclusive = (base.FieldGoalsMade - base.ThreesMade) * 2 + base.ThreesMade * 3;
-  const pointsFromSeparate = base.FieldGoalsMade * 2 + base.ThreesMade * 3;
-  const isInclusive = Math.abs(pointsFromInclusive - base.Points) <= Math.abs(pointsFromSeparate - base.Points);
-
-  const totalFGM = isInclusive ? base.FieldGoalsMade : base.FieldGoalsMade + base.ThreesMade;
-  const totalFGA = isInclusive ? base.FieldGoalAttempts : base.FieldGoalAttempts + base.ThreesAttempts;
-  const twoPM = Math.max(0, totalFGM - base.ThreesMade);
-  const twoPA = Math.max(twoPM, totalFGA - base.ThreesAttempts);
-
+  const twoPM = base.FieldGoalsMade;
+  const twoPA = base.FieldGoalAttempts;
+  const totalFGM = twoPM + base.ThreesMade;
+  const totalFGA = twoPA + base.ThreesAttempts;
   return { totalFGM, totalFGA, twoPM, twoPA };
 }
 
@@ -223,10 +222,14 @@ function buildCareerRecords(records: Record<string, CareerAccumulator>): CareerR
   return Object.entries(records).map(([name, data]) => {
     const stats = data.stats;
     const gamesPlayed = Math.max(data.gp, 1);
-    const missedFG = Math.max(0, stats.FieldGoalAttempts - stats.FieldGoalsMade);
+
+    const totalFGM = stats.FieldGoalsMade + stats.ThreesMade;
+    const totalFGA = stats.FieldGoalAttempts + stats.ThreesAttempts;
+    const twoPM = stats.FieldGoalsMade;
+    const twoPA = stats.FieldGoalAttempts;
+
+    const missedFG = Math.max(0, totalFGA - totalFGM);
     const missedFT = Math.max(0, stats.FreeThrowsAttempts - stats.FreeThrowsMade);
-    const twoPM = Math.max(0, stats.FieldGoalsMade - stats.ThreesMade);
-    const twoPA = Math.max(0, stats.FieldGoalAttempts - stats.ThreesAttempts);
     const totalEff =
       stats.Points +
       stats.Rebounds +
@@ -248,7 +251,7 @@ function buildCareerRecords(records: Record<string, CareerAccumulator>): CareerR
         DoubleDoubles: data.doubleDoubles,
         TripleDoubles: data.tripleDoubles,
         EFF: totalEff / gamesPlayed,
-        "FG%": (stats.FieldGoalsMade / Math.max(stats.FieldGoalAttempts, 1)) * 100,
+        "FG%": (totalFGM / Math.max(totalFGA, 1)) * 100,
         "2P%": (twoPM / Math.max(twoPA, 1)) * 100,
         "3P%": (stats.ThreesMade / Math.max(stats.ThreesAttempts, 1)) * 100,
         "FT%": (stats.FreeThrowsMade / Math.max(stats.FreeThrowsAttempts, 1)) * 100,
@@ -275,8 +278,14 @@ function getTop5(records: CareerRecord[], category: LeaderCategory): CareerRecor
     : records;
 
   if (category.minimumAttempts) {
-    const { stat, value } = category.minimumAttempts;
-    filtered = filtered.filter((record) => record.data.stats[stat] >= value);
+    const min = category.minimumAttempts;
+    filtered = filtered.filter((record) => {
+      if ("computed" in min && min.computed === "totalFGA") {
+        const totalFGA = record.data.stats.FieldGoalAttempts + record.data.stats.ThreesAttempts;
+        return totalFGA >= min.value;
+      }
+      return record.data.stats[min.stat] >= min.value;
+    });
   }
 
   return filtered
@@ -421,8 +430,7 @@ export default function AllTimePage() {
     { key: "Blocks", label: "Total Blocks", icon: "trophy", valueType: "total" },
     { key: "PPG", label: "Career PPG (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
     { key: "EFF", label: "Career Efficiency (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
-    { key: "FG%", label: "Career FG% (Min. 5 GP/30 Attempts)", icon: "star", minimumGames: 5, minimumAttempts: { stat: "FieldGoalAttempts", value: 30 }, valueType: "rate" },
-    { key: "2P%", label: "Career 2P% (Min. 5 GP/20 Attempts)", icon: "star", minimumGames: 5, minimumAttempts: { stat: "FieldGoalAttempts", value: 20 }, valueType: "rate" },
+    { key: "FG%", label: "Career FG% (Min. 50 FGA)", icon: "star", minimumGames: 5, minimumAttempts: { computed: "totalFGA", value: 50 }, valueType: "rate" },    { key: "2P%", label: "Career 2P% (Min. 5 GP/20 Attempts)", icon: "star", minimumGames: 5, minimumAttempts: { stat: "FieldGoalAttempts", value: 20 }, valueType: "rate" },
     { key: "3P%", label: "Career 3P% (Min. 5 GP/20 Attempts)", icon: "star", minimumGames: 5, minimumAttempts: { stat: "ThreesAttempts", value: 20 }, valueType: "rate" },
     { key: "FT%", label: "Career FT% (Min. 5 GP/15 Attempts)", icon: "star", minimumGames: 5, minimumAttempts: { stat: "FreeThrowsAttempts", value: 15 }, valueType: "rate" },    { key: "RPG", label: "Career RPG (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
     { key: "APG", label: "Career APG (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
