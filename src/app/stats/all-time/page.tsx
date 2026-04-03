@@ -77,6 +77,7 @@ type LeaderCategory = {
   label: string;
   icon: "trophy" | "star";
   minimumGames?: number;
+  minimumAttempts?: { stat: keyof BaseStats; value: number };
   valueType: "total" | "rate";
 };
 
@@ -269,10 +270,14 @@ function buildCareerRecords(records: Record<string, CareerAccumulator>): CareerR
 }
 
 function getTop5(records: CareerRecord[], category: LeaderCategory): CareerRecord[] {
-  const minimumGames = category.minimumGames;
-  const filtered = minimumGames
-    ? records.filter((record) => record.data.gp >= minimumGames)
+  let filtered = category.minimumGames
+    ? records.filter((record) => record.data.gp >= category.minimumGames!)
     : records;
+
+  if (category.minimumAttempts) {
+    const { stat, value } = category.minimumAttempts;
+    filtered = filtered.filter((record) => record.data.stats[stat] >= value);
+  }
 
   return filtered
     .toSorted((a, b) => b.metrics[category.key] - a.metrics[category.key])
@@ -416,11 +421,10 @@ export default function AllTimePage() {
     { key: "Blocks", label: "Total Blocks", icon: "trophy", valueType: "total" },
     { key: "PPG", label: "Career PPG (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
     { key: "EFF", label: "Career Efficiency (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
-    { key: "FG%", label: "Career FG% (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
-    { key: "2P%", label: "Career 2P% (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
-    { key: "3P%", label: "Career 3P% (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
-    { key: "FT%", label: "Career FT% (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
-    { key: "RPG", label: "Career RPG (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
+    { key: "FG%", label: "Career FG% (Min. 5 GP/30 Attempts)", icon: "star", minimumGames: 5, minimumAttempts: { stat: "FieldGoalAttempts", value: 30 }, valueType: "rate" },
+    { key: "2P%", label: "Career 2P% (Min. 5 GP/20 Attempts)", icon: "star", minimumGames: 5, minimumAttempts: { stat: "FieldGoalAttempts", value: 20 }, valueType: "rate" },
+    { key: "3P%", label: "Career 3P% (Min. 5 GP/20 Attempts)", icon: "star", minimumGames: 5, minimumAttempts: { stat: "ThreesAttempts", value: 20 }, valueType: "rate" },
+    { key: "FT%", label: "Career FT% (Min. 5 GP/15 Attempts)", icon: "star", minimumGames: 5, minimumAttempts: { stat: "FreeThrowsAttempts", value: 15 }, valueType: "rate" },    { key: "RPG", label: "Career RPG (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
     { key: "APG", label: "Career APG (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
     { key: "TOVPG", label: "Career TOVPG (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
     { key: "SPG", label: "Career SPG (Min. 5 GP)", icon: "star", minimumGames: 5, valueType: "rate" },
