@@ -168,7 +168,18 @@ export function getSeasonLabel(seasonId: string): string {
     "Season"
   );
 }
-
+const STAT_MINIMUMS: Partial<Record<LeaderStatKey, (p: SummaryPlayerWithTeamStats) => boolean>> = {
+  "FG%":   (p) => p.aggregated.FieldGoalAttempts  >= 20,
+  "2P%":   (p) => p.aggregated.twoPA              >= 15,
+  "3P%":   (p) => p.aggregated.ThreesAttempts     >= 10,
+  "FT%":   (p) => p.aggregated.FreeThrowsAttempts >= 10,
+  "PPG":   (p) => p.aggregated.GAMES >= 4,
+  "RPG":   (p) => p.aggregated.GAMES >= 4,
+  "APG":   (p) => p.aggregated.GAMES >= 4,
+  "SPG":   (p) => p.aggregated.GAMES >= 4,
+  "BPG":   (p) => p.aggregated.GAMES >= 4,
+  "TOVPG": (p) => p.aggregated.GAMES >= 4,
+};
 export function getTopPlayersByStat(
   players: SummaryPlayerWithTeamStats[],
   statKey: LeaderStatKey,
@@ -182,11 +193,17 @@ export function getTopPlayersByStat(
 
   const cacheKey = `${statKey}:${limit}`;
   const cached = cacheByStat.get(cacheKey);
-  if (cached) {
-    return cached;
-  }
+  if (cached) return cached;
 
-  const ranked = players.toSorted((a, b) => b.aggregated[statKey] - a.aggregated[statKey]).slice(0, limit);
+  // --- ADD FROM HERE ---
+  const qualifier = STAT_MINIMUMS[statKey];
+  const eligible = qualifier ? players.filter(qualifier) : players;
+
+  const ranked = eligible
+    .toSorted((a, b) => b.aggregated[statKey] - a.aggregated[statKey])
+    .slice(0, limit);
+  // --- TO HERE (replaces the old `const ranked = ...` line) ---
+
   cacheByStat.set(cacheKey, ranked);
   return ranked;
 }
