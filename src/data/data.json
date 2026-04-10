@@ -29656,6 +29656,33 @@
           "time": "7:45 PM",
           "homeTeam": "1Fam",
           "awayTeam": "The Mob"
+        },
+        {
+          "week": "Week 8 - May 5, 2026",
+          "date": "May 5, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Free Agents",
+          "awayTeam": "Venom"
+        },
+        {
+          "week": "Week 8 - May 5, 2026",
+          "date": "May 5, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "The Mob",
+          "awayTeam": "1Fam"
+        },
+        {
+          "week": "Week 8 - May 5, 2026",
+          "date": "May 5, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "ISP",
+          "awayTeam": "MTBM"
+        },
+        {
+          "week": "Week 8 - May 5, 2026",
+          "date": "May 5, 2026",
+          "byeTeam": "Dream Chasers",
+          "isBye": true
         }
       ]
     }
