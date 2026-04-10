@@ -619,6 +619,7 @@ export default function AdminPage() {
   const [selectedGameIdx, setSelectedGameIdx] = useState<number | "">("");
   const [matchupDrafts, setMatchupDrafts] = useState<Record<string, MatchupDraft>>({});
   const [scheduleEntries, setScheduleEntries] = useState<ScheduleDraftEntry[]>([]);
+  const [isScheduleExpanded, setIsScheduleExpanded] = useState(false);
   const [manualOverallLookup, setManualOverallLookup] = useState<Record<string, number>>({});
   const [apiUrl, setApiUrl] = useState(ADMIN_API_ENDPOINT);
   const [adminKey, setAdminKey] = useState("");
@@ -1422,12 +1423,6 @@ export default function AdminPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-copper-500/20 bg-copper-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-copper-100">
                 Season 3 Admin
               </div>
-              <h1 className="max-w-3xl text-4xl font-black uppercase tracking-tight text-white sm:text-5xl">
-                Matchup box scores, roster edits, and schedule control
-              </h1>
-              <p className="max-w-3xl text-sm leading-6 text-zinc-400 sm:text-base">
-                Run the season from one admin page. You can publish a full matchup, delete players, update tip times, and reorder games without touching the repo.
-              </p>
             </div>
           </div>
 
@@ -1639,16 +1634,33 @@ export default function AdminPage() {
               </div>
               <button
                 type="button"
-                onClick={handleAddScheduleEntry}
-                className="inline-flex min-h-[112px] items-center justify-center gap-2 rounded-[1.5rem] border border-sky-500/20 bg-sky-500/10 px-4 py-4 text-sm font-bold text-sky-100 transition-colors hover:border-sky-400/40 hover:bg-sky-500/15"
+                onClick={() => setIsScheduleExpanded((previous) => !previous)}
+                className="inline-flex min-h-[112px] items-center justify-center gap-2 rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-4 text-sm font-bold text-white transition-colors hover:border-white/20 hover:bg-white/10"
               >
-                <Plus className="h-4 w-4" />
-                Add Slot
+                {isScheduleExpanded ? (
+                  <ChevronUp className="h-4 w-4" />
+                ) : (
+                  <ChevronDown className="h-4 w-4" />
+                )}
+                {isScheduleExpanded ? "Hide Schedule Controls" : "Show Schedule Controls"}
               </button>
             </div>
           </div>
 
-          <div className="mt-6 grid gap-4">
+          {isScheduleExpanded ? (
+            <>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={handleAddScheduleEntry}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-sky-500/20 bg-sky-500/10 px-5 py-3 text-sm font-bold text-sky-100 transition-colors hover:border-sky-400/40 hover:bg-sky-500/15"
+                >
+                  <Plus className="h-4 w-4" />
+                  Add Slot
+                </button>
+              </div>
+
+              <div className="mt-6 grid gap-4">
             {scheduleEntries.map((entry, index) => (
               <div
                 key={entry.id}
@@ -1850,32 +1862,38 @@ export default function AdminPage() {
                 </div>
               </div>
             ))}
-          </div>
+              </div>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={handleResetSchedule}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-white transition-colors hover:border-white/20 hover:bg-white/10"
-            >
-              <RefreshCcw className="h-4 w-4" />
-              Reset Schedule
-            </button>
-            <button
-              type="button"
-              onClick={handlePublishSchedule}
-              disabled={!canPublishSchedule}
-              className={cn(
-                "inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition-colors",
-                canPublishSchedule
-                  ? "bg-sky-400 text-black hover:bg-sky-300"
-                  : "cursor-not-allowed bg-zinc-800 text-zinc-500",
-              )}
-            >
-              <Save className="h-4 w-4" />
-              {isSaving ? "Publishing..." : "Publish Schedule"}
-            </button>
-          </div>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={handleResetSchedule}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-white transition-colors hover:border-white/20 hover:bg-white/10"
+                >
+                  <RefreshCcw className="h-4 w-4" />
+                  Reset Schedule
+                </button>
+                <button
+                  type="button"
+                  onClick={handlePublishSchedule}
+                  disabled={!canPublishSchedule}
+                  className={cn(
+                    "inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition-colors",
+                    canPublishSchedule
+                      ? "bg-sky-400 text-black hover:bg-sky-300"
+                      : "cursor-not-allowed bg-zinc-800 text-zinc-500",
+                  )}
+                >
+                  <Save className="h-4 w-4" />
+                  {isSaving ? "Publishing..." : "Publish Schedule"}
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="mt-6 rounded-[1.5rem] border border-dashed border-white/10 bg-black/20 px-5 py-5 text-sm text-zinc-500">
+              Schedule controls are hidden so the matchup board stays closer to the top. Use the button above any time you need to edit dates, reorder games, set a bye week, or mark playoffs.
+            </div>
+          )}
         </section>
 
         {status.type ? (
