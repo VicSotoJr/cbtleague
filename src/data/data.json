@@ -25360,9 +25360,9 @@
       "teams": [
         {
           "Team": "1Fam",
-          "wins": 2,
+          "wins": 3,
           "loss": 1,
-          "gamesPlayed": 3,
+          "gamesPlayed": 4,
           "roster": [
             {
               "name": "Matt Perez",
@@ -26628,8 +26628,8 @@
         {
           "Team": "Venom",
           "wins": 1,
-          "loss": 3,
-          "gamesPlayed": 4,
+          "loss": 4,
+          "gamesPlayed": 5,
           "roster": [
             {
               "name": "Anthony Miller Jr.",
@@ -29870,7 +29870,9 @@
           "date": "April 14, 2026",
           "time": "5:45 PM",
           "homeTeam": "Venom",
-          "awayTeam": "1Fam"
+          "awayTeam": "1Fam",
+          "homeScore": "87",
+          "awayScore": "94"
         },
         {
           "week": "Week 5 - April 14, 2026",
