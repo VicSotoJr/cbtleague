@@ -26113,9 +26113,9 @@
         },
         {
           "Team": "MTBM",
-          "wins": 1,
+          "wins": 2,
           "loss": 2,
-          "gamesPlayed": 3,
+          "gamesPlayed": 4,
           "roster": [
             {
               "name": "Cam Menefee",
@@ -27974,8 +27974,8 @@
         {
           "Team": "The Mob",
           "wins": 1,
-          "loss": 2,
-          "gamesPlayed": 3,
+          "loss": 3,
+          "gamesPlayed": 4,
           "roster": [
             {
               "name": "Arkell Lamar",
@@ -29886,7 +29886,9 @@
           "date": "April 14, 2026",
           "time": "7:45 PM",
           "homeTeam": "The Mob",
-          "awayTeam": "MTBM"
+          "awayTeam": "MTBM",
+          "homeScore": "79",
+          "awayScore": "92"
         },
         {
           "week": "Week 5 - April 14, 2026",
