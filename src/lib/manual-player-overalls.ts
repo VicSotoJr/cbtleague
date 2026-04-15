@@ -22,6 +22,7 @@ const SEASON_3_MANUAL_OVERALLS = {
   "howie miller": 84,
   "isiah earl": 89,
   "jacob morales": 84,
+  "jah miller": 88,
   "jahwan cody": 84,
   "james jackson": 83,
   "jamie logan": 82,
