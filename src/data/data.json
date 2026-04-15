@@ -29514,6 +29514,12 @@
           "awayScore": "83"
         },
         {
+          "week": "Week 1 - March 10, 2026",
+          "date": "March 10, 2026",
+          "byeTeam": "1FAM",
+          "isBye": true
+        },
+        {
           "week": "Week 2 - March 17, 2026",
           "date": "March 17, 2026",
           "time": "5:45 PM",
@@ -29539,6 +29545,12 @@
           "awayTeam": "Venom",
           "homeScore": "112",
           "awayScore": "59"
+        },
+        {
+          "week": "Week 2 - March 17, 2026",
+          "date": "March 17, 2026",
+          "byeTeam": "MTBM",
+          "isBye": true
         },
         {
           "week": "Week 3 - March 24, 2026",
@@ -29568,6 +29580,12 @@
           "awayScore": "63"
         },
         {
+          "week": "Week 3 - March 24, 2026",
+          "date": "March 24, 2026",
+          "byeTeam": "Free Agents",
+          "isBye": true
+        },
+        {
           "week": "Week 4 - March 31, 2026",
           "date": "March 31, 2026",
           "time": "5:45 PM",
@@ -29595,6 +29613,12 @@
           "awayScore": "55"
         },
         {
+          "week": "Week 4 - March 31, 2026",
+          "date": "March 31, 2026",
+          "byeTeam": "The Mob",
+          "isBye": true
+        },
+        {
           "week": "Week 5 - April 14, 2026",
           "date": "April 14, 2026",
           "time": "5:45 PM",
@@ -29614,6 +29638,12 @@
           "time": "7:45 PM",
           "homeTeam": "The Mob",
           "awayTeam": "MTBM"
+        },
+        {
+          "week": "Week 5 - April 14, 2026",
+          "date": "April 14, 2026",
+          "byeTeam": "ISP",
+          "isBye": true
         },
         {
           "week": "Week 6 - April 21, 2026",
@@ -29637,6 +29667,12 @@
           "awayTeam": "ISP"
         },
         {
+          "week": "Week 6 - April 21, 2026",
+          "date": "April 21, 2026",
+          "byeTeam": "Dream Chasers",
+          "isBye": true
+        },
+        {
           "week": "Week 7 - April 28, 2026",
           "date": "April 28, 2026",
           "time": "5:45 PM",
@@ -29656,6 +29692,12 @@
           "time": "7:45 PM",
           "homeTeam": "MTBM",
           "awayTeam": "Dream Chasers"
+        },
+        {
+          "week": "Week 7 - April 28, 2026",
+          "date": "April 28, 2026",
+          "byeTeam": "Venom",
+          "isBye": true
         },
         {
           "week": "Week 8 - May 5, 2026",
