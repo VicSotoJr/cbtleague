@@ -1,5 +1,5 @@
 const SEASON_1_MANUAL_OVERALLS = {
-  "dayvon russel": 88,
+  "dayvon russell": 88,
   "rashard rodriguez": 90,
   "tj killings": 89,
 } as const satisfies Record<string, number>;
