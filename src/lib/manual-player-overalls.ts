@@ -1,3 +1,13 @@
+const SEASON_1_MANUAL_OVERALLS = {
+  "dayvon russel": 88,
+  "rashard rodriguez": 90,
+  "tj killings": 89,
+} as const satisfies Record<string, number>;
+
+const SEASON_2_MANUAL_OVERALLS = {
+  "isiah lewis": 93,
+} as const satisfies Record<string, number>;
+
 const SEASON_3_MANUAL_OVERALLS = {
   "adden goffe": 89,
   "aden goffe": 92,
@@ -73,6 +83,8 @@ const SEASON_3_MANUAL_OVERALLS = {
 } as const satisfies Record<string, number>;
 
 const MANUAL_SEASON_OVERALLS = {
+  "1": SEASON_1_MANUAL_OVERALLS,
+  "2": SEASON_2_MANUAL_OVERALLS,
   "3": SEASON_3_MANUAL_OVERALLS,
 } as const satisfies Record<string, Record<string, number>>;
 
