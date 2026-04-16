@@ -1,6 +1,12 @@
-const SEASON_1_MANUAL_OVERALLS = {} as const satisfies Record<string, number>;
+const SEASON_1_MANUAL_OVERALLS = {
+  "dayvon russel": 88,
+  "rashard rodriguez": 90,
+  "tj killings": 89,
+} as const satisfies Record<string, number>;
 
-const SEASON_2_MANUAL_OVERALLS = {} as const satisfies Record<string, number>;
+const SEASON_2_MANUAL_OVERALLS = {
+  "isiah lewis": 93,
+} as const satisfies Record<string, number>;
 
 const SEASON_3_MANUAL_OVERALLS = {
   "adden goffe": 89,
