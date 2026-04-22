@@ -26932,8 +26932,8 @@
         {
           "Team": "Venom",
           "wins": 1,
-          "loss": 4,
-          "gamesPlayed": 5,
+          "loss": 5,
+          "gamesPlayed": 6,
           "roster": [
             {
               "name": "Anthony Miller Jr.",
@@ -27041,7 +27041,7 @@
             {
               "name": "Colby Winchester",
               "number": 5,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "colbywinchester3.jpg",
               "stats": [
                 {
@@ -27137,6 +27137,25 @@
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "The Mob",
+                  "Points": 18,
+                  "FieldGoalsMade": 7,
+                  "FieldGoalAttempts": 15,
+                  "ThreesMade": 4,
+                  "ThreesAttempts": 10,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 20,
+                  "Offrebounds": 3,
+                  "Defrebounds": 17,
+                  "Assists": 5,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 2,
                   "PersonalFouls": 0
                 }
               ]
@@ -27247,7 +27266,7 @@
             {
               "name": "Dashon Smith",
               "number": 15,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "dashonsmith3.jpg",
               "stats": [
                 {
@@ -27344,13 +27363,32 @@
                   "Steals": 1,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "The Mob",
+                  "Points": 59,
+                  "FieldGoalsMade": 23,
+                  "FieldGoalAttempts": 40,
+                  "ThreesMade": 9,
+                  "ThreesAttempts": 16,
+                  "FreeThrowsMade": 4,
+                  "FreeThrowsAttempts": 4,
+                  "Rebounds": 17,
+                  "Offrebounds": 5,
+                  "Defrebounds": 12,
+                  "Assists": 8,
+                  "Blocks": 0,
+                  "Steals": 2,
+                  "Turnovers": 3,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Isiah Earl",
               "number": "21",
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "isiahearl.jpg",
               "stats": [
                 {
@@ -27369,6 +27407,25 @@
                   "Assists": 2,
                   "Blocks": 4,
                   "Steals": 2,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "The Mob",
+                  "Points": 8,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 11,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 8,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 11,
+                  "Offrebounds": 5,
+                  "Defrebounds": 6,
+                  "Assists": 1,
+                  "Blocks": 1,
+                  "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
                 }
@@ -27404,7 +27461,7 @@
             {
               "name": "Kevin Magliochetti",
               "number": 7,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "kevinmagliochetti3.jpg",
               "stats": [
                 {
@@ -27500,6 +27557,25 @@
                   "Blocks": 0,
                   "Steals": 1,
                   "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "The Mob",
+                  "Points": 19,
+                  "FieldGoalsMade": 7,
+                  "FieldGoalAttempts": 23,
+                  "ThreesMade": 4,
+                  "ThreesAttempts": 17,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 11,
+                  "Offrebounds": 3,
+                  "Defrebounds": 8,
+                  "Assists": 7,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 3,
                   "PersonalFouls": 0
                 }
               ]
@@ -27683,7 +27759,7 @@
             {
               "name": "Tyler Marchese",
               "number": 22,
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "tylermarchese.jpg",
               "stats": [
                 {
@@ -27722,6 +27798,25 @@
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "The Mob",
+                  "Points": 9,
+                  "FieldGoalsMade": 4,
+                  "FieldGoalAttempts": 12,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 5,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 4,
+                  "Offrebounds": 0,
+                  "Defrebounds": 4,
+                  "Assists": 4,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 3,
                   "PersonalFouls": 0
                 }
               ]
@@ -28399,9 +28494,9 @@
         },
         {
           "Team": "The Mob",
-          "wins": 1,
+          "wins": 2,
           "loss": 3,
-          "gamesPlayed": 4,
+          "gamesPlayed": 5,
           "roster": [
             {
               "name": "Arkell Lamar",
@@ -28433,7 +28528,7 @@
             {
               "name": "Brandon Holland",
               "number": 10,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "brandonholland3.jpg",
               "stats": [
                 {
@@ -28509,6 +28604,25 @@
                   "Assists": 1,
                   "Blocks": 0,
                   "Steals": 1,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "Venom",
+                  "Points": 27,
+                  "FieldGoalsMade": 10,
+                  "FieldGoalAttempts": 18,
+                  "ThreesMade": 7,
+                  "ThreesAttempts": 14,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 15,
+                  "Offrebounds": 3,
+                  "Defrebounds": 12,
+                  "Assists": 6,
+                  "Blocks": 0,
+                  "Steals": 5,
                   "Turnovers": 0,
                   "PersonalFouls": 0
                 }
@@ -28647,7 +28761,7 @@
             {
               "name": "Jahwan Cody",
               "number": 99,
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "jahwancody3.jpg",
               "stats": [
                 {
@@ -28706,6 +28820,25 @@
                   "Steals": 0,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "Venom",
+                  "Points": 26,
+                  "FieldGoalsMade": 9,
+                  "FieldGoalAttempts": 19,
+                  "ThreesMade": 8,
+                  "ThreesAttempts": 18,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 11,
+                  "Offrebounds": 3,
+                  "Defrebounds": 8,
+                  "Assists": 13,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
                 }
               ]
             },
@@ -28758,7 +28891,7 @@
             {
               "name": "Justin Sheffield",
               "number": 0,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "justinsheffield3.jpg",
               "stats": [
                 {
@@ -28836,6 +28969,25 @@
                   "Steals": 1,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "Venom",
+                  "Points": 42,
+                  "FieldGoalsMade": 15,
+                  "FieldGoalAttempts": 31,
+                  "ThreesMade": 12,
+                  "ThreesAttempts": 28,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 12,
+                  "Offrebounds": 5,
+                  "Defrebounds": 7,
+                  "Assists": 13,
+                  "Blocks": 0,
+                  "Steals": 2,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
@@ -28888,7 +29040,7 @@
             {
               "name": "Rob Moriarty",
               "number": 2,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "robmoriarty3.jpg",
               "stats": [
                 {
@@ -28966,13 +29118,32 @@
                   "Steals": 0,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "Venom",
+                  "Points": 40,
+                  "FieldGoalsMade": 18,
+                  "FieldGoalAttempts": 34,
+                  "ThreesMade": 4,
+                  "ThreesAttempts": 15,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 24,
+                  "Offrebounds": 9,
+                  "Defrebounds": 15,
+                  "Assists": 7,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "TJ Pettway",
               "number": 4,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "tjpettway3.jpg",
               "stats": [
                 {
@@ -29049,6 +29220,25 @@
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 2,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "Venom",
+                  "Points": 27,
+                  "FieldGoalsMade": 11,
+                  "FieldGoalAttempts": 21,
+                  "ThreesMade": 5,
+                  "ThreesAttempts": 15,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 6,
+                  "Offrebounds": 1,
+                  "Defrebounds": 5,
+                  "Assists": 6,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 0,
                   "PersonalFouls": 0
                 }
               ]
@@ -30481,7 +30671,9 @@
           "date": "April 21, 2026",
           "time": "5:45 PM",
           "homeTeam": "The Mob",
-          "awayTeam": "Venom"
+          "awayTeam": "Venom",
+          "homeScore": "165",
+          "awayScore": "115"
         },
         {
           "week": "Week 6 - April 21, 2026",
