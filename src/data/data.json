@@ -25361,13 +25361,13 @@
         {
           "Team": "1Fam",
           "wins": 3,
-          "loss": 1,
-          "gamesPlayed": 4,
+          "loss": 2,
+          "gamesPlayed": 5,
           "roster": [
             {
               "name": "Matt Perez",
               "number": "13",
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "mattperez3.jpg",
               "stats": [
                 {
@@ -25464,13 +25464,32 @@
                   "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "ISP",
+                  "Points": 6,
+                  "FieldGoalsMade": 0,
+                  "FieldGoalAttempts": 4,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 4,
+                  "FreeThrowsMade": 6,
+                  "FreeThrowsAttempts": 10,
+                  "Rebounds": 5,
+                  "Offrebounds": 1,
+                  "Defrebounds": 4,
+                  "Assists": 4,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Rodney Cook",
               "number": "5",
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "rodneycook3.jpg",
               "stats": [
                 {
@@ -25567,13 +25586,32 @@
                   "Steals": 1,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "ISP",
+                  "Points": 11,
+                  "FieldGoalsMade": 4,
+                  "FieldGoalAttempts": 9,
+                  "ThreesMade": 3,
+                  "ThreesAttempts": 8,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 2,
+                  "Offrebounds": 0,
+                  "Defrebounds": 2,
+                  "Assists": 3,
+                  "Blocks": 1,
+                  "Steals": 1,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Teron Griffin",
               "number": "12",
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "terrongriffin3.jpg",
               "stats": [
                 {
@@ -25670,13 +25708,32 @@
                   "Steals": 0,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "ISP",
+                  "Points": 18,
+                  "FieldGoalsMade": 7,
+                  "FieldGoalAttempts": 13,
+                  "ThreesMade": 3,
+                  "ThreesAttempts": 6,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 8,
+                  "Offrebounds": 0,
+                  "Defrebounds": 8,
+                  "Assists": 8,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Khalid Moreland",
               "number": "0",
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "khalidmoreland3.jpg",
               "stats": [
                 {
@@ -25754,13 +25811,32 @@
                   "Steals": 3,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "ISP",
+                  "Points": 8,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 14,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 7,
+                  "FreeThrowsMade": 2,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 4,
+                  "Offrebounds": 1,
+                  "Defrebounds": 3,
+                  "Assists": 9,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Ryan Boehm",
               "number": "6",
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "ryanboehm3.jpg",
               "stats": [
                 {
@@ -25857,13 +25933,32 @@
                   "Steals": 0,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "ISP",
+                  "Points": 3,
+                  "FieldGoalsMade": 1,
+                  "FieldGoalAttempts": 2,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 0,
+                  "Offrebounds": 0,
+                  "Defrebounds": 0,
+                  "Assists": 0,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Marcell Robinson",
               "number": "3",
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "marcellrobinson3.jpg",
               "stats": [
                 {
@@ -25940,6 +26035,25 @@
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "ISP",
+                  "Points": 12,
+                  "FieldGoalsMade": 6,
+                  "FieldGoalAttempts": 12,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 1,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 1,
+                  "Rebounds": 9,
+                  "Offrebounds": 5,
+                  "Defrebounds": 4,
+                  "Assists": 2,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 2,
                   "PersonalFouls": 0
                 }
               ]
@@ -26031,7 +26145,7 @@
             {
               "name": "Tiyorne Coleman",
               "number": "25",
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "tiyornecoleman.jpg",
               "stats": [
                 {
@@ -26109,13 +26223,32 @@
                   "Steals": 1,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "ISP",
+                  "Points": 12,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 11,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 3,
+                  "FreeThrowsMade": 2,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 6,
+                  "Offrebounds": 2,
+                  "Defrebounds": 4,
+                  "Assists": 0,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "James Jackson",
               "number": "00",
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "jamesjackson3.jpg",
               "stats": [
                 {
@@ -26193,13 +26326,32 @@
                   "Steals": 0,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "ISP",
+                  "Points": 6,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 5,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 1,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 5,
+                  "Offrebounds": 1,
+                  "Defrebounds": 4,
+                  "Assists": 2,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Aland Beliard",
               "number": 23,
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "alandbeliard.jpg",
               "stats": [
                 {
@@ -26275,6 +26427,25 @@
                   "Assists": 1,
                   "Blocks": 0,
                   "Steals": 0,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "ISP",
+                  "Points": 4,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 5,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 1,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 3,
+                  "Offrebounds": 0,
+                  "Defrebounds": 3,
+                  "Assists": 0,
+                  "Blocks": 1,
+                  "Steals": 2,
                   "Turnovers": 0,
                   "PersonalFouls": 0
                 }
@@ -30266,14 +30437,14 @@
         },
         {
           "Team": "ISP",
-          "wins": 3,
+          "wins": 4,
           "loss": 1,
-          "gamesPlayed": 4,
+          "gamesPlayed": 5,
           "roster": [
             {
               "name": "Aden Goffe",
               "number": "13",
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "adengoffe.jpg",
               "stats": [
                 {
@@ -30350,6 +30521,25 @@
                   "Blocks": 0,
                   "Steals": 1,
                   "Turnovers": 1,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "1Fam",
+                  "Points": 28,
+                  "FieldGoalsMade": 13,
+                  "FieldGoalAttempts": 21,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 4,
+                  "FreeThrowsMade": 2,
+                  "FreeThrowsAttempts": 4,
+                  "Rebounds": 12,
+                  "Offrebounds": 4,
+                  "Defrebounds": 8,
+                  "Assists": 2,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 5,
                   "PersonalFouls": 0
                 }
               ]
@@ -30457,7 +30647,7 @@
             {
               "name": "Lateef Bilewu",
               "number": 1,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "lateefbilewu3.jpg",
               "stats": [
                 {
@@ -30535,13 +30725,32 @@
                   "Steals": 2,
                   "Turnovers": 3,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "1Fam",
+                  "Points": 14,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 8,
+                  "ThreesMade": 4,
+                  "ThreesAttempts": 5,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 5,
+                  "Offrebounds": 2,
+                  "Defrebounds": 3,
+                  "Assists": 10,
+                  "Blocks": 1,
+                  "Steals": 3,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Sheriff Bilewu",
               "number": "0",
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "sheriffbilewu.jpg",
               "stats": [
                 {
@@ -30619,13 +30828,32 @@
                   "Steals": 1,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "1Fam",
+                  "Points": 0,
+                  "FieldGoalsMade": 0,
+                  "FieldGoalAttempts": 2,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 22,
+                  "Offrebounds": 4,
+                  "Defrebounds": 18,
+                  "Assists": 7,
+                  "Blocks": 2,
+                  "Steals": 1,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Will Barton",
               "number": 14,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "willbarton3.jpg",
               "stats": [
                 {
@@ -30703,13 +30931,32 @@
                   "Steals": 0,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "1Fam",
+                  "Points": 12,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 9,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 3,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 8,
+                  "Offrebounds": 3,
+                  "Defrebounds": 5,
+                  "Assists": 7,
+                  "Blocks": 2,
+                  "Steals": 1,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Zion Lott",
               "number": "23",
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "zionlott.jpg",
               "stats": [
                 {
@@ -30727,6 +30974,25 @@
                   "Defrebounds": 6,
                   "Assists": 5,
                   "Blocks": 1,
+                  "Steals": 0,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 6,
+                  "opponent": "1Fam",
+                  "Points": 47,
+                  "FieldGoalsMade": 19,
+                  "FieldGoalAttempts": 30,
+                  "ThreesMade": 7,
+                  "ThreesAttempts": 13,
+                  "FreeThrowsMade": 2,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 12,
+                  "Offrebounds": 5,
+                  "Defrebounds": 7,
+                  "Assists": 7,
+                  "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
@@ -30925,7 +31191,9 @@
           "date": "April 21, 2026",
           "time": "7:45 PM",
           "homeTeam": "1Fam",
-          "awayTeam": "ISP"
+          "awayTeam": "ISP",
+          "homeScore": "80",
+          "awayScore": "102"
         },
         {
           "week": "Week 6 - April 21, 2026",
