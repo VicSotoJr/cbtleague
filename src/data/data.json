@@ -31090,4 +31090,176 @@
         {
           "week": "Week 3 - March 24, 2026",
           "date": "March 24, 2026",
-          "time
+          "time          "time": "7:45 PM",
+          "homeTeam": "ISP",
+          "awayTeam": "The Mob",
+          "homeScore": "71",
+          "awayScore": "63"
+        },
+        {
+          "week": "Week 3 - March 24, 2026",
+          "date": "March 24, 2026",
+          "byeTeam": "Free Agents",
+          "isBye": true
+        },
+        {
+          "week": "Week 4 - March 31, 2026",
+          "date": "March 31, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Venom",
+          "awayTeam": "Free Agents",
+          "homeScore": "90",
+          "awayScore": "66"
+        },
+        {
+          "week": "Week 4 - March 31, 2026",
+          "date": "March 31, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "MTBM",
+          "awayTeam": "1Fam",
+          "homeScore": "69",
+          "awayScore": "90"
+        },
+        {
+          "week": "Week 4 - March 31, 2026",
+          "date": "March 31, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "Dream Chasers",
+          "awayTeam": "ISP",
+          "homeScore": "65",
+          "awayScore": "55"
+        },
+        {
+          "week": "Week 4 - March 31, 2026",
+          "date": "March 31, 2026",
+          "byeTeam": "The Mob",
+          "isBye": true
+        },
+        {
+          "week": "Week 5 - April 14, 2026",
+          "date": "April 14, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Venom",
+          "awayTeam": "1Fam",
+          "homeScore": "87",
+          "awayScore": "94"
+        },
+        {
+          "week": "Week 5 - April 14, 2026",
+          "date": "April 14, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "Free Agents",
+          "awayTeam": "Dream Chasers",
+          "homeScore": "89",
+          "awayScore": "102"
+        },
+        {
+          "week": "Week 5 - April 14, 2026",
+          "date": "April 14, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "The Mob",
+          "awayTeam": "MTBM",
+          "homeScore": "79",
+          "awayScore": "92"
+        },
+        {
+          "week": "Week 5 - April 14, 2026",
+          "date": "April 14, 2026",
+          "byeTeam": "ISP",
+          "isBye": true
+        },
+        {
+          "week": "Week 6 - April 21, 2026",
+          "date": "April 21, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "The Mob",
+          "awayTeam": "Venom",
+          "homeScore": "165",
+          "awayScore": "115"
+        },
+        {
+          "week": "Week 6 - April 21, 2026",
+          "date": "April 21, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "Free Agents",
+          "awayTeam": "MTBM",
+          "homeScore": "95",
+          "awayScore": "101"
+        },
+        {
+          "week": "Week 6 - April 21, 2026",
+          "date": "April 21, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "1Fam",
+          "awayTeam": "ISP",
+          "homeScore": "80",
+          "awayScore": "102"
+        },
+        {
+          "week": "Week 6 - April 21, 2026",
+          "date": "April 21, 2026",
+          "byeTeam": "Dream Chasers",
+          "isBye": true
+        },
+        {
+          "week": "Week 7 - April 28, 2026",
+          "date": "April 28, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Free Agents",
+          "awayTeam": "ISP"
+        },
+        {
+          "week": "Week 7 - April 28, 2026",
+          "date": "April 28, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "1Fam",
+          "awayTeam": "The Mob"
+        },
+        {
+          "week": "Week 7 - April 28, 2026",
+          "date": "April 28, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "MTBM",
+          "awayTeam": "Dream Chasers"
+        },
+        {
+          "week": "Week 7 - April 28, 2026",
+          "date": "April 28, 2026",
+          "byeTeam": "Venom",
+          "isBye": true
+        },
+        {
+          "week": "Week 8 - May 5, 2026",
+          "date": "May 5, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Free Agents",
+          "awayTeam": "Venom"
+        },
+        {
+          "week": "Week 8 - May 5, 2026",
+          "date": "May 5, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "The Mob",
+          "awayTeam": "1Fam"
+        },
+        {
+          "week": "Week 8 - May 5, 2026",
+          "date": "May 5, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "ISP",
+          "awayTeam": "MTBM"
+        },
+        {
+          "week": "Week 8 - May 5, 2026",
+          "date": "May 5, 2026",
+          "byeTeam": "Dream Chasers",
+          "isBye": true
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "extractedAt": "2026-03-06T14:27:20.964Z",
+    "totalSeasons": 3
+  }
+}
