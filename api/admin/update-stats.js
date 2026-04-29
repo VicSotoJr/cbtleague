@@ -812,12 +812,33 @@ async function fetchGitHubContent(headers, repository, path) {
   const response = await fetch(contentUrl, { method: "GET", headers });
   const payload = await readJsonResponse(response);
 
-  if (!response.ok || !isGitHubContentResponse(payload) || payload.encoding.toLowerCase() !== "base64") {
-    return {
-      ok: false,
-      status: response.status,
-      message: getGitHubErrorMessage(payload),
-    };
+  if (!response.ok || !isGitHubContentResponse(payload)) {
+    return { ok: false, status: response.status, message: getGitHubErrorMessage(payload) };
+  }
+
+  // Large files (>1MB) come back with encoding: "none" and empty content
+  // Fall back to the Git Blobs API which handles large files
+  if (payload.encoding.toLowerCase() !== "base64" || !payload.content.trim()) {
+    if (!payload.sha) {
+      return { ok: false, status: 500, message: "No blob SHA available for large file." };
+    }
+
+    const blobUrl = `https://api.github.com/repos/${encodeURIComponent(repository.owner)}/${encodeURIComponent(
+      repository.repo
+    )}/git/blobs/${payload.sha}`;
+
+    const blobResponse = await fetch(blobUrl, {
+      method: "GET",
+      headers: { ...headers, Accept: "application/vnd.github.raw+json" },
+    });
+
+    if (!blobResponse.ok) {
+      const blobPayload = await readJsonResponse(blobResponse);
+      return { ok: false, status: blobResponse.status, message: getGitHubErrorMessage(blobPayload) };
+    }
+
+    const decoded = await blobResponse.text();
+    return { ok: true, payload, decoded };
   }
 
   return {
