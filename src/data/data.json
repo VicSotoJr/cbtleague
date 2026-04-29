@@ -25361,13 +25361,13 @@
         {
           "Team": "1Fam",
           "wins": 3,
-          "loss": 2,
-          "gamesPlayed": 5,
+          "loss": 3,
+          "gamesPlayed": 6,
           "roster": [
             {
               "name": "Matt Perez",
               "number": "13",
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "mattperez3.jpg",
               "stats": [
                 {
@@ -25483,13 +25483,32 @@
                   "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "The Mob",
+                  "Points": 2,
+                  "FieldGoalsMade": 1,
+                  "FieldGoalAttempts": 5,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 3,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 7,
+                  "Offrebounds": 3,
+                  "Defrebounds": 4,
+                  "Assists": 3,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Rodney Cook",
               "number": "5",
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "rodneycook3.jpg",
               "stats": [
                 {
@@ -25605,13 +25624,32 @@
                   "Steals": 1,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "The Mob",
+                  "Points": 14,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 10,
+                  "ThreesMade": 3,
+                  "ThreesAttempts": 8,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 5,
+                  "Rebounds": 5,
+                  "Offrebounds": 1,
+                  "Defrebounds": 4,
+                  "Assists": 9,
+                  "Blocks": 1,
+                  "Steals": 4,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Teron Griffin",
               "number": "12",
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "terrongriffin3.jpg",
               "stats": [
                 {
@@ -25727,13 +25765,32 @@
                   "Steals": 1,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "The Mob",
+                  "Points": 7,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 9,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 4,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 1,
+                  "Rebounds": 7,
+                  "Offrebounds": 0,
+                  "Defrebounds": 7,
+                  "Assists": 8,
+                  "Blocks": 0,
+                  "Steals": 4,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Khalid Moreland",
               "number": "0",
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "khalidmoreland3.jpg",
               "stats": [
                 {
@@ -25828,6 +25885,25 @@
                   "Assists": 9,
                   "Blocks": 0,
                   "Steals": 1,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "The Mob",
+                  "Points": 29,
+                  "FieldGoalsMade": 11,
+                  "FieldGoalAttempts": 20,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 8,
+                  "FreeThrowsMade": 5,
+                  "FreeThrowsAttempts": 6,
+                  "Rebounds": 10,
+                  "Offrebounds": 3,
+                  "Defrebounds": 7,
+                  "Assists": 7,
+                  "Blocks": 0,
+                  "Steals": 3,
                   "Turnovers": 2,
                   "PersonalFouls": 0
                 }
@@ -25958,7 +26034,7 @@
             {
               "name": "Marcell Robinson",
               "number": "3",
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "marcellrobinson3.jpg",
               "stats": [
                 {
@@ -26055,13 +26131,32 @@
                   "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "The Mob",
+                  "Points": 14,
+                  "FieldGoalsMade": 6,
+                  "FieldGoalAttempts": 7,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 0,
+                  "FreeThrowsMade": 2,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 9,
+                  "Offrebounds": 1,
+                  "Defrebounds": 8,
+                  "Assists": 2,
+                  "Blocks": 0,
+                  "Steals": 2,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Mikey Fuller",
               "number": "1",
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "mikeyfuller3.jpg",
               "stats": [
                 {
@@ -26137,6 +26232,25 @@
                   "Assists": 2,
                   "Blocks": 0,
                   "Steals": 1,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "The Mob",
+                  "Points": 7,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 10,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 3,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 4,
+                  "Offrebounds": 0,
+                  "Defrebounds": 4,
+                  "Assists": 1,
+                  "Blocks": 0,
+                  "Steals": 3,
                   "Turnovers": 1,
                   "PersonalFouls": 0
                 }
@@ -26248,7 +26362,7 @@
             {
               "name": "James Jackson",
               "number": "00",
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "jamesjackson3.jpg",
               "stats": [
                 {
@@ -26344,6 +26458,25 @@
                   "Blocks": 0,
                   "Steals": 1,
                   "Turnovers": 2,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "The Mob",
+                  "Points": 11,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 8,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 1,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 10,
+                  "Offrebounds": 8,
+                  "Defrebounds": 2,
+                  "Assists": 0,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 4,
                   "PersonalFouls": 0
                 }
               ]
@@ -29015,9 +29148,9 @@
         },
         {
           "Team": "The Mob",
-          "wins": 2,
+          "wins": 3,
           "loss": 3,
-          "gamesPlayed": 5,
+          "gamesPlayed": 6,
           "roster": [
             {
               "name": "Arkell Lamar",
@@ -29049,7 +29182,7 @@
             {
               "name": "Brandon Holland",
               "number": 10,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "brandonholland3.jpg",
               "stats": [
                 {
@@ -29146,13 +29279,32 @@
                   "Steals": 5,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "1Fam",
+                  "Points": 6,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 7,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 3,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 2,
+                  "Offrebounds": 0,
+                  "Defrebounds": 2,
+                  "Assists": 1,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "David Crenshaw",
               "number": 13,
-              "GamesPlayed": 2,
+              "GamesPlayed": 3,
               "PlayerHead": "davidcrenshaw3.jpg",
               "stats": [
                 {
@@ -29210,6 +29362,25 @@
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 4,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "1Fam",
+                  "Points": 6,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 7,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 3,
+                  "FreeThrowsMade": 2,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 5,
+                  "Offrebounds": 1,
+                  "Defrebounds": 4,
+                  "Assists": 4,
+                  "Blocks": 0,
+                  "Steals": 3,
+                  "Turnovers": 0,
                   "PersonalFouls": 0
                 }
               ]
@@ -29282,7 +29453,7 @@
             {
               "name": "Jahwan Cody",
               "number": 99,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "jahwancody3.jpg",
               "stats": [
                 {
@@ -29360,13 +29531,32 @@
                   "Steals": 1,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "1Fam",
+                  "Points": 9,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 6,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 4,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 1,
+                  "Rebounds": 2,
+                  "Offrebounds": 0,
+                  "Defrebounds": 2,
+                  "Assists": 2,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Jonathan Edwards",
               "number": "1",
-              "GamesPlayed": 2,
+              "GamesPlayed": 3,
               "PlayerHead": "jonathanedwards.jpg",
               "stats": [
                 {
@@ -29406,13 +29596,32 @@
                   "Steals": 1,
                   "Turnovers": 4,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "1Fam",
+                  "Points": 19,
+                  "FieldGoalsMade": 7,
+                  "FieldGoalAttempts": 14,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 5,
+                  "FreeThrowsMade": 3,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 18,
+                  "Offrebounds": 3,
+                  "Defrebounds": 15,
+                  "Assists": 3,
+                  "Blocks": 2,
+                  "Steals": 2,
+                  "Turnovers": 3,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Justin Sheffield",
               "number": 0,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "justinsheffield3.jpg",
               "stats": [
                 {
@@ -29509,6 +29718,25 @@
                   "Steals": 2,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "1Fam",
+                  "Points": 15,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 9,
+                  "ThreesMade": 5,
+                  "ThreesAttempts": 8,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 1,
+                  "Offrebounds": 0,
+                  "Defrebounds": 1,
+                  "Assists": 4,
+                  "Blocks": 0,
+                  "Steals": 3,
+                  "Turnovers": 4,
+                  "PersonalFouls": 0
                 }
               ]
             },
@@ -29561,7 +29789,7 @@
             {
               "name": "Rob Moriarty",
               "number": 2,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "robmoriarty3.jpg",
               "stats": [
                 {
@@ -29658,13 +29886,32 @@
                   "Steals": 1,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "1Fam",
+                  "Points": 10,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 11,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 5,
+                  "FreeThrowsMade": 4,
+                  "FreeThrowsAttempts": 4,
+                  "Rebounds": 11,
+                  "Offrebounds": 4,
+                  "Defrebounds": 7,
+                  "Assists": 4,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "TJ Pettway",
               "number": 4,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "tjpettway3.jpg",
               "stats": [
                 {
@@ -29760,6 +30007,25 @@
                   "Blocks": 0,
                   "Steals": 1,
                   "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "1Fam",
+                  "Points": 4,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 7,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 1,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 2,
+                  "Offrebounds": 1,
+                  "Defrebounds": 1,
+                  "Assists": 2,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 2,
                   "PersonalFouls": 0
                 }
               ]
@@ -31424,7 +31690,9 @@
           "date": "April 28, 2026",
           "time": "6:45 PM",
           "homeTeam": "1Fam",
-          "awayTeam": "The Mob"
+          "awayTeam": "The Mob",
+          "homeScore": "69",
+          "awayScore": "80"
         },
         {
           "week": "Week 7 - April 28, 2026",
