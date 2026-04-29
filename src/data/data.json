@@ -25360,8 +25360,8 @@
       "teams": [
         {
           "Team": "1Fam",
-          "wins": 3,
-          "loss": 3,
+          "wins": 4,
+          "loss": 2,
           "gamesPlayed": 6,
           "roster": [
             {
@@ -29270,8 +29270,8 @@
         },
         {
           "Team": "The Mob",
-          "wins": 3,
-          "loss": 3,
+          "wins": 2,
+          "loss": 4,
           "gamesPlayed": 6,
           "roster": [
             {
@@ -31946,8 +31946,8 @@
           "time": "6:45 PM",
           "homeTeam": "1Fam",
           "awayTeam": "The Mob",
-          "homeScore": "69",
-          "awayScore": "80"
+          "homeScore": "80",
+          "awayScore": "69"
         },
         {
           "week": "Week 7 - April 28, 2026",
