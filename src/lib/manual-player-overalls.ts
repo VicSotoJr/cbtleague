@@ -28,6 +28,7 @@ const SEASON_3_MANUAL_OVERALLS = {
   "demetrius gordon": 85,
   "dlier mohammed": 85,
   "eric cummings": 84,
+  "eric rankin": 85,
   "gavin greene": 85,
   "greg langston": 87,
   "howie miller": 86,

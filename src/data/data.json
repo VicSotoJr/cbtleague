@@ -26589,13 +26589,13 @@
         {
           "Team": "MTBM",
           "wins": 3,
-          "loss": 2,
-          "gamesPlayed": 5,
+          "loss": 3,
+          "gamesPlayed": 6,
           "roster": [
             {
               "name": "Cam Menefee",
               "number": 8,
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "cammenefee3.jpg",
               "stats": [
                 {
@@ -26653,6 +26653,25 @@
                   "Blocks": 1,
                   "Steals": 1,
                   "Turnovers": 2,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "Dream Chasers",
+                  "Points": 12,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 10,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 4,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 8,
+                  "Offrebounds": 3,
+                  "Defrebounds": 5,
+                  "Assists": 4,
+                  "Blocks": 1,
+                  "Steals": 3,
+                  "Turnovers": 4,
                   "PersonalFouls": 0
                 }
               ]
@@ -26723,9 +26742,36 @@
               ]
             },
             {
+              "name": "Eric Rankin",
+              "number": "99",
+              "GamesPlayed": 1,
+              "PlayerHead": "",
+              "stats": [
+                {
+                  "game_number": 7,
+                  "opponent": "Dream Chasers",
+                  "Points": 9,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 10,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 4,
+                  "FreeThrowsMade": 3,
+                  "FreeThrowsAttempts": 4,
+                  "Rebounds": 5,
+                  "Offrebounds": 0,
+                  "Defrebounds": 5,
+                  "Assists": 2,
+                  "Blocks": 2,
+                  "Steals": 2,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
+                }
+              ]
+            },
+            {
               "name": "Greg Langston",
               "number": "00",
-              "GamesPlayed": 1,
+              "GamesPlayed": 2,
               "PlayerHead": "greglangston.jpg",
               "stats": [
                 {
@@ -26745,6 +26791,25 @@
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 1,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "Dream Chasers",
+                  "Points": 2,
+                  "FieldGoalsMade": 1,
+                  "FieldGoalAttempts": 4,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 5,
+                  "Offrebounds": 0,
+                  "Defrebounds": 5,
+                  "Assists": 1,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 0,
                   "PersonalFouls": 0
                 }
               ]
@@ -26958,7 +27023,7 @@
             {
               "name": "Jaylen Crawford",
               "number": 2,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "jaylencrawford3.jpg",
               "stats": [
                 {
@@ -27054,6 +27119,25 @@
                   "Blocks": 0,
                   "Steals": 1,
                   "Turnovers": 3,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "Dream Chasers",
+                  "Points": 12,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 10,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 5,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 2,
+                  "Offrebounds": 0,
+                  "Defrebounds": 2,
+                  "Assists": 3,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 2,
                   "PersonalFouls": 0
                 }
               ]
@@ -27188,7 +27272,7 @@
             {
               "name": "Quincy Mcknight",
               "number": "7",
-              "GamesPlayed": 2,
+              "GamesPlayed": 3,
               "PlayerHead": "quincymcknight.jpg",
               "stats": [
                 {
@@ -27228,13 +27312,32 @@
                   "Steals": 4,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "Dream Chasers",
+                  "Points": 30,
+                  "FieldGoalsMade": 10,
+                  "FieldGoalAttempts": 21,
+                  "ThreesMade": 8,
+                  "ThreesAttempts": 18,
+                  "FreeThrowsMade": 2,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 8,
+                  "Offrebounds": 0,
+                  "Defrebounds": 8,
+                  "Assists": 4,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 4,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "TJ Green",
               "number": 1,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "tjgreen3.jpg",
               "stats": [
                 {
@@ -27330,6 +27433,25 @@
                   "Blocks": 0,
                   "Steals": 1,
                   "Turnovers": 3,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "Dream Chasers",
+                  "Points": 8,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 8,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 5,
+                  "FreeThrowsMade": 3,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 3,
+                  "Offrebounds": 0,
+                  "Defrebounds": 3,
+                  "Assists": 7,
+                  "Blocks": 0,
+                  "Steals": 2,
+                  "Turnovers": 2,
                   "PersonalFouls": 0
                 }
               ]
@@ -30034,14 +30156,14 @@
         },
         {
           "Team": "Dream Chasers",
-          "wins": 5,
+          "wins": 6,
           "loss": 0,
-          "gamesPlayed": 5,
+          "gamesPlayed": 6,
           "roster": [
             {
               "name": "Pasquale Villano",
               "number": 13,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "pasqualevillano3.jpg",
               "stats": [
                 {
@@ -30138,13 +30260,32 @@
                   "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "MTBM",
+                  "Points": 5,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 6,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 6,
+                  "Offrebounds": 3,
+                  "Defrebounds": 3,
+                  "Assists": 1,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Tamar Williams",
               "number": 24,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "tamarwilliams3.jpg",
               "stats": [
                 {
@@ -30222,6 +30363,25 @@
                   "Steals": 2,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "MTBM",
+                  "Points": 22,
+                  "FieldGoalsMade": 7,
+                  "FieldGoalAttempts": 22,
+                  "ThreesMade": 6,
+                  "ThreesAttempts": 15,
+                  "FreeThrowsMade": 2,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 7,
+                  "Offrebounds": 0,
+                  "Defrebounds": 7,
+                  "Assists": 7,
+                  "Blocks": 0,
+                  "Steals": 2,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
@@ -30274,7 +30434,7 @@
             {
               "name": "Jacob Morales",
               "number": 1,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "jacobmorales3.jpg",
               "stats": [
                 {
@@ -30371,13 +30531,32 @@
                   "Steals": 2,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "MTBM",
+                  "Points": 11,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 4,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 3,
+                  "FreeThrowsAttempts": 4,
+                  "Rebounds": 4,
+                  "Offrebounds": 2,
+                  "Defrebounds": 2,
+                  "Assists": 2,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 5,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Javon Taylor",
               "number": 15,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "javontaylor3.jpeg",
               "stats": [
                 {
@@ -30474,13 +30653,32 @@
                   "Steals": 3,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "MTBM",
+                  "Points": 12,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 14,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 5,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 17,
+                  "Offrebounds": 5,
+                  "Defrebounds": 12,
+                  "Assists": 5,
+                  "Blocks": 1,
+                  "Steals": 5,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Alex Hopkins",
               "number": 22,
-              "GamesPlayed": 3,
+              "GamesPlayed": 4,
               "PlayerHead": "alexhopkins3.jpg",
               "stats": [
                 {
@@ -30537,6 +30735,25 @@
                   "Assists": 2,
                   "Blocks": 0,
                   "Steals": 0,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "MTBM",
+                  "Points": 4,
+                  "FieldGoalsMade": 2,
+                  "FieldGoalAttempts": 9,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 0,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 8,
+                  "Offrebounds": 5,
+                  "Defrebounds": 3,
+                  "Assists": 1,
+                  "Blocks": 1,
+                  "Steals": 1,
                   "Turnovers": 0,
                   "PersonalFouls": 0
                 }
@@ -30648,7 +30865,7 @@
             {
               "name": "Siah Tait",
               "number": 23,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "siahtait3.jpg",
               "stats": [
                 {
@@ -30726,13 +30943,32 @@
                   "Steals": 4,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "MTBM",
+                  "Points": 19,
+                  "FieldGoalsMade": 9,
+                  "FieldGoalAttempts": 16,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 1,
+                  "Rebounds": 11,
+                  "Offrebounds": 4,
+                  "Defrebounds": 7,
+                  "Assists": 5,
+                  "Blocks": 1,
+                  "Steals": 4,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Cody Dileonardo",
               "number": 2,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "codydileonardo3.jpg",
               "stats": [
                 {
@@ -30805,6 +31041,25 @@
                   "Rebounds": 1,
                   "Offrebounds": 0,
                   "Defrebounds": 1,
+                  "Assists": 0,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 7,
+                  "opponent": "MTBM",
+                  "Points": 2,
+                  "FieldGoalsMade": 1,
+                  "FieldGoalAttempts": 1,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 0,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 0,
+                  "Offrebounds": 0,
+                  "Defrebounds": 0,
                   "Assists": 0,
                   "Blocks": 0,
                   "Steals": 0,
@@ -31699,7 +31954,9 @@
           "date": "April 28, 2026",
           "time": "7:45 PM",
           "homeTeam": "MTBM",
-          "awayTeam": "Dream Chasers"
+          "awayTeam": "Dream Chasers",
+          "homeScore": "73",
+          "awayScore": "78"
         },
         {
           "week": "Week 7 - April 28, 2026",
