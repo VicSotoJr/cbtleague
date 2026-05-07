@@ -27460,14 +27460,14 @@
         },
         {
           "Team": "Venom",
-          "wins": 1,
+          "wins": 2,
           "loss": 5,
-          "gamesPlayed": 6,
+          "gamesPlayed": 7,
           "roster": [
             {
               "name": "Anthony Miller Jr.",
               "number": 1,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "anthonymiller3.jpg",
               "stats": [
                 {
@@ -27564,13 +27564,32 @@
                   "Steals": 1,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Free Agents",
+                  "Points": 24,
+                  "FieldGoalsMade": 11,
+                  "FieldGoalAttempts": 26,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 7,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 8,
+                  "Offrebounds": 3,
+                  "Defrebounds": 5,
+                  "Assists": 10,
+                  "Blocks": 0,
+                  "Steals": 5,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Colby Winchester",
               "number": 5,
-              "GamesPlayed": 6,
+              "GamesPlayed": 7,
               "PlayerHead": "colbywinchester3.jpg",
               "stats": [
                 {
@@ -27686,6 +27705,25 @@
                   "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Free Agents",
+                  "Points": 11,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 7,
+                  "ThreesMade": 1,
+                  "ThreesAttempts": 3,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 7,
+                  "Offrebounds": 2,
+                  "Defrebounds": 5,
+                  "Assists": 1,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
@@ -27795,7 +27833,7 @@
             {
               "name": "Dashon Smith",
               "number": 15,
-              "GamesPlayed": 6,
+              "GamesPlayed": 7,
               "PlayerHead": "dashonsmith3.jpg",
               "stats": [
                 {
@@ -27911,13 +27949,32 @@
                   "Steals": 2,
                   "Turnovers": 3,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Free Agents",
+                  "Points": 22,
+                  "FieldGoalsMade": 10,
+                  "FieldGoalAttempts": 18,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 5,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 15,
+                  "Offrebounds": 4,
+                  "Defrebounds": 11,
+                  "Assists": 8,
+                  "Blocks": 0,
+                  "Steals": 3,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Isiah Earl",
               "number": "21",
-              "GamesPlayed": 2,
+              "GamesPlayed": 3,
               "PlayerHead": "isiahearl.jpg",
               "stats": [
                 {
@@ -27957,6 +28014,25 @@
                   "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Free Agents",
+                  "Points": 17,
+                  "FieldGoalsMade": 8,
+                  "FieldGoalAttempts": 18,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 8,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 14,
+                  "Offrebounds": 4,
+                  "Defrebounds": 10,
+                  "Assists": 0,
+                  "Blocks": 1,
+                  "Steals": 1,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
@@ -27990,7 +28066,7 @@
             {
               "name": "Kevin Magliochetti",
               "number": 7,
-              "GamesPlayed": 6,
+              "GamesPlayed": 7,
               "PlayerHead": "kevinmagliochetti3.jpg",
               "stats": [
                 {
@@ -28105,6 +28181,25 @@
                   "Blocks": 0,
                   "Steals": 0,
                   "Turnovers": 3,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Free Agents",
+                  "Points": 12,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 19,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 13,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 8,
+                  "Offrebounds": 0,
+                  "Defrebounds": 8,
+                  "Assists": 4,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 1,
                   "PersonalFouls": 0
                 }
               ]
@@ -28288,7 +28383,7 @@
             {
               "name": "Tyler Marchese",
               "number": 22,
-              "GamesPlayed": 2,
+              "GamesPlayed": 3,
               "PlayerHead": "tylermarchese.jpg",
               "stats": [
                 {
@@ -28347,6 +28442,25 @@
                   "Steals": 0,
                   "Turnovers": 3,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Free Agents",
+                  "Points": 6,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 5,
+                  "ThreesMade": 0,
+                  "ThreesAttempts": 2,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 8,
+                  "Offrebounds": 1,
+                  "Defrebounds": 7,
+                  "Assists": 1,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 1,
+                  "PersonalFouls": 0
                 }
               ]
             },
@@ -28401,13 +28515,13 @@
         {
           "Team": "Free Agents",
           "wins": 0,
-          "loss": 6,
-          "gamesPlayed": 6,
+          "loss": 7,
+          "gamesPlayed": 7,
           "roster": [
             {
               "name": "Howie Miller",
               "number": 16,
-              "GamesPlayed": 4,
+              "GamesPlayed": 5,
               "PlayerHead": "howiemiller3.jpg",
               "stats": [
                 {
@@ -28483,6 +28597,25 @@
                   "Assists": 3,
                   "Blocks": 0,
                   "Steals": 2,
+                  "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Venom",
+                  "Points": 21,
+                  "FieldGoalsMade": 7,
+                  "FieldGoalAttempts": 19,
+                  "ThreesMade": 4,
+                  "ThreesAttempts": 15,
+                  "FreeThrowsMade": 3,
+                  "FreeThrowsAttempts": 3,
+                  "Rebounds": 9,
+                  "Offrebounds": 3,
+                  "Defrebounds": 6,
+                  "Assists": 4,
+                  "Blocks": 0,
+                  "Steals": 0,
                   "Turnovers": 0,
                   "PersonalFouls": 0
                 }
@@ -28594,7 +28727,7 @@
             {
               "name": "Chris Estwan",
               "number": 2,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "chrisestwan3.jpg",
               "stats": [
                 {
@@ -28691,13 +28824,32 @@
                   "Steals": 0,
                   "Turnovers": 2,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Venom",
+                  "Points": 10,
+                  "FieldGoalsMade": 3,
+                  "FieldGoalAttempts": 13,
+                  "ThreesMade": 3,
+                  "ThreesAttempts": 9,
+                  "FreeThrowsMade": 1,
+                  "FreeThrowsAttempts": 2,
+                  "Rebounds": 8,
+                  "Offrebounds": 2,
+                  "Defrebounds": 6,
+                  "Assists": 3,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 2,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Martin Dominguez",
               "number": 12,
-              "GamesPlayed": 6,
+              "GamesPlayed": 7,
               "PlayerHead": "martindominguez3.jpg",
               "stats": [
                 {
@@ -28813,13 +28965,32 @@
                   "Steals": 4,
                   "Turnovers": 0,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Venom",
+                  "Points": 22,
+                  "FieldGoalsMade": 10,
+                  "FieldGoalAttempts": 20,
+                  "ThreesMade": 2,
+                  "ThreesAttempts": 6,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 1,
+                  "Rebounds": 14,
+                  "Offrebounds": 4,
+                  "Defrebounds": 10,
+                  "Assists": 8,
+                  "Blocks": 0,
+                  "Steals": 1,
+                  "Turnovers": 4,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Luke Yoder",
               "number": 19,
-              "GamesPlayed": 5,
+              "GamesPlayed": 6,
               "PlayerHead": "lukeyoder3.jpg",
               "stats": [
                 {
@@ -28916,13 +29087,32 @@
                   "Steals": 1,
                   "Turnovers": 1,
                   "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Venom",
+                  "Points": 20,
+                  "FieldGoalsMade": 8,
+                  "FieldGoalAttempts": 20,
+                  "ThreesMade": 4,
+                  "ThreesAttempts": 10,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 1,
+                  "Rebounds": 11,
+                  "Offrebounds": 2,
+                  "Defrebounds": 9,
+                  "Assists": 9,
+                  "Blocks": 1,
+                  "Steals": 2,
+                  "Turnovers": 3,
+                  "PersonalFouls": 0
                 }
               ]
             },
             {
               "name": "Eric Cummings",
               "number": 0,
-              "GamesPlayed": 6,
+              "GamesPlayed": 7,
               "PlayerHead": "ericcommings3.jpg",
               "stats": [
                 {
@@ -29037,6 +29227,25 @@
                   "Blocks": 0,
                   "Steals": 2,
                   "Turnovers": 0,
+                  "PersonalFouls": 0
+                },
+                {
+                  "game_number": 8,
+                  "opponent": "Venom",
+                  "Points": 15,
+                  "FieldGoalsMade": 5,
+                  "FieldGoalAttempts": 14,
+                  "ThreesMade": 5,
+                  "ThreesAttempts": 12,
+                  "FreeThrowsMade": 0,
+                  "FreeThrowsAttempts": 0,
+                  "Rebounds": 8,
+                  "Offrebounds": 1,
+                  "Defrebounds": 7,
+                  "Assists": 2,
+                  "Blocks": 0,
+                  "Steals": 0,
+                  "Turnovers": 2,
                   "PersonalFouls": 0
                 }
               ]
@@ -30156,7 +30365,7 @@
         },
         {
           "Team": "Dream Chasers",
-          "wins": 7,
+          "wins": 6,
           "loss": 0,
           "gamesPlayed": 6,
           "roster": [
@@ -31969,7 +32178,9 @@
           "date": "May 5, 2026",
           "time": "5:45 PM",
           "homeTeam": "Free Agents",
-          "awayTeam": "Venom"
+          "awayTeam": "Venom",
+          "homeScore": "86",
+          "awayScore": "98"
         },
         {
           "week": "Week 8 - May 5, 2026",
