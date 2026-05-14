@@ -71,7 +71,7 @@ const SEASON_3_MANUAL_OVERALLS = {
   "ryan boehm": 81,
   "sheriff bilewu": 88,
   "siah tait": 89,
-  "tamar williams": 94,
+  "tamar williams": 99,
   "tarice thompson": 79,
   "teron griffin": 90,
   "tiyorne coleman": 84,
