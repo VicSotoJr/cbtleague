@@ -10,7 +10,7 @@ const SEASON_2_MANUAL_OVERALLS = {
 
 const SEASON_3_MANUAL_OVERALLS = {
   "adden goffe": 89,
-  "aden goffe": 94,
+  "aden goffe": 99,
   "aland beliard": 84,
   "alex hopkins": 85,
   "anthony ireland": 94,
