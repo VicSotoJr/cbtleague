@@ -32585,6 +32585,37 @@
           "date": "May 5, 2026",
           "byeTeam": "Dream Chasers",
           "isBye": true
+        },
+        {
+          "week": "Rd 1 Playoffs - May 19, 2026",
+          "date": "May 19, 2026",
+          "time": "5:45 PM",
+          "homeTeam": "Venom",
+          "awayTeam": "1Fam",
+          "isPlayoff": true
+        },
+        {
+          "week": "Rd 1 Playoffs - May 19, 2026",
+          "date": "May 19, 2026",
+          "time": "6:45 PM",
+          "homeTeam": "ISP",
+          "awayTeam": "Free Agents",
+          "isPlayoff": true
+        },
+        {
+          "week": "Rd 1 Playoffs - May 19, 2026",
+          "date": "May 19, 2026",
+          "time": "7:45 PM",
+          "homeTeam": "MTBM",
+          "awayTeam": "The Mob",
+          "isPlayoff": true
+        },
+        {
+          "week": "Rd 1 Playoffs - May 19, 2026",
+          "date": "May 19, 2026",
+          "byeTeam": "Dream Chasers",
+          "isPlayoff": true,
+          "isBye": true
         }
       ]
     }
