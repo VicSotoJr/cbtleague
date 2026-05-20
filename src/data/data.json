@@ -32858,9 +32858,9 @@
           "time": "5:45 PM",
           "homeTeam": "Venom",
           "awayTeam": "1Fam",
-          "isPlayoff": true,
           "homeScore": "69",
-          "awayScore": "82"
+          "awayScore": "82",
+          "isPlayoff": true
         },
         {
           "week": "Rd 1 Playoffs - May 19, 2026",
