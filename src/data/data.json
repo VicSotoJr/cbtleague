@@ -33324,9 +33324,9 @@
           "time": "6:45 PM",
           "homeTeam": "ISP",
           "awayTeam": "Free Agents",
-          "isPlayoff": true,
           "homeScore": "100",
-          "awayScore": "78"
+          "awayScore": "78",
+          "isPlayoff": true
         },
         {
           "week": "Rd 1 Playoffs - May 19, 2026",
@@ -33334,9 +33334,9 @@
           "time": "7:45 PM",
           "homeTeam": "MTBM",
           "awayTeam": "The Mob",
-          "isPlayoff": true,
           "homeScore": "82",
-          "awayScore": "69"
+          "awayScore": "69",
+          "isPlayoff": true
         },
         {
           "week": "Rd 1 Playoffs - May 19, 2026",
@@ -33344,6 +33344,22 @@
           "byeTeam": "Dream Chasers",
           "isPlayoff": true,
           "isBye": true
+        },
+        {
+          "week": "Rd 2 Playoffs - May 26, 2026",
+          "date": "May 26, 2026",
+          "time": "6:15 PM",
+          "homeTeam": "ISP",
+          "awayTeam": "1 FAM",
+          "isPlayoff": true
+        },
+        {
+          "week": "Rd 2 Playoffs - May 26, 2026",
+          "date": "May 26, 2026",
+          "time": "7:15 PM",
+          "homeTeam": "Dream Chasers",
+          "awayTeam": "MTBM",
+          "isPlayoff": true
         }
       ]
     }
