@@ -33360,6 +33360,14 @@
           "homeTeam": "Dream Chasers",
           "awayTeam": "MTBM",
           "isPlayoff": true
+        },
+        {
+          "week": "Championship - June 2, 2026",
+          "date": "June 2, 2026",
+          "time": "TBD",
+          "homeTeam": "Dream Chasers",
+          "awayTeam": "ISP",
+          "isPlayoff": true
         }
       ]
     }
