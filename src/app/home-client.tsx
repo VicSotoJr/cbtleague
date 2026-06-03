@@ -46,7 +46,7 @@ export default function HomeClient() {
                         className="mb-8 inline-flex items-center rounded-full border border-copper-500/20 bg-copper-500/5 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-copper-500 backdrop-blur-md"
                     >
                         <span className="mr-3 h-2 w-2 rounded-full bg-copper-500 shadow-[0_0_12px_rgba(184,103,58,0.8)]" />
-                        Season 3 • Underway
+                        Congratulations ISP - Season 3 Champions!
                     </motion.div>
 
                     <motion.h1
